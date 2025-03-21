@@ -1,0 +1,192 @@
+:root
+
+* {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --primary : #357761;
+    --secondary: #006747;
+}
+
+html, body {
+    background-color: white;
+    max-width: 100%;
+}
+
+nav h1{
+    color: var(--primary);
+}
+
+nav img{
+    width: 150px;
+    height: auto;
+}
+
+nav{
+    /*background-color: white;*/
+}
+
+img {
+    width: 400px;
+    height:300px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100% ;
+}
+.slogan {
+    margin: 20px;
+    text-align: center;
+}
+
+.navs nav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;;
+}
+
+nav a {
+    margin: auto 80px; /* ALTERE AQUI A MARGEM PARA MELHOR ENTENDIMENTO DO NAV */
+}
+
+.NossaEquipe{
+    background-color: var(--primary);
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    max-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 800px;
+
+}
+.NossaEquipe h2{
+    padding-bottom: 25%;
+    padding-left: 50px;
+    color: #F7F7F2;
+}
+
+.NossaEquipe img{
+    height: auto;
+    float: right;
+    border-radius: 10px;
+    margin-right: 25px;
+
+
+}
+.NossaEquipe h3{
+    color: #F7F7F2;
+}
+.Visao{
+    background-color: #F7F7F2;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    max-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: ceter;
+    height: 800px;
+
+
+}
+.Visao h2{
+    padding-bottom: 25%;
+    padding-right: 100px;
+    direction: rtl;     
+    
+}
+.Visao h3{
+    padding-left: 400px;
+    direction: rtl;
+}
+
+.Visao img{
+    height: auto;
+    float: left;
+    border-radius: 10px;
+    margin-left: 30px;
+
+
+
+}
+
+/* Parte de Funcionalidades - home Page */
+
+.element  svg{
+    width: 100px;
+
+}
+
+.element {
+    width: 20%;
+    height: 420px;
+    background-color: rgb(255,255,255);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 30px;
+    gap: 13px;
+    box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.062);
+    margin: auto 10px;
+}
+
+.funcs {
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.slogan a {
+    color:white;
+    background-color: #006747;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+/* Parte do <footer> da home page */
+
+footer {
+    position: relative;
+    bottom: 0;
+    max-width: 100%;
+    background-color:var(--secondary);
+    color:white;
+    text-align:center;
+    display: flex;
+    flex-direction: row;
+    max-height: 100px;
+}
+.ftcard {
+    text-align:center;
+    display: flex;
+    flex-direction: row;
+    width:100%
+}
+
+.ftcard p{
+    padding-right: 10px;
+    justify-content: center;
+    margin: auto 10px;
+}
+
+
+/* Parte da aba de navegação */
+
+.navs nav{
+    color: black;
+    background-color:white ;
+    width: auto;
+}
+
+.navs a {
+    color: var(--secondary);
+}
