@@ -6,23 +6,14 @@
     --secondary: #006747;
 }
 
-html, body {
+body {
     background-color: white;
     max-width: 100%;
+    padding: 0%;
+    margin: 0;
 }
 
-nav h1{
-    color: var(--primary);
-}
 
-nav img{
-    width: 150px;
-    height: auto;
-}
-
-nav{
-    /*background-color: white;*/
-}
 
 img {
     width: 400px;
@@ -33,7 +24,6 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 100% ;
 }
 .slogan {
     margin: 20px;
@@ -157,7 +147,7 @@ nav a {
 footer {
     position: relative;
     bottom: 0;
-    max-width: 100%;
+    min-width: 100%;
     background-color:var(--secondary);
     color:white;
     text-align:center;
@@ -182,11 +172,25 @@ footer {
 /* Parte da aba de navegação */
 
 .navs nav{
-    color: black;
-    background-color:white ;
+    background-color: var(--primary);
     width: auto;
+    height: 50px;
 }
 
 .navs a {
-    color: var(--secondary);
+    color: white;
+    text-decoration: none;
+}
+
+
+header {
+    max-width: 100%;
+}
+nav h1{
+    color:white;
+}
+
+nav img{
+    width: 150px;
+    height: auto;
 }
