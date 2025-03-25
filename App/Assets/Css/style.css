@@ -9,7 +9,7 @@
 body {
     background-color: white;
     max-width: 100%;
-    padding: 0%;
+    padding: 0;
     margin: 0;
 }
 
@@ -104,22 +104,32 @@ nav a {
 
 .element  svg{
     width: 100px;
+}
 
+
+.element p {
+    bottom: 0;
 }
 
 .element {
     width: 20%;
     height: 420px;
-    background-color: rgb(255,255,255);
+    background-color: rgb(255, 244, 215);
     border-radius: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px 30px;
+    padding: 8px 10px;
     gap: 13px;
-    box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.062);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.712);
     margin: auto 10px;
+    transition: transform 0,5s ease;
+    transform-origin: center;
+}
+
+.element:hover {
+    transform: scale(1.1);
 }
 
 .funcs {
@@ -128,6 +138,7 @@ nav a {
     align-items: center; 
     justify-content: center;
     margin-top: 30px;
+    margin-bottom: 90px;
 }
 
 .slogan a {
