@@ -6,7 +6,7 @@
     --secondary: #006747;
 }
 
-body {
+html, body {
     background-color: white;
     max-width: 100%;
     padding: 0;
@@ -15,28 +15,28 @@ body {
 
 img {
     width: 400px;
-    height:300px;
+    height:auto;
+    max-height: 400px;
 }
 
 main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding:20px;
 }
+
+main img{
+    width: 700px;
+    height: 250px;
+    margin-top: 50px;
+}
+
 .slogan {
     margin: 20px;
     text-align: center;
 }
 
-.navs nav{
-    display: flex;
-    flex-direction: row;
-    align-items: center;;
-}
-
-nav a {
-    margin: auto 80px; /* ALTERE AQUI A MARGEM PARA MELHOR ENTENDIMENTO DO NAV */
-}
 
 .NossaEquipe{
     background-color: var(--primary);
@@ -104,6 +104,7 @@ nav a {
 
 .element  svg{
     width: 100px;
+    transform: scale(1.1);
 }
 
 
@@ -111,9 +112,15 @@ nav a {
     bottom: 0;
 }
 
+.element h4 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
 .element {
-    width: 20%;
-    height: 420px;
+    width: 100%;
+    max-width: 300px;
+    height: 400px;
     background-color: rgb(255, 244, 215);
     border-radius: 8px;
     display: flex;
@@ -121,24 +128,29 @@ nav a {
     align-items: center;
     justify-content: center;
     padding: 8px 10px;
-    gap: 13px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.712);
-    margin: auto 10px;
-    transition: transform 0,5s ease;
-    transform-origin: center;
+    margin: auto 40px;
+    transition: transform 1s ;
+    position: relative;
 }
 
+
+
 .element:hover {
+    transform: scale(1.1);
+}
+
+.element svg::after{
     transform: scale(1.1);
 }
 
 .funcs {
     display: flex;
     flex-direction: row;
-    align-items: center; 
     justify-content: center;
     margin-top: 30px;
     margin-bottom: 90px;
+    flex-wrap: wrap;
 }
 
 .slogan a {
@@ -146,8 +158,9 @@ nav a {
     background-color: #006747;
     text-decoration: none;
     font-weight: bold;
-    padding: 4px;
+    padding: 5px;
     border-radius: 4px;
+    gap: 13px;
 }
 
 /* Parte do <footer> da home page */
@@ -180,7 +193,7 @@ footer {
 .navs nav{
     background-color: var(--primary);
     width: auto;
-    height: 50px;
+    height: 100px;
 }
 
 .navs a {
@@ -199,4 +212,27 @@ nav h1{
 nav img{
     width: 150px;
     height: auto;
+}
+
+
+.navs nav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding:10px 20px;
+}
+
+nav a {
+    margin: auto 80px; /* ALTERE AQUI A MARGEM PARA MELHOR ENTENDIMENTO DO NAV */
+}
+
+
+@media (max-width: 600px) {
+
+
+    
+    .element {
+        max-width: 100%;
+    }
 }
