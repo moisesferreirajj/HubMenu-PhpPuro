@@ -13,8 +13,6 @@ body {
     margin: 0;
 }
 
-
-
 img {
     width: 400px;
     height:300px;
@@ -63,12 +61,12 @@ nav a {
     float: right;
     border-radius: 10px;
     margin-right: 25px;
-
-
 }
+
 .NossaEquipe h3{
     color: #F7F7F2;
 }
+
 .Visao{
     background-color: #F7F7F2;
     background-position: center;
@@ -79,28 +77,27 @@ nav a {
     align-items: center;
     justify-content: ceter;
     height: 800px;
-
-
 }
+
 .Visao h2{
     padding-bottom: 25%;
-    padding-right: 100px;
-    direction: rtl;     
+    padding-left: 50px;
+    direction: rtl;
+    text-align: left;
     
 }
+
 .Visao h3{
     padding-left: 400px;
     direction: rtl;
+    padding-right: auto;
 }
 
 .Visao img{
     height: auto;
     float: left;
     border-radius: 10px;
-    margin-left: 30px;
-
-
-
+    margin-right: 50px;
 }
 
 /* Parte de Funcionalidades - home Page */
@@ -168,9 +165,7 @@ footer {
     margin: auto 10px;
 }
 
-
 /* Parte da aba de navegação */
-
 .navs nav{
     background-color: var(--primary);
     width: auto;
@@ -182,10 +177,10 @@ footer {
     text-decoration: none;
 }
 
-
 header {
     max-width: 100%;
 }
+
 nav h1{
     color:white;
 }
