@@ -12,10 +12,10 @@
             <nav>
                 <!-- <h1>HubMenu</h1> -->
                 <img src="../Assets/Images/LogoHB-Render-Branco.png">
-                <a href="../Views/index.html">Início</a>
-                <a href="../Views/chat-automatico.html">Fale Conosco</a>
+                <a href="../Views/index.php">Início</a>
+                <a href="../Views/chat-automatico.php">Fale Conosco</a>
                 <a href="">Funcionalidades</a>
-                <a href="../Views/sobre.html">Sobre Nós</a>
+                <a href="../Views/sobre.php">Sobre Nós</a>
                 <a href="">Entrar no Sistema</a>
             </nav>
         </div>   
