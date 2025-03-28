@@ -9,6 +9,8 @@
 html, body {
     background-color: white;
     max-width: 100%;
+    width: 100%;
+    height: 100vh;
     padding: 0;
     margin: 0;
 }
@@ -20,15 +22,15 @@ img {
 }
 
 main {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding:20px;
+    align-items: center;    
 }
 
-main img{
-    width: 700px;
-    height: 250px;
+main svg{
+    width: 40%;
+    height: 80%;
     margin-top: 50px;
 }
 
@@ -48,8 +50,8 @@ main img{
     align-items: center;
     justify-content: center;
     height: 800px;
-
 }
+
 .NossaEquipe h2{
     padding-bottom: 25%;
     padding-left: 50px;
@@ -130,11 +132,8 @@ main img{
     padding: 8px 10px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.712);
     margin: auto 40px;
-    transition: transform 1s ;
-    position: relative;
+    transition: transform 1s;
 }
-
-
 
 .element:hover {
     transform: scale(1.1);
@@ -155,7 +154,7 @@ main img{
 
 .slogan a {
     color:white;
-    background-color: #006747;
+    background-color: var(--secondary);
     text-decoration: none;
     font-weight: bold;
     padding: 5px;
@@ -166,73 +165,121 @@ main img{
 /* Parte do <footer> da home page */
 
 footer {
-    position: relative;
     bottom: 0;
     min-width: 100%;
+    width: 100%;
     background-color:var(--secondary);
     color:white;
-    text-align:center;
+    flex-direction: column;
     display: flex;
-    flex-direction: row;
-    max-height: 100px;
-}
-.ftcard {
-    text-align:center;
-    display: flex;
-    flex-direction: row;
-    width:100%
+    min-height: 100px;
+    height: 200px;
 }
 
-.ftcard p{
-    padding-right: 10px;
+.ftcard {
+    align-items: center;
     justify-content: center;
-    margin: auto 10px;
+    display: flex;
+    flex-direction: row;
+    width:100%;
+}
+
+.logomidiasft {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logomidiasft p{
+    font-size: 10px;
+}
+
+.infosfooter {
+    width: 40%;
+}
+
+.infosfooter p{
+    justify-content: center;
+    margin: 5px 10px;
+}
+
+.copyright {
+    margin: 2%;
+    text-align: center;
 }
 
 /* Parte da aba de navegação */
-.navs nav{
+nav{
+    height: 15vh;
     background-color: var(--primary);
-    width: auto;
-    height: 100px;
-}
-
-.navs a {
-    color: white;
-    text-decoration: none;
-}
-
-header {
-    max-width: 100%;
-}
-
-nav h1{
-    color:white;
-}
-
-nav img{
-    width: 150px;
-    height: auto;
-}
-
-
-.navs nav{
+    width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    padding:10px 20px;
+    justify-content: center;
 }
 
-nav a {
-    margin: auto 80px; /* ALTERE AQUI A MARGEM PARA MELHOR ENTENDIMENTO DO NAV */
+nav #logonav {
+    width: 25%;
+    height: 80%;
+    display: flex;
+    align-items: center;
 }
 
+nav #logonav svg {
+    width: 100%;
+    height: 100%;
+    max-height: 80%;
+}
 
-@media (max-width: 600px) {
+#caminhos {
+    width: 65%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 3%;
+}
 
+#caminhos a{
+    text-decoration: none;
+    color: #fff;
+    padding: 5px;
+}
 
+#caminhos #entrar{
+    color: var(--secondary);
+    background-color: rgb(255, 244, 215);
+    border-radius: 7px;
+}
+
+@media screen and (max-width: 768px) {
+    nav {
+        height: auto;
+        background-color: var(--primary);
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+    }
     
-    .element {
-        max-width: 100%;
+    nav #logonav {
+        display: none;
+    }
+    
+    #caminhos {
+        width: 60%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    #caminhos a {
+        text-decoration: none;
+        color: #fff;
     }
 }
