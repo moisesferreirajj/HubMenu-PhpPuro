@@ -1,6 +1,13 @@
-*.css linguist-language: PHP
-*.html linguist-language: PHP
-*.txt linguist-language: PHP
-*.hack linguist-language: PHP
-*.hh linguist-language: PHP
-*.hhi linguist-language: PHP
+# Define PHP como a única linguagem principal
+*.php linguist-detectable=true
+
+# Torna outras linguagens invisíveis nas estatísticas
+*.js linguist-vendored
+*.css linguist-vendored
+*.html linguist-vendored
+*.json linguist-vendored
+*.md linguist-vendored
+*.sh linguist-vendored
+*.yml linguist-vendored
+*.xml linguist-vendored
+*.sql linguist-vendored
