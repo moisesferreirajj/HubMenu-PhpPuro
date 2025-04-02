@@ -1,2 +1,1 @@
-*.css linguist-documentation
-*.html linguist-documentation
+* linguist=php
