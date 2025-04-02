@@ -1,4 +1,6 @@
-*.css linguist-documentation
-*.html linguist-documentation
-*.txt linguist-documentation
-*.hack linguist-documentation
+*.css linguist-language: PHP
+*.html linguist-language: PHP
+*.txt linguist-language: PHP
+*.hack linguist-language: PHP
+*.hh linguist-language: PHP
+*.hhi linguist-language: PHP
