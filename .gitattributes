@@ -2,3 +2,4 @@
 *.html linguist-documentation
 *.txt linguist-documentation
 *.hack linguist-documentation
+hack linguist-documentation
