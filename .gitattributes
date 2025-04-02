@@ -1,13 +1,15 @@
-# Define PHP como a única linguagem principal
-*.php linguist-detectable=true
+* text=auto eol=lf
 
-# Torna outras linguagens invisíveis nas estatísticas
-*.js linguist-vendored
-*.css linguist-vendored
-*.html linguist-vendored
-*.json linguist-vendored
-*.md linguist-vendored
-*.sh linguist-vendored
-*.yml linguist-vendored
-*.xml linguist-vendored
-*.sql linguist-vendored
+*.blade.php diff=php
+*.blade diff=php
+*.css diff=php
+*.html diff=html
+*.md diff=markdown
+*.php diff=php
+*.blade.php linguist-language=php
+*.blade linguist-language=php
+*.css linguist-language=php
+
+/.github export-ignore
+CHANGELOG.md export-ignore
+.styleci.yml export-ignore
