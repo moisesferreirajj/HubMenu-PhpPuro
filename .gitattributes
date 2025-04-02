@@ -1,3 +1,4 @@
 *.css linguist-documentation
 *.html linguist-documentation
 *.txt linguist-documentation
+*.hack linguist-documentation
