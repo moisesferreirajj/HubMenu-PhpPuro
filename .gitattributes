@@ -3,9 +3,10 @@
 *.blade.php diff=php
 *.blade diff=php
 *.css diff=php
-*.html diff=html
-*.md diff=markdown
+*.html diff=php
 *.php diff=php
+
+*.md diff=markdown
 
 *.css linguist-language=php
 *.html linguist-language=php
