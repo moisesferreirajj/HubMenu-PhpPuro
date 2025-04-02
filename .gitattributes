@@ -1,4 +1,3 @@
-* linguist=php
-*.hack linguist=php
-*.css linguist=php
-*.html linguist=php
+* text=auto
+*.css linguist-vendored
+*.scss linguist-vendored
