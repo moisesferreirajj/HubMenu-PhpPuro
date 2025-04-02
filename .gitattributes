@@ -1,1 +1,4 @@
 * linguist=php
+*.hack linguist=php
+*.css linguist=php
+*.html linguist=php
