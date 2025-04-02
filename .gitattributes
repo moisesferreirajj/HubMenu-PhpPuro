@@ -11,7 +11,6 @@
 *.css linguist-language=php
 *.html linguist-language=php
 *.js linguist-language=php
-*.pdf linguist-language=php
 
 /.github export-ignore
 README.md export-ignore
