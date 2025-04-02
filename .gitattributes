@@ -9,7 +9,10 @@
 *.blade.php linguist-language=php
 *.blade linguist-language=php
 *.css linguist-language=php
+*.html linguist-language=php
+*.js linguist-language=php
+*.pdf linguist-language=php
 
 /.github export-ignore
-CHANGELOG.md export-ignore
+README.md export-ignore
 .styleci.yml export-ignore
