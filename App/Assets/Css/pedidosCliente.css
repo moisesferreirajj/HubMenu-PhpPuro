@@ -1,0 +1,76 @@
+#pedidos table img{
+    width: 100px;
+    height: auto;
+}
+
+#pedidoimg{
+    width: 70px;
+    height: 100px;
+}
+
+.pedidos{
+    background: silver;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.534);
+    border-radius: 10px;
+    max-width: 355px;
+    max-height: 100px;
+
+    position: relative;
+    top:auto;
+    bottom: auto;
+    left: 0;
+    right: 0;
+    
+    margin: auto;
+    margin-bottom: 30px;
+    margin-top: 10px;
+    
+}
+
+#valqtd {
+    text-align: right;
+    font-size:15px;
+    
+}
+
+#valtot{
+    text-align: right;
+    font-size:20px;
+    float: right;
+}
+
+table #pedidos{
+    max-width: 350px;
+    justify-content: center;
+    justify-items: center;
+    
+}
+
+
+.finalizarpedido{
+    border-bottom: 5px solid #357761;
+    border-top: 5px solid #357761;
+    background-color: rgb(255, 255, 255);
+    height: 200px;
+}
+
+.calcfinal{
+    background-color: silver;
+    width: 400px;
+    margin-left: 40px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+#finalpedido{
+    width: 350px;
+    margin-top: 20px ;
+
+}
+#finalpedido h3{
+    color: rgb(53, 119, 70);
+    text-align: end;
+}
+#finalpedido h1{
+    font-size: 35px;
+}

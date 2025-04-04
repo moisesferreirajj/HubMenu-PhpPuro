@@ -1,0 +1,20 @@
+/* FOOTER BOLADAO BY MOISES */
+footer {
+  background-color:var(--secondary);
+  color:white;
+}
+
+.social-links a {
+    transition: opacity 0.3s;
+  }
+  
+  .hover-opacity {
+    transition: opacity 0.3s;
+  }
+  
+  .hover-opacity:hover, 
+  .social-links a:hover {
+    opacity: 0.7;
+    text-decoration: none;
+  }
+  

@@ -1,8 +1,11 @@
+@import "./Components/footer.css";
+@import "./Components/navbar.css";
+
 :root
 
 * {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    --primary : #357761;
+    --primary : #0e7a56;
     --secondary: #006747;
 }
 
@@ -37,69 +40,6 @@ main svg{
 .slogan {
     margin: 20px;
     text-align: center;
-}
-
-
-.NossaEquipe{
-    background-color: var(--primary);
-    background-position: center;
-    background-size: cover;
-    width: 100%;
-    max-height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 800px;
-}
-
-.NossaEquipe h2{
-    padding-bottom: 25%;
-    padding-left: 50px;
-    color: #F7F7F2;
-}
-
-.NossaEquipe img{
-    height: auto;
-    float: right;
-    border-radius: 10px;
-    margin-right: 25px;
-}
-
-.NossaEquipe h3{
-    color: #F7F7F2;
-}
-
-.Visao{
-    background-color: #F7F7F2;
-    background-position: center;
-    background-size: cover;
-    width: 100%;
-    max-height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: ceter;
-    height: 800px;
-}
-
-.Visao h2{
-    padding-bottom: 25%;
-    padding-left: 50px;
-    direction: rtl;
-    text-align: left;
-    
-}
-
-.Visao h3{
-    padding-left: 400px;
-    direction: rtl;
-    padding-right: auto;
-}
-
-.Visao img{
-    height: auto;
-    float: left;
-    border-radius: 10px;
-    margin-right: 50px;
 }
 
 /* Parte de Funcionalidades - home Page */
@@ -163,20 +103,6 @@ main svg{
     gap: 13px;
 }
 
-/* Parte do <footer> da home page */
-
-footer {
-    bottom: 0;
-    min-width: 100%;
-    width: 100%;
-    background-color:var(--secondary);
-    color:white;
-    flex-direction: column;
-    display: flex;
-    min-height: 100px;
-    height: 200px;
-}
-
 .ftcard {
     align-items: center;
     justify-content: center;
@@ -194,44 +120,6 @@ footer {
 
 .logomidiasft p{
     font-size: 10px;
-}
-
-.infosfooter {
-    width: 40%;
-}
-
-.infosfooter p{
-    justify-content: center;
-    margin: 5px 10px;
-}
-
-.copyright {
-    margin: 2%;
-    text-align: center;
-}
-
-/* Parte da aba de navegação */
-nav{
-    height: 15vh;
-    background-color: var(--primary);
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-}
-
-nav #logonav {
-    width: 25%;
-    height: 80%;
-    display: flex;
-    align-items: center;
-}
-
-nav #logonav svg {
-    width: 100%;
-    height: 100%;
-    max-height: 80%;
 }
 
 #caminhos {
@@ -255,21 +143,7 @@ nav #logonav svg {
 }
 
 @media screen and (max-width: 768px) {
-    nav {
-        height: auto;
-        background-color: var(--primary);
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-        padding: 10px;
-    }
-    
-    nav #logonav {
-        display: none;
-    }
-    
+
     #caminhos {
         width: 60%;
         height: 100%;
@@ -297,7 +171,5 @@ nav #logonav svg {
         margin-top: 10px;
         transform: none;
     }
-
-    
 
 }
