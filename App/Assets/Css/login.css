@@ -68,3 +68,66 @@ main{
     margin-left: 110px;
     color:#357761;
 }
+
+
+@media screen and (max-width: 720px){
+    
+
+    html, body {
+        overflow-y: auto;
+        display: flex;
+        justify-content:center;
+        align-items: center;
+    }
+
+
+    .frm {
+        width: 400px;
+        background-color: white;
+        height: 600px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        right: 0;
+        left: 0;
+        position: relative;
+        margin: 0 auto;
+        border-radius: 90px;
+    }
+    
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+
+    img {
+        display: none;
+    }
+
+    .icon {
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;    }
+
+    .icon svg {
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .frmhead {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .frmhead h1{
+        margin: 0 auto;
+    }
+}   
