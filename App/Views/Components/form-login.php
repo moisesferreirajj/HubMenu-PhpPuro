@@ -29,6 +29,7 @@
                 <input type="password" class="form-control" id="InputPassword1">
                 <button type="submit" class="btn btn-primary" id="submit-btn">Enviar</button>
                 <a href="cadastro.php" id="cadlink">Cadastrar</a>
+                </div>
+
             </form>
-        </div>
     </main>
