@@ -8,7 +8,7 @@ form {
 
 #submit-btn {
     float:right;
-    margin-top: 20px;
+    margin-top: 10px;
     color:white;
     background-color: #357761;
     border: 0;
@@ -20,23 +20,35 @@ form {
 
 #cadlink {
     float:right;
-    margin-top: 25px;
+    margin-top: 15px;
     margin-right: 20px;
+    text-decoration: none;
+    color: #357761;
+
 }
 
 label {
     color: #357761;
 }
 
-.mb-3 a{
-    text-decoration: none;
-    color: #357761;
-
+#side2side {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
+#side2side div{
+    
+    margin-bottom: -30px;
+}
 
-form label {
-    border-radius: 20px;
+#InputCnpj, #InputFone {
+    width: 200px;
+    
+}
+.form-label {
+    margin: 0;
 }
 
 .mb-3 {
@@ -57,21 +69,36 @@ form label {
         width: 700px;
         margin-right: 0px;
         }
+
+        #side2side {
+            flex-direction:column;
+            justify-content:center;
+            align-items: center;
+        }
     
 }   
 
-/* @media only screen and (min-width: 600px) and (max-width: 1024px) {
-    form {
-      width: 300px;
-      margin-right: 0px;
-    }
-  }
-  
 
-  @media only screen and (min-width: 600px) and (max-width: 768px) and (orientation: portrait) {
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
     form {
-      width: 300px;
-      margin-right: 0px;
+        width: 600px;
+        padding: 30px;
+        margin: auto;
     }
-  }
-   */
+
+    #submit-btn, #cadlink {
+        float: none;
+        display: block;
+        width: 100%;
+        margin: 20px 0 0 0;
+        text-align: center;
+    }
+
+    label {
+        font-size: 1.1em;
+    }
+
+    .mb-3 {
+        margin-bottom: 10px;
+    }
+}

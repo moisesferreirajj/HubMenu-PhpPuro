@@ -27,7 +27,7 @@
             <div class="mb-3">
                 <label for="password1" class="form-label">Senha</label>
                 <input type="password" class="form-control" id="InputPassword1">
-                <button type="submit" class="btn btn-primary" id="submit-btn">Enviar</button>
+                <button type="submit" class="btn btn-primary" id="submit-btn">Entrar</button>
                 <a href="cadastro.php" id="cadlink">Cadastrar</a>
                 </div>
 

@@ -4,14 +4,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../Assets/CSS/index.css">
+    <link rel="stylesheet" href="../Assets/CSS/suporte.css">
     <!-- BOOTSTRAP GERENCIAMENTO -->
-    <link type="text/css" rel="stylesheet" href="../Assets/CSS/bootstrap.min.css">
-    <script href="../Assets/CSS/bootstrap.min.js"></script>
+    <link rel="icon" href="../Assets/Images/favicon.png">
+    <link type="text/css" rel="stylesheet" href="../Assets/Vendor/bootstrap.min.css">
+    <script href="../Assets/Vendor/bootstrap.min.js"></script>
+    <script src="../Assets/Vendor/bootstrap.bundle.min.js"></script>
     <title><?= $Title ?> Suporte</title>
 </head>
 <body>
     <?php include_once 'Components/navigation.php'; ?>
+    <body class="d-flex flex-column">
+        <main class="flex-shrink-0">
+            <section class="py-5">
+                <div class="container px-5">
+                    <div class="bg rounded-4 py-5 px-4 px-md-5">
+                        <div class="text-center mb-5">
+                            <h1 class="fw-bolder">Fale Conosco</h1>
+                            <p class="lead fw-normal text-muted mb-0">Vamos conversar, quer tirar alguma dúvida sobre o sistema?</p>
+                        </div>
+                        <div class="row gx-5 justify-content-center">
+                            <div class="col-lg-8 col-xl-6">
+                                <form id="ContatoForm">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="nome" type="text" placeholder="Insira seu nome" data-sb-validations="required" required />
+                                        <label for="nome">Nome completo</label>
+                                        <div class="invalid-feedback" data-sb-feedback="nome:required">É necessário o nome completo!</div>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="email" type="email" placeholder="exemplo@gmail.com" data-sb-validations="required" required />
+                                        <label for="email">Endereço de email</label>
+                                        <div class="invalid-feedback" data-sb-feedback="email:required">É necessário um email!</div>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="phone" type="tel" placeholder="(55) 4799123-0123" data-sb-validations="required" required />
+                                        <label for="phone">Telefone</label>
+                                        <div class="invalid-feedback" data-sb-feedback="phone:required">É necessário um número de telefone!</div>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" id="message" type="text" placeholder="Coloque sua mensagem aqui" style="height: 10rem" data-sb-validations="required" required>
+                                        </textarea>
+                                        <label for="message">Mensagem</label>
+                                        <div class="invalid-feedback" data-sb-feedback="message:required">É necessário escrever uma mensagem!</div>
+                                    </div>
+                                    <div class="d-grid"><button class="btn btn-success" id="BotaoEnviar" type="submit">Enviar</button></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </body>
     <?php include_once 'Components/footer.php'; ?>
 </body>
 </html>

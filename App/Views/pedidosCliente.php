@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pedidos</title>
-    <title><?= $Title ?> Pedidos</title>
-    <!-- BOOTSTRAP GERENCIAMENTO -->
-    <link type="text/css" rel="stylesheet" href="../Assets/Css/bootstrap.min.css">
-    <script href="../Assets/Css/bootstrap.min.js"></script>
     <link type="text/css" rel="stylesheet" href="../Assets/Css/pedidosCliente.css">
+    <!-- BOOTSTRAP GERENCIAMENTO -->
+    <link rel="icon" href="../Assets/Images/favicon.png">
+    <link type="text/css" rel="stylesheet" href="../Assets/Vendor/bootstrap.min.css">
+    <script href="../Assets/Vendor/bootstrap.min.js"></script>
+    <script src="../Assets/Vendor/bootstrap.bundle.min.js"></script>
+    <title><?= $Title ?> Pedidos</title>
 <body>
     <h1>PEDIDOS</h1><br>
 

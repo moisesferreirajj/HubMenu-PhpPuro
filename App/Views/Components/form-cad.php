@@ -21,31 +21,31 @@
             </div>
             <form>
             <div class="mb-3">
+                <label for="rzsocial" class="form-label">Razão Social</label>
+                <input type="text" class="form-control" id="InputRz">
+            </div>
+            <div class="mb-3">
                 <label for="email" class="form-label">Email Comercial</label>
                 <input type="email" class="form-control" id="InputEmail1">
             </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">CNPJ</label>
-                <input type="email" class="form-control" id="InputCnpj1">
+            <div class="mb-3" >
+                <div id="side2side">
+                    <div class="mb-3" >
+                        <label for="cnpj" class="form-label">CNPJ</label>
+                        <input type="text" class="form-control" id="InputCnpj">
+                    </div>
+                    <div class="mb-3" >
+                        <label for="fone" class="form-label">Telefone</label>
+                        <input type="text" class="form-control" id="InputFone">
+                    </div>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="password1" class="form-label">Senha</label>
                 <input type="password" class="form-control" id="InputPassword1">
-            <div class="mb-3">
-                <label for="tipo" class="form-label">Tipo de Estabelecimento</label>
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Escolha</option>
-                    <option value="1">Restaurante</option>
-                    <option value="2">Cafeteria</option>
-                    <option value="3">Bar</option>
-                    <option value="4">Confeitaria</option>
-                    <option value="5">Hamburgueria</option>
-                    <option value="6">Comida Asiática</option>
-                    <option value="7">Lanchonete</option>
-                </select>
             </div>
-                <button type="submit" class="btn btn-primary" id="submit-btn">Enviar</button>
-                <a href="cadastro.php" id="cadlink">Cadastrar</a>
+                <button type="submit" class="btn btn-primary" id="submit-btn">Cadastrar</button>
+                <a href="login.php" id="cadlink">Entrar</a>
             </form>
         </div>
     </main>
