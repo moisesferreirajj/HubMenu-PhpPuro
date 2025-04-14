@@ -24,25 +24,25 @@
         <ul class="list-unstyled">
           <li class="mb-2">
             <a href="https://www.linkedin.com/in/igor-dias-b3162b219/" class="text-white text-decoration-none hover-opacity">
-              <i class="bi bi-linkedin me-2"></i>Igor Dias
+              <i class="bi bi-linkedin"></i>Igor Dias
             </a>
           </li>
 
           <li class="mb-2">
             <a href="https://www.linkedin.com/in/mark-stolfi-b84760337/" class="text-white text-decoration-none hover-opacity">
-              <i class="bi bi-linkedin me-2"></i>Mark Stolfi
+              <i class="bi bi-linkedin"></i>Mark Stolfi
             </a>
           </li>
 
           <li class="mb-2">
             <a href="https://www.linkedin.com/in/moisesferreirajj/" class="text-white text-decoration-none hover-opacity">
-              <i class="bi bi-linkedin me-2"></i>Moises Ferreira
+              <i class="bi bi-linkedin"></i>Moises Ferreira
             </a>
           </li>
 
           <li class="mb-2">
             <a href="https://www.linkedin.com/in/yohansie/" class="text-white text-decoration-none hover-opacity">
-              <i class="bi bi-linkedin me-2"></i>Yohan Siedschlag
+              <i class="bi bi-linkedin"></i>Yohan Siedschlag
             </a>
           </li>
         </ul>

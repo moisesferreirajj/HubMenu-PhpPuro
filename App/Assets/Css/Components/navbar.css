@@ -23,27 +23,6 @@ nav #logonav svg {
     max-height: 80%;
 }
 
-
-#caminhos {
-    width: 65%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 3%;
-}
-
-#caminhos a{
-    text-decoration: none;
-    color: black !important;
-    padding: 5px;
-}
-
-#caminhos #entrar{
-    color: var(--secondary);
-    background-color: rgb(255, 244, 215);
-    border-radius: 7px;
-}
-
 @media screen and (max-width: 768px) {
     nav {
         height: auto;
@@ -58,20 +37,6 @@ nav #logonav svg {
     
     nav #logonav {
         display: none;
-    }
-
-    #caminhos {
-        width: 60%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    #caminhos a {
-        text-decoration: none;
-        color: black !important;
     }
 
 }

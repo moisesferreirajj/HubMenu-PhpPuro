@@ -43,14 +43,14 @@ main {
 
 .slogan h2 {
     font-weight: bold;
-    color: #5f687b;
-    margin-top: 10px;
+    color: #3c4250;
+    margin-top: 40px;
 }
 
 .slogan img {
-    width: 40%;
+    width: 30%;
     height: auto;
-    margin: 10px;
+    margin: 0;
     animation: DesceSobe 3s ease-in-out infinite;
 }
 
@@ -74,28 +74,28 @@ main {
 
 .element {
     width: 100%;
-    max-width: 300px;
-    height: 400px;
+    max-width: 280px;
+    height: 380px;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.226), rgba(255, 255, 255, 0.30));
     backdrop-filter: blur(10px);
     border: 1px solid rgba(0, 0, 0, 0.10);
     border-radius: 8px;
-    display: flex;
+    display: inherit;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 8px 10px;
+    padding: 10px 10px;    
     box-shadow: 0 5px 5px rgba(128, 128, 128, 0.39);
     margin: auto 40px;
     transition: transform 1s;
 }
 
 .element:hover {
-    transform: scale(1.1);
+    transform: scale(1.07);
 }
 
 .element svg::after{
-    transform: scale(1.1);
+    transform: scale(1.07);
 }
 
 .funcs {
@@ -135,48 +135,41 @@ main {
 .logomidiasft p{
     font-size: 10px;
 }
+@media screen and (max-width: 1090px) {
 
-#caminhos {
-    width: 65%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 3%;
-}
-
-#caminhos a{
-    text-decoration: none;
-    color: #fff;
-    padding: 5px;
-}
-
-#caminhos #entrar{
-    color: var(--secondary);
-    background-color: rgb(255, 244, 215);
-    border-radius: 7px;
-}
-
-@media screen and (max-width: 768px) {
-
-    #caminhos {
-        width: 60%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+    .element {
+        max-width: 250px;
+        height: 280px;
+        margin-top:30px;
+        transform: none;
     }
-    
-    #caminhos a {
-        text-decoration: none;
-        color: #fff;
+
+    .element h4 {
+        font-size: 16px;
+    }
+
+    .element p {
+        font-size: 14px;
+    }
+
+    .element  svg{
+        width: 100px;
+        height: auto;
+        margin-top: 10px;
+        transform: none;
+    }
+
+}
+@media screen and (max-width: 800px) {
+
+    .funcs {
+        flex-direction: column;
     }
 
     .element {
-        height: 400px;
+        height: 300px;
         margin-top:30px;
         transform: none;
-       
     }
 
     .element  svg{
