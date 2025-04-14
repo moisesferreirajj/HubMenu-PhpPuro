@@ -29,7 +29,12 @@
 .hero-section {
     background-color: var(--primary);
     color: white;
-    padding: 3rem 0;
+    padding: 1rem 0;
+}
+
+.container h1, p {
+    margin: 0;
+    padding: 0;
 }
 
 .section-title {
@@ -50,13 +55,14 @@
 }
 
 .section {
-    padding: 5rem 0;
+    padding: 3rem 0;
 }
 
 .section-img {
     border-radius: 10px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    max-width: 100%;
+    max-width: 80%;
+    width: 80%;
     height: auto;
 }
 
@@ -131,6 +137,11 @@ footer {
     
     .section-title {
         text-align: center;
+    }
+
+    .section-text {
+        text-align: justify;
+        padding: 0 20px;
     }
     
     .hero-section {

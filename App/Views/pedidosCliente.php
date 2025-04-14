@@ -17,20 +17,24 @@
     <div class="pedidos">
         <table id="pedidos">
             <tr>
-                <th rowspan="5"><img id="pedidoimg" src="../Assets/Images/LogoHB-Render.png"></th>
+            <!-- Coluna da imagem -->
+            <td rowspan="2">
+                <img id="pedidoimg" src="../Assets/Images/LogoHB-Render.png" alt="Logo" width="60">
+            </td>
+
+            <!-- Nome do produto -->
+            <td>Hamburguer</td>
+
+            <!-- Quantidade e valor unitário -->
+            <td style="text-align: right;">
+                <h4 id="valqtd">2x R$XX,xx</h4>
+            </td>
             </tr>
-            <tr>
-                <th colspan="3", rowspan="4"><h3>Hamburguer</h3></th>
-            </tr>
-            <tr>
-                <th rowspan="5"></th>
-            </tr>
-            <tr>
-                <th><h4 id="valqtd">3x R$XX,xx</h4>
-            </tr>
-            <tr>
-                <th><h4 id="valtot">R$XX,xx</h4></th>  
-            </tr>
+                <td colspan="2" style="text-align: right;">
+            <h4 id="valtot">R$XX,xx</h4>
+        </td>
+        </tr>
+ 
         </table>
     </div>
 

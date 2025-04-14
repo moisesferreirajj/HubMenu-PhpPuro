@@ -8,32 +8,35 @@
     height: 100px;
 }
 
-.pedidos{
-    background: silver;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.534);
-    border-radius: 10px;
-    max-width: 355px;
-    max-height: 100px;
+.pedidos{  
 
-    position: relative;
-    top:auto;
-    bottom: auto;
-    left: 0;
-    right: 0;
-    
-    margin: auto;
-    margin-bottom: 30px;
-    margin-top: 10px;
+    border: 1px solid rgba(228, 228, 228, 0.5);
+    background: rgba(192, 192, 192, 0.349);
+    box-shadow: 2px 5px 10px rgba(29, 29, 29, 0.3);
+    border-radius: 8px;
+    width: 100%;
+    border-spacing: 10px;
     
 }
 
+  #pedidoimg {
+    width: 60px;
+  }
+  
+  td {
+    vertical-align: middle;
+    padding: 5px 10px;
+  }
+
 #valqtd {
+    float: right;
     text-align: right;
     font-size:15px;
     
 }
 
 #valtot{
+    float: right;
     text-align: right;
     font-size:20px;
     float: right;
@@ -55,7 +58,7 @@ table #pedidos{
 }
 
 .calcfinal{
-    background-color: silver;
+    background-color: rgba(133, 133, 133, 0.356);
     width: 400px;
     margin-left: 40px;
     text-align: center;

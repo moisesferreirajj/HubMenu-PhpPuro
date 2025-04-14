@@ -1,7 +1,7 @@
 <footer class="footer mt-auto py-3 text-white">
   <div class="container">
-    <div class="row g-4">
-      <div class="col-lg-4 col-md-6">
+    <div id="central" class="row g-4">
+      <div id="divcentral" class="col-lg-4 col-md-6">
         <h5 class="fw-bold mb-3">HubMenu</h5>
         <p class="small">
         O <strong>HubMenu</strong> não é apenas um sistema de pedidos, é uma revolução na forma como você e seus clientes

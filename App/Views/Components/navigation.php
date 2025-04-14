@@ -1,8 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
-    <div class="container px-5">
-        <a class="navbar-brand" href="#">
+    <div class="container">
+        
             <div id="logonav">
-                <svg version="1.1" viewBox="0 0 115.13 30.704" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+                <a class="navbar-brand" href="#">
+                    <svg version="1.1" viewBox="0 0 115.13 30.704" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
                     <g transform="translate(-11.773 -11.691)">
                         <g transform="matrix(.90737 0 0 .90251 -9.559 -99.198)">
                             <path d="m61.946 129.29c-0.54259-0.68097-1.3612-1.3917-3.4392-2.0943-1.9823-0.67025-2.391-0.58374-3.5815-0.60756-0.20505-4e-3 -0.37418 0.15591-0.37652 0.36166-0.01279 1.1246-0.0234 3.8108-0.0071 7.0898 0.0075 1.5058-0.02458 3.7416 0.01427 5.3941 0.03193 1.358-0.01533 4.227 0.07457 5.2175 0.0162 0.17854 0.19967 0.12957 0.30866-0.0775 0.80007-1.5201 1.8422-2.4853 3.2871-4.0446 0.92826-1.0017 2.8314-2.9375 4.2717-5.0216 0.92237-1.3347 1.0792-2.9729 0.60505-4.2608-0.39819-1.0816-0.90306-1.6378-1.1571-1.9567z" fill="#a3ad3d" stroke-width=".26458" />
@@ -14,9 +15,10 @@
                             </g>
                         </g>
                     </g>
-                </svg>
+                    </svg>
+                </a>
             </div>
-        </a>
+        
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">

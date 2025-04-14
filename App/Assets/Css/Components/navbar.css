@@ -23,10 +23,15 @@ nav #logonav svg {
     max-height: 80%;
 }
 
+nav .container {
+    padding-right: 3rem;
+    padding-left: 3rem ;
+}
+
 @media screen and (max-width: 768px) {
     nav {
         height: auto;
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15), rgba(255,255,255));
+        background: linear-gradient(to bottom, rgba(133, 133, 133, 0.15), rgba(255,255,255));
         width: 100%;
         display: flex;
         flex-wrap: wrap;
@@ -34,9 +39,19 @@ nav #logonav svg {
         justify-content: center;
         padding: 10px;
     }
-    
+
+    nav .container {
+        padding: 10px;
+    }
+
     nav #logonav {
-        display: none;
+        max-width: 50%;
+    }
+
+    nav #logonav svg {
+        width: 100%;
+        height: auto;
+        max-height: 100%;
     }
 
 }

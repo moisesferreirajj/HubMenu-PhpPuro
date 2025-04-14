@@ -33,7 +33,7 @@
                     <p class="section-text">Nosso objetivo é auxiliar na produtividade e agilidade de comércios e redes de restaurantes. Nosso produto conta com cardápios online personalizados, tanto para entrega quanto para consumo local, proporcionando uma experiência única para seus clientes e otimizando seu negócio.</p>
                 </div>
                 <div class="col-md-6 order-md-2 mt-4 mt-md-0">
-                    <img src="https://www.imagelato.com/images/article-image-restaurant-manager-directing-service-799eb0d9.jpg" class="section-img img-fluid" alt="Visão do HubMenu">
+                    <img src="../Assets/Images/Sobre/Visao.png" class="section-img img-fluid" alt="Visão do HubMenu">
                 </div>
             </div>
         </div>
@@ -88,7 +88,7 @@
                 </div>
                 <div class="col">
                     <div class="card team-card">
-                        <img src="../Assets/Images/Sobre/Mark.png" class="card-img-top team-member-img" alt="Mark Stolfi">
+                        <img src="../Assets/Images/Sobre/Mark.jpg" class="card-img-top team-member-img" alt="Mark Stolfi">
                         <div class="card-body text-center">
                             <h5 class="team-member-name">Mark Stolfi</h5>
                             <p class="team-member-role">Full-Stack Engineer</p>

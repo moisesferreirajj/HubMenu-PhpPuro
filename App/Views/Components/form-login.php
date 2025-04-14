@@ -22,14 +22,30 @@
             <form>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="InputEmail1">
+                <input type="email" class="form-control" id="InputEmail1" >
             </div>
             <div class="mb-3">
                 <label for="password1" class="form-label">Senha</label>
                 <input type="password" class="form-control" id="InputPassword1">
                 <button type="submit" class="btn btn-primary" id="submit-btn">Entrar</button>
                 <a href="cadastro.php" id="cadlink">Cadastrar</a>
-                </div>
-
+            </div>
             </form>
+
+
+            <div class="modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Informação Inválida</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Parece que algum campo não foi inserido corretamente</p>
+                    </div>
+                    </div>
+                </div>
+            </div>
     </main>

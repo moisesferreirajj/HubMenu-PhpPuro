@@ -1,11 +1,10 @@
-form {
+    form {
     padding: 20px;
     border: 0.015px solid #357761;
     width: 500px;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     border-radius: 16px;
-    height: 500px;
-
+    height: 450px;
 }
 
 #submit-btn {
@@ -45,9 +44,14 @@ label {
     margin-bottom: -30px;
 }
 
+input {
+    border-radius: 15px;
+    border: 0.015px solid #357761;
+
+}
+
 #InputCnpj, #InputFone {
     width: 200px;
-    
 }
 .form-label {
     margin: 0;
@@ -223,7 +227,8 @@ main{
 
     .icon svg {
         margin: 0 auto;
-        width: 100%;
+        width: 50%;
+        margin-bottom: 30px;
     }
 
     .frmhead {
@@ -234,8 +239,12 @@ main{
     
     .frmhead h1{
         margin: 0 auto;
-        margin-top: 20px;
+        margin-top: 50px;
         margin-bottom: 20px;
 
+    }
+
+    #InputCnpj, #InputFone {
+        width: 125px;
     }
 }   
