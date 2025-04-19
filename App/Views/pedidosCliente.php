@@ -17,9 +17,9 @@
 <?php require '../Views/Components/sidebar.php'; ?>
         <div class="order-card">
             <div class="order-heading">
-                <span>Pedido #81492</span>
-                <span>11/09/2001 - 19:45</span>
-                <span>Status: Entregue</span>
+                <span class="order_id">Pedido #81492</span>
+                <span class="order_date">11/09/2001 - 19:45</span>
+                <span class="order_status">Status: Entregue</span>
             </div>
             <table class="table">
                 <thead>
@@ -51,7 +51,7 @@
                     </tr>
                 </tbody>
             </table>
-            <span>Sub-Total:R$85,00</span>
+            <span class="sub_total" >Sub-Total:R$85,00</span>
         </div>
     </div>
     
