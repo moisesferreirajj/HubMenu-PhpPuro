@@ -87,7 +87,7 @@ body {
 .order-card {
     max-width: 1200px;
     margin: 0 auto;
-    background-color: rgb(255, 255, 255);
+    background-color: /*#006747*/ rgba(142, 142, 142, 0.921);
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -95,4 +95,80 @@ body {
     border: 1px solid rgb(0, 0, 0);
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     transition: 0.5s;
+}
+
+.order-heading {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    margin-bottom: 20px;
+    align-items: center;
+    padding: 1em;
+
+    margin-bottom: 1rem; 
+}
+
+.order_id {
+    font-weight: bold;
+    color:white;
+}
+
+.order_date {
+    color:white;
+}
+
+#entregue {
+    color: rgb(41, 255, 98);
+    background-color: rgba(127, 255, 127, 0.725);
+    border: 0;
+    padding: 8px;
+    border-radius: 12px;
+
+}
+#preparando {
+    color: rgb(255, 247, 0);
+    background-color: rgba(255, 242, 127, 0.639);
+    border: 0;
+    padding: 8px;
+    border-radius: 12px;
+}
+
+
+ #cancelado {
+    color: rgb(255, 129, 129);
+    background-color: rgba(255, 42, 42, 0.639);
+    border: 0;
+    padding: 8px;
+    border-radius: 12px;
+
+}
+
+.table {
+}
+
+.table thead {
+}
+
+.table th {
+}
+
+.table tbody {
+}
+
+.table tr {
+}
+
+.table td {
+}
+
+.sub_total {
+    color: white;
+
+}
+
+
+@media screen and (max-width:950px) {
+    .order-card {
+        margin-left: 0;
+    }
 }
