@@ -15,40 +15,13 @@
     <title><?= $Title ?> Pedidos</title>
 <body>
  
-<?php
-    // Esboço de backend para gerenciar pedidos
-    $pedido_cancelado = "Cancelado";
-    $pedido_preparando = "Preparando";
-    $pedido_caminho = "Á caminho";
-    $pedido_pronto = "Entregue";
-    
-    $pedido_status_1 = "Cancelado";
-    $pedido_status_2 = "Preparando";
-    $pedido_status_3 = "Á caminho";
-    $pedido_status_4 = "Entregue";
-    
-    if ($pedido_status_1 == $pedido_cancelado) {
-        $status_html_1 = "<span class='order_status' id='cancelado'>Cancelado</span>";
-    }
-    
-    if ($pedido_status_2 == $pedido_preparando) {
-        $status_html_2 = "<span class='order_status' id='preparando'>Preparando</span>";
-    }
 
-    if ($pedido_status_3 == $pedido_caminho) {
-        $status_html_3 = "<span class='order_status' id='caminho'>Á caminho</span>";
-    }
-    
-    if ($pedido_status_4 == $pedido_pronto) {
-        $status_html_4 = "<span class='order_status' id='entregue'>Entregue</span>";
-    }
-?>
 <?php require '../Views/Components/sidebar.php'; ?>
         <div class="order-card">
             <div class="order-heading">
                 <span class="order_id">Pedido #81492</span>
                 <span class="order_date">11/09/2001 - 19:45</span>
-                <?php echo $status_html_4 ?>
+                <span class="order-status" id="entregue">Entregue</span>
             </div>
             <table class="table">
                 <thead>
@@ -80,11 +53,9 @@
                     </tr>
                 </tbody>
             </table>
-            <span class="sub_total" >Sub-Total:<?php echo "87,00"; ?></span>
+            <span class="sub_total" >Sub-Total: <?php echo "87,00"; ?></span>
         </div>
     </div>
-    
-    <script src="../Assets/Js/FooterLayout.js"></script>
-    <footer-layout></footer-layout>
+
 </body>
 </html>

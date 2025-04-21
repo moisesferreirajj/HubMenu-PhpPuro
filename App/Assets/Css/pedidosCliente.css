@@ -90,8 +90,8 @@ body {
     background-color: /*#006747*/ rgba(142, 142, 142, 0.921);
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    border-radius: 20px;
+    padding: 15px;
+    border-radius: 10px;
     border: 1px solid rgb(0, 0, 0);
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     transition: 0.5s;
@@ -100,12 +100,10 @@ body {
 .order-heading {
     display: flex;
     justify-content: space-between;
+    gap:20px;
     font-size: 18px;
-    margin-bottom: 20px;
     align-items: center;
-    padding: 1em;
-
-    margin-bottom: 1rem; 
+    padding: 10px;
 }
 
 .order_id {
@@ -118,7 +116,7 @@ body {
 }
 
 #entregue {
-    color: rgb(41, 255, 98);
+    color: rgb(0, 138, 37);
     background-color: rgba(127, 255, 127, 0.725);
     border: 0;
     padding: 8px;
@@ -163,9 +161,14 @@ body {
 
 .sub_total {
     color: white;
-
+    font-weight: bolder;
 }
 
+
+.content {
+    background-color: bisque;
+    height: 100%;
+}
 
 @media screen and (max-width:950px) {
     .order-card {
