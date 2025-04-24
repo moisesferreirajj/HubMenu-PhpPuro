@@ -1,0 +1,139 @@
+* {
+    font-family: "Arial";
+}
+html, body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+img {
+    width: 75%;
+    height:100%;
+    bottom: 0;
+    position: relative;
+    z-index: 1;
+    object-fit: cover;
+}
+
+main{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+}
+
+.frm {
+    width: 600px;
+    position: absolute;
+    background-color: white;
+    z-index: 10;
+    height: 105%;
+    display: flex;
+    align-items: end;
+    right:10%;
+    border-radius: 90px;
+    flex-direction: column;
+    justify-content: start;
+}
+    
+.icon svg {
+    width: 125%;
+    height: 125%;
+    margin-right: 60px;
+}
+
+.icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+    margin-bottom: 90px;
+    margin-top: 100px;
+}
+
+.frmhead {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: row;
+    float:left;
+    width: 100%;
+
+}
+
+.frmhead h1{
+    margin-left: 110px;
+    color:#357761;
+    
+}
+
+
+@media screen and (max-width: 1200px){
+    
+
+    html, body {
+        overflow-y: auto;
+        display: flex;
+        justify-content:center;
+        align-items: center;
+
+    }
+
+
+    .frm {
+        width: 400px;
+        background-color: white;
+        height: 600px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        right: 0;
+        left: 0;
+        position: relative;
+        margin: 0 auto;
+        border-radius: 90px;
+    }
+    
+    main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+
+    img {
+        display: none;
+    }
+
+    .icon {
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;    }
+
+    .icon svg {
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .frmhead {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .frmhead h1{
+        margin: 0 auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+
+    }
+}   

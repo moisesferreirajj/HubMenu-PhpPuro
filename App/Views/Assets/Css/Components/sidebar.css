@@ -1,0 +1,131 @@
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 0;
+    background-color: azure;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    transition: 0.5s;
+}
+
+
+.sidebar a {
+    display: block;
+    text-decoration: none;
+    padding: 15px;
+    align-items: center;
+    transition: 0.3s;
+
+}
+
+.sidebar a#active {
+    color: black;
+    background-color: rgb(255, 255, 255);
+}
+
+.sidebar a:hover {
+    background-color: #555;
+    border-radius: 4px;
+}
+
+
+.side-item svg {
+    width: 50px;
+    height: auto;
+}
+
+.side-item span {
+    font-size: 18px;
+}
+
+.wrap-btn {
+    margin-top: 10px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.wrap-btn img {
+    width: 100px;
+    height: auto;
+    margin-left: 10px;
+}
+
+.wrap-btn h2 {
+    font-size: 12px;
+}
+
+.empresa {
+    display: flex;
+    flex-direction: row;
+}
+
+.close-btn {
+    float: right;
+    background-color: white;
+    border: 1px solid #0e7a56;
+    border-radius: 50px;
+    padding: 8px;
+}
+
+.open-btn {
+    background-color: white;
+    border: 1px solid #0e7a56;
+    border-radius: 50px;
+    padding: 8px;
+    margin-top: 10px;
+}
+
+.content {
+    padding: 1px 16px;
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+
+@media screen and (max-width:950px) {
+    .sidebar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 70px;
+        background-color: aquamarine;
+        color: black;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+        z-index: 10000;
+        width: 100%;
+    }
+    .wrap-btn {
+        display: none;
+    }
+    .sidebar a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .open-btn {
+        display: none;
+    }
+
+    .close-btn {
+        display: none;
+    }
+
+
+    .sidebar a:hover {
+        background-color: #555;
+        border-radius: 4px;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+}

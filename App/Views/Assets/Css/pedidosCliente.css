@@ -1,0 +1,177 @@
+/* #pedidos table img{
+    width: 100px;
+    height: auto;
+}
+
+#pedidoimg{
+    width: 70px;
+    height: 100px;
+}
+
+.pedidos{  
+
+    border: 1px solid rgba(228, 228, 228, 0.5);
+    background: rgba(192, 192, 192, 0.349);
+    box-shadow: 2px 5px 10px rgba(29, 29, 29, 0.3);
+    border-radius: 8px;
+    width: 100%;
+    border-spacing: 10px;
+    
+}
+
+  #pedidoimg {
+    width: 60px;
+  }
+  
+  td {
+    vertical-align: middle;
+    padding: 5px 10px;
+  }
+
+#valqtd {
+    float: right;
+    text-align: right;
+    font-size:15px;
+    
+}
+
+#valtot{
+    float: right;
+    text-align: right;
+    font-size:20px;
+    float: right;
+}
+
+table #pedidos{
+    max-width: 350px;
+    justify-content: center;
+    justify-items: center;
+    
+}
+
+
+.finalizarpedido{
+    border-bottom: 5px solid #357761;
+    border-top: 5px solid #357761;
+    background-color: rgb(255, 255, 255);
+    height: 200px;
+}
+
+.calcfinal{
+    background-color: rgba(133, 133, 133, 0.356);
+    width: 400px;
+    margin-left: 40px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+#finalpedido{
+    width: 350px;
+    margin-top: 20px ;
+
+}
+#finalpedido h3{
+    color: rgb(53, 119, 70);
+    text-align: end;
+}
+#finalpedido h1{
+    font-size: 35px;
+} */
+
+body {
+    margin: 0;
+    padding: 0;
+
+}
+
+.order-card {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: /*#006747*/ rgba(142, 142, 142, 0.921);
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid rgb(0, 0, 0);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: 0.5s;
+}
+
+.order-heading {
+    display: flex;
+    justify-content: space-between;
+    gap:20px;
+    font-size: 18px;
+    align-items: center;
+    padding: 10px;
+}
+
+.order_id {
+    font-weight: bold;
+    color:white;
+}
+
+.order_date {
+    color:white;
+}
+
+#entregue {
+    color: rgb(0, 138, 37);
+    background-color: rgba(127, 255, 127, 0.725);
+    border: 0;
+    padding: 8px;
+    border-radius: 12px;
+
+}
+#preparando {
+    color: rgb(255, 247, 0);
+    background-color: rgba(255, 242, 127, 0.639);
+    border: 0;
+    padding: 8px;
+    border-radius: 12px;
+}
+
+
+ #cancelado {
+    color: rgb(255, 129, 129);
+    background-color: rgba(255, 42, 42, 0.639);
+    border: 0;
+    padding: 8px;
+    border-radius: 12px;
+
+}
+
+.table {
+}
+
+.table thead {
+}
+
+.table th {
+}
+
+.table tbody {
+}
+
+.table tr {
+}
+
+.table td {
+}
+
+.sub_total {
+    color: white;
+    font-weight: bolder;
+}
+
+
+.content {
+    background-color: bisque;
+    height: 100%;
+}
+
+@media screen and (max-width:950px) {
+    .order-card {
+        margin-left: 0;
+    }
+}
