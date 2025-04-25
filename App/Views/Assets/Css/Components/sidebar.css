@@ -1,12 +1,13 @@
 .sidebar {
     margin: 0;
     padding: 0;
-    width: 0;
+    width: 0px;
     background-color: azure;
     position: fixed;
     height: 100%;
     overflow: auto;
     transition: 0.5s;
+
 }
 
 
@@ -75,12 +76,25 @@
     border-radius: 50px;
     padding: 8px;
     margin-top: 10px;
+    float:left;
+    z-index: 1000;
+    position: absolute;
 }
 
 .content {
-    padding: 1px 16px;
     transition: 0.5s;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0px;
+}
+
+.butoes {
+    background-color: #f8f9fa;
+    margin-left: 10px;
+    border: none;
 }
 
 
@@ -113,6 +127,8 @@
     }
     .open-btn {
         display: none;
+        z-index: 1000;
+        position: absolute;
     }
 
     .close-btn {

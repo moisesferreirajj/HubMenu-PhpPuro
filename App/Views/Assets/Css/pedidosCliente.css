@@ -78,16 +78,122 @@ table #pedidos{
     font-size: 35px;
 } */
 
+
 body {
     margin: 0;
     padding: 0;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+}
 
+.header {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top:0;
+    left: 0;
+    z-index: 1000;
+    
+}
+
+.header-btn {
+    position: absolute;
+    left:0;
+    display: block;
+    align-self: flex-start;}
+
+.header-btn button{
+    margin-left: 10px;
+}
+
+.search-box {
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0.3em 0.3em 1em rgba(0,0,0,0.3);   
+    background-color: white; 
+    padding:20px;
+}  
+
+.srch-input input{
+    height: 40px;
+}  
+
+.srch-input {
+    align-items: center;
+}  
+
+.srch-input select {}  
+
+
+
+.srch-input input[type="text"] {
+    width: 200px;
+    border-radius: 6px 0 0 6px;
+
+}  
+
+.srch-submit {
+    display: flex;
+    align-items: center;
+}  
+
+#srch-text {
+    border : 1px solid rgb(22, 153, 50);
+    background: transparent;
+}
+
+#srch-final {
+    display: flex;        
+    align-items: center;    
+    gap: 0; 
+}
+
+#srch-final input{
+      
+    margin:0;
+
+}
+
+#srch-final input[type="submit"] {
+    background-color: #006747;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    border: none;
+    border-radius: 0 6px 6px 0;
+}
+
+#srch-final input[type="submit"]:hover {
+    background-color: rgb(40, 180, 70);
+  }
+  
+  #srch-text:focus, .input:focus-visible {
+    border-color: rgb(40, 180, 70);
+    outline: none;
+  }
+  
+
+.orders {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 80px;
+    margin-bottom: 80px;
 }
 
 .order-card {
     max-width: 1200px;
+    width: 900px;
     margin: 0 auto;
-    background-color: /*#006747*/ rgba(142, 142, 142, 0.921);
+    background-color: #006747;
     display: flex;
     flex-direction: column;
     padding: 15px;
@@ -95,6 +201,7 @@ body {
     border: 1px solid rgb(0, 0, 0);
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     transition: 0.5s;
+    margin-top: 20px;
 }
 
 .order-heading {
@@ -103,7 +210,7 @@ body {
     gap:20px;
     font-size: 18px;
     align-items: center;
-    padding: 10px;
+    padding: 15px;
 }
 
 .order_id {
@@ -116,16 +223,16 @@ body {
 }
 
 #entregue {
-    color: rgb(0, 138, 37);
-    background-color: rgba(127, 255, 127, 0.725);
+    color: #27ae60;
+    background-color: #d5f5e3;
     border: 0;
     padding: 8px;
     border-radius: 12px;
 
 }
 #preparando {
-    color: rgb(255, 247, 0);
-    background-color: rgba(255, 242, 127, 0.639);
+    color: #f39c12;
+    background-color: #fef9e7;
     border: 0;
     padding: 8px;
     border-radius: 12px;
@@ -133,15 +240,19 @@ body {
 
 
  #cancelado {
-    color: rgb(255, 129, 129);
-    background-color: rgba(255, 42, 42, 0.639);
+    color: #e74c3c;
+    background-color: #fadbd8;
     border: 0;
     padding: 8px;
     border-radius: 12px;
 
 }
 
+
 .table {
+    background-color: #ffffff;
+    color: #333333;
+    border: 1px solid #eeeeee;
 }
 
 .table thead {
@@ -166,12 +277,44 @@ body {
 
 
 .content {
-    background-color: bisque;
+    background-color: #f5f5f5;
     height: 100%;
+    justify-content: center;
+    display: grid;
+}
+
+.payment-method {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+    color: #e0e0e0;
+    font-size: 14px;
+}
+
+.payment-icon {
+    margin-right: 8px;
+    color: #3498db;
+    font-size: 18px;
 }
 
 @media screen and (max-width:950px) {
     .order-card {
         margin-left: 0;
+        width: 400px;
+        right:0;
     }
+    .order-heading {
+        display: flex;
+        gap:10px;
+        font-size: 18px;
+        padding: 8px;
+    }
+    .search-box {
+        padding:10px;
+    }
+    .srch-input input[type="text"] {
+        width: 100px;
+    }  
 }

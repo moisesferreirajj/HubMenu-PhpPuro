@@ -4,7 +4,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="65b9415f-c3b7-400e-a458-3d23579c5e59" name="Changes" comment="" />
+    <list default="true" id="65b9415f-c3b7-400e-a458-3d23579c5e59" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Models/Database.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Models/UsuariosModel.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Utils/RenderView.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Views/error.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/NotFoundController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/NotFoundController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Core.php" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Core.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Router/Routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/Router/Routes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Assets/Css/Components/sidebar.css" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Assets/Css/Components/sidebar.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Assets/Css/pedidosCliente.css" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Assets/Css/pedidosCliente.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Assets/Css/sobre.css" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Assets/Css/sobre.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Components/form-login.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Components/form-login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Components/sidebar.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Components/sidebar.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/cadastro.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/cadastro.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/pedidosCliente.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/pedidosCliente.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/pedidosEmpresa.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/pedidosEmpresa.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/sobre.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/sobre.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/suporte.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/suporte.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/global.php" beforeDir="false" afterPath="$PROJECT_DIR$/global.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,39 +41,43 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="$PROJECT_DIR$/../../php/php.exe" />
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2w8wAKmzBBHMm4mNMO72JkyKoqH" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/HubMenu-PhpPuro/App",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/HubMenu-PhpPuro/App&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\moises_j_ferreira\Documents\GitHub\HubMenu-PhpPuro\App" />
       <recent name="C:\HubMenu-PhpPuro\App\Views" />
     </key>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-PS-251.23774.436" />
-        <option value="bundled-php-predefined-a98d8de5180a-aaeaa8632555-com.jetbrains.php.sharedIndexes-PS-251.23774.436" />
+        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-PS-251.23774.466" />
+        <option value="bundled-php-predefined-a98d8de5180a-aaeaa8632555-com.jetbrains.php.sharedIndexes-PS-251.23774.466" />
       </set>
     </attachedChunks>
   </component>
@@ -61,6 +89,7 @@
       <option name="presentableId" value="Default" />
       <updated>1745436365856</updated>
       <workItem from="1745436368433" duration="2581000" />
+      <workItem from="1745603568246" duration="6168000" />
     </task>
     <servers />
   </component>

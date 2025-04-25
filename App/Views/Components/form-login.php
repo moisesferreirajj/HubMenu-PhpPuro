@@ -1,5 +1,5 @@
 <main>
-        <img src="../Assets/Images/login.jpg">
+        <img src="/Views/Assets/Images/login.jpg">
         <div class="frm">
             <div class="icon">
                 <svg version="1.1" viewBox="0 0 115.13 30.704" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">

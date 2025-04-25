@@ -3,6 +3,8 @@
 class Core {
     public function run($routes) {
         $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        ($url != '/') ? $url = rtrim($url, '/') : $url;
+
         $routerFound = false;
 
         foreach ($routes as $path => $controller) {

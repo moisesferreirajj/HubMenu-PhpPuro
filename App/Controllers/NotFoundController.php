@@ -1,8 +1,12 @@
 <?php
 
-class NotFoundController
+class NotFoundController extends RenderView
 {
     public function index(){
-        echo "Error 404 - Controller";
+        $this->loadView('error',
+            [
+                'Title' => 'HubMenu |'
+            ],
+        );
     }
 }
