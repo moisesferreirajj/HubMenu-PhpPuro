@@ -1,16 +1,16 @@
-<?php require '../global.php'; ?>
+<?php @require_once __DIR__ . '/../global.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../Assets/CSS/index.css">
+    <link rel="stylesheet" href="/Views/Assets/Css/index.css">
     <!-- BOOTSTRAP GERENCIAMENTO -->
-    <link rel="icon" href="../Assets/Images/favicon.png">
-    <link type="text/css" rel="stylesheet" href="../Assets/Vendor/bootstrap.min.css">
-    <script href="../Assets/Vendor/bootstrap.min.js"></script>
-    <script src="../Assets/Vendor/bootstrap.bundle.min.js"></script>
+    <link rel="icon" href="/Views/Assets/Images/favicon.png">
+    <link type="text/css" rel="stylesheet" href="/Views/Assets/Vendor/bootstrap.min.css">
+    <script href="/Views/Assets/Vendor/bootstrap.min.js"></script>
+    <script src="/Views/Assets/Vendor/bootstrap.bundle.min.js"></script>
     <title><?= $Title ?> Início</title>
     </head>
 
@@ -18,11 +18,21 @@
     <?php include 'Components/navigation.php'; ?>
     <main>
         <div class="slogan">
-            <img src="../Assets/Images/motoboy.png" alt="Motoboy">
+            <div id="div-chamativa">
+                <img class="entregador" src="/Views/Assets/Images/entregador.png" alt="Entregador">
+                <img class="motoboy2" src="/Views/Assets/Images/motoboy.png" alt="Motoboy">
+                <img class="motoboy1" src="/Views/Assets/Images/motoboy2.png" alt="Motoboy 2">
+            </div>
+            
+            <!--
+            ?php //foreach ($users as $item): ?>
+                <h2>Olá ?= ($item['nome']) ?>, sabia que gerenciar seu estabelecimento é muito fácil?</h2>
+            ?php //endforeach; ?>
+            -->
             <h2>Sabia que gerenciar seu estabelecimento é muito fácil?</h2>
         </div>
         <div class="funcs">
-            <div class="element">
+            <div class="element eleone">
                 <svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve" fill="#006747" stroke="#006747">
                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -41,9 +51,12 @@
                         <path d="M17,27v-5H2V5c0-0.6,0.4-1,1-1h18c0.6,0,1,0.4,1,1v2h2V5c0-1.7-1.3-3-3-3H3C1.3,2,0,3.3,0,5v22c0,1.7,1.3,3,3,3h15 C17.4,29.2,17,28.1,17,27z M13,27h-2c-0.6,0-1-0.4-1-1s0.4-1,1-1h2c0.6,0,1,0.4,1,1S13.6,27,13,27z"></path>
                     </g>
                 </svg>
-                <h4>Organização de comanda</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vitae hendrerit enim. Suspendisse bibendum ante vel odio ullamcorper, non luctus nisi suscipit. Curabitur.</p>
+                <h4>Gestão Digital</h4>
+                <p>
+                    Controle seu estabelecimento de qualquer lugar através do nosso aplicativo móvel e plataforma desktop. Gerencie pedidos, estoque e funcionários em tempo real com uma interface intuitiva que facilita o dia a dia da sua operação.
+                </p>
             </div>
+
             <div class="element">
             <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#006747" stroke="#006747" preserveAspectRatio="xMidYMid meet">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -56,9 +69,12 @@
                 </g>
             </svg>
 
-                <h4>Organização de comanda</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vitae hendrerit enim. Suspendisse bibendum ante vel odio ullamcorper, non luctus nisi suscipit. Curabitur.</p>
+                <h4>Controle de Pedidos</h4>
+                <p>
+                    Organize todas as comandas com eficiência e precisão. Nosso sistema permite visualizar pedidos pendentes, em preparo e finalizados, reduzindo erros e agilizando o atendimento para maior satisfação dos seus clientes.
+                </p>
             </div>
+
             <div class="element">
                 <svg viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -73,10 +89,19 @@
                         <path d="M11.25 14.254H18.4C18.956 14.2536 19.5009 14.0988 19.9739 13.8067C20.447 13.5147 20.8296 13.0969 21.079 12.6L21.7115 11.3314" stroke="#006747" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     </g>
                 </svg>
-                <h4>Organização de comanda</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vitae hendrerit enim. Suspendisse bibendum ante vel odio ullamcorper, non luctus nisi suscipit. Curabitur.</p>
+                <h4>Experiência do Cliente</h4>
+                <p>
+                    Proporcione um atendimento impecável com nossa solução de gerenciamento de comandas. Acompanhe o status dos pratos, tempo de espera e preferências dos clientes para criar experiências memoráveis que os farão voltar.
+                </p>
             </div>
         </div>
+
+        <section class="hero-section text-center">
+            <div class="container">
+                <h1>Veja abaixo alguns estabelecimentos perto de você que contam com nosso sistema:</h1>
+            </div>
+        </section>
+
     </main>
     <?php include 'Components/footer.php'; ?>
 </body>

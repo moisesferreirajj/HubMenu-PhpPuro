@@ -1,0 +1,214 @@
+@import "Components/footer.css";
+@import "Components/navbar.css";
+
+:root {
+    --primary: #0e7a56;
+    --secondary: #006747;
+    --title-font-size: 2rem;
+    --p-font-size: 1.1rem;
+    
+    /*  */
+}
+
+* {
+    font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.hero-section {
+    background-color: var(--primary);
+    color: white;
+    padding: 1rem 0;
+}
+
+.container h1, p {
+    margin: 0;
+    padding: 0;
+}
+
+.section-title {
+    color: var(--primary);
+    font-weight: bold;
+    position: relative;
+    margin-bottom: 2rem;
+    font-size: var(--title-font-size);
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 70px;
+    height: 4px;
+    background-color: var(--primary);
+}
+
+.section {
+    padding: 3rem 0;
+}
+
+.section-text {
+    font-size: var(--p-font-size);
+    line-height: 1.7;
+    color: #555;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+/* Ajustes gerais para imagens */
+.section-img {
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    width: 80%; 
+    height: auto;
+    object-fit: cover;
+}
+
+/* Ajustes para imagens dos membros da equipe */
+.team-member-img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.team-card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.team-card:hover {
+    transform: translateY(-10px);
+}
+
+.team-member-name {
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.team-member-role {
+    color: #666;
+    font-style: italic;
+}
+
+@media (max-width: 767px) {
+    .section {
+        padding: 10px !important;
+        margin: 10px !important;
+    }
+    
+    .team-member-img {
+        height: 200px !important; 
+    }
+
+    .team-card-div {
+        max-width: 80% !important;
+        margin: 0 auto;
+    }
+
+    .team-member-img {
+        height: 250px;
+        object-fit: cover;
+    }
+
+    .card-body {
+        padding: 8px !important;
+
+    }
+    
+    .team-member-name {
+        font-size: 1.1rem !important;
+    }
+    
+    .team-member-role {
+        font-size: 0.8rem !important;
+        margin-bottom: 4px !important;
+    }
+    
+    .section-title::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .section-title {
+        text-align: center;
+    }
+
+    .section-text {
+        text-align: justify;
+        padding: 0 20px;
+    }
+
+    .container {
+        p {
+            font-size: 1rem;
+        }
+        h1 {
+            font-size: 1.5rem;
+        }
+    }
+    
+    .hero-section {
+        padding: 0.7rem 0;
+        .lead {
+            margin-bottom: 0 !important;
+        }
+    }
+    
+    .order-md-1 {
+        order: 2;
+    }
+    
+    .order-md-2 {
+        order: 1;
+    }
+
+    .fale-conosco p {
+        margin-bottom: 24px !important;
+    }
+
+    .section-text {
+        font-size: var(--p-font-size);
+        line-height: 1.7;
+        color: #555;
+    }
+
+    .section-title {
+        font-size: calc(var(--title-font-size) - 0.5rem) !important;
+    }
+
+    /* IMG VISAO E MISSAO */
+    /* Ajustes gerais para imagens */
+    .image-sobre {
+        display: flex;
+        justify-content: center;
+    }
+
+    #image-valores {
+        display: none !important;
+    }
+
+    .section-valores {
+        ul {
+            font-size: 0.9rem;
+        }
+    }
+
+    .fale-conosco {
+        button {
+            margin-bottom: 2rem;
+        }
+    }
+}

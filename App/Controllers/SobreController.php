@@ -1,11 +1,11 @@
 <?php
 
-class LoginController extends RenderView
+class SobreController extends RenderView
 {
     public function index(){
         $users = new UsuariosModel();
 
-        $this->loadView('login',
+        $this->loadView('sobre',
             [
                 'Title' => 'HubMenu |',
                 'users' => $users->fetch()

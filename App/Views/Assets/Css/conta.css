@@ -1,0 +1,116 @@
+:root {
+    --primary-color: #006747;
+    --primary-light: rgba(0, 103, 71, 0.1);
+    --text-color: #2d3748;
+    --gray-light: #f7fafc;
+    --white: #ffffff;
+}
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--text-color);
+}
+
+.headerconta {
+    background: var(--primary-color);
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.profile-container {
+    padding-right: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.profile-card {
+    background-color: var(--white);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    width: 800px; 
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.profile-item {
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.profile-item:hover {
+    background-color: var(--primary-light);
+    border-radius: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.profile-item:last-child {
+    border-bottom: none;
+}
+
+.edit-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 103, 71, 0.1);
+    color: var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.edit-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: scale(1.05);
+}
+
+.profile-label {
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: #718096;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.profile-value {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.password-item .profile-label {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+@media (max-width: 576px) {
+    .profile-card {
+        padding: 20px;
+        border-radius: 12px;
+    }
+    
+    .profile-item {
+        padding: 14px 0;
+    }
+}
