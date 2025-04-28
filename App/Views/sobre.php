@@ -44,7 +44,11 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6 image-sobre">
+<<<<<<< HEAD
                     <img src="/Views/Assets/Images/LeonardoHubMenu.jpg" class="section-img img-fluid" alt="Missão do HubMenu">
+=======
+                    <img src="https://www.imagelato.com/images/article-image-restaurant-manager-directing-service-799eb0d9.jpg" class="section-img img-fluid" alt="Missão do HubMenu">
+>>>>>>> 7ee9314e10cef458a90e37326d60b970e9ec962c
                 </div>
                 <div class="col-md-6">
                     <h2 class="section-title">Nossa Missão</h2>
@@ -61,7 +65,11 @@
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                 <div class="col team-card-div">
                     <div class="card team-card">
+<<<<<<< HEAD
                         <img src="/Views/Assets/Images/Sobre/MoisesCaptura.jpg" class="card-img-top team-member-img" alt="Moises Ferreira">
+=======
+                        <img src="/Views/Assets/Images/Sobre/Moises.png" class="card-img-top team-member-img" alt="Moises Ferreira">
+>>>>>>> 7ee9314e10cef458a90e37326d60b970e9ec962c
                         <div class="card-body text-center">
                             <h5 class="team-member-name">Moises Ferreira</h5>
                             <p class="team-member-role">CEO & Back-End Engineer</p>
@@ -70,7 +78,11 @@
                 </div>
                 <div class="col team-card-div">
                     <div class="card team-card">
+<<<<<<< HEAD
                         <img src="/Views/Assets/Images/Sobre/Yohan.jpg" class="card-img-top team-member-img" alt="Yohan Siedschlag">
+=======
+                        <img src="/Views/Assets/Images/Sobre/Yohan.png" class="card-img-top team-member-img" alt="Yohan Zig Zag">
+>>>>>>> 7ee9314e10cef458a90e37326d60b970e9ec962c
                         <div class="card-body text-center">
                             <h5 class="team-member-name">Yohan Siedschlag</h5>
                             <p class="team-member-role">COO & Front-End Engineer</p>
@@ -112,7 +124,11 @@
                         <li><strong>Sustentabilidade:</strong> Promovemos práticas responsáveis que beneficiam o planeta.</li>
                     </ul>
                 </div>
+<<<<<<< HEAD
                 <div id="image-valores" class="col-md-6 order-md-2 mt-4 mt-md-0 text-end">
+=======
+                <div class="col-md-6 order-md-2 mt-4 mt-md-0 text-end">
+>>>>>>> 7ee9314e10cef458a90e37326d60b970e9ec962c
                     <img src="https://doubleconsult.com/images/2021/10/27/felicidade-no-trabalho.jpg" class="section-img img-fluid" alt="Valores do HubMenu">
                 </div>
             </div>

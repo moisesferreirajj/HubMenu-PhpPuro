@@ -18,12 +18,16 @@
     <?php include 'Components/navigation.php'; ?>
     <main>
         <div class="slogan">
+<<<<<<< HEAD
             <div id="div-chamativa">
                 <img class="entregador" src="/Views/Assets/Images/entregador.png" alt="Entregador">
                 <img class="motoboy2" src="/Views/Assets/Images/motoboy.png" alt="Motoboy">
                 <img class="motoboy1" src="/Views/Assets/Images/motoboy2.png" alt="Motoboy 2">
             </div>
             
+=======
+            <img src="/Views/Assets/Images/motoboy.png" alt="Motoboy">
+>>>>>>> 7ee9314e10cef458a90e37326d60b970e9ec962c
             <!--
             ?php //foreach ($users as $item): ?>
                 <h2>Olá ?= ($item['nome']) ?>, sabia que gerenciar seu estabelecimento é muito fácil?</h2>
@@ -94,6 +98,7 @@
                     Proporcione um atendimento impecável com nossa solução de gerenciamento de comandas. Acompanhe o status dos pratos, tempo de espera e preferências dos clientes para criar experiências memoráveis que os farão voltar.
                 </p>
             </div>
+
         </div>
 
         <section class="hero-section text-center">

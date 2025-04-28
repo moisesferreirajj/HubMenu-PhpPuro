@@ -166,6 +166,10 @@
     </div>
     <span class="sub_total">Sub-Total: R$37,50</span>
 </div>
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 7ee9314e10cef458a90e37326d60b970e9ec962c
         </div>
 
 </body>
