@@ -1,4 +1,4 @@
-@import "Components/footer.css";
+    @import "Components/footer.css";
 @import "Components/navbar.css";
 
 :root * {
@@ -34,6 +34,7 @@ main {
 }
 
 .slogan {
+    width: 80%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -47,41 +48,14 @@ main {
     margin-top: 20px;
 }
 
-#div-chamativa {
-
-    position: relative;
-    width: 100%;
-    max-height: 500px;
-    height: 250px;
-
-    .motoboy1 {
-        position: absolute;
-        top: 0px;
-        right: 70px;
-        width: 150px;
-        height: auto;
-        animation: DesceSobe 10s ease-in-out infinite;
-    }
-
-    .motoboy2 {
-        position: absolute;
-        top: 0px;
-        left: 60px;
-        width: 200px;
-        height: auto;
-        animation: DesceSobe 10s ease-in-out infinite;
-    }
-    
-    .entregador{
-        position: absolute;
-        top: 0;
-        left: 300px;
-        width: 250px;
-        height: auto;
-        animation: DesceSobe 10s ease-in-out infinite;
-    }
-
+.entregador {
+    width: 20%;
+    height: auto;
+    animation: DesceSobe 10s ease-in-out infinite;
+    z-index: 1;
+    margin-bottom: 0%;
 }
+
 
 /* Parte de Funcionalidades - home Page */
 
@@ -92,7 +66,6 @@ main {
     margin-bottom: 0.7rem;
 
 }
-
 
 .element p {
     bottom: 0;
@@ -170,6 +143,87 @@ main {
     font-size: 10px;
 }
 
+.hero-section {
+    padding: 1rem 0;
+    text-align: center;
+}
+
+.hero-section h1 {
+    margin-top: -70px;
+    color: #3c4250;
+    font-size: 200%;
+    font-weight: bold;
+}
+
+.enterprises {
+
+    max-width: 90%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4%;
+
+    .title-enterprise {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .sec-enterprises {
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+        margin-top: 2%;
+        overflow-y: hidden;
+    }
+
+    .enterprise {
+        display: flex;
+        flex-direction: row;
+        border: 1px rgba(0, 0, 0, 0.10) solid;
+        border-radius: 10px;
+        max-width: 25%;
+        width: 100%;
+        padding: 2%;
+    }
+
+    .img-enterprise {
+        width: 30%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .img-enterprise img {
+        width: 50px;
+        border-radius: 100%;
+        
+    }
+
+    .name-enterprise {
+        width: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    h3, p {
+        margin: 0;
+    }
+
+    h3 {
+        font-size: 1rem;
+        color: black;
+    }
+
+    p {
+        font-size: 0.9rem;
+        color: #525252;
+    }
+
+}
+
 @media screen and (max-width: 1090px) {
 
     .element {
@@ -221,19 +275,15 @@ main {
         transform: none;
     }
 
+    .entregador {
+        width: 30%;
+        height: auto;
+        animation: DesceSobe 10s ease-in-out infinite;
+        margin: 0px 0px 2% 0px;
+    }
+
 }
 
-.hero-section {
-    padding: 1rem 0;
-    text-align: center;
-}
-
-.hero-section h1 {
-    margin-top: -70px;
-    color: #3c4250;
-    font-size: 200%;
-    font-weight: bold;
-}
 
 /* ANIMAÇÃO DESCE E SOBE */
 

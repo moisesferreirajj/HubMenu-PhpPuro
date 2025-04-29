@@ -12,22 +12,15 @@
     <script href="/Views/Assets/Vendor/bootstrap.min.js"></script>
     <script src="/Views/Assets/Vendor/bootstrap.bundle.min.js"></script>
     <title><?= $Title ?> Início</title>
-    </head>
+</head>
 
 <body>
     <?php include 'Components/navigation.php'; ?>
     <main>
         <div class="slogan">
-<<<<<<< HEAD
-            <div id="div-chamativa">
-                <img class="entregador" src="/Views/Assets/Images/entregador.png" alt="Entregador">
-                <img class="motoboy2" src="/Views/Assets/Images/motoboy.png" alt="Motoboy">
-                <img class="motoboy1" src="/Views/Assets/Images/motoboy2.png" alt="Motoboy 2">
-            </div>
-            
-=======
-            <img src="/Views/Assets/Images/motoboy.png" alt="Motoboy">
->>>>>>> 7ee9314e10cef458a90e37326d60b970e9ec962c
+
+            <img class="entregador" src="/Views/Assets/Images/entregador.png" alt="Entregador">
+
             <!--
             ?php //foreach ($users as $item): ?>
                 <h2>Olá ?= ($item['nome']) ?>, sabia que gerenciar seu estabelecimento é muito fácil?</h2>
@@ -62,16 +55,16 @@
             </div>
 
             <div class="element">
-            <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#006747" stroke="#006747" preserveAspectRatio="xMidYMid meet">
-                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                <g id="SVGRepo_iconCarrier">
-                    <path d="M749.7 585.3l-164.6 91.4v182.9L749.7 951l164.6-91.4V676.7l-164.6-91.4z m91.4 231.2l-91.4 50.8-91.4-50.8v-96.8l91.4-50.8 91.4 50.8v96.8z" fill="#006747"></path>
-                    <path d="M735.667582 801.904773a36.6 36.6 0 1 0 28.012427-67.627982 36.6 36.6 0 1 0-28.012427 67.627982Z" fill="#006747"></path>
-                    <path d="M219.4 731.4H256v-73.1h-36.6V365.7H256v-73.1h-36.6V146.3h585v402.4h73.2V73.1H146.3v219.5h-36.6v73.1h36.6v292.6h-36.6v73.1h36.6v219.5h399.8v-73.2H219.4z" fill="#006747"></path>
-                    <path d="M329.2 256h402.3v73.1H329.2zM329.2 438.9h402.3V512H329.2zM329.2 621.7h182.9v73.1H329.2z" fill="#006747"></path>
-                </g>
-            </svg>
+                <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#006747" stroke="#006747" preserveAspectRatio="xMidYMid meet">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path d="M749.7 585.3l-164.6 91.4v182.9L749.7 951l164.6-91.4V676.7l-164.6-91.4z m91.4 231.2l-91.4 50.8-91.4-50.8v-96.8l91.4-50.8 91.4 50.8v96.8z" fill="#006747"></path>
+                        <path d="M735.667582 801.904773a36.6 36.6 0 1 0 28.012427-67.627982 36.6 36.6 0 1 0-28.012427 67.627982Z" fill="#006747"></path>
+                        <path d="M219.4 731.4H256v-73.1h-36.6V365.7H256v-73.1h-36.6V146.3h585v402.4h73.2V73.1H146.3v219.5h-36.6v73.1h36.6v292.6h-36.6v73.1h36.6v219.5h399.8v-73.2H219.4z" fill="#006747"></path>
+                        <path d="M329.2 256h402.3v73.1H329.2zM329.2 438.9h402.3V512H329.2zM329.2 621.7h182.9v73.1H329.2z" fill="#006747"></path>
+                    </g>
+                </svg>
 
                 <h4>Controle de Pedidos</h4>
                 <p>
@@ -101,13 +94,55 @@
 
         </div>
 
-        <section class="hero-section text-center">
-            <div class="container">
-                <h1>Veja abaixo alguns estabelecimentos perto de você que contam com nosso sistema:</h1>
+        <!-- Seção das Melhores Empresas -->
+        <section class="enterprises">
+
+            <div class="title-enterprise">
+                <h1>Empresas Com Nosso Sistema</h1>
+            </div>
+            
+            <div class="sec-enterprises">
+            <div class="enterprise">
+                <div class="img-enterprise">
+                    <img src="./Assets/Images/mcdonalds-logo.png" alt="logo-mc-donalds">
+                </div>
+                <div class="name-enterprise">
+                    <h3>McDonald's</h3>
+                    <p>Lanches</p>
+                </div>
+            </div>
+            <div class="enterprise">
+                <div class="img-enterprise">
+                    <img src="./Assets/Images/mcdonalds-logo.png" alt="logo-mc-donalds">
+                </div>
+                <div class="name-enterprise">
+                    <h3>McDonald's</h3>
+                    <p>Lanches</p>
+                </div>
+            </div>
+            <div class="enterprise">
+                <div class="img-enterprise">
+                    <img src="./Assets/Images/mcdonalds-logo.png" alt="logo-mc-donalds">
+                </div>
+                <div class="name-enterprise">
+                    <h3>McDonald's</h3>
+                    <p>Lanches</p>
+                </div>
+            </div>
+            <div class="enterprise">
+                <div class="img-enterprise">
+                    <img src="./Assets/Images/mcdonalds-logo.png" alt="logo-mc-donalds">
+                </div>
+                <div class="name-enterprise">
+                    <h3>McDonald's</h3>
+                    <p>Lanches</p>
+                </div>
+            </div>
             </div>
         </section>
 
     </main>
     <?php include 'Components/footer.php'; ?>
 </body>
+
 </html>
