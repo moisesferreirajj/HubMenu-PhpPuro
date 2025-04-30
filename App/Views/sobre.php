@@ -45,7 +45,7 @@
             <div class="row align-items-center">
                 <div class="col-md-6 image-sobre">
 
-                    <img src="/Views/Assets/Images/LeonardoHubMenu.jpg" class="section-img img-fluid" alt="Missão do HubMenu">
+                    <img src="/Views/Assets/Images/Fundo.jpg" class="section-img img-fluid" alt="Missão do HubMenu">
 
                 </div>
                 <div class="col-md-6">

@@ -1,0 +1,143 @@
+@import "Components/footer.css";
+@import "Components/navbar.css";
+
+:root {
+    --primary-color: #0e7a56;
+    --secondary-color: #006747;
+    --secondary: #006747;
+    --accent-color: #17a36b;
+    --light-bg: #f8f9fa;
+    --dark-text: #343a40;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--dark-text);
+}
+
+/* Removidas classes de navbar, serão usadas do componente */
+
+.hero {
+    background: linear-gradient(rgba(0, 103, 71, 0.8), rgba(0, 103, 71, 0.8)), url('img/hero-bg.jpg') center/cover no-repeat;
+    color: white;
+    padding: 5rem 0;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    padding: 0.8rem 2rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    margin-bottom: 3rem;
+}
+
+.section-title h2 {
+    color: var(--secondary-color);
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.section-title h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 50px;
+    height: 3px;
+    background-color: var(--primary-color);
+}
+
+.feature-card {
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.advantages {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.advantage-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.advantage-icon {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+.how-it-works {
+    background-color: var(--light-bg);
+}
+
+.step-card {
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+    border: none;
+}
+
+.step-number {
+    background-color: var(--primary-color);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.cta {
+    background: linear-gradient(rgba(14, 122, 86, 0.9), rgba(0, 103, 71, 0.9)), url('img/cta-bg.jpg') center/cover no-repeat;
+    color: white;
+}
+
+.btn-light {
+    font-weight: 500;
+    padding: 0.8rem 2rem;
+    transition: all 0.3s ease;
+}
+
+.btn-light:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}

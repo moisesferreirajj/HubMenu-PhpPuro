@@ -100,44 +100,20 @@
             <div class="title-enterprise">
                 <h1>Empresas Com Nosso Sistema</h1>
             </div>
-            
+
             <div class="sec-enterprises">
-            <div class="enterprise">
-                <div class="img-enterprise">
-                    <img src="./Assets/Images/mcdonalds-logo.png" alt="logo-mc-donalds">
-                </div>
-                <div class="name-enterprise">
-                    <h3>McDonald's</h3>
-                    <p>Lanches</p>
-                </div>
-            </div>
-            <div class="enterprise">
-                <div class="img-enterprise">
-                    <img src="./Assets/Images/mcdonalds-logo.png" alt="logo-mc-donalds">
-                </div>
-                <div class="name-enterprise">
-                    <h3>McDonald's</h3>
-                    <p>Lanches</p>
-                </div>
-            </div>
-            <div class="enterprise">
-                <div class="img-enterprise">
-                    <img src="./Assets/Images/mcdonalds-logo.png" alt="logo-mc-donalds">
-                </div>
-                <div class="name-enterprise">
-                    <h3>McDonald's</h3>
-                    <p>Lanches</p>
-                </div>
-            </div>
-            <div class="enterprise">
-                <div class="img-enterprise">
-                    <img src="./Assets/Images/mcdonalds-logo.png" alt="logo-mc-donalds">
-                </div>
-                <div class="name-enterprise">
-                    <h3>McDonald's</h3>
-                    <p>Lanches</p>
-                </div>
-            </div>
+                <?php for ($i = 1; $i <= 4; $i++): ?>
+                    <div class="enterprise">
+                        <div class="img-enterprise">
+                            <img src="./Assets/Images/mcdonalds-logo.png" alt="logo-mc-donalds">
+                        </div>
+                        <div class="name-enterprise">
+                            <h3>McDonald's</h3>
+                            <p>Lanches</p>
+                        </div>
+                        <img src="./Assets/Images/verified.png" alt="imagem-verificado" id="verified">
+                    </div>
+                <?php endfor; ?>
             </div>
         </section>
 

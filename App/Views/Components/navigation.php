@@ -12,7 +12,7 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
                 <li class="nav-item"><a class="nav-link" href="../Views/index.php">Início</a></li>
                 <li class="nav-item"><a class="nav-link" href="../Views/suporte.php">Fale Conosco</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Funcionalidades</a></li>
+                <li class="nav-item"><a class="nav-link" href="../Views/funcionalidades.php">Funcionalidades</a></li>
                 <li class="nav-item"><a class="nav-link" href="../Views/sobre.php">Sobre Nós</a></li>
                 <li class="nav-item"><a class="nav-link" href="#" id="entrar">Painel de Controle</a></li>
                 <li class="nav-item"><a class="nav-link" href="../Views/login.php" id="entrar">Entrar no Sistema</a></li>
