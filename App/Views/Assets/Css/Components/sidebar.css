@@ -21,7 +21,8 @@
     padding: 15px;
     align-items: center;
     transition: 0.3s;
-
+    color:#0e7a56;
+    font-weight: 500;
 }
 
 
@@ -36,6 +37,7 @@
     width: 50px;
     height: auto;
     color: #0a5e42 ;
+    fill: #0a5e42;
 }
 
 .address {
@@ -105,6 +107,17 @@
     background-color: #f8f9fa;
     margin-left: 10px;
     border: none;
+}
+
+
+#active {
+    color:white;
+    background-color: #0a5e42;
+    font-weight: 600;
+}
+
+#active svg {
+    fill:white !important;
 }
 
 

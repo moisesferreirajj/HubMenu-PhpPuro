@@ -15,7 +15,8 @@ CREATE TABLE estabelecimentos (
     cep VARCHAR(20),
     endereco VARCHAR(255),
     cnpj VARCHAR(20),
-    tipo VARCHAR(100)
+    tipo VARCHAR(100),
+media_avaliacao INT(10) NOT NULL
 );
 
 -- Usuarios
@@ -44,6 +45,7 @@ CREATE TABLE pedidos (
     id_pedido INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
     observacao TEXT,
+avaliacao INT(10) NOT NULL,
     id_produto INT NOT NULL,
     valor_total DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id),

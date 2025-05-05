@@ -98,12 +98,12 @@
         <section class="enterprises">
 
             <div class="title-enterprise">
-                <h1>Empresas Com Nosso Sistema</h1>
+                <h1>Estabelecimentos perto de você com nosso sistema:</h1>
             </div>
 
             <div class="sec-enterprises">
-                <?php for ($i = 1; $i <= 4; $i++): ?>
-                    <div class="enterprise">
+                <?php for ($i = 1; $i <= 5; $i++): ?>
+                    <div class="enterprise <?php if ($i == 5){  } ?>">
                         <div class="img-enterprise">
                             <img src="./Assets/Images/mcdonalds-logo.png" alt="logo-mc-donalds">
                         </div>

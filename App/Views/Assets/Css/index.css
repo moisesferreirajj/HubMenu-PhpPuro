@@ -169,6 +169,9 @@ main {
 
     h1 {
         font-size: 1.5rem;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
     }
 
     .sec-enterprises {
@@ -214,7 +217,7 @@ main {
         display: flex;
         justify-content: center;
         flex-direction: column;
-        overflow: hidden; /* Prevent text overflow */
+        overflow: hidden;
     }
 
     .name-enterprise h3 {
@@ -233,7 +236,8 @@ main {
         text-overflow: ellipsis;
     }
 
-    h3, p {
+    h3,
+    p {
         margin: 0;
     }
 
@@ -268,7 +272,7 @@ main {
     .enterprises .name-enterprise h3 {
         font-size: 0.9rem;
     }
-    
+
     .enterprises .name-enterprise p {
         font-size: 0.8rem;
     }
@@ -277,9 +281,9 @@ main {
 
 @media screen and (max-width: 992px) {
     .enterprises .sec-enterprises {
-        flex-wrap: wrap;
+        overflow-x: scroll;
     }
-    
+
     .enterprises .enterprise {
         max-width: 45%;
         margin-bottom: 20px;
@@ -290,6 +294,7 @@ main {
 
     .funcs {
         flex-direction: column;
+        margin-bottom: 10%;
     }
 
     .element {
@@ -316,16 +321,32 @@ main {
         margin: 0px 0px 2% 0px;
     }
 
-    .enterprises .enterprise {
-        max-width: 100%;
+    .enterprises {
+        max-width: 90% !important;
+        width: 100%;
+
+        .sec-enterprises {
+            width: 100% !important;
+            max-width: 100%;
+            gap: 15px;
+
+            .enterprise {
+                height: 100px;
+                width: 200px;
+                margin-right: 5%;
+            }
+
+            .name-enterprise h3 {
+                font-size: 1rem;
+            }
+
+            .name-enterprise p {
+                font-size: 0.9rem;
+            }
+
+        }
+
     }
-    
-    .enterprises .name-enterprise h3 {
-        font-size: 1rem;
-    }
-    
-    .enterprises .name-enterprise p {
-        font-size: 0.9rem;
 
 }
 

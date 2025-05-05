@@ -21,6 +21,10 @@ body {
     
 }
 
+.bi-search::before {
+    margin: 15px;
+}
+
 .search-container {
     position: center;
     width: 50%;
@@ -43,12 +47,18 @@ body {
 
 .search-btn {
     position: absolute;
-    right: 12px;
-    top: 2px;
+    right: 530px;
+    top: 20px;
     border: none;
-    background: transparent;
-    color: var(--primary-color);
+    background: white;
+    color: black;
     transition: transform 0.2s;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .search-btn:hover {
