@@ -17,7 +17,11 @@
   <!-- Scripts -->
   <script src="/Views/Assets/Vendor/bootstrap.bundle.min.js" defer></script>
   <script src="/Views/Assets/Js/sidebar.js" defer></script>
+<<<<<<< HEAD
   <script src= "/Views/Assets/Js/cad_products.js" defer></script>
+=======
+  script.src->
+>>>>>>> 6864bd400a055aa350733617fc6357a4d38c392a
 </head>
 
 <body>
@@ -204,6 +208,7 @@
   </div>
 
 <!-- Modal de cadastro de produtos -->
+<<<<<<< HEAD
 <div class="modal fade" id="modal_page" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -220,6 +225,23 @@
           <input type="number" id="product-price" class="form-control" required>
           <label for="product-price">Descrição:</label>
           <input type="text" id="product-price" class="form-control" required>
+=======
+  <section class="modal-container" id="modal">
+    <section class="modal">
+      <button class="close-modal" id="close">X</button>
+      <h2 class="modal-title">Cadastrar Produto</h2>
+      <div class="modal-content">
+        <form action="/" class="item-cad">
+          <div class="input-wrapper">
+            <label for="product-name">Nome do Produto:</label>
+            <input type="text" id="product-name" class="form-product" required>
+          </div>
+          <div class="input-wrapper">
+            <label for="product-price">Preço:</label>
+            <input type="number" id="product-price" class="form-product" required>
+          </div>
+          <button type="submit">Cadastrar</button>
+>>>>>>> 6864bd400a055aa350733617fc6357a4d38c392a
         </form>
       </div>
     </div>
