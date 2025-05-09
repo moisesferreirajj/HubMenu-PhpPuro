@@ -20,7 +20,7 @@ body {
 .hero {
     background: linear-gradient(rgba(0, 103, 71, 0.8), rgba(0, 103, 71, 0.8)), url('img/hero-bg.jpg') center/cover no-repeat;
     color: white;
-    padding: 5rem 0;
+    padding: 15px 0;
 }
 
 .btn-primary {
@@ -100,11 +100,21 @@ body {
 .how-it-works {
     background-color: var(--light-bg);
 }
+.bg-primary{
+    background-color: var(--primary-color) !important;
+}
+.bg-secondary{
+    background-color: var(--secondary-color) !important;
+}
+
+.section-img{
+    border-radius: 15px;
+}
+
 
 .step-card {
     height: 100%;
     border-radius: 10px;
-    overflow: hidden;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     position: relative;
     border: none;

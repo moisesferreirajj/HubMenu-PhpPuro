@@ -17,6 +17,7 @@
   <!-- Scripts -->
   <script src="/Views/Assets/Vendor/bootstrap.bundle.min.js" defer></script>
   <script src="/Views/Assets/Js/sidebar.js" defer></script>
+  <script src= "/Views/Assets/Js/cad_products.js" defer></script>
 </head>
 
 <body>
@@ -42,7 +43,7 @@
         <button class="btn btn-light btn-circle">
           <i class="bi bi-funnel"></i>
         </button>
-        <button class="btn btn-light btn-circle">
+        <button id="open_cad" data-bs-toggle="modal" data-bs-target="#modal_page" class="btn btn-light btn-circle">
           <i class="bi bi-plus-lg"></i>
         </button>
       </div>
@@ -203,20 +204,28 @@
   </div>
 
 <!-- Modal de cadastro de produtos -->
-  <section class="modal-container" id="modal">
-    <section class="modal">
-      <button class="close-modal" id="close">X</button>
-      <h2 class="modal-title">Cadastrar Produto</h2>
-      <div class="modal-content">
-        <form action="/" class="item-cad">
+<div class="modal fade" id="modal_page" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">Cadastrar Produto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <input type="file">
           <label for="product-name">Nome do Produto:</label>
-          <input type="text" id="product-name" class="form-product" required>
+          <input type="text" id="product-name" class="form-control" required>
           <label for="product-price">Preço:</label>
-          <input type="number" id="product-price" class="form-product" required>
+          <input type="number" id="product-price" class="form-control" required>
+          <label for="product-price">Descrição:</label>
+          <input type="text" id="product-price" class="form-control" required>
         </form>
       </div>
-    </section>
-  </section>
+    </div>
+  </div>
+</div>
+
   
   <!-- Bootstrap Bundle -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>

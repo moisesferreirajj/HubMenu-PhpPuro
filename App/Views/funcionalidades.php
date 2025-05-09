@@ -235,14 +235,14 @@
             </div>
             <div class="row g-4 align-items-center">
                 <div class="col-lg-6">
-                    <img src="img/ordering-process.jpg" alt="Processo de Pedido" class="img-fluid rounded shadow-lg">
+                    <img src="/Views/Assets/Images/Fundo.jpg" class="section-img img-fluid" alt="Missão do HubMenu">
                 </div>
                 <div class="col-lg-6">
                     <div class="card border-0 bg-light p-4">
                         <h3 class="fw-bold mb-4">Pedidos dentro do Restaurante</h3>
                         <ul class="list-unstyled">
                             <li class="mb-3">
-                            <span class="background: var(--primary-color) text-white rounded-circle d-inline-block text-center me-3" style="width: 30px; height: autopx; line-height: 30px;">1</span>
+                            <span class="bg-primary text-white rounded-circle d-inline-block text-center me-3" style="width: 30px; height: autopx; line-height: 30px;">1</span>
                                 Cliente acessa o cardápio digital pelo tablet na mesa ou via QR Code
                             </li>
                             <li class="mb-3">
@@ -267,23 +267,23 @@
                         <h3 class="fw-bold mb-4">Pedidos fora do Restaurante</h3>
                         <ul class="list-unstyled">
                             <li class="mb-3">
-                                <span class="bg-primary text-white rounded-circle d-inline-block text-center me-3" style="width: 30px; height: autopx; line-height: 30px;">1</span>
+                                <span class="bg-secondary text-white rounded-circle d-inline-block text-center me-3" style="width: 30px; height: autopx; line-height: 30px;">1</span>
                                 Cliente acessa o site ou aplicativo do restaurante
                             </li>
                             <li class="mb-3">
-                                <span class="bg-primary text-white rounded-circle d-inline-block text-center me-3" style="width: 30px; height: 30px; line-height: 30px;">2</span>
+                                <span class="bg-secondary text-white rounded-circle d-inline-block text-center me-3" style="width: 30px; height: 30px; line-height: 30px;">2</span>
                                 Navega pelo cardápio digital e seleciona os itens desejados
                             </li>
                             <li class="mb-3">
-                                <span class="bg-primary text-white rounded-circle d-inline-block text-center me-3" style="width: 30px; height: 30px; line-height: 30px;">3</span>
+                                <span class="bg-secondary text-white rounded-circle d-inline-block text-center me-3" style="width: 30px; height: 30px; line-height: 30px;">3</span>
                                 Informa endereço ou se deseja retirar no local
                             </li>
                             <li class="mb-3">
-                                <span class="bg-primary text-white rounded-circle d-inline-block text-center me-3" style="width: 30px; height: 30px; line-height: 30px;">4</span>
+                                <span class="bg-secondary text-white rounded-circle d-inline-block text-center me-3" style="width: 30px; height: 30px; line-height: 30px;">4</span>
                                 Realiza o pagamento online ou escolhe pagar na entrega
                             </li>
                             <li>
-                                <span class="bg-primary text-white rounded-circle d-inline-block text-center me-3" style="width: 30px; height: 30px; line-height: 30px;">5</span>
+                                <span class="bg-secondary text-white rounded-circle d-inline-block text-center me-3" style="width: 30px; height: 30px; line-height: 30px;">5</span>
                                 Acompanha o status do pedido em tempo real até a entrega
                             </li>
                         </ul>
