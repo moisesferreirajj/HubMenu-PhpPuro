@@ -17,6 +17,7 @@
   <!-- Scripts -->
   <script src="/Views/Assets/Vendor/bootstrap.bundle.min.js" defer></script>
   <script src="/Views/Assets/Js/sidebar.js" defer></script>
+  script.src->
 </head>
 
 <body>
@@ -209,10 +210,15 @@
       <h2 class="modal-title">Cadastrar Produto</h2>
       <div class="modal-content">
         <form action="/" class="item-cad">
-          <label for="product-name">Nome do Produto:</label>
-          <input type="text" id="product-name" class="form-product" required>
-          <label for="product-price">Preço:</label>
-          <input type="number" id="product-price" class="form-product" required>
+          <div class="input-wrapper">
+            <label for="product-name">Nome do Produto:</label>
+            <input type="text" id="product-name" class="form-product" required>
+          </div>
+          <div class="input-wrapper">
+            <label for="product-price">Preço:</label>
+            <input type="number" id="product-price" class="form-product" required>
+          </div>
+          <button type="submit">Cadastrar</button>
         </form>
       </div>
     </section>
