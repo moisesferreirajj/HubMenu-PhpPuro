@@ -8,7 +8,7 @@ class CadastroController extends RenderView
         $this->loadView('cadastro',
             [
                 'Title' => 'HubMenu |',
-                'users' => $users->fetch()
+                'users' => $users->findAll()
             ],
         );
     }

@@ -1,11 +1,6 @@
 <?php
 
-namespace sys4soft;
-require_once '../global.php';
-
-use PDO;
-use PDOException;
-use stdClass;
+@require_once __DIR__ . '/../global.php';
 
 class Database
 {

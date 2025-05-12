@@ -1,32 +1,83 @@
 <?php
 
-// class UsuariosModel extends Database {
-//     private $pdo;
+require_once __DIR__ . '/Database.php';
 
-//     public function __construct(){
-//         $this->pdo = $this->getConnection();
-//     }
+class UsuariosModel
+{
+    /**
+     * Busca um usuário pelo ID.
+     */
+    public function findById($id)
+    {
+        $db = new Database();
+        $sql = "SELECT * FROM usuarios WHERE id = :id";
+        $params = [':id' => $id];
+        return $db->execute_query($sql, $params);
+    }
 
-//     public function fetch(){
-//         try {
-//             //INICIA A QUERY SQL
-//             $this->pdo->beginTransaction();
+    /**
+     * Retorna todos os usuários da tabela.
+     */
+    public function findAll()
+    {
+        $db = new Database();
+        $sql = "SELECT * FROM usuarios";
+        return $db->execute_query($sql);
+    }
 
-//             $stm = $this->pdo->prepare("SELECT * FROM usuarios");
-//             $stm->execute();
+    /**
+     * Insere um novo usuário no banco de dados.
+     */
+    public function insert($nome, $senha, $email, $cep = null, $endereco = null, $telefone = null)
+    {
+        $db = new Database();
+        $sql = "INSERT INTO usuarios (nome, senha, email, cep, endereco, telefone)
+                VALUES (:nome, :senha, :email, :cep, :endereco, :telefone)";
+        $params = [
+            ':nome' => $nome,
+            ':senha' => $senha,
+            ':email' => $email,
+            ':cep' => $cep,
+            ':endereco' => $endereco,
+            ':telefone' => $telefone
+        ];
+        return $db->execute_non_query($sql, $params);
+    }
 
-//             if ($stm->rowCount() > 0) {
-//                 //SE TUDO OCORRER BEM, PROSSIGA
-//                 $this->pdo->commit();
-//                 return $stm->fetchAll(PDO::FETCH_ASSOC);
-//             } else {
-//                 //SE NÃO TIVER NENHUM RESULTADO FAZ ROLLBACK PARA EVITAR SQL INJECTION
-//                 $this->pdo->rollback();
-//                 return [];
-//             }
-//         } catch (Exception $error) {
-//             $this->pdo->rollback();
-//             throw $error;
-//         }
-//     }
-// }
+    /**
+     * Atualiza os dados de um usuário existente.
+     */
+    public function update($id, $nome, $senha, $email, $cep, $endereco, $telefone)
+    {
+        $db = new Database();
+        $sql = "UPDATE usuarios SET 
+                    nome = :nome, 
+                    senha = :senha, 
+                    email = :email, 
+                    cep = :cep, 
+                    endereco = :endereco, 
+                    telefone = :telefone
+                WHERE id = :id";
+        $params = [
+            ':nome' => $nome,
+            ':senha' => $senha,
+            ':email' => $email,
+            ':cep' => $cep,
+            ':endereco' => $endereco,
+            ':telefone' => $telefone,
+            ':id' => $id
+        ];
+        return $db->execute_non_query($sql, $params);
+    }
+
+    /**
+     * Deleta um usuário com base no ID.
+     */
+    public function delete($id)
+    {
+        $db = new Database();
+        $sql = "DELETE FROM usuarios WHERE id = :id";
+        $params = [':id' => $id];
+        return $db->execute_non_query($sql, $params);
+    }
+}

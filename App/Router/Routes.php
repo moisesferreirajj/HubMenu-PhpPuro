@@ -5,8 +5,10 @@ $routes = [
     '/cadastro' => 'CadastroController@index',
     '/login' => 'LoginController@index',
     '/sobre' => 'SobreController@index',
-    '/login' => 'LoginController@index',
     '/user/{id}' => 'UserController@show',
+    '/cadastro/produtos' => 'ProdutosController@index',
+    /* ROTAS DE API ABAIXO: */
+    '/api/produtos/cadastrar' => 'ProdutosController@cadastrar',
 ]
 
 ?>

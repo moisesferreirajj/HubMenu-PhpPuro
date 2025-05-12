@@ -7,8 +7,7 @@ class SobreController extends RenderView
 
         $this->loadView('sobre',
             [
-                'Title' => 'HubMenu |',
-                'users' => $users->fetch()
+                'Title' => 'HubMenu |'
             ],
         );
     }

@@ -7,8 +7,7 @@ class LoginController extends RenderView
 
         $this->loadView('login',
             [
-                'Title' => 'HubMenu |',
-                'users' => $users->fetch()
+                'Title' => 'HubMenu |'
             ],
         );
     }

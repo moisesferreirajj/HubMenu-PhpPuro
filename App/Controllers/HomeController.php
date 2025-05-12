@@ -7,8 +7,7 @@ class HomeController extends RenderView
 
         $this->loadView('index',
             [
-            'Title' => 'HubMenu |',
-            'users' => $users->fetch()
+                'Title' => 'HubMenu |'
             ],
         );
     }

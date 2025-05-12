@@ -1,4 +1,7 @@
-<?php @require_once __DIR__ . '/../global.php'; ?>
+<?php 
+   require_once __DIR__ . '/../global.php';
+   require_once __DIR__ . '/../Models/UsuariosModel.php';
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -171,6 +174,14 @@
 
     </div>
 
-</body>
+    <?php
 
+        $select = new UsuariosModel();
+
+        $user_orders = $select->findById(2);
+        print_r($user_orders)
+        
+    ?>
+
+</body>
 </html>

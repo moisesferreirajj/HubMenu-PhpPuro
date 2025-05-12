@@ -2,7 +2,7 @@
 
 class Core {
     public function run($routes) {
-        $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $url = isset($_SERVER['REQUEST_URI']) ? parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) : '/';
         ($url != '/') ? $url = rtrim($url, '/') : $url;
 
         $routerFound = false;
@@ -16,7 +16,11 @@ class Core {
                 $routerFound = true;
 
                 [$currentController, $action] = explode('@', $controller);
-                require_once __DIR__ . "/../Controllers/$currentController.php";
+                $controllerFile = __DIR__ . "/../Controllers/$currentController.php";
+                if (!file_exists($controllerFile)) {
+                    $controllerFile = __DIR__ . "/../Controllers/Cadastros/$currentController.php";
+                }
+                require_once $controllerFile;
 
                 $newController = new $currentController();
                 call_user_func_array([$newController, $action], $matches);
