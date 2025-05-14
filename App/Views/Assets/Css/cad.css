@@ -122,6 +122,10 @@ h2::after {
     border-radius: 2px;
 }
 
+.form-check-label {
+    margin-bottom: 0px;
+}
+
 .form-container {
     width: 100%;
     max-width: 480px;
@@ -137,8 +141,18 @@ h2::after {
     margin-bottom: 1.5rem;
 }
 
+.form-check {
+    display: flex;
+    align-items: center;
+}
+
+.form-check-input {
+    max-width: 50px;
+    background: none;
+    box-shadow: none;
+}
+
 label {
-    display: block;
     margin-bottom: 0.5rem;
     color: var(--text-dark);
     font-weight: 600;

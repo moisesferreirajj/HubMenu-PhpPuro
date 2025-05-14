@@ -7,16 +7,16 @@ class ProdutosModel
     /**
      * Busca um produto pelo ID.
      */
-    public function findById($id_produto)
+    public function findById($id)
     {
         $db = new Database();
-        $sql = "SELECT * FROM produtos WHERE id_produto = :id_produto";
-        $params = [':id_produto' => $id_produto];
+        $sql = "SELECT * FROM produtos WHERE id = :id";
+        $params = [':id' => $id];
         return $db->execute_query($sql, $params);
     }
 
     /**
-     * Retorna todos os usuários da tabela.
+     * Retorna todos os produtos da tabela.
      */
     public function findAll()
     {
@@ -28,16 +28,18 @@ class ProdutosModel
     /**
      * Insere um novo produto no banco de dados.
      */
-    public function insert($nome, $descricao, $valor, $id_estabelecimento)
+    public function insert($nome, $descricao, $valor, $imagem, $estabelecimento_id, $categoria_id)
     {
         $db = new Database();
-        $sql = "INSERT INTO produtos (nome, descricao, valor, id_estabelecimento)
-                VALUES (:nome, :descricao, :valor, :id_estabelecimento)";
+        $sql = "INSERT INTO produtos (nome, descricao, valor, imagem, estabelecimento_id, categoria_id)
+                VALUES (:nome, :descricao, :valor, :imagem, :estabelecimento_id, :categoria_id)";
         $params = [
             ':nome' => $nome,
             ':descricao' => $descricao,
             ':valor' => $valor,
-            ':id_estabelecimento' => $id_estabelecimento,
+            ':imagem' => $imagem,
+            ':estabelecimento_id' => $estabelecimento_id,
+            ':categoria_id' => $categoria_id
         ];
         return $db->execute_non_query($sql, $params);
     }
@@ -45,21 +47,23 @@ class ProdutosModel
     /**
      * Atualiza os dados de um produto existente.
      */
-    public function update($id, $nome, $descricao, $valor, $id_estabelecimento)
+    public function update($id, $nome, $descricao, $valor, $estabelecimento_id, $categoria_id)
     {
         $db = new Database();
         $sql = "UPDATE produtos SET 
                     nome = :nome, 
                     descricao = :descricao, 
                     valor = :valor, 
-                    id_estabelecimento = :id_estabelecimento
-                WHERE id_produto = :id";
+                    estabelecimento_id = :estabelecimento_id,
+                    categoria_id = :categoria_id
+                WHERE id = :id";
         $params = [
+            ':id' => $id,
             ':nome' => $nome,
             ':descricao' => $descricao,
             ':valor' => $valor,
-            ':id_estabelecimento' => $id_estabelecimento,
-            ':id' => $id
+            ':estabelecimento_id' => $estabelecimento_id,
+            ':categoria_id' => $categoria_id
         ];
         return $db->execute_non_query($sql, $params);
     }
@@ -70,9 +74,8 @@ class ProdutosModel
     public function delete($id)
     {
         $db = new Database();
-        $sql = "DELETE FROM produtos WHERE id_produto = :id";
+        $sql = "DELETE FROM produtos WHERE id = :id";
         $params = [':id' => $id];
         return $db->execute_non_query($sql, $params);
     }
-
 }

@@ -310,3 +310,61 @@ body {
 }
 
 
+/* Garante espaçamento interno para as colunas */
+.col {
+    padding: 15px;
+    position: relative;
+}
+
+/* Melhora a responsividade da imagem */
+.card-img-top {
+    height: 180px;
+    width: 100%;
+    object-fit: cover;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+/* Mantém o tamanho mínimo dos cards para uniformidade */
+.card.h-100 {
+    min-height: 320px;
+}
+
+/* Responsivo para smartphones */
+@media (max-width: 768px) {
+    .card-img-top {
+        height: 140px;
+    }
+
+    .card.h-100 {
+        min-height: 300px;
+    }
+
+    .search-btn {
+        right: 20px;
+        top: 15px;
+    }
+}
+
+@media (max-width: 500px) {
+    .card-img-top {
+        height: 120px;
+    }
+
+    .search-btn {
+        right: 10px;
+        top: 10px;
+    }
+
+    .btn-cart {
+        font-size: 0.75rem;
+        padding: 4px 8px;
+    }
+}
+
+/* Corrige botão de edição em telas pequenas */
+.edit-button {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+}
