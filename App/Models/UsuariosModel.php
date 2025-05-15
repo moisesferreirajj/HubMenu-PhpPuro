@@ -80,4 +80,13 @@ class UsuariosModel
         $params = [':id' => $id];
         return $db->execute_non_query($sql, $params);
     }
+
+    public function  queryOrders($id){
+        $db = new Database();
+        $sql = "SELECT * FROM pedidos p JOIN usuarios usu ON p.usuario_id = usu.id JOIN pedidos_produtos pp ON p.id = pp.pedido_id JOIN produto pr ON pr.id = pp.produto_id WHERE usu.id = :id";
+        $params = [':id' => $id];
+
+        return $db->execute_query($sql, $params);
+    }
 }
+ 

@@ -9,4 +9,5 @@ class UserController
     public function show($id){
         echo "User " .$id[0];
     }
+
 }
