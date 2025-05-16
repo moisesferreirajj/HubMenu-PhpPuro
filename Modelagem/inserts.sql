@@ -34,29 +34,17 @@ INSERT INTO usuarios (nome, email, senha, cep, endereco, telefone) VALUES
 ('Rafael Rodrigues', 'rafael@example.com', 'senha123', '89200-018', 'Rua I, 900', '(47) 99999-0009'),
 ('Juliana Martins', 'juliana@example.com', 'senha123', '89200-019', 'Rua J, 1000', '(47) 99999-0010');
 
-INSERT INTO usuarios_cargos (usuario_id, cargo_id) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5),
-(6, 6),
-(7, 7),
-(8, 8),
-(9, 9),
-(10, 10);
-
-INSERT INTO usuarios_estabelecimentos (usuario_id, estabelecimento_id) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5),
-(6, 6),
-(7, 7),
-(8, 8),
-(9, 9),
-(10, 10);
+INSERT INTO estabelecimentos_usuarios (usuario_id, cargo_id, estabelecimento_id) VALUES
+(1, 1, 1),
+(2, 2, 2),
+(3, 3, 3),
+(4, 4, 4),
+(5, 5, 5),
+(6, 6, 6),
+(7, 7, 7),
+(8, 8, 8),
+(9, 9, 9),
+(10, 10, 10);
 
 INSERT INTO categorias (nome) VALUES
 ('Pizzas'),

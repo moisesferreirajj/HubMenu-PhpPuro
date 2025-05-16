@@ -60,7 +60,7 @@
             </div>
 
             <div class="links">
-                <a href="./index"><i class="fas fa-arrow-left"></i> Voltar ao Início</a>
+                <a href="/Views/Empresarial/index.php"><i class="fas fa-arrow-left"></i> Voltar ao Início</a>
                 <a href="./login"><i class="fas fa-sign-in-alt"></i> Já tem cadastro? Entrar</a>
             </div>
         </div>

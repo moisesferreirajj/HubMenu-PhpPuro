@@ -47,7 +47,7 @@ class ProdutosModel
     /**
      * Atualiza os dados de um produto existente.
      */
-    public function update($id, $nome, $descricao, $valor, $estabelecimento_id, $categoria_id)
+    public function update($id, $nome, $descricao, $valor, $estabelecimento_id, $categoria_id, $imagem)
     {
         $db = new Database();
         $sql = "UPDATE produtos SET 
@@ -55,7 +55,8 @@ class ProdutosModel
                     descricao = :descricao, 
                     valor = :valor, 
                     estabelecimento_id = :estabelecimento_id,
-                    categoria_id = :categoria_id
+                    categoria_id = :categoria_id,
+                    imagem = :imagem
                 WHERE id = :id";
         $params = [
             ':id' => $id,
@@ -63,7 +64,8 @@ class ProdutosModel
             ':descricao' => $descricao,
             ':valor' => $valor,
             ':estabelecimento_id' => $estabelecimento_id,
-            ':categoria_id' => $categoria_id
+            ':categoria_id' => $categoria_id,
+            ':imagem' => $imagem
         ];
         return $db->execute_non_query($sql, $params);
     }

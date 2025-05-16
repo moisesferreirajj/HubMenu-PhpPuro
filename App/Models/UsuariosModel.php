@@ -83,10 +83,17 @@ class UsuariosModel
 
     public function  queryOrders($id){
         $db = new Database();
-        $sql = "SELECT * FROM pedidos p JOIN usuarios usu ON p.usuario_id = usu.id JOIN pedidos_produtos pp ON p.id = pp.pedido_id JOIN produto pr ON pr.id = pp.produto_id WHERE usu.id = :id";
+        $sql = "SELECT id AS id_pedido, data_pedido, forma_pagamento FROM pedidos WHERE usuario_id = :id";
+        $params = [':id' => $id];
+
+        return $db->execute_query($sql, $params);
+    }
+
+    public function  queryProduct($id){
+        $db = new Database();
+        $sql = "SELECT pr.nome AS nome_produto, pp.quantidade AS Quantidade, pr.valor AS Preço FROM produtos pr JOIN pedidos_produtos pp ON pr.id = pp.produto_id JOIN pedidos p ON p.id = pp.pedido_id JOIN usuarios u ON u.id = p.usuario_id WHERE p.usuario_id = :id";
         $params = [':id' => $id];
 
         return $db->execute_query($sql, $params);
     }
 }
- 

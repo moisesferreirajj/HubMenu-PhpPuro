@@ -20,6 +20,13 @@ class Core {
                 if (!file_exists($controllerFile)) {
                     $controllerFile = __DIR__ . "/../Controllers/Cadastros/$currentController.php";
                 }
+                if (!file_exists($controllerFile)) {
+                    $controllerFile = __DIR__ . "/../Controllers/Empresarial/$currentController.php";
+                }
+                if (!file_exists($controllerFile)) {
+                    $controllerFile = __DIR__ . "/../Controllers/Clientes/$currentController.php";
+                }
+                
                 require_once $controllerFile;
 
                 $newController = new $currentController();

@@ -179,7 +179,7 @@ main {
         flex-direction: row;
         gap: 30px;
         margin-top: 2%;
-        overflow-y: hidden;
+        overflow-y: scroll;
     }
 
     .enterprise {
@@ -221,7 +221,7 @@ main {
     }
 
     .name-enterprise h3 {
-        font-size: 1rem;
+        font-size: 0.7rem;
         color: black;
         white-space: nowrap;
         overflow: hidden;

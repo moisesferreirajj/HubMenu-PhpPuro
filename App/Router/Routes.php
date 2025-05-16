@@ -1,10 +1,14 @@
 <?php
 
 $routes = [
-    '/' => 'HomeController@index',
-    '/cadastro' => 'CadastroController@index',
-    '/login' => 'LoginController@index',
-    '/sobre' => 'SobreController@index',
+    /* ROTAS CLIENTES */
+    '/clientes' => 'DashClienteController@index',
+    /* ROTAS EMPRESARIAIS */
+    '/empresarial' => 'HomeController@index',
+    '/empresarial/cadastro' => 'CadastroController@index',
+    '/empresarial/login' => 'LoginController@index',
+    '/empresarial/sobre' => 'SobreController@index',
+    /* ROTAS GLOBAIS */
     '/user/{id}' => 'UserController@show',
     '/cardapio/{id}' => 'CardapioController@indexCliente',
     /* ROTAS DE ADMIN */

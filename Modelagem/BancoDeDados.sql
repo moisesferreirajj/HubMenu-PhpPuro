@@ -36,22 +36,15 @@ CREATE TABLE usuarios (
     telefone VARCHAR(20)
 );
 
--- Relação N:N entre usuários e cargos
-CREATE TABLE usuarios_cargos (
+-- Relação N:N entre usuários e estabelecimentos
+CREATE TABLE estabelecimentos_usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id INT NOT NULL,
     cargo_id INT NOT NULL,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-    FOREIGN KEY (cargo_id) REFERENCES cargos(id)
-);
-
--- Relação N:N entre usuários e estabelecimentos
-CREATE TABLE usuarios_estabelecimentos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT NOT NULL,
     estabelecimento_id INT NOT NULL,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-    FOREIGN KEY (estabelecimento_id) REFERENCES estabelecimentos(id)
+    FOREIGN KEY (estabelecimento_id) REFERENCES estabelecimentos(id),
+    FOREIGN KEY (cargo_id) REFERENCES cargos(id)
 );
 
 -- Tabela de Categorias de Produto

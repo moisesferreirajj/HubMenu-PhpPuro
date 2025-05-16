@@ -1,0 +1,271 @@
+/* Custom styles for HubMenu */
+:root {
+    --primary: #0e7a56;
+    --secondary: #006747;
+    --accent: #ff4500;
+    --light-gray: #f8f9fa;
+    --dark-gray: #343a40;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    padding: 15px 0;
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.hub {
+    color: var(--primary);
+}
+
+.menu {
+    color: var(--secondary);
+}
+
+.nav-link {
+    font-weight: 500;
+    color: #666;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: var(--primary);
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+.btn-outline-primary {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+/* Hero Section */
+.hero {
+    background-color: var(--light-gray);
+    padding: 80px 0;
+}
+
+.hero h1 {
+    color: #333;
+}
+
+.search-box {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-box .input-group {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.search-box .form-control {
+    border-color: #ddd;
+    padding: 12px;
+    font-size: 1rem;
+}
+
+.search-box .form-control:focus {
+    box-shadow: none;
+    border-color: var(--primary);
+}
+
+.search-box .input-group-text {
+    border-color: #ddd;
+}
+
+/* Categories Section */
+.category-card {
+    border-radius: 12px;
+    overflow: hidden;
+    height: 180px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+}
+
+.category-card h2 {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.bg-danger {
+    background-color: #e63946 !important;
+}
+
+.bg-success {
+    background-color: var(--primary) !important;
+}
+
+.mini-category-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.mini-category-card:hover {
+    transform: translateY(-5px);
+}
+
+.mini-category-card .icon-container {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.mini-category-card:nth-child(1) .icon-container {
+    background-color: #ffcc00;
+    color: #996600;
+}
+
+.mini-category-card:nth-child(2) .icon-container {
+    background-color: #ff6666;
+    color: #cc0000;
+}
+
+.mini-category-card:nth-child(3) .icon-container {
+    background-color: #99ccff;
+    color: #3366cc;
+}
+
+/* Top Restaurants Section */
+.section-title {
+    position: relative;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    padding-bottom: 0.5rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 60px;
+    height: 4px;
+    background-color: var(--primary);
+}
+
+.restaurant-card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-5px);
+}
+
+.restaurant-card .card-img-top {
+    height: 160px;
+    object-fit: cover;
+}
+
+.restaurant-card .card-title {
+    font-weight: 600;
+}
+
+.badge.bg-success {
+    background-color: var(--primary) !important;
+}
+
+/* App Download Section */
+.app-download {
+    background-color: white;
+}
+
+.app-image {
+    max-height: 500px;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .hero {
+        padding: 50px 0;
+    }
+    
+    .category-card {
+        height: auto;
+    }
+    
+    .mini-category-card {
+        height: 140px;
+    }
+    
+    .app-image {
+        max-width: 70%;
+        margin-top: 30px;
+    }
+    
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .search-box .input-group {
+        flex-direction: column;
+    }
+    
+    .search-box .btn {
+        margin-top: 10px;
+        border-radius: 5px;
+    }
+    
+    .category-card {
+        text-align: center;
+    }
+    
+    .category-card img {
+        display: none;
+    }
+    
+    .app-image {
+        max-width: 90%;
+    }
+}
