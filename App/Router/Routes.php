@@ -8,6 +8,8 @@ $routes = [
     '/empresarial/cadastro' => 'CadastroController@index',
     '/empresarial/login' => 'LoginController@index',
     '/empresarial/sobre' => 'SobreController@index',
+    '/empresarial/suporte' => 'SuporteController@index',
+    '/empresarial/funcionalidades'=> 'FuncionalidadesController@index',
     /* ROTAS GLOBAIS */
     '/user/{id}' => 'UserController@show',
     '/cardapio/{id}' => 'CardapioController@indexCliente',

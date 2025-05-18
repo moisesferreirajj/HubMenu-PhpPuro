@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <?php include '../Components/navigation.php'; ?>
+    <?php include_once __DIR__ . '/../Components/navigation.php'; ?>
     <!-- SECTION DE BOAS VINDAS -->
     <section class="hero-section text-center">
         <div class="container">
@@ -136,7 +136,7 @@
             </a>
         </div>
     </section>
-    <?php include '../Components/footer.php'; ?>
+    <?php include_once __DIR__ . '/../Components/footer.php'; ?>
 </body>
 
 </html>

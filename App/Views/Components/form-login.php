@@ -28,7 +28,7 @@
                 </div>
                 <button type="submit" class="btn">Entrar</button>
                 <div class="links">
-                    <a href="./index.php"><i class="fas fa-arrow-left"></i> Voltar ao Início</a>
+                    <a href="./"><i class="fas fa-arrow-left"></i> Voltar ao Início</a>
                     <a href="./cadastro"><i class="fas fa-sign-in-alt"></i> Cadastrar-se</a>
                 </div>
                 <!--

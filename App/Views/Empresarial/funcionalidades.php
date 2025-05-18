@@ -1,6 +1,8 @@
 <?php
 // Arquivo: funcionalidades.php
 // Página de Funcionalidades para sistema de cardápios online e digitais
+@require_once __DIR__ . '/../../global.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -8,9 +10,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Funcionalidades | Sistema de Cardápios Digitais</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title><?= $Title ?> Funcionalidades</title>
+    <!-- BOOTSTRAP GERENCIAMENTO -->
+    <link rel="icon" href="/Views/Assets/Images/favicon.png">
+    <link type="text/css" rel="stylesheet" href="/Views/Assets/Vendor/bootstrap.min.css">
+    <script href="/Views/Assets/Vendor/bootstrap.min.js"></script>
+    <script src="/Views/Assets/Vendor/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- CSS Personalizado -->
@@ -18,7 +23,7 @@
 </head>
 <body>
     <!-- O componente Nav será incluído aqui -->
-    <?php include '../Components/navigation.php'; ?>
+    <?php include_once __DIR__ . '/../Components/navigation.php'; ?>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -309,7 +314,7 @@
         </div>
     </section>
 
-    <?php include '../Components/footer.php'; ?>
+    <?php include_once __DIR__ . '/../Components/footer.php'; ?>
 
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

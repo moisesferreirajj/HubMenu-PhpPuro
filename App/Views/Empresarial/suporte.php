@@ -13,7 +13,7 @@
     <title><?= $Title ?> Suporte</title>
 </head>
 <body>
-    <?php include_once '../Components/navigation.php'; ?>
+    <?php include_once __DIR__ . '/../Components/navigation.php'; ?>
     <body class="d-flex flex-column">
         <main class="flex-shrink-0">
             <section class="py-5">
@@ -56,6 +56,6 @@
             </section>
         </main>
     </body>
-    <?php include_once '../Components/footer.php'; ?>
+    <?php include_once __DIR__ . '/../Components/footer.php'; ?>
 </body>
 </html>
