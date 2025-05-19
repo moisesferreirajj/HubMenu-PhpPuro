@@ -2,7 +2,7 @@
 
 $routes = [
     /* ROTAS CLIENTES */
-    '/clientes' => 'DashClienteController@index',
+    '/' => 'DashClienteController@index',
     /* ROTAS EMPRESARIAIS */
     '/empresarial' => 'HomeController@index',
     '/empresarial/cadastro' => 'CadastroController@index',

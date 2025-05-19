@@ -98,7 +98,7 @@ class EstabelecimentosModel
     public function MoreStars()
     {
         $db = new Database();
-        $sql = "SELECT media_avaliacao, nome, tipo FROM estabelecimentos ORDER BY media_avaliacao DESC LIMIT 5";
+        $sql = "SELECT media_avaliacao, nome, tipo, imagem FROM estabelecimentos ORDER BY media_avaliacao DESC LIMIT 5";
         return $db->execute_query($sql);
     }
 }

@@ -56,6 +56,8 @@ class Core {
         // Se nenhuma rota bateu
         if (!$routerFound) {
             require_once __DIR__ . '/../Controllers/NotFoundController.php';
+            $notFound = new NotFoundController();
+            $notFound->index();
         }
     }
 }

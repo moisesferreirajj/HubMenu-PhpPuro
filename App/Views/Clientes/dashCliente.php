@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 @require_once __DIR__ . '/../../global.php';
 
@@ -6,57 +6,26 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $Title ?? 'HubMenu' ?> Delivery de Comida</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- CSS Customizado -->
     <link rel="stylesheet" href="/Views/Assets/CSS/Clientes/dash.css">
+
 </head>
+
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <span class="hub">Hub</span><span class="menu">Menu</span>
-            </a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Entregador</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Restaurantes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Carreiras</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">HubMenu Card</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Para Empresas</a>
-                    </li>
-                </ul>
-                <div class="d-flex">
-                    <button class="btn btn-outline-primary me-2">Criar conta</button>
-                    <button class="btn btn-primary">Entrar</button>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php include_once __DIR__ . '/../Components/navigation-clientes.php'; ?>
 
     <!-- Hero Section -->
     <section class="hero py-5">
@@ -64,16 +33,18 @@
             <div class="row">
                 <div class="col-md-8 mx-auto text-center">
                     <h1 class="display-5 fw-bold mb-4">Tudo pra facilitar seu dia a dia</h1>
-                    <p class="lead mb-4">Descubra os melhores restaurantes, pizzarias, hamburguerias e muito mais perto de você!</p>
-                    
+                    <p class="lead mb-4">Descubra os melhores restaurantes, pizzarias, hamburguerias e muito mais perto
+                        de você!</p>
+
                     <div class="search-box">
                         <form class="d-flex">
                             <div class="input-group">
                                 <span class="input-group-text bg-white border-end-0">
                                     <i class="fas fa-map-marker-alt text-primary"></i>
                                 </span>
-                                <input type="text" class="form-control border-start-0" placeholder="Endereço de entrega e número">
-                                <button class="btn btn-primary px-4" type="submit">Buscar</button>
+                                <input type="text" class="form-control border-start-0"
+                                    placeholder="Endereço de entrega e número">
+                                <button class="btn btn-success px-4" type="submit">Buscar</button>
                             </div>
                         </form>
                     </div>
@@ -96,12 +67,13 @@
                                 </a>
                             </div>
                             <div class="col-4 d-flex align-items-end">
-                                <img src="/Views/Assets/Images/Estabelecimentos/DashRestaurante.png" alt="Restaurante" class="img-fluid">
+                                <img src="/Views/Assets/Images/Estabelecimentos/DashRestaurante.png" alt="Restaurante"
+                                    class="img-fluid">
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-md-6">
                     <div class="category-card bg-success text-white">
                         <div class="row">
@@ -112,13 +84,14 @@
                                 </a>
                             </div>
                             <div class="col-4 d-flex align-items-end">
-                                <img src="/Views/Assets/Images/Estabelecimentos/DashPizzaiolo.png" alt="Pizzaria" class="img-fluid">
+                                <img src="/Views/Assets/Images/Estabelecimentos/DashPizzaiolo.png" alt="Pizzaria"
+                                    class="img-fluid">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Additional Categories -->
             <div class="row mt-4 g-4">
                 <div class="col-md-4">
@@ -129,7 +102,7 @@
                         <h5>Hamburguerias</h5>
                     </div>
                 </div>
-                
+
                 <div class="col-md-4">
                     <div class="mini-category-card text-center p-3">
                         <div class="icon-container mb-3">
@@ -138,7 +111,7 @@
                         <h5>Lanchonetes</h5>
                     </div>
                 </div>
-                
+
                 <div class="col-md-4">
                     <div class="mini-category-card text-center p-3">
                         <div class="icon-container mb-3">
@@ -155,7 +128,7 @@
     <section class="top-restaurants py-5 bg-light">
         <div class="container">
             <h2 class="section-title mb-4">Melhores Restaurantes</h2>
-            
+
             <div class="row g-4" id="estabelecimentos-container">
                 <!-- Os estabelecimentos serão carregados aqui via AJAX -->
                 <div class="col-12 text-center py-5">
@@ -174,7 +147,8 @@
             <div class="row align-items-center">
                 <div class="col-md-6">
                     <h2 class="mb-4">Baixe o app HubMenu</h2>
-                    <p class="mb-4">Milhares de restaurantes no seu bolso, com delivery rápido e rastreamento em tempo real.</p>
+                    <p class="mb-4">Milhares de restaurantes no seu bolso, com delivery rápido e rastreamento em tempo
+                        real.</p>
                     <div class="d-flex flex-wrap">
                         <a href="#" class="btn btn-dark me-3 mb-3">
                             <i class="fab fa-apple me-2"></i> App Store
@@ -185,7 +159,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 text-center">
-                    <img src="https://via.placeholder.com/300x400" alt="App HubMenu" class="img-fluid app-image">
+                    <img src="./Views/Assets/Images/marksapecao.png" alt="App HubMenu" class="img-fluid app-image">
                 </div>
             </div>
         </div>
@@ -204,26 +178,29 @@
                         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Contato</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="col-md-3 mb-4">
                     <h5 class="mb-3">Para Restaurantes</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Cadastre seu Restaurante</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Cadastre seu
+                                Restaurante</a></li>
                         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Entregadores</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Planos para Parceiros</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Planos para
+                                Parceiros</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="col-md-3 mb-4">
                     <h5 class="mb-3">Para Você</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Restaurantes próximos</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Restaurantes
+                                próximos</a></li>
                         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Pizzarias</a></li>
                         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Hamburguerias</a></li>
                         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">HubMenu Card</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="col-md-3 mb-4">
                     <h5 class="mb-3">Redes Sociais</h5>
                     <div class="d-flex gap-3 fs-4">
@@ -234,9 +211,9 @@
                     </div>
                 </div>
             </div>
-            
+
             <hr class="my-4">
-            
+
             <div class="row">
                 <div class="col-12 text-center">
                     <p class="text-white-50">&copy; <?= date('Y') ?> HubMenu | Todos os direitos reservados</p>
@@ -247,8 +224,9 @@
 
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Script customizado para carregar os estabelecimentos via AJAX -->
     <script src="/Views/Assets/JS/Clientes/dash.js"></script>
 </body>
+
 </html>

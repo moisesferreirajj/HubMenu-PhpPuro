@@ -1,4 +1,7 @@
-<?php @require_once __DIR__ . '/../../global.php'; ?>
+<?php
+@require_once __DIR__ . '/../global.php';
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 

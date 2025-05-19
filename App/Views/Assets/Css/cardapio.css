@@ -368,3 +368,34 @@ body {
     height: 32px;
     font-size: 0.9rem;
 }
+
+
+@media screen and (max-width:950px) {
+    nav {
+        gap:0;
+    }
+    
+    .search-input {
+        max-width: 300px;
+    }
+    .search-container-wrapper {
+        margin-left: 10px;
+    }
+    .search-container {
+        display: flex;
+        position: relative;
+        max-width: 600px;
+        margin: 0;  
+        padding: 0;
+        margin-right: 20px;
+    }
+    .search-btn {
+        align-self: center;
+        justify-self: center;
+        top:0;
+        bottom: 0;
+    }
+    
+
+
+}

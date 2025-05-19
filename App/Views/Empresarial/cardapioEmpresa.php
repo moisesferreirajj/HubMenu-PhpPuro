@@ -33,21 +33,21 @@
           <path d="M7.8205 3.26875C8.2111 2.87823 8.8442 2.87823 9.2348 3.26875L15.8792 9.91322C17.0505 11.0845 17.0508 12.9833 15.88 14.155L9.3097 20.7304C8.9192 21.121 8.286 21.121 7.8955 20.7304C7.505 20.3399 7.505 19.7067 7.8955 19.3162L14.4675 12.7442C14.8581 12.3536 14.8581 11.7205 14.4675 11.33L7.8205 4.68297C7.43 4.29244 7.43 3.65928 7.8205 3.26875Z" fill="#0e7a56"/>
         </svg>
       </button>
-
-      <div class="search-container col-lg-8 mx-auto d-flex">
-        <input type="text" class="form-control search-input" placeholder="Digite o produto">
-        <button class="btn btn-light search-btn">
-          <i class="bi bi-search"></i>
-        </button>
-      </div>
-
-      <div class="d-flex gap-2 ms-auto">
-        <button class="btn btn-light btn-circle">
-          <i class="bi bi-funnel"></i>
-        </button>
-        <button id="open_cad" data-bs-toggle="modal" data-bs-target="#modal_page" class="btn btn-light btn-circle">
-          <i class="bi bi-plus-lg"></i>
-        </button>
+      <div class="search-container-wrapper d-flex align-items-center flex-grow-1">
+        <div class="search-container">
+          <input type="text" class="form-control search-input" placeholder="Digite o produto">
+          <button class="btn btn-light search-btn">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+        <div class="d-flex gap-2 ms-auto">
+          <button class="btn btn-light btn-circle">
+            <i class="bi bi-funnel"></i>
+          </button>
+          <button id="open_cad" data-bs-toggle="modal" data-bs-target="#modal_page" class="btn btn-light btn-circle">
+            <i class="bi bi-plus-lg"></i>
+          </button>
+        </div>
       </div>
     </div>
   </nav>
@@ -115,7 +115,7 @@ if ($response->status === 'error') {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
       </div>
       <div class="modal-body">
-      <?php @require_once __DIR__ . '../../Views/Components/Cadastros/cadastrarProdutos.php'; ?>
+      <?php @require_once __DIR__ . '/../../Views/Components/Cadastros/cadastrarProdutos.php'; ?>
       </div>
     </div>
   </div>
@@ -130,7 +130,7 @@ if ($response->status === 'error') {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
       </div>
       <div class="modal-body">
-      <?php @require_once __DIR__ . '../../Views/Components/Cadastros/editarProdutos.php'; ?>
+      <?php @require_once __DIR__ . '/../../Views/Components/Cadastros/editarProdutos.php'; ?>
       </div>
     </div>
   </div>

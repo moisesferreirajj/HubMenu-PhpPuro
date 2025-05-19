@@ -44,7 +44,6 @@ if ($response->status === 'error') {
     <?php include_once __DIR__ . '/../Components/navigation.php'; ?>
     <main>
         <div class="slogan">
-
             <img class="entregador" src="/Views/Assets/Images/entregador.png" alt="Entregador">
 
             <!--
@@ -167,7 +166,7 @@ if ($response->status === 'error') {
                             <h3><?= $estabelecimento->nome ?></h3>
                             <p><?= $estabelecimento->tipo ?></p>
                         </div>
-                        <img src="../Assets/Images/verified.png" alt="imagem-verificado" id="verified">
+                        <img src="./Images/verified.png" alt="imagem-verificado" id="verified">
                     </div>
                 <?php endforeach; ?>
             </div>

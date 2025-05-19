@@ -2,18 +2,14 @@
     margin: 0;
     padding: 0;
     width: 0px;
-    /* background-color: azure; */
     position: fixed;
     height: 100%;
     overflow: auto;
     transition: 0.5s;
     z-index: 10000000000000;
-    background-color: rgb(240, 240, 240);
+    background: linear-gradient(to right, #0e7a56, rgb(0, 192, 74));
     box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.5);
-  
-
 }
-
 
 .sidebar a {
     display: block;
@@ -21,23 +17,19 @@
     padding: 15px;
     align-items: center;
     transition: 0.3s;
-    color:#0e7a56;
+    color: #ffffff;
     font-weight: 500;
 }
 
-
-
 .sidebar a:hover {
-    background-color: #9b9b9b;
-    /* border-radius: 4px; */
+    background-color: #b5b6b680;
 }
 
-
 .side-item svg {
-    width: 50px;
+    width: 40px;
     height: auto;
-    color: #0a5e42 ;
-    fill: #0a5e42;
+    color: #ffffff;
+    fill: #ffffff;
 }
 
 .address {
@@ -84,10 +76,9 @@
     padding: 8px;
     margin-top: 10px;
     margin-left: 20px;
-    float:left;
+    float: left;
     z-index: 100;
     position: absolute;
-    
 }
 
 .content {
@@ -107,17 +98,15 @@
     border: none;
 }
 
-
 #active {
-    color:white;
-    background-color: #0a5e42;
+    color: white;
+    background-color: #dadbdb80;
     font-weight: 600;
 }
 
 #active svg {
-    fill:white !important;
+    fill: white !important;
 }
-
 
 @media screen and (max-width:950px) {
     .sidebar {
@@ -126,7 +115,6 @@
         left: 0;
         right: 0;
         height: 70px;
-        background-color: aquamarine;
         color: black;
         display: flex;
         justify-content: space-around;
@@ -145,6 +133,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+ 
     }
     .open-btn {
         display: none;
@@ -157,12 +146,35 @@
     }
 
 
+    .side-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+    }
+
+    .side-item svg {
+        height:25px;
+        width:40px;
+    }
+
+    .side-item span{
+        font-size:11px ;
+        margin-left: 0;
+
+    }
+
     .sidebar a:hover {
-        background-color: #555;
+        background-color: #ffffff41;
         border-radius: 4px;
     }
 
     .content {
         margin-left: 0;
+    }
+    #active {
+        background: #b5b6b680;
+        border-radius: 12px;
+
     }
 }

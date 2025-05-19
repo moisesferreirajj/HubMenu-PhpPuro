@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  <?php require '../Views/Components/sidebar.php'; ?>
+  <?php require_once '/Views/Components/sidebar.php'; ?>
 
   <!-- Navbar com pesquisa -->
   <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
