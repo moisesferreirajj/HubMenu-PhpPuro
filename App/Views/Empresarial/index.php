@@ -166,7 +166,7 @@ if ($response->status === 'error') {
                             <h3><?= $estabelecimento->nome ?></h3>
                             <p><?= $estabelecimento->tipo ?></p>
                         </div>
-                        <img src="./Images/verified.png" alt="imagem-verificado" id="verified">
+                        <img src="Views/Assets/Images/verified.png" alt="imagem-verificado" id="verified">
                     </div>
                 <?php endforeach; ?>
             </div>

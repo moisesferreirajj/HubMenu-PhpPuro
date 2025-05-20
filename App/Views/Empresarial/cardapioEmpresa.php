@@ -1,5 +1,5 @@
 <?php @require_once __DIR__ . '/../../global.php'; ?>
-<?php @require_once __DIR__ . '/../../Models/ProdutosModel.php'; ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -41,9 +41,6 @@
           </button>
         </div>
         <div class="d-flex gap-2 ms-auto">
-          <button class="btn btn-light btn-circle">
-            <i class="bi bi-funnel"></i>
-          </button>
           <button id="open_cad" data-bs-toggle="modal" data-bs-target="#modal_page" class="btn btn-light btn-circle">
             <i class="bi bi-plus-lg"></i>
           </button>
@@ -67,43 +64,48 @@
 
 <!-- Principais -->
 <?php
-// Realizando a consulta no banco de dados
-$produtoModel = new ProdutosModel();
-$response = $produtoModel->findAll();
-
-$produtos = ($response->status === 'success') ? $response->results : [];
-
-if ($response->status === 'error') {
-    echo '<div class="alert alert-danger">Erro ao carregar produtos: ' . htmlspecialchars($response->message) . '</div>';
+// Realizando a consulta do Cardápio específico para aquela empresa, exemplo:
+// /cardapio/{id} | cardapio/1 - Aparece Pizza Margherita e Yohan;
+// By Moises João Ferreira
+$produtos = $Produtos ?? [];
+if ($Erro) {
+    echo '<div class="alert alert-danger">Erro ao carregar produtos: ' . htmlspecialchars($Erro) . '</div>';
 }
 ?>
 
 <h1 class="rowCategory">Principais</h1>
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+<div class="row row-cols-2 row-cols-md-2 row-cols-lg-4 g-4">
   <?php foreach ($produtos as $produto): ?>
     <div class="col animated-card" style="animation-delay: 0.4s">
-      <div class="card h-100 category-drink">
-        <span class="category-badge badge-drink">
-        <?php echo htmlspecialchars($produto->categoria_id); ?>
-        </span>
-        <button class="btn btn-circle edit-button"><i class="bi bi-pencil"></i></button>
+      <div class="card category-drink"
+           data-id="<?php echo $produto->id; ?>"
+           data-descricao="<?php echo htmlspecialchars($produto->descricao); ?>"
+           data-estabelecimento-id="<?php echo $produto->estabelecimento_id; ?>"
+           data-imagem="<?php echo htmlspecialchars($produto->imagem); ?>">
 
-        <img src="<?php echo htmlspecialchars($produto->imagem)?>" class="card-img-top" alt="<?php echo htmlspecialchars($produto->nome); ?>">
+        <span class="category-badge badge-drink" data-id="<?php echo $produto->categoria_id; ?>">
+          <?php echo htmlspecialchars($produto->categoria_id); ?>
+        </span>
+
+        <button class="btn btn-circle edit-button" data-bs-toggle="modal" data-bs-target="#editModal">
+          <i class="bi bi-pencil"></i>
+        </button>
+
+        <img src="<?php echo ($produto->imagem ?: 'default.png'); ?>"
+             class="card-img-top"
+             alt="<?php echo htmlspecialchars($produto->nome); ?>">
+
         <div class="card-body">
           <h5 class="card-title mb-0"><?php echo htmlspecialchars($produto->nome); ?></h5>
         </div>
+
         <div class="card-footer d-flex justify-content-end align-items-center">
           <span class="price-tag">R$<?php echo number_format($produto->valor, 2, ',', '.'); ?></span>
         </div>
+
       </div>
     </div>
   <?php endforeach; ?>
-</div>
-
-<!-- Destaques -->
-<h1 class="rowCategory mt-5">Destaques</h1>
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-  <!-- Aqui você pode repetir o foreach se quiser mostrar outros produtos -->
 </div>
 
 <!-- Modal de cadastro de produtos -->

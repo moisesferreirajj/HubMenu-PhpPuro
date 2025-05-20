@@ -26,6 +26,8 @@ body {
 }
 
 .search-container {
+    display: flex;
+    flex-direction: row;
     position: center;
     width: 50%;
     margin-left: auto;
@@ -46,7 +48,6 @@ body {
 }
 
 .search-btn {
-    position: absolute;
     right: 530px;
     top: 20px;
     border: none;
@@ -59,11 +60,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 10px;
 }
 
-.search-btn:hover {
-    transform: scale(1.1);
-}
 
 .btn-circle {
     width: 38px;
@@ -108,7 +107,7 @@ body {
 } */
 
 .card-body {
-    padding: 5px 15px;
+    padding: 5px 8px;
 }
 
 .card-footer {
@@ -326,12 +325,39 @@ body {
 }
 
 /* Mantém o tamanho mínimo dos cards para uniformidade */
-.card.h-100 {
+.card {
     min-height: 320px;
 }
 
+
+
+
+/* Modais */
+
+/* Modal de Cadastro */
+
+#nome {
+    width: 300px;
+}
+
+#valor {
+    max-width: 80px;
+}
+
+.pro_frm textarea{
+    resize: none;
+}
+
+#side {
+    margin-left: 70px;
+}
+
+
+
 /* Responsivo para smartphones */
 @media (max-width: 768px) {
+
+    
     .card-img-top {
         height: 140px;
     }
@@ -379,7 +405,6 @@ body {
         max-width: 300px;
     }
     .search-container-wrapper {
-        margin-left: 10px;
     }
     .search-container {
         display: flex;
@@ -396,6 +421,12 @@ body {
         bottom: 0;
     }
     
-
-
+    .card {
+        max-width: 250px;
+        height: 250px;
+    }
+    .col.animated-card {
+        display: flex;
+        justify-content: center;
+    }
 }

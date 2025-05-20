@@ -1,28 +1,24 @@
-
-
-
 <!-- Modal para editar produto -->
 <form method="POST" action="/api/produtos/editar" enctype="multipart/form-data">
   <div class="modal-body">
     <input type="hidden" id="edit_id" name="id">
+    <input type="hidden" id="edit_estabelecimento_id" name="estabelecimento_id">
 
     <label for="edit_nome">Nome do Produto:</label><br>
-    <input type="text" id="enome" name="nome" required><br><br>
+    <input type="text" id="edit_nome" name="nome" required><br><br>
 
     <label for="edit_descricao">Descrição:</label><br>
-    <textarea id="descricao" name="descricao" required></textarea><br><br>
+    <textarea id="edit_descricao" name="descricao"></textarea><br><br>
 
     <label for="edit_valor">Valor:</label><br>
-    <input type="number" id="valor" name="valor" required step="0.01"><br><br>
+    <input type="number" id="edit_valor" name="valor" step="0.01"><br><br>
 
-    <label for="edit_imagem">Imagem:</label><br>
-    <input type="file" id="imagem" name="imagem" accept=".png"><br><br>
-
-    <label for="edit_estabelecimento_id">Estabelecimento:</label><br>
-    <select id="eestabelecimento_id" name="estabelecimento_id" required></select><br><br>
+    <label for="edit_imagem">Imagem (.png):</label><br>
+    <input type="file" id="edit_imagem" name="imagem" accept=".png"><br>
+    <small id="imagemAtualInfo" style="color: gray;"></small><br><br>
 
     <label for="edit_categoria_id">Categoria:</label><br>
-    <select id="categoria_id" name="categoria_id" required></select><br><br>
+    <select id="edit_categoria_id" name="categoria_id"></select><br><br>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -30,73 +26,57 @@
   </div>
 </form>
 
-
 <script>
-// Preencher categorias e estabelecimentos quando o modal for aberto
-async function carregarSelectsEdit() {
-    try {
-        const [estabelecimentosResp, categoriasResp] = await Promise.all([
-            fetch('/api/visualizar/estabelecimentos').then(r => r.json()),
-            fetch('/api/visualizar/categorias').then(r => r.json())
-        ]);
+async function carregarSelectsEdit(categoriaAtual) {
+  try {
+    const catResp = await fetch('/api/visualizar/categorias').then(r => r.json());
+    const catSelect = document.getElementById('edit_categoria_id');
+    catSelect.innerHTML = '';
 
-        const estSelect = document.getElementById('edit_estabelecimento_id');
-        const catSelect = document.getElementById('edit_categoria_id');
-
-        estSelect.innerHTML = '';
-        catSelect.innerHTML = '';
-
-        if (estabelecimentosResp.status === 'success') {
-            estabelecimentosResp.estabelecimentos.forEach(e => {
-                const opt = document.createElement('option');
-                opt.value = e.id;
-                opt.textContent = e.nome;
-                estSelect.appendChild(opt);
-            });
-        }
-
-        if (categoriasResp.status === 'success') {
-            categoriasResp.categorias.forEach(c => {
-                const opt = document.createElement('option');
-                opt.value = c.id;
-                opt.textContent = c.nome;
-                catSelect.appendChild(opt);
-            });
-        }
-    } catch (error) {
-        console.error('Erro ao carregar selects:', error);
+    if (catResp.status === 'success' && Array.isArray(catResp.categorias.results)) {
+      catResp.categorias.results.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = c.nome;
+        if (c.id == categoriaAtual) opt.selected = true;
+        catSelect.appendChild(opt);
+      });
     }
+  } catch (error) {
+    console.error('Erro ao carregar categorias:', error);
+  }
 }
 
-// Quando clicar no botão de editar
-document.querySelectorAll('.edit-button').forEach((button, index) => {
-    button.addEventListener('click', async () => {
-        await carregarSelectsEdit();
+document.querySelectorAll('.edit-button').forEach((button) => {
+  button.addEventListener('click', async () => {
+    const card = button.closest('.card');
 
-        const card = button.closest('.card');
+    const nome = card.querySelector('.card-title').textContent.trim();
+    const valorTexto = card.querySelector('.price-tag').textContent.replace('R$', '').trim();
+    const valor = parseFloat(valorTexto.replace('.', '').replace(',', '.'));
+    const categoriaId = card.querySelector('.category-badge').getAttribute('data-id');
+    const descricao = card.getAttribute('data-descricao');
+    const produtoId = card.getAttribute('data-id');
+    const estabelecimentoId = card.getAttribute('data-estabelecimento-id');
+    const imagemNome = card.getAttribute('data-imagem');
 
-        const nome = card.querySelector('.card-title').textContent.trim();
-        const valorTexto = card.querySelector('.price-tag').textContent.replace('R$', '').trim();
-        const valor = parseFloat(valorTexto.replace('.', '').replace(',', '.'));
-        const categoriaId = card.querySelector('.category-badge').textContent.trim();
-        const imagem = card.querySelector('img').getAttribute('src');
-        const produtoId = <?php echo json_encode(array_column($produtos, 'id')); ?>[index];
+    await carregarSelectsEdit(categoriaId);
 
-        // Dados fictícios para simulação – você pode carregar dados completos via AJAX se quiser
-        document.getElementById('edit_id').value = produtoId;
-        document.getElementById('edit_nome').value = nome;
-        document.getElementById('edit_valor').value = valor.toFixed(2);
-        document.getElementById('edit_descricao').value = card.getAttribute('data-descricao') || ''; // ou busque via AJAX
-        document.getElementById('edit_categoria_id').value = categoriaId;
-        // Estabelecimento pode ser carregado via data attribute ou backend
-        document.getElementById('edit_estabelecimento_id').value = card.getAttribute('data-estabelecimento-id') || '';
+    document.getElementById('edit_id').value = produtoId;
+    document.getElementById('edit_estabelecimento_id').value = estabelecimentoId;
+    document.getElementById('edit_nome').value = nome;
+    document.getElementById('edit_valor').value = valor.toFixed(2);
+    document.getElementById('edit_descricao').value = descricao || '';
 
-        const modal = new bootstrap.Modal(document.getElementById('editModal'));
-        modal.show();
-    });
+    const imagemInfo = document.getElementById('imagemAtualInfo');
+    if (imagemNome) {
+      imagemInfo.textContent = 'Imagem atual: ' + imagemNome;
+    } else {
+      imagemInfo.textContent = '';
+    }
+
+    const modal = new bootstrap.Modal(document.getElementById('editModal'));
+    modal.show();
+  });
 });
 </script>
-
-<div class="card h-100 category-drink"
-     data-descricao="<?php echo htmlspecialchars($produto->descricao); ?>"
-     data-estabelecimento-id="<?php echo htmlspecialchars($produto->estabelecimento_id); ?>">

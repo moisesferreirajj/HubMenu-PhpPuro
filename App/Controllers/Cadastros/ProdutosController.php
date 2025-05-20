@@ -24,26 +24,33 @@ class ProdutosController extends RenderView
      */
     public function cadastrar()
     {
+        session_start();
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nome = $_POST['nome'];
             $descricao = $_POST['descricao'];
             $valor = $_POST['valor'];
-            $estabelecimento_id = $_POST['estabelecimento_id'];
             $categoria_id = $_POST['categoria_id'];
 
-            // Upload de imagem
+            // Pegando estabelecimento da sessão
+            if (!isset($_SESSION['estabelecimento_id'])) {
+                die('Estabelecimento não identificado.');
+            }
+            $estabelecimento_id = $_SESSION['estabelecimento_id'];
+
+            // Upload da imagem
             if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
                 $ext = strtolower(pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION));
-                $extensoesPermitidas = ['png', 'jpg', 'jpeg', 'webp'];
+                $permitidas = ['png', 'jpg', 'jpeg', 'webp'];
 
-                if (!in_array($ext, $extensoesPermitidas)) {
-                    die('Apenas imagens nos formatos .png, .jpg, .jpeg ou .webp são permitidas.');
+                if (!in_array($ext, $permitidas)) {
+                    die('Apenas imagens .png, .jpg, .jpeg ou .webp são permitidas.');
                 }
 
                 $nomeImagem = uniqid() . '.' . $ext;
-                $caminhoDestino = __DIR__ . '/../../Views/Assets/Images/Produtos/' . $nomeImagem;
+                $destino = __DIR__ . '/../../Views/Assets/Images/Produtos/' . $nomeImagem;
 
-                if (!move_uploaded_file($_FILES['imagem']['tmp_name'], $caminhoDestino)) {
+                if (!move_uploaded_file($_FILES['imagem']['tmp_name'], $destino)) {
                     die('Erro ao salvar a imagem.');
                 }
 
@@ -96,8 +103,8 @@ class ProdutosController extends RenderView
             $nome = $_POST['nome'];
             $descricao = $_POST['descricao'];
             $valor = $_POST['valor'];
-            $estabelecimento_id = $_POST['estabelecimento_id'];
             $categoria_id = $_POST['categoria_id'];
+            $estabelecimento_id = $_POST['estabelecimento_id'];
 
             // Verificando se a imagem foi enviada
             if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
@@ -132,11 +139,11 @@ class ProdutosController extends RenderView
 
             // Atualizando produto no banco
             $produtosModel->update(
-                $id, // ID do produto a ser atualizado
+                $id,
                 $nome,
                 $descricao,
                 $valor,
-                $imagemPath, // Se imagem for null, não será atualizada
+                $imagemPath,
                 $estabelecimento_id,
                 $categoria_id
             );
@@ -147,4 +154,36 @@ class ProdutosController extends RenderView
             echo "Erro: Requisição inválida.";
         }
     }
+
+    public function getProdutos($estabelecimento_id)
+    {
+        header('Content-Type: application/json; charset=utf-8');
+        $produtosModel = new ProdutosModel();
+        $produtos = $produtosModel->findByEstabelecimentoId($estabelecimento_id);
+
+        echo json_encode([
+            'status' => 'success',
+            'produtos' => $produtos
+        ], JSON_UNESCAPED_UNICODE);
+    }
+
+    public function getProdutoPorId($id)
+    {
+        header('Content-Type: application/json; charset=utf-8');
+        $produtosModel = new ProdutosModel();
+        $produto = $produtosModel->findById($id);
+
+        if ($produto) {
+            echo json_encode([
+                'status' => 'success',
+                'produto' => $produto[0] // apenas o primeiro resultado
+            ], JSON_UNESCAPED_UNICODE);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Produto não encontrado'
+            ]);
+        }
+    }
+    
 }

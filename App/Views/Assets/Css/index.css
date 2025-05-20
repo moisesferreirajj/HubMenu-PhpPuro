@@ -92,7 +92,7 @@ main {
     align-items: center;
     justify-content: center;
     padding: 10px 10px;
-    box-shadow: 0 5px 5px rgba(128, 128, 128, 0.39);
+    box-shadow: 0 5px 5px  rgba(99, 99, 99, 0.658);
     margin: auto 40px;
     transition: transform 1s;
 }
@@ -156,91 +156,107 @@ main {
 }
 
 .enterprises {
-
-    max-width: 90%;
-    width: 100%;
+    width: 90% !important;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
-    margin-bottom: 4%;
+    margin-bottom: 30px;
+    padding: 0;
+}
 
-    .title-enterprise {
-        width: 100%;
-    }
+.title-enterprise {
+    width: 100%;
+    margin-bottom: 15px;
+}
 
-    h1 {
-        font-size: 1.5rem;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
+.title-enterprise h1 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #3e3e3e;
+    text-align: left;
+    margin: 0;
+}
 
-    .sec-enterprises {
-        display: flex;
-        flex-direction: row;
-        gap: 30px;
-        margin-top: 2%;
-        overflow-y: scroll;
-    }
+.sec-enterprises {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
 
-    .enterprise {
-        display: flex;
-        flex-direction: row;
-        border: 1px rgba(0, 0, 0, 0.10) solid;
-        border-radius: 10px;
-        max-width: 25%;
-        width: 100%;
-        padding: 2%;
-        position: relative;
-    }
+.sec-enterprises::-webkit-scrollbar {
+    display: none;
+}
 
-    .enterprise #verified {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        width: 25px;
-    }
+.enterprise {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: white;
+    border-radius: 8px;
+    min-width: 180px;
+    max-width: 300px;
+    height: 100px;
+    padding: 8px;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: none;
+}
 
-    .img-enterprise {
-        width: 30%;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-    }
+.enterprise #verified {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+}
 
-    .img-enterprise img {
-        width: 80%;
-        border-radius: 100%;
-    }
+.img-enterprise {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
 
-    .name-enterprise {
-        width: auto;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        overflow: hidden;
-    }
+.img-enterprise img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
 
-    .name-enterprise h3 {
-        font-size: 0.7rem;
-        color: black;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+.name-enterprise {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    flex-grow: 1;
+}
 
-    .name-enterprise p {
-        font-size: 0.9rem;
-        color: #525252;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+.name-enterprise h3 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #3e3e3e;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0 0 3px 0;
+}
 
-    h3,
-    p {
-        margin: 0;
-    }
-
+.name-enterprise p {
+    font-size: 12px;
+    color: #717171;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
 }
 
 @media screen and (max-width: 1090px) {
@@ -253,12 +269,12 @@ main {
     }
 
     .element h4 {
-        font-size: 16px;
+        font-size: 1rem;
         font-weight: bold;
     }
 
     .element p {
-        font-size: 14px;
+        font-size: 1rem;
         text-align: center;
     }
 
@@ -279,75 +295,90 @@ main {
 
 }
 
+/* Responsividade */
 @media screen and (max-width: 992px) {
     .enterprises .sec-enterprises {
-        overflow-x: scroll;
-    }
-
-    .enterprises .enterprise {
-        max-width: 45%;
-        margin-bottom: 20px;
+        overflow-x: auto;
     }
 }
 
 @media screen and (max-width: 800px) {
-
     .funcs {
         flex-direction: column;
-        margin-bottom: 10%;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: center;
+        align-items: center;
     }
 
     .element {
-        height: 300px;
-        margin-top: 30px;
-        transform: none;
-    }
-
-    .element-one {
-        margin-top: 0;
+        max-width: 60%;
+        margin: 0;
     }
 
     .element svg {
-        width: 100px;
+        width: 60px;
         height: auto;
         margin-top: 10px;
         transform: none;
     }
 
+    .element h4 {
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+
+    .element p {
+        font-size: 0.7rem;
+        text-align: center;
+    }
+
+    .enterprise {
+        min-width: 150px;
+        max-width: 150px;
+    }
+    
+    .title-enterprise h1 {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    .funcs {
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .element {
+        max-width: 70%;
+    }
+    
     .entregador {
-        width: 30%;
-        height: auto;
-        animation: DesceSobe 10s ease-in-out infinite;
-        margin: 0px 0px 2% 0px;
+        width: 60px;
     }
-
-    .enterprises {
-        max-width: 90% !important;
-        width: 100%;
-
-        .sec-enterprises {
-            width: 100% !important;
-            max-width: 100%;
-            gap: 15px;
-
-            .enterprise {
-                height: 100px;
-                width: 200px;
-                margin-right: 5%;
-            }
-
-            .name-enterprise h3 {
-                font-size: 1rem;
-            }
-
-            .name-enterprise p {
-                font-size: 0.9rem;
-            }
-
-        }
-
+    
+    .enterprise {
+        min-width: 140px;
+        max-width: 140px;
+        height: 65px;
     }
-
+    
+    .img-enterprise {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .name-enterprise h3 {
+        font-size: 13px;
+    }
+    
+    .name-enterprise p {
+        font-size: 11px;
+    }
 }
 
 

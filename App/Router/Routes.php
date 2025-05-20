@@ -12,14 +12,18 @@ $routes = [
     '/empresarial/funcionalidades'=> 'FuncionalidadesController@index',
     /* ROTAS GLOBAIS */
     '/user/{id}' => 'UserController@show',
-    '/cardapio/{id}' => 'CardapioController@indexCliente',
     /* ROTAS DE ADMIN */
-    '/gerenciar/cardapio/{id}'=> 'CardapioController@indexAdmin',
     '/cadastro/produtos' => 'ProdutosController@index',
     /* ROTAS DE API ABAIXO: */
-    '/api/produtos/cadastrar' => 'ProdutosController@cadastrar',
     '/api/visualizar/categorias' => 'ProdutosController@getCategorias',
     '/api/visualizar/estabelecimentos' => 'ProdutosController@getEstabelecimentos',
+    /* ROTAS ESPECIALMENTE DA EMPRESA PARA O CLIENTE: */
+    '/cardapio/{id}' => 'CardapioController@indexCliente',
+    '/gerenciar/cardapio/{id}'=> 'CardapioController@indexAdmin',
+    /* ROTAS ESPECIALMENTE DA EMPRESA PARA A EMPRESA: */
+    '/api/produtos/cadastrar' => 'ProdutosController@cadastrar',
+    '/api/produtos/editar' => 'ProdutosController@atualizar',
+    '/api/visualizar/produtos/{id}' => 'ProdutosController@getProdutos',
 ]
 
 ?>

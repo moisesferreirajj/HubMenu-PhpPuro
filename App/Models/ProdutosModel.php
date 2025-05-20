@@ -15,6 +15,17 @@ class ProdutosModel
         return $db->execute_query($sql, $params);
     }
 
+     /**
+     * Busca os produtos pelo ID do Estabelecimento.
+     */
+    public function findByEstabelecimentoId($estabelecimento_id)
+    {
+        $db = new Database();
+        $sql = "SELECT * FROM produtos WHERE estabelecimento_id = :estabelecimento_id";
+        $params = [':estabelecimento_id' => $estabelecimento_id];
+        return $db->execute_query($sql, $params);
+    }
+
     /**
      * Retorna todos os produtos da tabela.
      */
@@ -47,26 +58,47 @@ class ProdutosModel
     /**
      * Atualiza os dados de um produto existente.
      */
-    public function update($id, $nome, $descricao, $valor, $estabelecimento_id, $categoria_id, $imagem)
+    public function update($id, $nome, $descricao, $valor, $imagem, $estabelecimento_id, $categoria_id)
     {
         $db = new Database();
-        $sql = "UPDATE produtos SET 
-                    nome = :nome, 
-                    descricao = :descricao, 
-                    valor = :valor, 
-                    estabelecimento_id = :estabelecimento_id,
-                    categoria_id = :categoria_id,
-                    imagem = :imagem
-                WHERE id = :id";
-        $params = [
-            ':id' => $id,
-            ':nome' => $nome,
-            ':descricao' => $descricao,
-            ':valor' => $valor,
-            ':estabelecimento_id' => $estabelecimento_id,
-            ':categoria_id' => $categoria_id,
-            ':imagem' => $imagem
-        ];
+
+        // Atualizar somente se imagem não for null
+        if ($imagem !== null) {
+            $sql = "UPDATE produtos SET 
+                        nome = :nome, 
+                        descricao = :descricao, 
+                        valor = :valor, 
+                        imagem = :imagem,
+                        estabelecimento_id = :estabelecimento_id,
+                        categoria_id = :categoria_id
+                    WHERE id = :id";
+            $params = [
+                ':id' => $id,
+                ':nome' => $nome,
+                ':descricao' => $descricao,
+                ':valor' => $valor,
+                ':imagem' => $imagem,
+                ':estabelecimento_id' => $estabelecimento_id,
+                ':categoria_id' => $categoria_id
+            ];
+        } else {
+            $sql = "UPDATE produtos SET 
+                        nome = :nome, 
+                        descricao = :descricao, 
+                        valor = :valor, 
+                        estabelecimento_id = :estabelecimento_id,
+                        categoria_id = :categoria_id
+                    WHERE id = :id";
+            $params = [
+                ':id' => $id,
+                ':nome' => $nome,
+                ':descricao' => $descricao,
+                ':valor' => $valor,
+                ':estabelecimento_id' => $estabelecimento_id,
+                ':categoria_id' => $categoria_id
+            ];
+        }
+
         return $db->execute_non_query($sql, $params);
     }
 

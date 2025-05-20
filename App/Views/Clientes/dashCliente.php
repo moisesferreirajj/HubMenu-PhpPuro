@@ -54,20 +54,20 @@
     </section>
 
     <!-- Categories Section -->
-    <section class="categories py-5">
+    <section class="categories py-5 mt-3">
         <div class="container">
             <div class="row g-4">
                 <div class="col-md-6">
                     <div class="category-card bg-danger text-white">
                         <div class="row">
-                            <div class="col-8 p-4">
+                            <div class="col-8 p-4 ms-2  ">
                                 <h2>Restaurantes</h2>
-                                <a href="#" class="btn btn-outline-light mt-3">
+                                <a href="#" class="btn btn-outline-light mt-1 ms-2 btn-opcoes">
                                     Ver opções <i class="fas fa-arrow-right"></i>
                                 </a>
                             </div>
-                            <div class="col-4 d-flex align-items-end">
-                                <img src="/Views/Assets/Images/Estabelecimentos/DashRestaurante.png" alt="Restaurante"
+                            <div class="col-3 d-flex align-items-end">
+                                <img src="../Views/Assets/Images/Estabelecimentos/DashRestaurante.png" alt="Restaurante"
                                     class="img-fluid">
                             </div>
                         </div>
@@ -77,13 +77,13 @@
                 <div class="col-md-6">
                     <div class="category-card bg-success text-white">
                         <div class="row">
-                            <div class="col-8 p-4">
+                            <div class="col-8 p-4 ms-2">
                                 <h2>Pizzarias</h2>
-                                <a href="#" class="btn btn-outline-light mt-3">
+                                <a href="#" class="btn btn-outline-light mt-1 ms-2">
                                     Ver opções <i class="fas fa-arrow-right"></i>
                                 </a>
                             </div>
-                            <div class="col-4 d-flex align-items-end">
+                            <div class="col-3 d-flex align-items-end">
                                 <img src="/Views/Assets/Images/Estabelecimentos/DashPizzaiolo.png" alt="Pizzaria"
                                     class="img-fluid">
                             </div>
@@ -146,15 +146,11 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <h2 class="mb-4">Baixe o app HubMenu</h2>
-                    <p class="mb-4">Milhares de restaurantes no seu bolso, com delivery rápido e rastreamento em tempo
-                        real.</p>
+                    <h2 class="mb-4">Use Nosso Sistema</h2>
+                    <p class="mb-4">Cardápio descomplicado para organizar seu estabelecimento e facilitar o pedido de seus clientes!</p>
                     <div class="d-flex flex-wrap">
-                        <a href="#" class="btn btn-dark me-3 mb-3">
-                            <i class="fab fa-apple me-2"></i> App Store
-                        </a>
-                        <a href="#" class="btn btn-dark mb-3">
-                            <i class="fab fa-google-play me-2"></i> Google Play
+                        <a href="/empresarial" class="btn btn-dark me-3 mb-3">
+                            <i class="fa-solid fa-house"></i> Para Empresas
                         </a>
                     </div>
                 </div>

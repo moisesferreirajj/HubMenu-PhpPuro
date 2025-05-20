@@ -1,55 +1,60 @@
-<form method="POST" action="/api/produtos/cadastrar" enctype="multipart/form-data">
-    <label for="nome">Nome do Produto:</label><br>
-    <input type="text" id="nome" name="nome" required><br><br>
+<?php @require_once __DIR__ . '/../../global.php'; ?>
 
-    <label for="descricao">Descrição:</label><br>
-    <textarea id="descricao" name="descricao" required></textarea><br><br>
+<form class="pro_frm" method="POST" action="/api/produtos/cadastrar" enctype="multipart/form-data">
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="nome" class="form-label">Nome do Produto:</label>
+                <input type="text" class="form-control" id="nome" name="nome" required>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group" id="side">
+                <label for="valor" class="form-label">Valor:</label>
+                <div class="input-group">
+                    <span class="input-group-text">R$</span>
+                    <input type="number" class="form-control" id="valor" name="valor" placeholder="0,00" required step="0.01">
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <label for="valor">Valor:</label><br>
-    <input type="number" id="valor" name="valor" required step="0.01"><br><br>
+    <div class="mb-3">
+        <div class="form-group">
+            <label for="imagem" class="form-label">Imagem:</label>
+            <input type="file" class="form-control" id="imagem" name="imagem" accept=".png" required>
+        </div>
+    </div>
 
-    <label for="imagem">Imagem:</label><br>
-    <input type="file" id="imagem" name="imagem" accept=".png" required><br><br>
+    <input type="hidden" id="estabelecimento_id" name="estabelecimento_id" value="<?= $EstabelecimentoID ?>">
 
-    <label for="estabelecimento_id">Estabelecimento:</label><br>
-    <select id="estabelecimento_id" name="estabelecimento_id" required>
-        <!-- As opções serão preenchidas via AJAX -->
-    </select><br><br>
+    <div class="mb-3">
+        <div class="form-group">
+            <label for="categoria_id" class="form-label">Categoria:</label>
+            <select class="form-select" id="categoria_id" name="categoria_id" required>
+            </select>
+        </div>
+    </div>
 
-    <label for="categoria_id">Categoria:</label><br>
-    <select id="categoria_id" name="categoria_id" required>
-        <!-- As opções serão preenchidas via AJAX -->
-    </select><br><br>
+    <div class="mb-3">
+        <div class="form-group">
+            <label for="descricao" class="form-label">Descrição:</label>
+            <textarea class="form-control" id="descricao" name="descricao" required rows="3"></textarea>
+        </div>
+    </div>
 
-    <button type="submit">Cadastrar</button>
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
 </form>
 
 <script>
-// Função para carregar as opções de categorias e estabelecimentos via AJAX
-document.addEventListener('DOMContentLoaded', function() {
-    // Carregar Estabelecimentos
-    fetch('/api/visualizar/estabelecimentos')
-        .then(response => response.json())
-        .then(data => {
-            const estabelecimentoSelect = document.getElementById('estabelecimento_id');
-            if (data.status === 'success') {
-                data.estabelecimentos.forEach(estabelecimento => {
-                    const option = document.createElement('option');
-                    option.value = estabelecimento.id;
-                    option.textContent = estabelecimento.nome;
-                    estabelecimentoSelect.appendChild(option);
-                });
-            }
-        })
-        .catch(error => console.error('Erro ao carregar estabelecimentos:', error));
-
+document.addEventListener('DOMContentLoaded', function () {
     // Carregar Categorias
     fetch('/api/visualizar/categorias')
         .then(response => response.json())
         .then(data => {
             const categoriaSelect = document.getElementById('categoria_id');
-            if (data.status === 'success') {
-                data.categorias.forEach(categoria => {
+            if (data.status === 'success' && Array.isArray(data.categorias.results)) {
+                data.categorias.results.forEach(categoria => {
                     const option = document.createElement('option');
                     option.value = categoria.id;
                     option.textContent = categoria.nome;
