@@ -41,7 +41,7 @@
           </button>
         </div>
         <div class="d-flex gap-2 ms-auto">
-          <button id="open_cad" data-bs-toggle="modal" data-bs-target="#modal_page" class="btn btn-light btn-circle">
+          <button id="open_cad" data-bs-toggle="modal" data-bs-target="#cadastrarModal" class="btn btn-light btn-circle">
             <i class="bi bi-plus-lg"></i>
           </button>
         </div>
@@ -109,36 +109,11 @@ if ($Erro) {
 </div>
 
 <!-- Modal de cadastro de produtos -->
-<div class="modal fade" id="modal_page" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalLabel">Cadastrar Produto</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-      </div>
-      <div class="modal-body">
-      <?php @require_once __DIR__ . '/../../Views/Components/Cadastros/cadastrarProdutos.php'; ?>
-      </div>
-    </div>
-  </div>
-</div>
+<?php @require_once __DIR__ . '/../../Views/Components/Cadastros/cadastrarProdutos.php'; ?>
 
 <!-- Modal para editar produtos -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalLabel">Editar Produto</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-      </div>
-      <div class="modal-body">
-      <?php @require_once __DIR__ . '/../../Views/Components/Cadastros/editarProdutos.php'; ?>
-      </div>
-    </div>
-  </div>
-</div>
+<?php @require_once __DIR__ . '/../../Views/Components/Cadastros/editarProdutos.php'; ?>
 
-  
   <!-- Bootstrap Bundle -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 

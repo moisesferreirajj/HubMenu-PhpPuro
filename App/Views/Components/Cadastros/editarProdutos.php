@@ -1,30 +1,51 @@
-<!-- Modal para editar produto -->
-<form method="POST" action="/api/produtos/editar" enctype="multipart/form-data">
-  <div class="modal-body">
-    <input type="hidden" id="edit_id" name="id">
-    <input type="hidden" id="edit_estabelecimento_id" name="estabelecimento_id">
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="POST" action="/api/produtos/editar" enctype="multipart/form-data">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Editar Produto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="edit_id" name="id">
+          <input type="hidden" id="edit_estabelecimento_id" name="estabelecimento_id">
 
-    <label for="edit_nome">Nome do Produto:</label><br>
-    <input type="text" id="edit_nome" name="nome" required><br><br>
+          <div class="mb-3">
+            <label for="edit_nome" class="form-label">Nome do Produto</label>
+            <input type="text" class="form-control" id="edit_nome" name="nome" required>
+          </div>
 
-    <label for="edit_descricao">Descrição:</label><br>
-    <textarea id="edit_descricao" name="descricao"></textarea><br><br>
+          <div class="mb-3">
+            <label for="edit_descricao" class="form-label">Descrição</label>
+            <textarea class="form-control" id="edit_descricao" name="descricao" rows="3"></textarea>
+          </div>
 
-    <label for="edit_valor">Valor:</label><br>
-    <input type="number" id="edit_valor" name="valor" step="0.01"><br><br>
+          <div class="mb-3">
+            <label for="edit_valor" class="form-label">Valor</label>
+            <input type="number" class="form-control" id="edit_valor" name="valor" step="0.01">
+          </div>
 
-    <label for="edit_imagem">Imagem (.png):</label><br>
-    <input type="file" id="edit_imagem" name="imagem" accept=".png"><br>
-    <small id="imagemAtualInfo" style="color: gray;"></small><br><br>
+          <div class="mb-3">
+            <label for="edit_imagem" class="form-label">Imagem</label>
+            <input class="form-control" type="file" id="edit_imagem" name="imagem">
+            <div class="form-text text-muted" id="imagemAtualInfo"></div>
+          </div>
 
-    <label for="edit_categoria_id">Categoria:</label><br>
-    <select id="edit_categoria_id" name="categoria_id"></select><br><br>
+          <div class="mb-3">
+            <label for="edit_categoria_id" class="form-label">Categoria</label>
+            <select class="form-select" id="edit_categoria_id" name="categoria_id">
+              <!-- Carregado via JS -->
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar alterações</button>
+        </div>
+      </form>
+    </div>
   </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-    <button type="submit" class="btn btn-primary">Salvar alterações</button>
-  </div>
-</form>
+</div>
 
 <script>
 async function carregarSelectsEdit(categoriaAtual) {
@@ -47,6 +68,7 @@ async function carregarSelectsEdit(categoriaAtual) {
   }
 }
 
+// Abrir modal e preencher campos
 document.querySelectorAll('.edit-button').forEach((button) => {
   button.addEventListener('click', async () => {
     const card = button.closest('.card');
@@ -69,14 +91,17 @@ document.querySelectorAll('.edit-button').forEach((button) => {
     document.getElementById('edit_descricao').value = descricao || '';
 
     const imagemInfo = document.getElementById('imagemAtualInfo');
-    if (imagemNome) {
-      imagemInfo.textContent = 'Imagem atual: ' + imagemNome;
-    } else {
-      imagemInfo.textContent = '';
-    }
+    imagemInfo.textContent = imagemNome ? 'Imagem atual: ' + imagemNome : '';
 
     const modal = new bootstrap.Modal(document.getElementById('editModal'));
     modal.show();
   });
+});
+
+// Garantir que o backdrop é removido corretamente
+document.getElementById('editModal').addEventListener('hidden.bs.modal', function () {
+  document.body.classList.remove('modal-open');
+  const backdrop = document.querySelector('.modal-backdrop');
+  if (backdrop) backdrop.remove();
 });
 </script>

@@ -2,7 +2,7 @@
     <div class="container">
 
         <div id="logonav">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
                 <?php @require_once __DIR__ . '/svg-logo.php'; ?>
             </a>
         </div>
@@ -12,18 +12,20 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
+            <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Para Empresas</a>
+                    <a class="nav-link" href="/empresarial">Para Empresas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Restaurantes</a>
+                    <a class="nav-link" href="/restaurantes">Restaurantes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/empresarial/suporte">Fale Conosco</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/empresarial/sobre">Sobre Nós</a>
                 </li>
             </ul>
-            <div class="d-flex">
-                <button class="btn btn-outline-primary me-2">Criar conta</button>
-                <button class="btn btn-primary">Entrar</button>
-            </div>
         </div>
     </div>
 </nav>

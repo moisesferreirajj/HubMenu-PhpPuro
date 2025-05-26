@@ -73,7 +73,7 @@ function renderizarEstabelecimentos(estabelecimentos, container) {
         card.innerHTML = `
             <div class="card restaurant-card h-100">
                 <img src="${estabelecimento.imagem || 'https://via.placeholder.com/300x150'}" 
-                     class="card-img-top" alt="${estabelecimento.nome}">
+                    class="card-img-top fixed-img" alt="${estabelecimento.nome}">
                 <div class="card-body">
                     <h5 class="card-title">${estabelecimento.nome}</h5>
                     <div class="d-flex align-items-center mb-2">

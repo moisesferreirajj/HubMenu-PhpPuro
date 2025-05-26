@@ -279,7 +279,22 @@ body {
   .pro_file input {
     display: none;
   }
+  
+  .del-btn {
+    color: red;
+  }
+  .del-btn:hover {
+    color: rgb(112, 0, 0);
+  }
+.conf-btn {
+    background-color: red;
+    color: white;
+    border: none;
+}
+.conf-btn:hover {
+    background-color: rgb(112, 0, 0);
 
+}
 
 /* Responsividade adicional */
 @media (max-width: 768px) {

@@ -76,9 +76,7 @@ if ($Erro) {
         <span class="category-badge badge-drink">
         <?php echo htmlspecialchars($produto->categoria_id); ?>
         </span>
-        <button class="btn btn-circle edit-button" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bi bi-pencil"></i></button>
-
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0KFDZkjY8zVpr1ftr2n7Rm_OLf0Eq3inoxw&s" class="card-img-top" alt="<?php echo htmlspecialchars($produto->nome); ?>">
+        <img src="<?php echo htmlspecialchars($produto->imagem); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($produto->nome); ?>">
         <div class="card-body">
           <h5 class="card-title mb-0"><?php echo htmlspecialchars($produto->nome); ?></h5>
         </div>

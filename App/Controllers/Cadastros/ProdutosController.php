@@ -31,12 +31,11 @@ class ProdutosController extends RenderView
             $descricao = $_POST['descricao'];
             $valor = $_POST['valor'];
             $categoria_id = $_POST['categoria_id'];
+            $estabelecimento_id = $_POST['estabelecimento_id'] ?? null;
 
-            // Pegando estabelecimento da sessão
-            if (!isset($_SESSION['estabelecimento_id'])) {
-                die('Estabelecimento não identificado.');
+            if (!$estabelecimento_id) {
+                die('Estabelecimento não informado.');
             }
-            $estabelecimento_id = $_SESSION['estabelecimento_id'];
 
             // Upload da imagem
             if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
@@ -62,7 +61,8 @@ class ProdutosController extends RenderView
             $produtosModel = new ProdutosModel();
             $produtosModel->insert($nome, $descricao, $valor, $imagemPath, $estabelecimento_id, $categoria_id);
 
-            echo "Produto cadastrado com sucesso!";
+            echo "<script>alert('Produto cadastrado com sucesso!')</script>";
+            header(header: "Location: /gerenciar/cardapio/$estabelecimento_id");
         }
     }
 
@@ -148,7 +148,8 @@ class ProdutosController extends RenderView
                 $categoria_id
             );
 
-            echo "Produto atualizado com sucesso!";
+            echo "<script>alert('Produto editado com sucesso!')</script>";
+            header(header: "Location: /gerenciar/cardapio/$estabelecimento_id");
         } else {
             // Caso a requisição não seja POST, você pode retornar algum erro
             echo "Erro: Requisição inválida.";

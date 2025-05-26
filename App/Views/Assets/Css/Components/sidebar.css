@@ -1,14 +1,16 @@
 .sidebar {
     margin: 0;
     padding: 0;
-    width: 0px;
+    width: 250px;
     position: fixed;
-    height: 100%;
+    height: 100vh;
     overflow: auto;
-    transition: 0.5s;
-    z-index: 10000000000000;
-    background: linear-gradient(to right, #0e7a56, rgb(0, 192, 74));
-    box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.5);
+    transition: 0.5s ease;
+    z-index: 9999;
+    background: linear-gradient(160deg, #ffffff, #ffffff, #d3d3d3);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+    flex-direction: column;
+    display: flex;
 }
 
 .sidebar a {
@@ -16,44 +18,117 @@
     text-decoration: none;
     padding: 15px;
     align-items: center;
-    transition: 0.3s;
-    color: #ffffff;
+    color: #232c29;
     font-weight: 500;
 }
 
-.sidebar a:hover {
-    background-color: #b5b6b680;
+.sidebar a:focus {
+    outline: 2px solid #ffffff;
+    outline-offset: 4px;
+}
+
+
+.side-item {
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 10px;
+    transition:background 0.3s;  
+}
+
+
+.side-item:hover,
+#active {
+    background: rgba(223, 223, 223, 0.25);
+    border-radius: 15px;
+    color: rgb(0, 0, 0);
+    font-weight: 500;
+}
+
+.menu-links {
+    align-self: center;
+}
+
+.side-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.575);
+    transform: translateX(4px);
+    transition: all 0.2s ease-in-out;
 }
 
 .side-item svg {
-    width: 40px;
+    width: 30px;
     height: auto;
-    color: #ffffff;
+    color: #232c29;
     fill: #ffffff;
 }
+
+
+.sidebar span{
+    margin-top: 4px;
+}  
+/* Assistir Evangelion */
+
+
 
 .address {
     font-size: 18px;
     margin-left: 10px;
+    text-align: center;
+}
+
+
+.last {
+    justify-self: end;
 }
 
 .wrap-btn {
-    margin-top: 10px;
-    align-items: center;
+    padding: 10px 5px;
+    border-bottom: 1px solid #e8f5e9;
+    background: linear-gradient(45deg, #28a745, #20c997);
+    color:white;
+    text-align: center;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    margin: 0px;
-    height: 65px;
+    margin-bottom: 30px;
 }
 
-.wrap-btn img {
-    width: 100px;
+.opt {
+    margin-top: auto;
+    border-top: 1px solid #868686cc;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.opt .end-opt:hover {
+    font-weight: 400;
+    color:black;
+    transform: none;
+    transition: none;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+}
+
+  .opt .end-opt i {
+    margin-right: 10px;
+    font-size: 18px;
+    color: #000000; /* ícone com cor levemente diferente */
+    transition: color 0.3s ease;
+
+  }
+  
+
+.empresa svg {
+    width: 150px;
     height: auto;
-    margin-left: 10px;
+    justify-self: center;
 }
 
 .wrap-btn h2 {
-    font-size: 12px;
+    margin: 0;
+    font-weight: 600;
 }
 
 .empresa {
@@ -65,8 +140,13 @@
     float: right;
     background-color: white;
     border: 1px solid #0e7a56;
-    border-radius: 50px;
+    border-radius: 100px;
     padding: 8px;
+}
+
+.close-btn svg {
+    fill: #0e7a56;
+    color: #0e7a56;
 }
 
 .open-btn {
@@ -81,8 +161,10 @@
     position: absolute;
 }
 
+
+
+
 .content {
-    transition: 0.5s;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -99,13 +181,17 @@
 }
 
 #active {
-    color: white;
+    color: #0e7a56;
     background-color: #dadbdb80;
     font-weight: 600;
 }
 
 #active svg {
     fill: white !important;
+}
+
+.some {
+    display: none;
 }
 
 @media screen and (max-width:950px) {
@@ -116,24 +202,25 @@
         right: 0;
         height: 70px;
         color: black;
-        display: flex;
         justify-content: space-around;
         align-items: center;
         box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
         z-index: 10000;
         width: 100%;
+        flex-direction: row;
+        display: flex;
     }
     .wrap-btn {
         display: none;
     }
     .sidebar a {
-        color: white;
         text-decoration: none;
         padding: 10px 15px;
         display: flex;
         flex-direction: column;
         align-items: center;
- 
+        margin: 0;
+        padding: 0;
     }
     .open-btn {
         display: none;
@@ -151,6 +238,7 @@
         align-items: center;
         justify-content: center;
         width: 50px;
+        margin: 0%;
     }
 
     .side-item svg {
@@ -176,5 +264,16 @@
         background: #b5b6b680;
         border-radius: 12px;
 
+    }
+    .side-item span {
+        display: none;
+    }
+    .opt {
+        display: none;
+
+    }
+
+    #some {
+        display: block;
     }
 }

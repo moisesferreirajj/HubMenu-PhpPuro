@@ -15,14 +15,14 @@ if ($response->status === 'error') {
 }
 
 // Realizando a consulta no banco de dados - Avaliacoes
-// $avaliacoesModel = new avaliacoesModel();
-// $response = $avaliacoesModel->Avaliacoes();
+$AvaliacoesSistemaModel = new AvaliacoesSistemaModel();
+$response = $AvaliacoesSistemaModel->avaliacoes_sistema();
 
-// $avaliacoes = ($response->status === 'success') ? $response->results : [];
+$avaliacoes_sistema = ($response->status === 'success') ? $response->results : [];
 
-// if ($response->status === 'error') {
-//     echo '<div class="alert alert-danger">Erro ao carregar produtos: ' . htmlspecialchars($response->message) . '</div>';
-// }
+if ($response->status === 'error') {
+    echo '<div class="alert alert-danger">Erro ao carregar produtos: ' . htmlspecialchars($response->message) . '</div>';
+}
 
 ?>
 <!DOCTYPE html>
@@ -54,7 +54,7 @@ if ($response->status === 'error') {
             <h2>Sabia que gerenciar seu estabelecimento é muito fácil?</h2>
         </div>
         <div class="funcs">
-            <div class="element eleone">
+            <div class="element">
                 <svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve" fill="#006747"
                     stroke="#006747">
@@ -154,7 +154,7 @@ if ($response->status === 'error') {
         <section class="enterprises">
 
             <div class="title-enterprise">
-                <h1>Estabelecimentos perto de você com nosso sistema:</h1>
+                <h1>Nossas Melhores Avaliações:</h1>
             </div>
             <div class="sec-enterprises">
                 <?php foreach ($estabelecimentos as $estabelecimento): ?>
@@ -172,6 +172,29 @@ if ($response->status === 'error') {
             </div>
 
         </section>
+
+        <!-- Seção das Avaliações em Cards -->
+        <section class="avaliacoes">
+            <div class="title-avaliacoes">
+                <h2>O que estão dizendo sobre nós</h2>
+            </div>
+            <div class="cards-avaliacoes">
+                <?php foreach ($avaliacoes_sistema as $avaliacao): ?>
+                    <div class="card-avaliacao">
+                        <div class="card-conteudo">
+                            <p class="comentario">“<?= htmlspecialchars($avaliacao->comentario) ?>”</p>
+                            <div class="avaliador">
+                                <strong><?= htmlspecialchars($avaliacao->nome) ?></strong>
+                                <span class="estrela">
+                                    <?= str_repeat('⭐', intval($avaliacao->avaliacao)) ?>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </section>
+
 
     </main>
     <?php include_once __DIR__ . '/../Components/Footer.php'; ?>

@@ -1,4 +1,4 @@
--- --------------------------------------------------------
+  -- --------------------------------------------------------
 -- Servidor:                     127.0.0.1
 -- Versão do servidor:           10.4.32-MariaDB - mariadb.org binary distribution
 -- OS do Servidor:               Win64
@@ -34,6 +34,44 @@ CREATE TABLE IF NOT EXISTS `avaliacoes` (
   CONSTRAINT `avaliacoes_ibfk_2` FOREIGN KEY (`estabelecimento_id`) REFERENCES `estabelecimentos` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `avaliacoes` (`usuario_id`, `estabelecimento_id`, `avaliacao`, `comentario`)
+VALUES
+(1, 1, 5, 'Excelente atendimento e comida!'),
+(2, 2, 4, 'Muito bom, mas poderia ser mais rápido.'),
+(3, 3, 5, 'Sabor incrível!'),
+(4, 4, 3, 'Ok, mas esperava mais.'),
+(5, 5, 4, 'Boa padaria, voltarei com certeza.'),
+(6, 6, 5, 'Melhor lanche da cidade!'),
+(7, 7, 5, 'Comida deliciosa e ambiente agradável.'),
+(8, 8, 4, 'Bom hambúrguer, mas atendimento demorado.'),
+(9, 9, 5, 'Sorvete maravilhoso!'),
+(10, 10, 3, 'Ambiente legal, mas atendimento deixou a desejar.');
+
+-- Tabela para avaliações do sistema HubMenu
+CREATE TABLE IF NOT EXISTS `avaliacoes_sistema` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `usuario_id` INT(11) NOT NULL,
+  `avaliacao` INT(1) NOT NULL,  -- Avaliação entre 1 e 5 (ajuste conforme necessário)
+  `comentario` TEXT DEFAULT NULL, -- Comentário opcional
+  `data_avaliacao` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `usuario_id` (`usuario_id`),
+  CONSTRAINT `avaliacoes_sistema_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `avaliacoes_sistema` (`usuario_id`, `avaliacao`, `comentario`)
+VALUES
+(1, 5, 'Sistema muito intuitivo e rápido, facilitou o controle dos pedidos.'),
+(2, 4, 'Gostei da interface, mas poderia ter mais opções de filtros nas vendas.'),
+(3, 5, 'Excelente! Melhorou muito a organização do meu estabelecimento.'),
+(4, 3, 'Funciona bem, mas encontrei lentidão ao gerar relatórios.'),
+(5, 4, 'Sistema prático, mas a tela de cadastro poderia ser mais simples.'),
+(6, 5, 'Tudo funcionando perfeitamente. Recomendo!'),
+(7, 5, 'Atendeu todas as necessidades do meu negócio. Parabéns à equipe.'),
+(8, 4, 'Fácil de usar, só senti falta de um tutorial inicial.'),
+(9, 5, 'Fluxo de pedidos ficou muito mais eficiente com o Hub Menu.'),
+(10, 3, 'Alguns bugs ao salvar produtos, mas no geral é bom.');
+  
 -- Copiando dados para a tabela db_hubmenu.avaliacoes: ~0 rows (aproximadamente)
 
 -- Copiando estrutura para tabela db_hubmenu.cargos

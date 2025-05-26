@@ -131,7 +131,7 @@
         <div class="container">
             <h2 class="text-center mb-4" style="color: var(--primary);">Pronto para transformar seu restaurante?</h2>
             <p class="mb-5 p-fale-conosco">Entre em contato conosco e descubra como o HubMenu pode alavancar seu negócio</p>
-            <a href="./suporte.php">
+            <a href="/empresarial/suporte">
                 <button class="btn btn-success btn-lg">Fale Conosco</button>
             </a>
         </div>

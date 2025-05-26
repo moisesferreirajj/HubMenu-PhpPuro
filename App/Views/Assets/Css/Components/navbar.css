@@ -1,4 +1,4 @@
-/* NAVBAR BOLADAO */
+/* NAVBAR */
 nav{
     height: 12vh;
     background: transparent;
@@ -28,6 +28,36 @@ nav .container {
     padding-left: 3rem ;
 }
 
+.nav-link {
+    font-weight: 500 !important; 
+}
+
+.nav-link:hover {
+    color: var(--primary);
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+.btn-outline-primary {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+
 @media screen and (max-width: 768px) {
     nav {
         height: auto;
@@ -54,4 +84,136 @@ nav .container {
         max-height: 100%;
     }
 
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--light-gray);
+    position: relative;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.navbar-collapse {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navbar-nav {
+    display: flex;
+    gap: 1rem;
+}
+
+.navbar-nav a {
+    text-decoration: none;
+    color: #333 !important;
+    font-size: 1rem;
+    transition: color 0.3s !important;
+}
+
+.navbar-nav a:hover {
+    color: var(--primary) !important;
+}
+
+/* Botão toggler personalizado */
+.navbar-toggler {
+    border: none;
+    padding: 0.25rem 0.5rem;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2833, 37, 41, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+@media (max-width: 991px) {
+    .navbar {
+        position: relative;
+        z-index: 1050;
+    }
+    
+    .navbar-collapse {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: white;
+        border: 1px solid #dee2e6;
+        border-top: none;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 1060;
+        padding: 1rem;
+        justify-content: flex-start;
+        margin: 0 15px;
+        max-width: calc(100% - 30px);
+    }
+    
+    .navbar-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+    }
+    
+    .navbar-nav .nav-item {
+        width: 100%;
+    }
+    
+    .navbar-nav .nav-link {
+        padding: 0.75rem 0.5rem;
+        border-bottom: 1px solid #f0f0f0;
+        display: block;
+        width: 100%;
+        border-radius: 4px;
+        transition: background-color 0.2s ease;
+    }
+    
+    .navbar-nav .nav-link:hover {
+        background-color: #f8f9fa;
+        color: var(--primary);
+    }
+    
+    .navbar-nav .nav-item:last-child .nav-link {
+        border-bottom: none;
+    }
+    
+    .navbar-collapse:not(.show) {
+        display: none !important;
+    }
+
+    .navbar-collapse.show {
+        display: block !important;
+    }
+}
+
+/* Dispositivos pequenos (celulares) */
+@media (max-width: 576px) {
+    .navbar {
+        padding: 0.75rem 1rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .navbar-collapse {
+        padding: 0.75rem 1rem;
+    }
+
+}
+
+/* Dispositivos grandes (desktops) */
+@media (min-width: 769px) {
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
 }
