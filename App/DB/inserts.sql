@@ -1,39 +1,3 @@
-  -- --------------------------------------------------------
--- Servidor:                     127.0.0.1
--- Versão do servidor:           10.4.32-MariaDB - mariadb.org binary distribution
--- OS do Servidor:               Win64
--- HeidiSQL Versão:              12.10.0.7000
--- --------------------------------------------------------
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
-
--- Copiando estrutura do banco de dados para db_hubmenu
-CREATE DATABASE IF NOT EXISTS `db_hubmenu` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
-USE `db_hubmenu`;
-
--- Copiando estrutura para tabela db_hubmenu.avaliacoes
-CREATE TABLE IF NOT EXISTS `avaliacoes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `usuario_id` int(11) NOT NULL,
-  `estabelecimento_id` int(11) NOT NULL,
-  `avaliacao` int(1) NOT NULL,
-  `comentario` text DEFAULT NULL,
-  `data_avaliacao` datetime DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `usuario_id` (`usuario_id`),
-  KEY `estabelecimento_id` (`estabelecimento_id`),
-  CONSTRAINT `avaliacoes_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `avaliacoes_ibfk_2` FOREIGN KEY (`estabelecimento_id`) REFERENCES `estabelecimentos` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 INSERT INTO `avaliacoes` (`usuario_id`, `estabelecimento_id`, `avaliacao`, `comentario`)
 VALUES
 (1, 1, 5, 'Excelente atendimento e comida!'),
@@ -47,17 +11,6 @@ VALUES
 (9, 9, 5, 'Sorvete maravilhoso!'),
 (10, 10, 3, 'Ambiente legal, mas atendimento deixou a desejar.');
 
--- Tabela para avaliações do sistema HubMenu
-CREATE TABLE IF NOT EXISTS `avaliacoes_sistema` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `usuario_id` INT(11) NOT NULL,
-  `avaliacao` INT(1) NOT NULL,  -- Avaliação entre 1 e 5 (ajuste conforme necessário)
-  `comentario` TEXT DEFAULT NULL, -- Comentário opcional
-  `data_avaliacao` DATETIME DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `usuario_id` (`usuario_id`),
-  CONSTRAINT `avaliacoes_sistema_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `avaliacoes_sistema` (`usuario_id`, `avaliacao`, `comentario`)
 VALUES
@@ -72,35 +25,6 @@ VALUES
 (9, 5, 'Fluxo de pedidos ficou muito mais eficiente com o Hub Menu.'),
 (10, 3, 'Alguns bugs ao salvar produtos, mas no geral é bom.');
   
--- Copiando dados para a tabela db_hubmenu.avaliacoes: ~0 rows (aproximadamente)
-
--- Copiando estrutura para tabela db_hubmenu.cargos
-CREATE TABLE IF NOT EXISTS `cargos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- Copiando dados para a tabela db_hubmenu.cargos: ~10 rows (aproximadamente)
-INSERT INTO `cargos` (`id`, `nome`) VALUES
-	('Administrador'),
-	('Gerente'),
-	('Atendente'),
-	('Cozinheiro'),
-	('Entregador'),
-	('Caixa'),
-	('Garçom'),
-	('Supervisor'),
-	('Auxiliar de Limpeza'),
-	('Segurança');
-
--- Copiando estrutura para tabela db_hubmenu.categorias
-CREATE TABLE IF NOT EXISTS `categorias` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 -- Copiando dados para a tabela db_hubmenu.categorias: ~10 rows (aproximadamente)
 INSERT INTO `categorias` (`id`, `nome`) VALUES
 	(1, 'Pizzas'),
@@ -114,21 +38,18 @@ INSERT INTO `categorias` (`id`, `nome`) VALUES
 	(9, 'Sobremesas'),
 	(10, 'Bebidas');
 
--- Copiando estrutura para tabela db_hubmenu.estabelecimentos
-CREATE TABLE IF NOT EXISTS `estabelecimentos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(100) NOT NULL,
-  `cep` varchar(20) DEFAULT NULL,
-  `endereco` varchar(255) DEFAULT NULL,
-  `cnpj` varchar(20) DEFAULT NULL,
-  `imagem` varchar(255) DEFAULT NULL,
-  `cor1` varchar(20) DEFAULT NULL,
-  `cor2` varchar(20) DEFAULT NULL,
-  `cor3` varchar(20) DEFAULT NULL,
-  `tipo` varchar(100) DEFAULT NULL,
-  `media_avaliacao` decimal(3,2) DEFAULT 0.00,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Inserindo dados para a tabela cargos
+INSERT INTO `cargos` (`id`, `nome`) VALUES
+(1, 'Administrador'),
+(2, 'Gerente'),
+(3, 'Atendente'),
+(4, 'Cozinheiro'),
+(5, 'Entregador'),
+(6, 'Caixa'),
+(7, 'Garçom'),
+(8, 'Supervisor'),
+(9, 'Auxiliar de Limpeza'),
+(10, 'Segurança');
 
 -- Copiando dados para a tabela db_hubmenu.estabelecimentos: ~10 rows (aproximadamente)
 INSERT INTO `estabelecimentos` (`id`, `nome`, `cep`, `endereco`, `cnpj`, `imagem`, `cor1`, `cor2`, `cor3`, `tipo`, `media_avaliacao`) VALUES
@@ -143,21 +64,6 @@ INSERT INTO `estabelecimentos` (`id`, `nome`, `cep`, `endereco`, `cnpj`, `imagem
 	(9, 'Sorveteria Gelato', '89200-008', 'Rua do Sorvete, 852', '90.123.456/0001-88', 'sorveteria.jpg', '#FF5733', '#33FF57', '#3357FF', 'Sorveteria', 4.10),
 	(10, 'Bar do Zé', '89200-009', 'Rua da Alegria, 963', '01.234.567/0001-99', 'bar.jpg', '#FF5733', '#33FF57', '#3357FF', 'Bar', 4.00);
 
--- Copiando estrutura para tabela db_hubmenu.estabelecimentos_usuarios
-CREATE TABLE IF NOT EXISTS `estabelecimentos_usuarios` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `usuario_id` int(11) NOT NULL,
-  `cargo_id` int(11) NOT NULL,
-  `estabelecimento_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `usuario_id` (`usuario_id`),
-  KEY `estabelecimento_id` (`estabelecimento_id`),
-  KEY `cargo_id` (`cargo_id`),
-  CONSTRAINT `estabelecimentos_usuarios_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
-  CONSTRAINT `estabelecimentos_usuarios_ibfk_2` FOREIGN KEY (`estabelecimento_id`) REFERENCES `estabelecimentos` (`id`),
-  CONSTRAINT `estabelecimentos_usuarios_ibfk_3` FOREIGN KEY (`cargo_id`) REFERENCES `cargos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 -- Copiando dados para a tabela db_hubmenu.estabelecimentos_usuarios: ~10 rows (aproximadamente)
 INSERT INTO `estabelecimentos_usuarios` (`id`, `usuario_id`, `cargo_id`, `estabelecimento_id`) VALUES
 	(1, 1, 1, 1),
@@ -171,22 +77,6 @@ INSERT INTO `estabelecimentos_usuarios` (`id`, `usuario_id`, `cargo_id`, `estabe
 	(9, 9, 9, 9),
 	(10, 10, 10, 10);
 
--- Copiando estrutura para tabela db_hubmenu.pedidos
-CREATE TABLE IF NOT EXISTS `pedidos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `usuario_id` int(11) NOT NULL,
-  `estabelecimento_id` int(11) NOT NULL,
-  `observacao` text DEFAULT NULL,
-  `avaliacao` int(11) DEFAULT NULL,
-  `valor_total` decimal(10,2) NOT NULL,
-  `data_pedido` datetime DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `usuario_id` (`usuario_id`),
-  KEY `estabelecimento_id` (`estabelecimento_id`),
-  CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
-  CONSTRAINT `pedidos_ibfk_2` FOREIGN KEY (`estabelecimento_id`) REFERENCES `estabelecimentos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 -- Copiando dados para a tabela db_hubmenu.pedidos: ~10 rows (aproximadamente)
 INSERT INTO `pedidos` (`id`, `usuario_id`, `estabelecimento_id`, `observacao`, `avaliacao`, `valor_total`, `data_pedido`) VALUES
 	(1, 1, 1, 'Sem cebola', 5, 29.90, '2025-05-14 15:41:03'),
@@ -199,38 +89,6 @@ INSERT INTO `pedidos` (`id`, `usuario_id`, `estabelecimento_id`, `observacao`, `
 	(8, 8, 8, 'Adicionar picles', 5, 25.90, '2025-05-14 15:41:03'),
 	(9, 9, 9, 'Sorvete com calda de chocolate', 5, 9.90, '2025-05-14 15:41:03'),
 	(10, 10, 10, 'Cerveja bem gelada', 4, 12.90, '2025-05-14 15:41:03');
-
--- Copiando estrutura para tabela db_hubmenu.pedidos_produtos
-CREATE TABLE IF NOT EXISTS `pedidos_produtos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `pedido_id` int(11) NOT NULL,
-  `produto_id` int(11) NOT NULL,
-  `quantidade` int(11) NOT NULL DEFAULT 1,
-  `preco_unitario` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `pedido_id` (`pedido_id`),
-  KEY `produto_id` (`produto_id`),
-  CONSTRAINT `pedidos_produtos_ibfk_1` FOREIGN KEY (`pedido_id`) REFERENCES `pedidos` (`id`),
-  CONSTRAINT `pedidos_produtos_ibfk_2` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- Copiando dados para a tabela db_hubmenu.pedidos_produtos: ~0 rows (aproximadamente)
-
--- Copiando estrutura para tabela db_hubmenu.produtos
-CREATE TABLE IF NOT EXISTS `produtos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(100) NOT NULL,
-  `descricao` text DEFAULT NULL,
-  `valor` decimal(10,2) NOT NULL,
-  `imagem` varchar(255) DEFAULT NULL,
-  `estabelecimento_id` int(11) NOT NULL,
-  `categoria_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `estabelecimento_id` (`estabelecimento_id`),
-  KEY `categoria_id` (`categoria_id`),
-  CONSTRAINT `produtos_ibfk_1` FOREIGN KEY (`estabelecimento_id`) REFERENCES `estabelecimentos` (`id`),
-  CONSTRAINT `produtos_ibfk_2` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Copiando dados para a tabela db_hubmenu.produtos: ~11 rows (aproximadamente)
 INSERT INTO `produtos` (`id`, `nome`, `descricao`, `valor`, `imagem`, `estabelecimento_id`, `categoria_id`) VALUES
@@ -256,19 +114,6 @@ INSERT INTO `produtos` (`id`, `nome`, `descricao`, `valor`, `imagem`, `estabelec
 	(21, 'Pizza de 4 Queijos - Família', 'Pizza de 4 queijos tamanho família caprichada com 16 fatias.', 80.00, '/Views/Assets/Images/Produtos/6830cc552e633.jpg', 1, 1),
 	(22, 'Filho do Yohan', 'HUMMMMMMM', 555.00, '/Views/Assets/Images/Produtos/6830cd0631107.png', 6, 2);
 
--- Copiando estrutura para tabela db_hubmenu.usuarios
-CREATE TABLE IF NOT EXISTS `usuarios` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `senha` varchar(255) NOT NULL,
-  `cep` varchar(20) DEFAULT NULL,
-  `endereco` varchar(255) DEFAULT NULL,
-  `telefone` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 -- Copiando dados para a tabela db_hubmenu.usuarios: ~10 rows (aproximadamente)
 INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `cep`, `endereco`, `telefone`) VALUES
 	(1, 'João Silva', 'joao@example.com', 'senha123', '89200-010', 'Rua A, 100', '(47) 99999-0001'),
@@ -282,20 +127,6 @@ INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `cep`, `endereco`, `tele
 	(9, 'Rafael Rodrigues', 'rafael@example.com', 'senha123', '89200-018', 'Rua I, 900', '(47) 99999-0009'),
 	(10, 'Juliana Martins', 'juliana@example.com', 'senha123', '89200-019', 'Rua J, 1000', '(47) 99999-0010');
 
--- Copiando estrutura para tabela db_hubmenu.vendas
-CREATE TABLE IF NOT EXISTS `vendas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `referencia` varchar(100) DEFAULT NULL,
-  `transacao_id` varchar(100) DEFAULT NULL,
-  `status_pagamento` varchar(50) DEFAULT NULL,
-  `estabelecimento_id` int(11) NOT NULL,
-  `valor_total` decimal(10,2) NOT NULL,
-  `data_venda` datetime DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `estabelecimento_id` (`estabelecimento_id`),
-  CONSTRAINT `vendas_ibfk_1` FOREIGN KEY (`estabelecimento_id`) REFERENCES `estabelecimentos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 -- Copiando dados para a tabela db_hubmenu.vendas: ~10 rows (aproximadamente)
 INSERT INTO `vendas` (`id`, `referencia`, `transacao_id`, `status_pagamento`, `estabelecimento_id`, `valor_total`, `data_venda`) VALUES
 	(1, 'VEND001', 'TXN001', 'Pendente', 1, 150.00, '2025-05-14 15:41:03'),
@@ -308,9 +139,3 @@ INSERT INTO `vendas` (`id`, `referencia`, `transacao_id`, `status_pagamento`, `e
 	(8, 'VEND008', 'TXN008', 'Aprovado', 2, 325.80, '2025-05-14 15:41:03'),
 	(9, 'VEND009', 'TXN009', 'Cancelado', 3, 95.00, '2025-05-14 15:41:03'),
 	(10, 'VEND010', 'TXN010', 'Aprovado', 1, 150.20, '2025-05-14 15:41:03');
-
-/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
