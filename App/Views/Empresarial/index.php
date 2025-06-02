@@ -176,19 +176,17 @@ if ($response->status === 'error') {
         <!-- Seção das Avaliações em Cards -->
         <section class="avaliacoes">
             <div class="title-avaliacoes">
-                <h2>O que estão dizendo sobre nós</h2>
+                <h2>O Que Dizem Sobre Nós:</h2>
             </div>
             <div class="cards-avaliacoes">
                 <?php foreach ($avaliacoes_sistema as $avaliacao): ?>
                     <div class="card-avaliacao">
                         <div class="card-conteudo">
+                            <p class="avaliador"><strong><?= htmlspecialchars($avaliacao->nome) ?></strong></p>
                             <p class="comentario">“<?= htmlspecialchars($avaliacao->comentario) ?>”</p>
-                            <div class="avaliador">
-                                <strong><?= htmlspecialchars($avaliacao->nome) ?></strong>
-                                <span class="estrela">
-                                    <?= str_repeat('⭐', intval($avaliacao->avaliacao)) ?>
-                                </span>
-                            </div>
+                            <span class="estrela">
+                                <?= str_repeat('⭐', intval($avaliacao->avaliacao)) ?>
+                            </span>
                         </div>
                     </div>
                 <?php endforeach; ?>

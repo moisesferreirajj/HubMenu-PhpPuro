@@ -39,7 +39,8 @@ body {
     padding-right: 40px;
     padding-left: 15px;
     border: none;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: rgb(255, 255, 255);
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.336);
     transition: all 0.3s ease;
 }
 

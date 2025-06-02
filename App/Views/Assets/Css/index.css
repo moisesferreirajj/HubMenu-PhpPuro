@@ -14,7 +14,7 @@ body {
     background-color: white;
     max-width: 100%;
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
     padding: 0;
     font-family: var(--default-font);
     margin: 0;
@@ -262,8 +262,16 @@ main {
 }
 
 /* Avaliações */
+.avaliacoes {
+    width: 90% !important;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .title-avaliacoes {
-    width: 90%;
+    width: 100%;
 }
 
 .title-avaliacoes h2 {
@@ -271,23 +279,34 @@ main {
     font-weight: 500;
     color: #3e3e3e;
     text-align: left;
-    margin: 0;  
+    margin: 0;
 }
 
 .cards-avaliacoes {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    margin: 40px 0;
+    flex-direction: row;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    gap: 50px;
+    width: 100%;
+    margin: 30px 0;
+    padding-left: 0.5%;
+    padding-right: 0.5%;
+}
+
+.cards-avaliacoes::-webkit-scrollbar {
+    display: none;
 }
 
 .card-avaliacao {
     background-color: #f8f9fa;
     border: 1px solid #ddd;
     border-radius: 12px;
-    padding: 20px;
-    width: 250px;
+    padding: 15px;
+    width: 220px;
+    min-width: 160px;
+    max-width: 300px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease;
 }
@@ -296,21 +315,24 @@ main {
     transform: translateY(-5px);
 }
 
-.card-conteudo .comentario {
-    font-style: italic;
-    color: #333;
-    margin-bottom: 10px;
-}
-
 .avaliador {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.95em;
-    color: #555;
+    justify-content: center;
+    font-size: 0.95rem;
+    color: #3b3b3b;
+    margin: 0 0 5px 0;
+}
+
+.card-conteudo .comentario {
+    font-style: italic;
+    font-size: 0.90rem;
+    color: #333;
+    margin-bottom: 5px;
 }
 
 .estrela {
+    display: flex;
+    justify-content: center;
     color: #ffc107;
 }
 
@@ -352,6 +374,10 @@ main {
 
     .enterprises .name-enterprise p {
         font-size: 0.8rem;
+    }
+
+    .cards-avaliacoes {
+        gap: 20px;
     }
 
 }
@@ -398,7 +424,11 @@ main {
     }
 
     .title-enterprise h1 {
-        font-size: 16px;
+        font-size: 1.1rem;
+    }
+
+    .title-avaliacoes h2 {
+        font-size: 1.1rem;
     }
 }
 
@@ -454,8 +484,7 @@ main {
     }
 
     .title-enterprise h1 {
-        font-size: 1.3rem;
-        margin: 0;
+        font-size: 1.2rem;
     }
 
     .enterprise {
@@ -472,6 +501,15 @@ main {
 
     .slogan h2 {
         font-size: 1.3rem;
+    }
+
+    .cards-avaliacoes {
+        margin-left: 4%;
+    }
+
+    .title-avaliacoes h2 {
+        font-size: 1.2rem;
+        margin: 0;
     }
 
 }
