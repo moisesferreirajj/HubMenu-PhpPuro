@@ -15,6 +15,8 @@ $routes = [
     /* ROTAS GLOBAIS */
     '/user/{id}' => 'UserController@show',
     /* ROTAS DE ADMIN */
+    '/api/autenticar/usuario' => 'LoginController@autenticar',
+    '/api/cadastrar/usuario' => 'CadastroController@cadastrar',
     '/cadastro/produtos' => 'ProdutosController@index',
     /* ROTAS DE API ABAIXO: */
     '/api/visualizar/categorias' => 'ProdutosController@getCategorias',

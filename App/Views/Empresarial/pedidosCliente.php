@@ -57,17 +57,7 @@
     </div>
 
     
-    <?php
-        // $usuarioModel = new UsuariosModel();
-        // $pedidosData = $usuarioModel->queryOrders(1);
-        // $pedidos = $pedidosData['results'];
-        // foreach ($pedidos as $pedido) {
-        //     $produtosData = $usuarioModel->queryProduct($pedido['id_pedido']);
-        //     $pedido['produtos'] = $produtosData['results'];
-        // }
-    ?>
     <div class="orders">
-         <?php //foreach($pedidos as $pedido) : ?> 
             <div class="order-card">
                 <div class="order-heading">
                     <span class="order_id">Pedido </span>
@@ -104,7 +94,6 @@
                     </div>
                     <span class="sub_total">Sub-Total: <?php // echo "R$". $total; ?></span>
                 </div>
-            <?php // endforeach ?>
     </div>
 
 

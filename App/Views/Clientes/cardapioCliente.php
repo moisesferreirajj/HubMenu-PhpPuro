@@ -1,5 +1,17 @@
 <?php @require_once __DIR__ . '/../../global.php'; ?>
 
+<?php
+// Realizando a consulta do Cardápio específico para aquela empresa, exemplo:
+// /cardapio/{id} | cardapio/1 - Aparece Pizza Margherita e Yohan;
+// By Moises João Ferreira
+
+$produtos = $Produtos ?? [];
+if ($Erro) {
+    echo '<div class="alert alert-danger">Erro ao carregar produtos: ' . htmlspecialchars($Erro) . '</div>';
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -58,16 +70,6 @@
     </div>
 
 <!-- Principais -->
-<?php
-// Realizando a consulta do Cardápio específico para aquela empresa, exemplo:
-// /cardapio/{id} | cardapio/1 - Aparece Pizza Margherita e Yohan;
-// By Moises João Ferreira
-$produtos = $Produtos ?? [];
-if ($Erro) {
-    echo '<div class="alert alert-danger">Erro ao carregar produtos: ' . htmlspecialchars($Erro) . '</div>';
-}
-?>
-
 <h1 class="rowCategory">Principais</h1>
 <div class="row row-cols-2 row-cols-md-2 row-cols-lg-4 g-4">
   <?php foreach ($produtos as $produto): ?>

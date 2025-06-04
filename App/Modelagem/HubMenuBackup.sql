@@ -32,9 +32,45 @@ CREATE TABLE IF NOT EXISTS `avaliacoes` (
   KEY `estabelecimento_id` (`estabelecimento_id`),
   CONSTRAINT `avaliacoes_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
   CONSTRAINT `avaliacoes_ibfk_2` FOREIGN KEY (`estabelecimento_id`) REFERENCES `estabelecimentos` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela db_hubmenu.avaliacoes: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela db_hubmenu.avaliacoes: ~10 rows (aproximadamente)
+INSERT INTO `avaliacoes` (`id`, `usuario_id`, `estabelecimento_id`, `avaliacao`, `comentario`, `data_avaliacao`) VALUES
+	(1, 1, 1, 5, 'Excelente atendimento e comida!', '2025-05-23 16:49:29'),
+	(2, 2, 2, 4, 'Muito bom, mas poderia ser mais rápido.', '2025-05-23 16:49:29'),
+	(3, 3, 3, 5, 'Sabor incrível!', '2025-05-23 16:49:29'),
+	(4, 4, 4, 3, 'Ok, mas esperava mais.', '2025-05-23 16:49:29'),
+	(5, 5, 5, 4, 'Boa padaria, voltarei com certeza.', '2025-05-23 16:49:29'),
+	(6, 6, 6, 5, 'Melhor lanche da cidade!', '2025-05-23 16:49:29'),
+	(7, 7, 7, 5, 'Comida deliciosa e ambiente agradável.', '2025-05-23 16:49:29'),
+	(8, 8, 8, 4, 'Bom hambúrguer, mas atendimento demorado.', '2025-05-23 16:49:29'),
+	(9, 9, 9, 5, 'Sorvete maravilhoso!', '2025-05-23 16:49:29'),
+	(10, 10, 10, 3, 'Ambiente legal, mas atendimento deixou a desejar.', '2025-05-23 16:49:29');
+
+-- Copiando estrutura para tabela db_hubmenu.avaliacoes_sistema
+CREATE TABLE IF NOT EXISTS `avaliacoes_sistema` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario_id` int(11) NOT NULL,
+  `avaliacao` int(1) NOT NULL,
+  `comentario` text DEFAULT NULL,
+  `data_avaliacao` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `usuario_id` (`usuario_id`),
+  CONSTRAINT `avaliacoes_sistema_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Copiando dados para a tabela db_hubmenu.avaliacoes_sistema: ~10 rows (aproximadamente)
+INSERT INTO `avaliacoes_sistema` (`id`, `usuario_id`, `avaliacao`, `comentario`, `data_avaliacao`) VALUES
+	(1, 1, 5, 'Sistema muito intuitivo e rápido, facilitou o controle dos pedidos.', '2025-05-23 16:56:43'),
+	(2, 2, 4, 'Gostei da interface, mas poderia ter mais opções de filtros nas vendas.', '2025-05-23 16:56:43'),
+	(3, 3, 5, 'Excelente! Melhorou muito a organização do meu estabelecimento.', '2025-05-23 16:56:43'),
+	(4, 4, 3, 'Funciona bem, mas encontrei lentidão ao gerar relatórios.', '2025-05-23 16:56:43'),
+	(5, 5, 4, 'Sistema prático, mas a tela de cadastro poderia ser mais simples.', '2025-05-23 16:56:43'),
+	(6, 6, 5, 'Tudo funcionando perfeitamente. Recomendo!', '2025-05-23 16:56:43'),
+	(7, 7, 5, 'Atendeu todas as necessidades do meu negócio. Parabéns à equipe.', '2025-05-23 16:56:43'),
+	(8, 8, 4, 'Fácil de usar, só senti falta de um tutorial inicial.', '2025-05-23 16:56:43'),
+	(9, 9, 5, 'Fluxo de pedidos ficou muito mais eficiente com o Hub Menu.', '2025-05-23 16:56:43'),
+	(10, 10, 3, 'Alguns bugs ao salvar produtos, mas no geral é bom.', '2025-05-23 16:56:43');
 
 -- Copiando estrutura para tabela db_hubmenu.cargos
 CREATE TABLE IF NOT EXISTS `cargos` (
@@ -194,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `produtos` (
   CONSTRAINT `produtos_ibfk_2` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela db_hubmenu.produtos: ~11 rows (aproximadamente)
+-- Copiando dados para a tabela db_hubmenu.produtos: ~19 rows (aproximadamente)
 INSERT INTO `produtos` (`id`, `nome`, `descricao`, `valor`, `imagem`, `estabelecimento_id`, `categoria_id`) VALUES
 	(1, 'Pizza Margherita', 'Molho de tomate, mussarela e manjericão', 29.90, '/Views/Assets/Images/Produtos/6830ce694ee14.webp', 1, 1),
 	(2, 'Picanha na Brasa', 'Picanha grelhada com acompanhamentos', 59.90, 'picanha.jpg', 2, 2),
@@ -202,7 +238,7 @@ INSERT INTO `produtos` (`id`, `nome`, `descricao`, `valor`, `imagem`, `estabelec
 	(4, 'X-Burguer', 'Hambúrguer com queijo, alface e tomate', 19.90, 'xburguer.jpg', 4, 4),
 	(5, 'Pão Francês', 'Pão crocante e fresquinho', 0.90, 'pao_frances.jpg', 5, 5),
 	(6, 'Pizza Mortadelao', 'Pizza preparada especialmente com mortadela!', 30.00, '/Views/Assets/Images/Produtos/6830c72d6864e.webp', 6, 1),
-	(7, 'Lasanha à Bolonhesa', 'Lasanha com molho bolonhesa e queijo', 24.90, 'lasanha.jpg', 7, 7),
+	(7, 'Lasanha à Bolonhesa', 'Lasanha com molho bolonhesa e queijo', 24.90, '/Views/Assets/Images/Produtos/6834b6d92194f.png', 7, 7),
 	(8, 'Hambúrguer Duplo', 'Dois hambúrgueres com queijo e bacon', 25.90, 'hamburguer_duplo.jpg', 8, 8),
 	(9, 'Sorvete de Chocolate', 'Sorvete cremoso de chocolate', 9.90, 'sorvete_chocolate.jpg', 9, 9),
 	(10, 'Cerveja Artesanal', 'Cerveja local artesanal', 12.90, 'cerveja_artesanal.jpg', 10, 10),
@@ -216,7 +252,7 @@ INSERT INTO `produtos` (`id`, `nome`, `descricao`, `valor`, `imagem`, `estabelec
 	(19, 'Pizza Vegetariana', 'Pizza vegetariana caprichada!', 45.00, '/Views/Assets/Images/Produtos/6830caca5e37a.webp', 6, 1),
 	(20, 'Cuzcuz c/ Ovo', 'essa e bom', 12.00, '/Views/Assets/Images/Produtos/6830cb1e44ddc.png', 6, 1),
 	(21, 'Pizza de 4 Queijos - Família', 'Pizza de 4 queijos tamanho família caprichada com 16 fatias.', 80.00, '/Views/Assets/Images/Produtos/6830cc552e633.jpg', 1, 1),
-	(22, 'Filho do Yohan', 'HUMMMMMMM', 555.00, '/Views/Assets/Images/Produtos/6830cd0631107.png', 6, 2);
+	(22, 'Filho do Yohan', 'como ele fez essa coisa?????', 555.00, '/Views/Assets/Images/Produtos/6830cd0631107.png', 6, 2);
 
 -- Copiando estrutura para tabela db_hubmenu.usuarios
 CREATE TABLE IF NOT EXISTS `usuarios` (

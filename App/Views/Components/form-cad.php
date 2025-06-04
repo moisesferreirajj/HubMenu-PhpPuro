@@ -5,62 +5,62 @@
             <p>Acesse o HubMenu para controlar cardápios, pedidos e clientes em uma única plataforma intuitiva e moderna. Simplifique a gestão do seu negócio e aumente seus resultados.</p>
         </div>
     </div>
+
     <div class="right-side">
         <div class="form-container">
             <?php @require_once __DIR__ . '/svg-logo.php'; ?>
             <h2>Acesso - Cadastro</h2>
 
-            <!-- Formulário Pessoa Física -->
-            <div class="form-section active" id="form-fisica">
+            <form id="form-cadastro" action="/api/cadastrar/usuario" method="POST" onsubmit="return validarFormulario();">
                 <div class="form-group">
                     <label for="nome"><i class="fas fa-user"></i> Nome Completo</label>
-                    <input type="text" id="nome" placeholder="Digite seu nome completo">
+                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="cpf"><i class="fas fa-id-card"></i> CPF</label>
-                    <input type="text" id="cpf" placeholder="000.000.000-00">
+                    <label for="cep"><i class="fas fa-id-card"></i> CEP</label>
+                    <input type="text" id="cep" name="cep" placeholder="00000-000" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="endereco"><i class="fas fa-home"></i> Endereço</label>
+                    <input type="text" id="endereco" name="endereco" placeholder="Rua Inexistente, 123" required>
                 </div>
 
                 <div class="form-group">
                     <label for="email"><i class="fas fa-envelope"></i> Email</label>
-                    <input type="email" id="email" placeholder="Seu email">
+                    <input type="email" id="email" name="email" placeholder="seuemail@email.com" required>
                 </div>
 
                 <div class="form-group">
                     <label for="telefone"><i class="fas fa-phone"></i> Telefone</label>
-                    <input type="tel" id="telefone" placeholder="(00) 00000-0000">
+                    <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" required>
                 </div>
 
                 <div class="form-group">
                     <label for="senha"><i class="fas fa-lock"></i> Senha</label>
-                    <div class="password-container">
-                        <input type="password" id="senha" placeholder="Sua senha">
-                    </div>
+                    <input type="password" id="senha" name="senha" placeholder="Sua senha" required>
                 </div>
 
                 <div class="form-group">
                     <label for="confirmar-senha"><i class="fas fa-lock"></i> Confirmar Senha</label>
-                    <div class="password-container">
-                        <input type="password" id="confirmar-senha" placeholder="Confirme sua senha">
-                    </div>
+                    <input type="password" id="confirmar-senha" placeholder="Confirme a senha" required>
                 </div>
 
                 <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="aceito-termos">
-                    <label class="form-check-label" for="aceito-termos">
+                    <input type="checkbox" id="aceito-termos" required>
+                    <label for="aceito-termos">
                         Aceito os <a href="#" target="_blank">termos e condições</a>
                     </label>
-        
                 </div>
 
-                <button type="button" onclick="cadastrar()">
+                <button type="submit">
                     <i class="fas fa-user-plus"></i> Cadastrar-se
                 </button>
-            </div>
+            </form>
 
             <div class="links">
-                <a href="/Views/Empresarial/index.php"><i class="fas fa-arrow-left"></i> Voltar ao Início</a>
+                <a href="/empresarial"><i class="fas fa-arrow-left"></i> Voltar ao Início</a>
                 <a href="./login"><i class="fas fa-sign-in-alt"></i> Já tem cadastro? Entrar</a>
             </div>
         </div>
@@ -68,74 +68,40 @@
 </div>
 
 <script>
-function cadastrar() {
-    let isValid = true;
+function validarFormulario() {
+    const senha = document.getElementById('senha').value.trim();
+    const confirmar = document.getElementById('confirmar-senha').value.trim();
 
-    // Validar campos obrigatórios
-    const requiredFields = document.querySelectorAll('#form-fisica input');
-    requiredFields.forEach(field => {
-        if (field.value.trim() === '') {
-            field.style.borderColor = '#dc3545';
-            isValid = false;
-        } else {
-            field.style.borderColor = '';
-        }
-    });
-
-    // Validar senhas iguais
-    const senha = document.getElementById('senha');
-    const confirmarSenha = document.getElementById('confirmar-senha');
-
-    if (senha.value !== confirmarSenha.value) {
-        confirmarSenha.style.borderColor = '#dc3545';
+    if (senha !== confirmar) {
         alert('As senhas não conferem!');
-        isValid = false;
+        document.getElementById('confirmar-senha').style.borderColor = '#dc3545';
+        return false;
     }
 
-    if (isValid) {
-        const submitBtn = document.querySelector('#form-fisica button');
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
-        submitBtn.disabled = true;
-
-        setTimeout(() => {
-            alert('Cadastro realizado com sucesso!');
-            submitBtn.innerHTML = '<i class="fas fa-user-plus"></i> Cadastrar-se';
-            submitBtn.disabled = false;
-        }, 2000);
-    }
+    return true;
 }
 
 window.onload = function () {
-    // Máscara CPF
-    const cpfInput = document.getElementById('cpf');
-    cpfInput.addEventListener('input', function (e) {
+    // Máscara CEP
+    const cepInput = document.getElementById('cep');
+    cepInput.addEventListener('input', function (e) {
         let value = e.target.value.replace(/\D/g, '');
-        if (value.length > 11) value = value.slice(0, 11);
-
-        if (value.length > 9) {
-            value = value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2}).*/, '$1.$2.$3-$4');
-        } else if (value.length > 6) {
-            value = value.replace(/^(\d{3})(\d{3})(\d{0,3}).*/, '$1.$2.$3');
-        } else if (value.length > 3) {
-            value = value.replace(/^(\d{3})(\d{0,3}).*/, '$1.$2');
-        }
+        if (value.length > 8) value = value.slice(0, 8);
+        if (value.length > 5) value = value.replace(/^(\d{5})(\d{0,3})/, '$1-$2');
         e.target.value = value;
     });
 
     // Máscara Telefone
-    const telefones = document.querySelectorAll('input[type="tel"]');
-    telefones.forEach(tel => {
-        tel.addEventListener('input', function (e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 11) value = value.slice(0, 11);
-
-            if (value.length > 6) {
-                value = value.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
-            } else if (value.length > 2) {
-                value = value.replace(/^(\d{2})(\d{0,5}).*/, '($1) $2');
-            }
-            e.target.value = value;
-        });
+    const telInput = document.getElementById('telefone');
+    telInput.addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 11) value = value.slice(0, 11);
+        if (value.length > 6) {
+            value = value.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
+        } else if (value.length > 2) {
+            value = value.replace(/^(\d{2})(\d{0,5}).*/, '($1) $2');
+        }
+        e.target.value = value;
     });
 };
 </script>

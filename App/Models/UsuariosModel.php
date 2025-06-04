@@ -81,19 +81,29 @@ class UsuariosModel
         return $db->execute_non_query($sql, $params);
     }
 
-    public function  queryOrders($id){
-        $db = new Database();
-        $sql = "SELECT id AS id_pedido, data_pedido, forma_pagamento FROM pedidos WHERE usuario_id = :id";
-        $params = [':id' => $id];
 
-        return $db->execute_query($sql, $params);
+    /**
+     * Busca um usuário pelo email. (query demoniaca)
+     */
+    public function buscarPorEmail($email)
+    {
+        $db = new Database();
+        $sql = "SELECT id, nome, senha, email FROM usuarios WHERE email = :email LIMIT 1";
+        $params = [':email' => $email];
+
+        $response = $db->execute_query($sql, $params);
+
+        if (isset($response->status) && $response->status === 'success' && !empty($response->results)) {
+            $row = $response->results[0];
+
+            if (is_object($row)) {
+                return $row;
+            } elseif (is_array($row)) {
+                return (object) $row;
+            }
+        }
+
+        return false;
     }
 
-    public function  queryProduct($id){
-        $db = new Database();
-        $sql = "SELECT pr.nome AS nome_produto, pp.quantidade AS Quantidade, pr.valor AS Preço FROM produtos pr JOIN pedidos_produtos pp ON pr.id = pp.produto_id JOIN pedidos p ON p.id = pp.pedido_id JOIN usuarios u ON u.id = p.usuario_id WHERE p.usuario_id = :id";
-        $params = [':id' => $id];
-
-        return $db->execute_query($sql, $params);
-    }
 }

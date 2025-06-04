@@ -1,0 +1,11 @@
+{
+  "require": {
+    "phpmailer/phpmailer": "^6.9",
+    "php-webdriver/webdriver": "^1.13"
+  },
+  "autoload": {
+    "psr-4": {
+      "": "src/"
+    }
+  }
+}

@@ -17,6 +17,9 @@
                     <a class="nav-link" href="/empresarial">Início</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/">Para Clientes</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/empresarial/suporte">Fale Conosco</a>
                 </li>
                 <li class="nav-item">

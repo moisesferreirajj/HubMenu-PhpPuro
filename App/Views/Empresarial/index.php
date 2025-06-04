@@ -25,6 +25,7 @@ if ($response->status === 'error') {
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -45,12 +46,6 @@ if ($response->status === 'error') {
     <main>
         <div class="slogan">
             <img class="entregador" src="/Views/Assets/Images/entregador.png" alt="Entregador">
-
-            <!--
-            ?php //foreach ($users as $item): ?>
-                <h2>Olá ?= ($item['nome']) ?>, sabia que gerenciar seu estabelecimento é muito fácil?</h2>
-            ?php //endforeach; ?>
-            -->
             <h2>Sabia que gerenciar seu estabelecimento é muito fácil?</h2>
         </div>
         <div class="funcs">
@@ -170,7 +165,6 @@ if ($response->status === 'error') {
                     </div>
                 <?php endforeach; ?>
             </div>
-
         </section>
 
         <!-- Seção das Avaliações em Cards -->
@@ -192,7 +186,6 @@ if ($response->status === 'error') {
                 <?php endforeach; ?>
             </div>
         </section>
-
 
     </main>
     <?php include_once __DIR__ . '/../Components/Footer.php'; ?>

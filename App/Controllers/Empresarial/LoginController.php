@@ -1,14 +1,47 @@
 <?php
 
+session_start();
+
 class LoginController extends RenderView
 {
-    public function index(){
-        $users = new UsuariosModel();
-
-        $this->loadView('empresarial/login',
+    public function index()
+    {
+        $this->loadView(
+            'empresarial/login',
             [
                 'Title' => 'HubMenu |'
             ],
         );
+    }
+
+    public function autenticar()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: /empresarial/login');
+            exit();
+        }
+
+        $email = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
+
+        if (empty($email) || empty($password)) {
+            echo "<script>alert('Preencha todos os campos.'); window.location.href = '/empresarial/login';</script>";
+            exit();
+        }
+
+        $users = new UsuariosModel();
+        $usuario = $users->buscarPorEmail($email);
+
+        if (!$usuario || !password_verify($password, $usuario->senha)) {
+            echo "<script>alert('Email ou senha inválido.'); window.location.href = '/empresarial/login';</script>";
+            exit();
+        }
+
+        //SE A AUTENTICAÇÃO FOR BEM SUCEDIDA, ARMAZENA AS INFORMAÇÕES DO USUÁRIO NA SESSÃO
+        $_SESSION['usuario_id'] = $usuario->id;
+        $_SESSION['usuario_nome'] = $usuario->nome;
+        $_SESSION['usuario_email'] = $usuario->email;
+        echo "<script>alert('Login realizado com sucesso!'); window.location.href = '/gerenciar/cardapio/1';</script>";
+        exit();
     }
 }

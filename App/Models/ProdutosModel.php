@@ -61,8 +61,7 @@ class ProdutosModel
     public function update($id, $nome, $descricao, $valor, $imagem, $estabelecimento_id, $categoria_id)
     {
         $db = new Database();
-
-        // Atualizar somente se imagem não for null
+        
         if ($imagem !== null) {
             $sql = "UPDATE produtos SET 
                         nome = :nome, 

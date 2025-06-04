@@ -53,7 +53,6 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // Carrega as categorias no select
   fetch('/api/visualizar/categorias')
     .then(response => response.json())
     .then(data => {
@@ -70,7 +69,6 @@ document.addEventListener('DOMContentLoaded', function () {
     .catch(error => console.error('Erro ao carregar categorias:', error));
 });
 
-// Garante remoção do backdrop preto ao fechar
 document.getElementById('cadastrarModal').addEventListener('hidden.bs.modal', function () {
   document.body.classList.remove('modal-open');
   const backdrop = document.querySelector('.modal-backdrop');

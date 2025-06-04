@@ -2,25 +2,25 @@
 
 class Core {
     public function run($routes) {
-        // Obter a URL atual
+        //OBTEM O URL ATUAL
         $url = isset($_SERVER['REQUEST_URI']) ? parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) : '/';
         $url = ($url !== '/') ? rtrim($url, '/') : $url;
 
         $routerFound = false;
 
-        // Loop pelas rotas definidas
+        //LOOP PELAS ROTAS
         foreach ($routes as $path => $controller) {
-            // Substituir parâmetros {id} por regex (\w+)
+            //SUBSTITUI O {id} POR REGEX
             $pattern = '#^' . preg_replace('/{[^}]+}/', '(\w+)', $path) . '$#';
 
             if (preg_match($pattern, $url, $matches)) {
-                array_shift($matches); // Remove a URL completa do match
+                array_shift($matches);
 
                 $routerFound = true;
 
                 [$controllerName, $action] = explode('@', $controller);
 
-                // Pastas onde procurar os controllers
+                //PASTA PARA PROCURAR OS CONTROLLER, MUDE AQUI CASO FOR NECESSARIO - BY MOISES
                 $controllerFolders = [
                     __DIR__ . '/../Controllers/Cadastros/',
                     __DIR__ . '/../Controllers/Empresarial/',
@@ -37,23 +37,23 @@ class Core {
                     }
                 }
 
-                // Se não encontrou o arquivo do controller
+                //PAGINA DE ERRO
                 if (!$controllerFile) {
                     require_once __DIR__ . '/../Controllers/NotFoundController.php';
                     return;
                 }
 
-                // Carrega o controller
+                //CARREGA O CONTROLLER
                 require_once $controllerFile;
 
-                // Instancia e executa o método
+                //INSTANCIA E EXECUTA O MÉTODO
                 $controllerInstance = new $controllerName();
                 call_user_func_array([$controllerInstance, $action], $matches);
                 return;
             }
         }
 
-        // Se nenhuma rota bateu
+        //SE NENHUMA ROTA BATER, VOLTA O NOT FOUND
         if (!$routerFound) {
             require_once __DIR__ . '/../Controllers/NotFoundController.php';
             $notFound = new NotFoundController();

@@ -14,13 +14,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
+                    <a class="nav-link" href="/">Início</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/empresarial">Para Empresas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/restaurantes">Restaurantes</a>
+                    <a class="nav-link" href="/empresarial/suporte">Fale Conosco</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/empresarial/suporte">Fale Conosco</a>
+                    <a class="nav-link" href="/restaurantes">Restaurantes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/empresarial/sobre">Sobre Nós</a>
