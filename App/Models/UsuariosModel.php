@@ -91,19 +91,10 @@ class UsuariosModel
         $sql = "SELECT id, nome, senha, email FROM usuarios WHERE email = :email LIMIT 1";
         $params = [':email' => $email];
 
-        $response = $db->execute_query($sql, $params);
+        return $db->execute_query($sql, $params);
 
-        if (isset($response->status) && $response->status === 'success' && !empty($response->results)) {
-            $row = $response->results[0];
-
-            if (is_object($row)) {
-                return $row;
-            } elseif (is_array($row)) {
-                return (object) $row;
-            }
-        }
-
-        return false;
+        // if (isset($response->status) && $response->status === 'success' && !empty($response->results)) {
+        //     return $response->results[0]; // sempre objeto
+        // }
     }
-
 }

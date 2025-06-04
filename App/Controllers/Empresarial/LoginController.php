@@ -30,7 +30,8 @@ class LoginController extends RenderView
         }
 
         $users = new UsuariosModel();
-        $usuario = $users->buscarPorEmail($email);
+        $usuarioBusca = $users->buscarPorEmail($email);
+        $usuario = $usuarioBusca->results[0]; // apenas o primeiro
 
         if (!$usuario || !password_verify($password, $usuario->senha)) {
             echo "<script>alert('Email ou senha inválido.'); window.location.href = '/empresarial/login';</script>";
