@@ -44,6 +44,15 @@
     font-weight: 500;
 }
 
+.sidebar {
+    display: none; /* Oculta a sidebar inicialmente */
+}
+
+.sidebar.openNav {
+    display: block; /* Exibe a sidebar quando a classe 'open' é adicionada */
+}
+
+
 .menu-links {
     align-self: center;
 }

@@ -1,11 +1,18 @@
 {
-  "require": {
-    "phpmailer/phpmailer": "^6.9",
-    "php-webdriver/webdriver": "^1.13"
-  },
-  "autoload": {
-    "psr-4": {
-      "": "src/"
+    "name": "app/hubmenu",
+    "description": "libs para uso no projeto hubmenu",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\Hubmenu\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Yohan Siedschlag"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.10"
     }
-  }
 }
