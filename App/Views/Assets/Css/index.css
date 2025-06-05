@@ -33,6 +33,15 @@ main {
     align-items: center;
 }
 
+.linha-separadora {
+    width: 30%;
+    border: none;
+    border-top: 2px solid #a6a6a6;
+    margin: 10px 0 30px 0;
+    height: 0;
+    background: transparent;
+}
+
 .slogan {
     width: 80%;
     display: flex;
@@ -49,7 +58,7 @@ main {
 }
 
 .entregador {
-    width: 20%;
+    width: 10%;
     height: auto;
     animation: DesceSobe 10s ease-in-out infinite;
     z-index: 1;
@@ -164,12 +173,14 @@ main {
 }
 
 .title-enterprise {
+    display: flex;
+    justify-content: center;
     width: 100%;
     margin-bottom: 15px;
 }
 
 .title-enterprise h1 {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 500;
     color: #3e3e3e;
     text-align: left;
@@ -180,13 +191,15 @@ main {
     width: 100%;
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    gap: 12px;
     overflow-x: auto;
     padding-bottom: 10px;
+    padding-top: 10px;
     scrollbar-width: none;
     -ms-overflow-style: none;
     padding-left: 0.5%;
     padding-right: 0.5%;
+    justify-content: center;
 }
 
 .sec-enterprises::-webkit-scrollbar {
@@ -194,16 +207,17 @@ main {
 }
 
 .enterprise {
+    width: 100% !important;
     display: flex;
     flex-direction: row;
     align-items: center;
     background: white;
     border-radius: 8px;
-    min-width: 180px;
-    max-width: 300px;
+    min-width: 250px;
+    max-width: 250px;
     width: 250px;
-    height: 100px;
-    padding: 1%;
+    height: 120px;
+    padding: 20px;
     position: relative;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.315);
     border: none;
@@ -218,12 +232,12 @@ main {
 }
 
 .img-enterprise {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 8px;
+    margin-right: 10px;
     flex-shrink: 0;
 }
 
@@ -267,15 +281,16 @@ main {
     max-width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
 }
 
 .title-avaliacoes {
     width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .title-avaliacoes h2 {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 500;
     color: #3e3e3e;
     text-align: left;
@@ -293,6 +308,7 @@ main {
     margin: 30px 0;
     padding-left: 0.5%;
     padding-right: 0.5%;
+    justify-content: center;
 }
 
 .cards-avaliacoes::-webkit-scrollbar {
@@ -308,11 +324,6 @@ main {
     min-width: 160px;
     max-width: 300px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
-}
-
-.card-avaliacao:hover {
-    transform: translateY(-5px);
 }
 
 .avaliador {
@@ -336,6 +347,12 @@ main {
     color: #ffc107;
 }
 
+@media screen and (max-width:1500px) {
+    .sec-enterprises,
+    .cards-avaliacoes {
+        justify-content: flex-start !important;
+    }
+}
 
 @media screen and (max-width: 1090px) {
 
@@ -387,6 +404,10 @@ main {
     .enterprises .sec-enterprises {
         overflow-x: auto;
     }
+
+    .entregador {
+        width: 20% !important;
+    }
 }
 
 @media screen and (max-width: 800px) {
@@ -434,11 +455,16 @@ main {
 
 @media screen and (max-width: 480px) {
     .funcs {
+        margin-bottom: 20px !important;
         flex-direction: column;
         flex-wrap: wrap;
         gap: 30px;
         justify-content: center;
         align-items: center;
+    }
+
+    .linha-separadora {
+        margin-bottom: 20px !important;
     }
 
     .element {
@@ -461,12 +487,13 @@ main {
     }
 
     .entregador {
-        width: 60px;
-        max-width: 60px;
+        width: 30% !important;
     }
 
-    .sec-enterprises {
-        margin-left: 4%;
+    .sec-enterprises, .cards-avaliacoes {
+        margin-left: 4% !important;
+        padding-left: 1% !important;
+        padding-right: 9% !important;
     }
 
     .enterprises {
@@ -474,7 +501,7 @@ main {
         max-width: 100%;
         display: flex;
         flex-direction: column;
-        margin-bottom: 30px;
+        margin-bottom: 10px;
         padding: 0;
     }
 
@@ -489,9 +516,10 @@ main {
 
     .enterprise {
         width: 100% !important;
-        min-width: auto !important;
-        max-width: 250px !important;
-        padding: 10px;
+        min-width: 250px !important;
+        max-width: 300px !important;
+        height: 100px;
+        padding: 20px;
         box-sizing: border-box;
     }
 
@@ -510,6 +538,20 @@ main {
     .title-avaliacoes h2 {
         font-size: 1.2rem;
         margin: 0;
+    }
+
+    .img-enterprise {
+        width: 60px;
+        height: 60px;
+        margin-right: 10px;
+    }
+
+    .name-enterprise h3 {
+        font-size: 1.0rem !important;
+    }
+
+    .name-enterprise p {
+        font-size: 0.8rem !important;
     }
 
 }

@@ -42,6 +42,7 @@ class LoginController extends RenderView
         $_SESSION['usuario_id'] = $usuario->id;
         $_SESSION['usuario_nome'] = $usuario->nome;
         $_SESSION['usuario_email'] = $usuario->email;
+
         echo "<script>alert('Login realizado com sucesso!'); window.location.href = '/gerenciar/cardapio/1';</script>";
         exit();
     }

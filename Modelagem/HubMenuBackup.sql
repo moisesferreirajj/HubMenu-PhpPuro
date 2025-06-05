@@ -269,16 +269,16 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 
 -- Copiando dados para a tabela db_hubmenu.usuarios: ~10 rows (aproximadamente)
 INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `cep`, `endereco`, `telefone`) VALUES
-	(1, 'João Silva', 'joao@example.com', 'senha123', '89200-010', 'Rua A, 100', '(47) 99999-0001'),
-	(2, 'Maria Oliveira', 'maria@example.com', 'senha123', '89200-011', 'Rua B, 200', '(47) 99999-0002'),
-	(3, 'Pedro Santos', 'pedro@example.com', 'senha123', '89200-012', 'Rua C, 300', '(47) 99999-0003'),
-	(4, 'Ana Souza', 'ana@example.com', 'senha123', '89200-013', 'Rua D, 400', '(47) 99999-0004'),
-	(5, 'Lucas Lima', 'lucas@example.com', 'senha123', '89200-014', 'Rua E, 500', '(47) 99999-0005'),
-	(6, 'Carla Pereira', 'carla@example.com', 'senha123', '89200-015', 'Rua F, 600', '(47) 99999-0006'),
-	(7, 'Marcos Almeida', 'marcos@example.com', 'senha123', '89200-016', 'Rua G, 700', '(47) 99999-0007'),
-	(8, 'Fernanda Costa', 'fernanda@example.com', 'senha123', '89200-017', 'Rua H, 800', '(47) 99999-0008'),
-	(9, 'Rafael Rodrigues', 'rafael@example.com', 'senha123', '89200-018', 'Rua I, 900', '(47) 99999-0009'),
-	(10, 'Juliana Martins', 'juliana@example.com', 'senha123', '89200-019', 'Rua J, 1000', '(47) 99999-0010');
+	(1, 'João Silva', 'joao@example.com', '$2y$2y$10$PlZAEZtmmsh7zQcuN4P1Z.5l2sDCWLcb7k2k7hyCxf0bT0uk3i1NO', '89200-010', 'Rua A, 100', '(47) 99999-0001'),
+	(2, 'Maria Oliveira', 'maria@example.com', '$2y$2y$10$PlZAEZtmmsh7zQcuN4P1Z.5l2sDCWLcb7k2k7hyCxf0bT0uk3i1NO', '89200-011', 'Rua B, 200', '(47) 99999-0002'),
+	(3, 'Pedro Santos', 'pedro@example.com', '$2y$2y$10$PlZAEZtmmsh7zQcuN4P1Z.5l2sDCWLcb7k2k7hyCxf0bT0uk3i1NO', '89200-012', 'Rua C, 300', '(47) 99999-0003'),
+	(4, 'Ana Souza', 'ana@example.com', '$2y$2y$10$PlZAEZtmmsh7zQcuN4P1Z.5l2sDCWLcb7k2k7hyCxf0bT0uk3i1NO', '89200-013', 'Rua D, 400', '(47) 99999-0004'),
+	(5, 'Lucas Lima', 'lucas@example.com', '$2y$2y$10$PlZAEZtmmsh7zQcuN4P1Z.5l2sDCWLcb7k2k7hyCxf0bT0uk3i1NO', '89200-014', 'Rua E, 500', '(47) 99999-0005'),
+	(6, 'Carla Pereira', 'carla@example.com', '$2y$2y$10$PlZAEZtmmsh7zQcuN4P1Z.5l2sDCWLcb7k2k7hyCxf0bT0uk3i1NO', '89200-015', 'Rua F, 600', '(47) 99999-0006'),
+	(7, 'Marcos Almeida', 'marcos@example.com', '$2y$2y$10$PlZAEZtmmsh7zQcuN4P1Z.5l2sDCWLcb7k2k7hyCxf0bT0uk3i1NO', '89200-016', 'Rua G, 700', '(47) 99999-0007'),
+	(8, 'Fernanda Costa', 'fernanda@example.com', '$2y$2y$10$PlZAEZtmmsh7zQcuN4P1Z.5l2sDCWLcb7k2k7hyCxf0bT0uk3i1NO', '89200-017', 'Rua H, 800', '(47) 99999-0008'),
+	(9, 'Rafael Rodrigues', 'rafael@example.com', '$2y$2y$10$PlZAEZtmmsh7zQcuN4P1Z.5l2sDCWLcb7k2k7hyCxf0bT0uk3i1NO', '89200-018', 'Rua I, 900', '(47) 99999-0009'),
+	(10, 'Juliana Martins', 'juliana@example.com', '$2y$2y$10$PlZAEZtmmsh7zQcuN4P1Z.5l2sDCWLcb7k2k7hyCxf0bT0uk3i1NO', '89200-019', 'Rua J, 1000', '(47) 99999-0010');
 
 -- Copiando estrutura para tabela db_hubmenu.vendas
 CREATE TABLE IF NOT EXISTS `vendas` (

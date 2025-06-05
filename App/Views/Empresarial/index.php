@@ -145,6 +145,8 @@ if ($response->status === 'error') {
 
         </div>
 
+        <hr class="linha-separadora">
+
         <!-- Seção das Melhores Empresas -->
         <section class="enterprises">
 
@@ -166,6 +168,8 @@ if ($response->status === 'error') {
                 <?php endforeach; ?>
             </div>
         </section>
+
+        <hr class="linha-separadora">
 
         <!-- Seção das Avaliações em Cards -->
         <section class="avaliacoes">

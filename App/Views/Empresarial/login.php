@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <?php include_once __DIR__ . '/../Components/form-login.php'; ?>
+    <?php include_once __DIR__ . '/../Components/form-login.php'; ?>d
 </body>
 
 </html>
