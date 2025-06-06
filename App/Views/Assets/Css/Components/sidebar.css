@@ -2,15 +2,22 @@
     margin: 0;
     padding: 0;
     width: 250px;
-    position: fixed;
+    position: absolute;
     height: 100vh;
     overflow: auto;
-    transition: 0.5s ease;
+    transition: transform 0.5s ease;
     z-index: 9999;
     background: linear-gradient(160deg, #ffffff, #ffffff, #d3d3d3);
     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
     flex-direction: column;
     display: flex;
+
+    /* inicia fechado */
+    transform: translateX(-100%);
+}
+
+.sidebar.openNav {
+    transform: translateX(0);
 }
 
 .sidebar a {
@@ -27,14 +34,12 @@
     outline-offset: 4px;
 }
 
-
 .side-item {
     margin-left: 20px;
     margin-right: 20px;
     border-radius: 10px;
-    transition:background 0.3s;  
+    transition: background 0.3s;
 }
-
 
 .side-item:hover,
 #active {
@@ -43,15 +48,6 @@
     color: rgb(0, 0, 0);
     font-weight: 500;
 }
-
-.sidebar {
-    display: none; /* Oculta a sidebar inicialmente */
-}
-
-.sidebar.openNav {
-    display: block; /* Exibe a sidebar quando a classe 'open' é adicionada */
-}
-
 
 .menu-links {
     align-self: center;
@@ -71,20 +67,15 @@
     fill: #ffffff;
 }
 
-
-.sidebar span{
+.sidebar span {
     margin-top: 4px;
-}  
-/* Assistir Evangelion */
-
-
+}
 
 .address {
     font-size: 18px;
     margin-left: 10px;
     text-align: center;
 }
-
 
 .last {
     justify-self: end;
@@ -94,7 +85,7 @@
     padding: 11px 5px;
     border-bottom: 1px solid #e8f5e9;
     background: linear-gradient(45deg, #28a745, #20c997);
-    color:white;
+    color: white;
     text-align: center;
     display: flex;
     flex-direction: row;
@@ -111,7 +102,7 @@
 
 .opt .end-opt:hover {
     font-weight: 400;
-    color:black;
+    color: black;
     transform: none;
     transition: none;
     background: none;
@@ -120,14 +111,12 @@
     border: none;
 }
 
-  .opt .end-opt i {
+.opt .end-opt i {
     margin-right: 10px;
     font-size: 18px;
-    color: #000000; /* ícone com cor levemente diferente */
+    color: #000000;
     transition: color 0.3s ease;
-
-  }
-  
+}
 
 .empresa svg {
     width: 150px;
@@ -146,16 +135,16 @@
 }
 
 .close-btn {
+    background-color: rgba(0, 0, 0, 0);
     float: right;
-    background-color: white;
-    border: 1px solid #0e7a56;
-    border-radius: 100px;
-    padding: 8px;
+    padding: 10px;
+    border: none !important;
 }
 
 .close-btn svg {
     fill: #0e7a56;
     color: #0e7a56;
+    border: none !important;    
 }
 
 .open-btn {
@@ -164,13 +153,23 @@
     border-radius: 50px;
     padding: 8px;
     margin-top: 10px;
-    margin-left: 20px;
     float: left;
     z-index: 100;
     position: absolute;
 }
 
-
+#open-btn {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 10001;
+    margin: 0;
+    padding: 10px;
+    background-color: white;
+    border: 2px solid #0e7a56;
+    border-radius: 50px;
+    cursor: pointer;
+}
 
 
 .content {
@@ -203,6 +202,7 @@
     display: none;
 }
 
+/* Responsivo */
 @media screen and (max-width:950px) {
     .sidebar {
         position: fixed;
@@ -218,10 +218,13 @@
         width: 100%;
         flex-direction: row;
         display: flex;
+        transform: none !important;
     }
+
     .wrap-btn {
         display: none;
     }
+
     .sidebar a {
         text-decoration: none;
         padding: 10px 15px;
@@ -231,6 +234,7 @@
         margin: 0;
         padding: 0;
     }
+
     .open-btn {
         display: none;
         z-index: 1000;
@@ -241,7 +245,6 @@
         display: none;
     }
 
-
     .side-item {
         display: flex;
         align-items: center;
@@ -251,14 +254,13 @@
     }
 
     .side-item svg {
-        height:25px;
-        width:40px;
+        height: 25px;
+        width: 40px;
     }
 
-    .side-item span{
-        font-size:11px ;
+    .side-item span {
+        font-size: 11px;
         margin-left: 0;
-
     }
 
     .sidebar a:hover {
@@ -269,17 +271,18 @@
     .content {
         margin-left: 0;
     }
+
     #active {
         background: #b5b6b680;
         border-radius: 12px;
-
     }
+
     .side-item span {
         display: none;
     }
+
     .opt {
         display: none;
-
     }
 
     #some {

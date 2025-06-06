@@ -2,17 +2,18 @@
     $actual_page = basename($_SERVER['PHP_SELF']);
 ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
 
     <div class="sidebar" id="sidebar">
             <div class="wrap-btn">
                 <span class="empresa">            
                     <?php require_once 'svg-logo.php'; ?>
                 </span>
-                <button onclick="closeNav()" class="close-btn" >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"  fill="#0e7a56">
-                        <path id="arrow-path" d="M16.1795 3.26875C15.7889 2.87823 15.1558 2.87823 14.7652 3.26875L8.12078 9.91322C6.94952 11.0845 6.94916 12.9833 8.11996 14.155L14.6903 20.7304C15.0808 21.121 15.714 21.121 16.1045 20.7304C16.495 20.3399 16.495 19.7067 16.1045 19.3162L9.53246 12.7442C9.14194 12.3536 9.14194 11.7205 9.53246 11.33L16.1795 4.68297C16.57 4.29244 16.57 3.65928 16.1795 3.26875Z" fill="currentColor"/>
-                    </svg>
-                </button>
+                    <button onclick="closeNav()" class="close-btn">
+                    <i class="bi bi-x" style="font-size: 24px; color: #0e7a56;"></i>
+                    </button>
+
             </div>
                 <a class="side-item" href="dashboard.php" <?php if ($actual_page == '/dashboard') echo 'id="active"'; ?>>
                     <i class="fa-solid fa-house"></i>

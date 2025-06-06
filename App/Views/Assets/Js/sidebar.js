@@ -1,14 +1,11 @@
-function openNav(){
-    document.getElementById("sidebar").style.width = "250px";
-    document.getElementById("content").style.marginLeft ="250px";
+function openNav() {
+    document.getElementById("sidebar").classList.add("openNav");
     document.getElementById("open-btn").style.display = "none";
     document.getElementById("address").style.display = "block";
 }
 
-function closeNav(){
-    document.getElementById("sidebar").style.width = "0";
-    document.getElementById("content").style.marginLeft ="0";
+function closeNav() {
+    document.getElementById("sidebar").classList.remove("openNav");
     document.getElementById("open-btn").style.display = "block";
     document.getElementById("address").style.display = "none";
-
 }

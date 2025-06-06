@@ -9,6 +9,7 @@ $routes = [
     '/empresarial' => 'HomeController@index',
     '/empresarial/cadastro' => 'CadastroController@index',
     '/empresarial/login' => 'LoginController@index',
+    '/empresarial/esqueceuSenha' => 'EsqueceuSenha@index',
     '/empresarial/sobre' => 'SobreController@index',
     '/empresarial/suporte' => 'SuporteController@index',
     '/empresarial/funcionalidades'=> 'FuncionalidadesController@index',
@@ -17,6 +18,7 @@ $routes = [
     /* ROTAS DE ADMIN */
     '/api/autenticar/usuario' => 'LoginController@autenticar',
     '/api/cadastrar/usuario' => 'CadastroController@cadastrar',
+    '/api/autenticar/senha' => 'EsqueceuSenha@autenticar',
     '/cadastro/produtos' => 'ProdutosController@index',
     /* ROTAS DE API ABAIXO: */
     '/api/visualizar/categorias' => 'ProdutosController@getCategorias',

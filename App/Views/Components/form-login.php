@@ -12,7 +12,7 @@
         <h1>Acesso - Login</h1>
         <form method="POST" action="/api/autenticar/usuario">
             <div class="form-group">
-                <label for="Email"><i class="fas fa-user"></i> Email</label>
+                <label for="email"><i class="fas fa-user"></i> Email</label>
                 <div class="input-group">
                     <input type="email" class="form-control" id="email" name="email" placeholder="Seu email" required>
                 </div>
@@ -29,6 +29,7 @@
             <button type="submit" class="btn">Entrar</button>
             <div class="links">
                 <a href="./"><i class="fas fa-arrow-left"></i> Voltar ao Início</a>
+                <a href="./esqueceuSenha"><i class="fa-solid fa-lock"></i> Esqueceu a Senha</a>
                 <a href="./cadastro"><i class="fas fa-sign-in-alt"></i> Cadastrar-se</a>
             </div>
         </form>

@@ -1,2 +1,6 @@
+# composer
 /vendor/
+composer.phar
+
+# ide
 .vscode

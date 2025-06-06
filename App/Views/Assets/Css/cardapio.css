@@ -352,12 +352,27 @@ body {
 
 /* Modal de Cadastro */
 
+.modal-dialog {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    max-width: 400px;
+}
+
 #nome {
-    width: 300px;
+    width: 100%;
 }
 
 #valor {
-    max-width: 80px;
+    width: 100px;
+}
+
+#valor-group {
+    width: fit-content;
 }
 
 .pro_frm textarea{

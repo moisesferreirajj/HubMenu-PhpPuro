@@ -1,4 +1,4 @@
-<div class="modal fade" id="cadastrarModal" tabindex="-1" aria-labelledby="cadastrarModalLabel" aria-hidden="true">
+<div class="modal fade " id="cadastrarModal" tabindex="-1" aria-labelledby="cadastrarModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <form class="pro_frm" method="POST" action="/api/produtos/cadastrar" enctype="multipart/form-data">
@@ -7,21 +7,20 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
         </div>
 
-        <div class="modal-body">
-          <div class="row mb-3">
-            <div class="col-md-6">
+        <div class="modal-body ">
+          <div class="row mb-3 sla">
+            <div class="col-md-6 mb-3">
               <label for="nome" class="form-label">Nome do Produto:</label>
               <input type="text" class="form-control" id="nome" name="nome" required>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 mb-3">
               <label for="valor" class="form-label">Valor:</label>
-              <div class="input-group">
+              <div class="input-group" id="valor-group">
                 <span class="input-group-text">R$</span>
                 <input type="number" class="form-control" id="valor" name="valor" placeholder="0,00" required step="0.01">
               </div>
             </div>
           </div>
-
           <div class="mb-3">
             <label for="imagem" class="form-label">Imagem:</label>
             <input type="file" class="form-control" id="imagem" name="imagem" required>
@@ -44,7 +43,7 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Cadastrar</button>
+          <button type="submit" id="regis_pro" class="btn btn-primary">Cadastrar</button>
         </div>
       </form>
     </div>
