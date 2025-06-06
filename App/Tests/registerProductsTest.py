@@ -28,7 +28,7 @@ class TestRegisterProducts:
             time.sleep(3)
             # Imagem do produto
             input_img = self.driver.find_element(By.ID, "imagem")
-            input_img.send_keys(r"C:\Users\igord\Downloads\teste\malasadas.jpg")
+            input_img.send_keys(r"C:\Users\nubmo\Downloads\sonho.jpg")
             time.sleep(3)
 
             select_type = self.driver.find_element(By.ID, "categoria_id")
@@ -48,7 +48,7 @@ class TestRegisterProducts:
             self.driver.quit()  
 
 service = webdriver.Chrome()
-addressUrl = service.get("http://26.123.71.60:8080/gerenciar/cardapio/1")
+addressUrl = service.get("http://localhost:8080/gerenciar/cardapio/3")
 
 testUnir = TestRegisterProducts(addressUrl, service)
 

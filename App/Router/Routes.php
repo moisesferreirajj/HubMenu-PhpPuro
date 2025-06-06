@@ -5,6 +5,7 @@ $routes = [
     '/' => 'DashClienteController@index',
     '/restaurantes' => 'RestaurantesController@index',
     '/restaurante/{id}' => 'RestaurantesController@indexRestaurante',
+    '/pedidos' => 'PedidosController@index',
     /* ROTAS EMPRESARIAIS */
     '/empresarial' => 'HomeController@index',
     '/empresarial/cadastro' => 'CadastroController@index',

@@ -731,7 +731,7 @@
 
         function viewRestaurant(restaurantId) {
             // Redirect to restaurant detail page
-            window.location.href = `/restaurante/${restaurantId}`;
+            window.location.href = `/cardapio/${restaurantId}`;
         }
 
         function showError(message) {

@@ -1,6 +1,6 @@
 <?php 
-   require_once __DIR__ . '/../global.php';
-   require_once __DIR__ . '/../Models/UsuariosModel.php';
+   require_once __DIR__ . '/../../global.php';
+   require_once __DIR__ . '/../../Models/UsuariosModel.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -21,7 +21,7 @@
 <body>
 
 
-    <?php require '../Views/Components/sidebar.php'; ?>
+    <?php require_once __DIR__ . '/../Views/Components/sidebar.php'; ?>
     <div class="header">
         <div class="header-btn">
             <button type="button" onclick="openNav()" id="open-btn" class="open-btn">
