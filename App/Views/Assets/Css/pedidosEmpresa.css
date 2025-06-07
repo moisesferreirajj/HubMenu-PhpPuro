@@ -1,0 +1,152 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top:0;
+    left: 0;
+    z-index: 1000;
+    
+}
+
+.header-btn {
+    position: absolute;
+    left:0;
+    display: block;
+    align-self: flex-start;}
+
+.header-btn button{
+    margin-left: 10px;
+}
+
+.search-box {
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0.3em 0.3em 1em rgba(0,0,0,0.3);   
+    background-color: white; 
+    padding:20px;
+}  
+
+.srch-input input{
+    height: 40px;
+}  
+
+.srch-input {
+    align-items: center;
+}  
+
+.srch-input select {}  
+
+
+
+.srch-input input[type="text"] {
+    width: 200px;
+    border-radius: 6px 0 0 6px;
+
+}  
+
+.srch-submit {
+    display: flex;
+    align-items: center;
+}  
+
+#srch-text {
+    border : 1px solid rgb(22, 153, 50);
+    background: transparent;
+}
+
+#srch-final {
+    display: flex;        
+    align-items: center;    
+    gap: 0; 
+}
+
+#srch-final input{
+      
+    margin:0;
+
+}
+
+#srch-final input[type="submit"] {
+    background-color: #006747;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    border: none;
+    border-radius: 0 6px 6px 0;
+}
+
+#srch-final input[type="submit"]:hover {
+    background-color: rgb(40, 180, 70);
+  }
+  
+  #srch-text:focus, .input:focus-visible {
+    border-color: rgb(40, 180, 70);
+    outline: none;
+  }
+
+.order-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.order-table {
+    width:100%;
+    border-collapse: collapse;
+    max-width: 1500px;
+    min-width: 600px;
+
+}
+
+thead {
+    background: rgb(127, 127, 127);
+    color:white;
+}
+th, td {
+      padding: 14px;
+      border-bottom: 1px solid rgba(84, 84, 84, 0.296) !important;
+      text-align: left;
+}
+
+.order-table th:nth-child(1),
+.order-table td:nth-child(1) {
+    width: 90px; /* #Pedido */
+}
+
+.order-table th:nth-child(2),
+.order-table td:nth-child(2) {
+    width: 175px; /* Cliente */
+}
+
+.order-table th:nth-child(3),
+.order-table td:nth-child(3) {
+    width: 300px; /* Itens */
+}
+
+.order-table th:nth-child(4),
+.order-table td:nth-child(4) {
+    width: 125px; /* Status */
+}
+
+.order-table th:nth-child(5),
+.order-table td:nth-child(5) {
+    width: 180px; /* Ação */
+}

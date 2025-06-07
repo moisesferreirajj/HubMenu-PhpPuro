@@ -53,7 +53,7 @@ if ($Erro) {
           </button>
         </div>
         <div class="d-flex gap-2 ms-auto">
-          <button id="open_cad" data-bs-toggle="modal" data-bs-target="#cadastrarModal" class="btn btn-light btn-circle">
+          <button id="open_cad" data-bs-toggle="modal" data-bs-target="#cadastrarModal"  onclick="closeNav()" class="btn btn-light btn-circle">
             <i class="bi bi-plus-lg"></i>
           </button>
         </div>

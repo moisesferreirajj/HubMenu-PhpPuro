@@ -10,7 +10,7 @@
             <?php @require_once __DIR__ . '/svg-logo.php'; ?>
         </div>
         <h1>Esqueceu Senha</h1>
-        <form method="POST" action="#">
+        <form method="POST" action="/api/autenticar/senha">
             <div class="form-group">
                 <label for="email"><i class="fas fa-user"></i> Email</label>
                 <div class="input-group">
