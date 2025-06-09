@@ -1,7 +1,7 @@
 /* NAVBAR */
 nav{
     height: 12vh;
-    background: transparent;
+    background: white !important;
     backdrop-filter: blur(15px);
     width: 100%;
     display: flex;  

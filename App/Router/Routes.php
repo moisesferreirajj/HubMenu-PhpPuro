@@ -20,10 +20,12 @@ $routes = [
     '/api/autenticar/usuario' => 'LoginController@autenticar',
     '/api/cadastrar/usuario' => 'CadastroController@cadastrar',
     '/api/autenticar/senha' => 'EsqueceuSenha@autenticar',
+    '/api/autenticar/sendtype' => 'EsqueceuSenha@sendType',
     '/cadastro/produtos' => 'ProdutosController@index',
     /* ROTAS DE API ABAIXO: */
     '/api/visualizar/categorias' => 'ProdutosController@getCategorias',
     '/api/visualizar/estabelecimentos' => 'ProdutosController@getEstabelecimentos',
+    '/api/send/SMS' => 'SendSMSController@sendSMS',
     /* ROTAS ESPECIALMENTE DA EMPRESA PARA O CLIENTE: */
     '/cardapio/{id}' => 'CardapioController@indexCliente',
     '/gerenciar/cardapio/{id}'=> 'CardapioController@indexAdmin',

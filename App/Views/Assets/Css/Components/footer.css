@@ -1,7 +1,13 @@
 /* FOOTER BOLADAO BY MOISES */
-footer {
-  background-color: var(--secondary);
+
+#central {
   color: white;
+}
+
+footer {
+  background: #212529;
+  color: white;
+  width: 100%;
 }
 
 .social-links a {

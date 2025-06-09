@@ -16,6 +16,11 @@ define('DB_PASSWORD' , "");
 define('DB_DRIVER'   , "mysql");
 define('DB_NAME'     , "Db_HubMenu");
 
+//SMS - IAgente
+define('IAgente_USER'     , 'contatosistemassenai@gmail.com');
+define('IAgente_PASS'     , 'SistemasSenai123@');
+
+
 $Title   = "HubMenu |";
 $Website = "http://localhost:8080";
 

@@ -33,28 +33,28 @@ nav .container {
 }
 
 .nav-link:hover {
-    color: var(--primary);
+    color: var(--primary) !important;
 }
 
 /* Buttons */
 .btn-primary {
-    background-color: var(--primary);
-    border-color: var(--primary);
+    background-color: var(--primary)!important;
+    border-color: var(--primary)!important;
 }
 
 .btn-primary:hover, .btn-primary:focus {
-    background-color: var(--secondary);
-    border-color: var(--secondary);
+    background-color: var(--secondary)!important;
+    border-color: var(--secondary)!important;
 }
 
 .btn-outline-primary {
-    color: var(--primary);
-    border-color: var(--primary);
+    color: var(--primary)!important;
+    border-color: var(--primary)!important;
 }
 
 .btn-outline-primary:hover {
-    background-color: var(--primary);
-    border-color: var(--primary);
+    background-color: var(--primary)!important;
+    border-color: var(--primary)!important;
 }
 
 
@@ -91,13 +91,13 @@ nav .container {
     display: flex;
     align-items: center;
     padding: 1rem;
-    background-color: var(--light-gray);
+    background-color: var(--light-gray)!important;
     position: relative;
 }
 
 .navbar-brand {
     font-size: 1.5rem;
-    font-weight: bold;
+    font-weight: bold!important;
 }
 
 .navbar-collapse {

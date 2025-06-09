@@ -9,6 +9,9 @@ use PHPMailer\PHPMailer\Exception;
 //Load Composer's autoloader (created by composer, not included with PHPMailer)
 require 'vendor/autoload.php';
 
+// load global variables
+require_once __DIR__ . '/../../global.php';
+
 session_start();
 
 class EsqueceuSenha extends RenderView
@@ -42,24 +45,24 @@ class EsqueceuSenha extends RenderView
 
         try {
             //Server settings
-            $mail->SMTPDebug  = SMTP::DEBUG_SERVER;               //Enable verbose debug output
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;               //Enable verbose debug output
             $mail->isSMTP();                                      //Send using SMTP
-            $mail->Host       = 'smtp.gmail.com';                 //Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                             //Enable SMTP authentication
-            $mail->Username   = 'cautios.yohan@gmail.com';               //SMTP username
-            $mail->Password   = 'ttcczoklydsvcwxu';                         //SMTP password
+            $mail->Host = 'smtp.gmail.com';                 //Set the SMTP server to send through
+            $mail->SMTPAuth = true;                             //Enable SMTP authentication
+            $mail->Username = 'contatosistemassenai@gmail.com';               //SMTP username
+            $mail->Password = 'nwpk zlni mlhs hzww';                         //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;   //Enable implicit TLS encryption
-            $mail->Port       = 587;                              //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->Port = 587;                              //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
-            $mail->setFrom('cautios.yohan@gmail.com', 'Mailer');
-            $mail->addAddress($_SESSION['email_usuario'],);     //Add a recipient
+            $mail->setFrom('contatosistemassenai@gmail.com', 'Mailer');
+            $mail->addAddress($_SESSION['email_usuario'], );     //Add a recipient
 
             //Content
             $mail->isHTML(true);
             $mail->CharSet = 'UTF-8';                                  //Set email format to HTML
             $mail->Subject = 'Código senha - HUBMENU';
-            $mail->Body    = 'Segue código para recuperação de senha: <br><br><b>' . $this->gerarCodigo(5) . '<b>';
+            $mail->Body = 'Segue código para recuperação de senha: <br><br><b>' . $this->gerarCodigo(5) . '<b>';
             $mail->AltBody = 'Segue código para recuperação de senha: ' . $this->gerarCodigo(5);
 
             $mail->send();
@@ -67,6 +70,19 @@ class EsqueceuSenha extends RenderView
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
+
+        // // Para definir a variável com expiração de 1 minuto:
+        // $_SESSION['codigo'] = 'valor_do_codigo';
+        // $_SESSION['codigo_expira'] = time() + 60; // 60 segundos
+
+        // // Para checar se ainda está válida:
+        // if (isset($_SESSION['codigo'], $_SESSION['codigo_expira']) && time() < $_SESSION['codigo_expira']) {
+        //     // Ainda válido
+        //     $codigo = $_SESSION['codigo'];
+        // } else {
+        //     // Expirou
+        //     unset($_SESSION['codigo'], $_SESSION['codigo_expira']);
+        // }
     }
 
     public function autenticar()
@@ -90,15 +106,41 @@ class EsqueceuSenha extends RenderView
         if (!$emailExists) {
             // Por segurança, não informe se o e-mail existe ou não
             echo "<script>alert('Se o e-mail estiver cadastrado, você receberá instruções.'); window.location.href = '/empresarial/esqueceuSenha';</script>";
-            exit();
+            exit;
         }
 
         $_SESSION['email_usuario'] = $emailExists->email;
         $_SESSION['nome_usuario'] = $emailExists->nome;
 
-        $this->enviaEmail();
-
         echo "<script>alert('Se o e-mail estiver cadastrado, você receberá instruções.'); window.location.href = '/empresarial/esqueceuSenha';</script>";
+
+
+        $this->enviaEmail();
         exit();
+    }
+
+    public function sendType()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: /empresarial/esqueceuSenha');
+            exit();
+        }
+
+        $metodo_envio = $_POST['metodo_envio'] ?? '';
+
+        if (!$metodo_envio) {
+            header('Location: /empresarial/esqueceuSenha');
+            exit;
+        }
+
+        if ($metodo_envio == 'email') {
+            $_SESSION['metodo_envio'] = $metodo_envio;
+            header("Location: /empresarial/esqueceuSenha");
+            exit;
+        } else {
+            $_SESSION['metodo_envio'] = $metodo_envio;
+            header("Location: /empresarial/esqueceuSenha");
+            exit;
+        }
     }
 }

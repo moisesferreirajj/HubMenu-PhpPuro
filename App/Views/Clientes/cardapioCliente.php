@@ -26,35 +26,25 @@ if ($Erro) {
   
   <!-- Estilos personalizados -->
   <link rel="stylesheet" href="/Views/Assets/Css/cardapio.css">
-  <link rel="stylesheet" href="/Views/Assets/Css/Components/sidebar.css">
+  
 
+
+<!-- Bootstrap CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Estilos personalizados -->
+  <link rel="stylesheet" href="/Views/Assets/Css/cardapio.css">
+  <!-- Favicon -->
+  <link rel="icon" href="/Views/Assets/Images/favicon.png">
   <!-- Scripts -->
   <script src="/Views/Assets/Vendor/bootstrap.bundle.min.js" defer></script>
-  <script src="/Views/Assets/Js/sidebar.js" defer></script>
-  <script src= "/Views/Assets/Js/cad_products.js" defer></script>
+  <script src="/Views/Assets/Js/cad_products.js" defer></script>
 </head>
 
 <body>
 
-  <?php @require_once __DIR__ . '/../../Views/Components/sidebar.php'; ?>
-  <!-- Navbar com pesquisa -->
-  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-    <div class="container">
-      <button type="button" onclick="openNav()" id="open-btn" class="open-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M7.8205 3.26875C8.2111 2.87823 8.8442 2.87823 9.2348 3.26875L15.8792 9.91322C17.0505 11.0845 17.0508 12.9833 15.88 14.155L9.3097 20.7304C8.9192 21.121 8.286 21.121 7.8955 20.7304C7.505 20.3399 7.505 19.7067 7.8955 19.3162L14.4675 12.7442C14.8581 12.3536 14.8581 11.7205 14.4675 11.33L7.8205 4.68297C7.43 4.29244 7.43 3.65928 7.8205 3.26875Z" fill="#0e7a56"/>
-        </svg>
-      </button>
-      <div class="search-container-wrapper d-flex align-items-center flex-grow-1">
-        <div class="search-container">
-          <input type="text" class="form-control search-input" placeholder="Digite o produto">
-          <button class="btn btn-light search-btn">
-            <i class="bi bi-search"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-  </nav>
+  <?php include_once __DIR__ . '/../Components/navigation-clientes.php'; ?>
 
   <!-- Conteúdo principal -->
   <div class="container py-4">
@@ -69,6 +59,15 @@ if ($Erro) {
       </div>
     </div>
 
+          <div class="search-container-wrapper d-flex align-items-center flex-grow-1">
+        <div class="search-container">
+          <input type="text" class="form-control search-input" placeholder="Digite o produto">
+          <button class="btn btn-light search-btn">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+      </div>
+
 <!-- Principais -->
 <h1 class="rowCategory">Principais</h1>
 <div class="row row-cols-2 row-cols-md-2 row-cols-lg-4 g-4">
@@ -76,7 +75,7 @@ if ($Erro) {
     <div class="col animated-card" style="animation-delay: 0.4s">
       <div class="card category-drink">
         <span class="category-badge badge-drink">
-        <?php echo htmlspecialchars($produto->categoria_id); ?>
+          <?php echo htmlspecialchars($produto->categoria_id); ?>
         </span>
         <img src="<?php echo htmlspecialchars($produto->imagem); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($produto->nome); ?>">
         <div class="card-body">
@@ -89,9 +88,67 @@ if ($Erro) {
     </div>
   <?php endforeach; ?>
 </div>
-  
+
+<footer class="footer mt-auto py-3 text-white">
+  <div class="container">
+    <div id="central" class="row g-4">
+      <div id="divcentral" class="col-lg-4 col-md-6">
+        <h5 class="fw-bold mb-3">HubMenu</h5>
+        <p class="small">
+        O <strong>HubMenu</strong> não é apenas um sistema de pedidos, é uma revolução na forma como você e seus clientes
+        interagem com a comida! Em um mundo cada vez mais dinâmico, onde o tempo é um recurso precioso, o <strong>HubMenu</strong>
+        foi pensado para otimizar sua operação e proporcionar uma experiência única com agilidade!
+        </p>
+      </div>
+      
+      <div class="col-lg-4 col-md-6">
+        <h5 class="fw-bold mb-3">Links Úteis</h5>
+        <ul class="list-unstyled">
+          <li class="mb-2"><a href="#" class="text-white text-decoration-none hover-opacity">Termos de Ações Empresariais</a></li>
+          <li class="mb-2"><a href="#" class="text-white text-decoration-none hover-opacity">Termos de Privacidade</a></li>
+          <li class="mb-2"><a href="#" class="text-white text-decoration-none hover-opacity">Termos de Serviço</a></li>
+        </ul>
+      </div>
+      
+      <div class="col-lg-4 col-md-12">
+        <h5 class="fw-bold mb-3">Nossa Equipe</h5>
+        <ul class="list-unstyled">
+          <li class="mb-2">
+            <a href="https://www.linkedin.com/in/igor-dias-b3162b219/" class="text-white text-decoration-none hover-opacity">
+              <i class="bi bi-linkedin"></i>Igor Dias
+            </a>
+          </li>
+
+          <li class="mb-2">
+            <a href="https://www.linkedin.com/in/mark-stolfi-b84760337/" class="text-white text-decoration-none hover-opacity">
+              <i class="bi bi-linkedin"></i>Mark Stolfi
+            </a>
+          </li>
+
+          <li class="mb-2">
+            <a href="https://www.linkedin.com/in/moisesferreirajj/" class="text-white text-decoration-none hover-opacity">
+              <i class="bi bi-linkedin"></i>Moises Ferreira
+            </a>
+          </li>
+
+          <li class="mb-2">
+            <a href="https://www.linkedin.com/in/yohansie/" class="text-white text-decoration-none hover-opacity">
+              <i class="bi bi-linkedin"></i>Yohan Siedschlag
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row border-top border-secondary mt-4 pt-3">
+      <div class="col-12 text-center">
+        <p class="small mb-0">&copy; 2025 HubMenu. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
 <!-- Bootstrap Bundle -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

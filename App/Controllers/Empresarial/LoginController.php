@@ -12,6 +12,10 @@ class LoginController extends RenderView
                 'Title' => 'HubMenu |'
             ],
         );
+
+        if (isset($_GET['from']) && $_GET['from'] === 'metodo_envio') {
+            unset($_SESSION['metodo_envio']);
+        }
     }
 
     public function autenticar()

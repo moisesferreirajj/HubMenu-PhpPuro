@@ -16,11 +16,11 @@
                 <div class="input-group">
                     <input type="email" class="form-control" id="email" name="email" placeholder="Seu email" required>
                 </div>
-                <p>Enviaremos um código por gmail</p>
+                <p>Enviaremos um código por Gmail</p>
             </div>
             <button type="submit" class="btn">Entrar</button>
             <div class="links">
-                <a href="./"><i class="fas fa-arrow-left"></i> Voltar ao Início</a>
+                <a href="./login?from=metodo_envio"><i class="fas fa-arrow-left"></i> Voltar ao Login</a>
                 <a href="./cadastro"><i class="fas fa-sign-in-alt"></i> Cadastrar-se</a>
             </div>
         </form>

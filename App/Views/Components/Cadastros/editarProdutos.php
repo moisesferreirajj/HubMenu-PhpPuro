@@ -38,8 +38,9 @@
             </select>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <div class="modal-footer">          
+          <button type="button" class="btn">Desativar</button>
+          <button type="button" class="btn btn-danger">Excluir</button>
           <button type="submit" class="btn btn-primary">Salvar alterações</button>
         </div>
       </form>

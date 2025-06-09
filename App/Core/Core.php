@@ -22,6 +22,7 @@ class Core {
 
                 //PASTA PARA PROCURAR OS CONTROLLER, MUDE AQUI CASO FOR NECESSARIO - BY MOISES
                 $controllerFolders = [
+                    __DIR__ . '/../Controllers/',
                     __DIR__ . '/../Controllers/Cadastros/',
                     __DIR__ . '/../Controllers/Empresarial/',
                     __DIR__ . '/../Controllers/Clientes/',
