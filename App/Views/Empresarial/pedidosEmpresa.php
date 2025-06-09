@@ -72,16 +72,14 @@
                     <td>Sung Jinwoo</td>
                     <td>Picanha na Brasa</td>
                     <td>Preparando</td>
-                    <td>Editar Staus</td>
+                    <td><button class="editar">Editar</button></td>
                 </tr>
                 <tr>
                     <td>#73482</td>
                     <td>Sung Jinwoo</td>
-                    <td data-bs-toggle="tooltip" data-bs-placement="top"
-        data-bs-custom-class="custom-tooltip"
-        data-bs-title="This top tooltip is themed via CSS variables.">Picanha na Brasa</td>
+                    <td>Picanha na Brasa</td>
                     <td>Preparando</td>
-                    <td>Editar Staus</td>
+                    <td><button class="editar">Editar</button></td>
                 </tr>
             </tbody>
         </table>
