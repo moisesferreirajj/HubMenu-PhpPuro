@@ -15,6 +15,18 @@ class ProdutosModel
         return $db->execute_query($sql, $params);
     }
 
+        /**
+     * Busca um produto pelo ID.
+     */
+    public function findOrderProdById($id)
+    {
+        $db = new Database();
+        $sql = "SELECT pp.quantidade, p.nome, p.descricao, p.valor FROM produtos p JOIN pedidos_produtos pp ON p.id = pp.produto_id WHERE pp.pedido_id = :id;";
+        $params = [':id' => $id];
+        $result = $db->execute_query($sql, $params);
+        return $result->results ? $result->results : [];
+    }
+
      /**
      * Busca os produtos pelo ID do Estabelecimento.
      */
@@ -111,4 +123,35 @@ class ProdutosModel
         $params = [':id' => $id];
         return $db->execute_non_query($sql, $params);
     }
+
+    //Ativar & Desativar - QUERY BASICA
+    public function desativar($id)
+    {
+        $db = new Database();
+        $sql = "UPDATE produtos SET status_produtos = 0 WHERE id = :id";
+        $params = [':id' => $id];
+        return $db->execute_non_query($sql, $params);
+    }
+
+    public function ativar($id)
+    {
+        $db = new Database();
+        $sql = "UPDATE produtos SET status_produtos = 1 WHERE id = :id";
+        $params = [':id' => $id];
+        return $db->execute_non_query($sql, $params);
+    }
+
+public function searchByEstabelecimentoAndQuery($estabelecimento_id, $query)
+{
+    $db = new Database();
+    $query = "%$query%";
+    $sql = "SELECT * FROM produtos WHERE estabelecimento_id = :estabelecimento_id AND nome LIKE :query AND status_produtos = 1";
+    $params = [
+        ':estabelecimento_id' => $estabelecimento_id,
+        ':query' => $query,
+    ];
+    $result = $db->execute_query($sql, $params);
+    return $result->results ? $result->results : [];
+}
+
 }

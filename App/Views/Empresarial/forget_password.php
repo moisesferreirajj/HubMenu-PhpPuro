@@ -26,16 +26,20 @@ session_start();
         require_once __DIR__ . '/../Components/SendTypeForgetPassword.php';
         exit;
     }
+
     if ($_SESSION['metodo_envio'] == 'email') {
 
+        // 1. Se já validou o código, mostra a tela de trocar senha, independente do tempo
+        if (isset($_SESSION['codigo_inserido']) && $_SESSION['codigo_inserido'] == ($_SESSION['codigo'] ?? null)) {
+            require_once __DIR__ . '/../Components/form-forgetPasswordChange.php';
+            exit;
+        }
+        // 2. Se o código ainda está válido, mostra a tela de inserir código
         if (isset($_SESSION['codigo'], $_SESSION['codigo_expira']) && time() < $_SESSION['codigo_expira']) {
-            if ($_SESSION['codigo_inserido'] && $_SESSION['codigo_inserido'] == $_SESSION['codigo']){
-                require_once __DIR__ . '/../Components/form-forgetPasswordChange.php';
-                exit;
-            }
             require_once __DIR__ . '/../Components/form-forgetPasswordCode.php';
             exit;
         }
+        // 3. Senão, volta para o email
         require_once __DIR__ . '/../Components/form-forgetPasswordEmail.php';
         exit;
     } else {

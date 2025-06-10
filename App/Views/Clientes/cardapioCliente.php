@@ -19,15 +19,6 @@ if ($Erro) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= $Title ?> Menu de Alimentos</title>
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
-  
-  <!-- Estilos personalizados -->
-  <link rel="stylesheet" href="/Views/Assets/Css/cardapio.css">
-  
-
 
 <!-- Bootstrap CSS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
@@ -79,7 +70,7 @@ if ($Erro) {
         </span>
         <img src="<?php echo htmlspecialchars($produto->imagem); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($produto->nome); ?>">
         <div class="card-body">
-          <h5 class="card-title mb-0"><?php echo htmlspecialchars($produto->nome); ?></h5>
+          <h5 class="card-title mb-0"><?php echo htmlspecialchars(intval($produto->nome)); ?></h5>
         </div>
         <div class="card-footer d-flex justify-content-end align-items-center">
           <span class="price-tag">R$<?php echo number_format($produto->valor, 2, ',', '.'); ?></span>

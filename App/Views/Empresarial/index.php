@@ -157,7 +157,7 @@ if ($response->status === 'error') {
                 <?php foreach ($estabelecimentos as $estabelecimento): ?>
                     <div class="enterprise">
                         <div class="img-enterprise">
-                            <img src="<?= $estabelecimento->imagem ?>" alt="logo-mc-donalds">
+                            <img src="<?= $estabelecimento->imagem ?>" alt="logo-empresa">
                         </div>
                         <div class="name-enterprise">
                             <h3><?= $estabelecimento->nome ?></h3>

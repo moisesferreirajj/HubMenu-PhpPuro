@@ -1,41 +1,15 @@
 <?php 
-
-
 @require_once __DIR__ . '/../../global.php'; 
 @require_once __DIR__ . '/../../Models/PedidosModel.php';
+@require_once __DIR__ . '/../../Models/ProdutosModel.php';
 
+$orders = new PedidosModel;
+$items = new ProdutosModel;
+$ordersResponse = $orders->getOrderByCompanyId(1);
+$itemsResponse = $items->findOrderProdById($ordersResponse[0]->pedido_id);
 
-$pedidosModel = new PedidosModel();
-$pedidos = $pedidosModel->getOrdersProducts();
-if (!$pedidos) {
-    echo '<div class="alert alert-danger">Erro ao carregar pedidos.</div>';
-}
-
-$pedidos = ($response->status === 'success') ? $response->results : [];
-
-if ($response->status === 'error') {
-    echo '<div class="alert alert-danger">Erro ao carregar pedidos: ' . htmlspecialchars($response->message) . '</div>';
-}
-
-// Agrupando os produtos por pedido
-$pedidosAgrupados = [];
-foreach ($pedidos as $row) {
-    $id = $row->pedido_id;
-    if (!isset($pedidosAgrupados[$id])) {
-        $pedidosAgrupados[$id] = [
-            'id' => $id,
-            'cliente' => $row->cliente_nome,
-            'observacao' => $row->pedido_observacao,
-            'produtos' => []
-        ];
-    }
-    $pedidosAgrupados[$id]['produtos'][] = [
-        'nome' => $row->produto_nome,
-        'quantidade' => $row->quantidade,
-        'preco_unitario' => $row->preco_unitario
-    ];
-}
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -50,42 +24,56 @@ foreach ($pedidos as $row) {
     <script src="/Views/Assets/Vendor/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="/Views/Assets/Css/Components/sidebar.css">
     <script src="/Views/Assets/Js/sidebar.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-            tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
-        });
-    </script>
 
     <title><?= $Title ?> Pedidos</title>
 <body>
     
     <?php require_once __DIR__ . '/../../Views/Components/sidebar.php'; ?>
+    <div class="header">
+        <div class="container">
+            <button type="button" onclick="openNav()" id="open-btn" class="open-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M7.8205 3.26875C8.2111 2.87823 8.8442 2.87823 9.2348 3.26875L15.8792 9.91322C17.0505 11.0845 17.0508 12.9833 15.88 14.155L9.3097 20.7304C8.9192 21.121 8.286 21.121 7.8955 20.7304C7.505 20.3399 7.505 19.7067 7.8955 19.3162L14.4675 12.7442C14.8581 12.3536 14.8581 11.7205 14.4675 11.33L7.8205 4.68297C7.43 4.29244 7.43 3.65928 7.8205 3.26875Z" fill="#0e7a56"/>
+                </svg>
+            </button>
+            <div class="search-container-wrapper d-flex align-items-center flex-grow-1">
+                <div class="search-container">
+                    <input type="text" class="form-control search-input" placeholder="Digite o produto">
+                    <button class="btn btn-light search-btn">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
 
-    <div class="order-container">
-        <?php foreach ($pedidosAgrupados as $pedido): ?>
-            <div class="card">
-                <div class="card-header">
-                    <span class="order-id">Pedido <?=htmlspecialchars($pedido['id']); ?></span>
-                    <span class="order-client"><?=htmlspecialchars($pedido['cliente']); ?></span>
-                </div>
-                <?php foreach ($pedido['produtos'] as $produto): ?>
-                    <div class="item">
-                        <div class="item-info">
-                            <span class="quantity"><?=htmlspecialchars($produto['quantidade']); ?>x</span>
-                            <span class="item-name"><?=htmlspecialchars($produto['nome']); ?></span>
-                        </div>
-                    </div>
-                <?php endforeach ?>
-                <div class="actions">
-                    <button class="btn btn-outline-danger status_pedido">Cancelar</button>
-                    <button class="btn btn-success status_pedido">PRONTO</button>
-                </div>
             </div>
-        <?php endforeach ?>
-
+            <div class="actions-right">
+                <button id="open_cad" data-bs-toggle="modal" data-bs-target="#cadastrarModal" onclick="closeNav()" class="btn btn-light btn-circle">
+                    <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
+        </div>
     </div>
-
+        <div class="order-container">
+            <?php foreach($ordersResponse as $pedido): ?>
+                <div class="card">
+                    <div class="card-header">
+                        <span class="order-id">Pedido <?= htmlspecialchars($pedido->pedido_id) ?></span>
+                        <span class="order-client"><?= htmlspecialchars($pedido->nome) ?></span>
+                    </div>
+                    <?php foreach($itemsResponse as $item): ?>
+                        <div class="item">
+                            <div class="item-info">
+                                <span class="quantity"><?php echo intval($item->quantidade) ?></span>
+                                <span class="item-name"><?php echo htmlspecialchars($item->nome) ?></span>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                    <div class="actions">
+                        <button class="btn btn-outline-danger status_pedido">Cancelar</button>
+                        <button class="btn btn-success status_pedido">PRONTO</button>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
     
     <script src="/Views/Assets/Js/FooterLayout.js"></script>
     <footer-layout></footer-layout>

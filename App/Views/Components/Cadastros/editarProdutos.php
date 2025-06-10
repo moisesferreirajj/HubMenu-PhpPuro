@@ -1,3 +1,4 @@
+<!-- Modal de Edição -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -22,7 +23,7 @@
 
           <div class="mb-3">
             <label for="edit_valor" class="form-label">Valor</label>
-            <input type="number" class="form-control" id="edit_valor" name="valor" step="0.01">
+            <input type="number" class="form-control" id="edit_valor" name="valor" step="0.01" required>
           </div>
 
           <div class="mb-3">
@@ -33,14 +34,13 @@
 
           <div class="mb-3">
             <label for="edit_categoria_id" class="form-label">Categoria</label>
-            <select class="form-select" id="edit_categoria_id" name="categoria_id">
-              <!-- Carregado via JS -->
+            <select class="form-select" id="edit_categoria_id" name="categoria_id" required>
+              <!-- Preenchido via JS -->
             </select>
           </div>
         </div>
-        <div class="modal-footer">          
-          <button type="button" class="btn">Desativar</button>
-          <button type="button" class="btn btn-danger">Excluir</button>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
           <button type="submit" class="btn btn-primary">Salvar alterações</button>
         </div>
       </form>
@@ -48,6 +48,7 @@
   </div>
 </div>
 
+<!-- Script para preencher o modal -->
 <script>
 async function carregarSelectsEdit(categoriaAtual) {
   try {
@@ -60,7 +61,7 @@ async function carregarSelectsEdit(categoriaAtual) {
         const opt = document.createElement('option');
         opt.value = c.id;
         opt.textContent = c.nome;
-        if (c.id == categoriaAtual) opt.selected = true;
+        if (parseInt(c.id) === parseInt(categoriaAtual)) opt.selected = true;
         catSelect.appendChild(opt);
       });
     }
@@ -69,16 +70,15 @@ async function carregarSelectsEdit(categoriaAtual) {
   }
 }
 
-// Abrir modal e preencher campos
-document.querySelectorAll('.edit-button').forEach((button) => {
+document.querySelectorAll('.edit-button').forEach(button => {
   button.addEventListener('click', async () => {
     const card = button.closest('.card');
 
-    const nome = card.querySelector('.card-title').textContent.trim();
-    const valorTexto = card.querySelector('.price-tag').textContent.replace('R$', '').trim();
+    const nome = card.querySelector('.card-title')?.textContent.trim();
+    const valorTexto = card.querySelector('.price-tag')?.textContent.replace('R$', '').trim();
     const valor = parseFloat(valorTexto.replace('.', '').replace(',', '.'));
-    const categoriaId = card.querySelector('.category-badge').getAttribute('data-id');
-    const descricao = card.getAttribute('data-descricao');
+    const categoriaId = card.querySelector('.category-badge')?.getAttribute('data-id');
+    const descricao = card.getAttribute('data-descricao') || '';
     const produtoId = card.getAttribute('data-id');
     const estabelecimentoId = card.getAttribute('data-estabelecimento-id');
     const imagemNome = card.getAttribute('data-imagem');
@@ -89,7 +89,7 @@ document.querySelectorAll('.edit-button').forEach((button) => {
     document.getElementById('edit_estabelecimento_id').value = estabelecimentoId;
     document.getElementById('edit_nome').value = nome;
     document.getElementById('edit_valor').value = valor.toFixed(2);
-    document.getElementById('edit_descricao').value = descricao || '';
+    document.getElementById('edit_descricao').value = descricao;
 
     const imagemInfo = document.getElementById('imagemAtualInfo');
     imagemInfo.textContent = imagemNome ? 'Imagem atual: ' + imagemNome : '';
@@ -99,7 +99,7 @@ document.querySelectorAll('.edit-button').forEach((button) => {
   });
 });
 
-// Garantir que o backdrop é removido corretamente
+// Limpeza do backdrop
 document.getElementById('editModal').addEventListener('hidden.bs.modal', function () {
   document.body.classList.remove('modal-open');
   const backdrop = document.querySelector('.modal-backdrop');

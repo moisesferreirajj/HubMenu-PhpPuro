@@ -2,10 +2,10 @@
 
 class PedidosController extends RenderView
 {
-    public function index(){
+    public function indexEmpresa(){
         $users = new UsuariosModel();
 
-        $this->loadView('empresarial/pedidosCliente',
+        $this->loadView('empresarial/pedidosEmpresa',
             [
                 'Title' => 'HubMenu |'
             ],

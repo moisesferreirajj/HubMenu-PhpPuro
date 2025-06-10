@@ -29,7 +29,7 @@
                     <a class="nav-link" href="/empresarial/sobre">Sobre Nós</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/empresarial/login">Painel do Controle</a>
+                    <a class="nav-link" href="/empresarial/login">Painel de Controle</a>
                 </li>
             </ul>
         </div>

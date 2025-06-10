@@ -179,5 +179,47 @@ class ProdutosController extends RenderView
             ]);
         }
     }
-    
+
+    public function desativar()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'] ?? null;
+            if ($id) {
+                (new ProdutosModel())->desativar($id);
+                echo json_encode(['status' => 'success', 'message' => 'Produto desativado com sucesso.']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'ID do produto não informado.']);
+            }
+        }
+    }
+
+    public function ativar()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'] ?? null;
+            if ($id) {
+                (new ProdutosModel())->ativar($id);
+                echo json_encode(['status' => 'success', 'message' => 'Produto ativado com sucesso.']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'ID do produto não informado.']);
+            }
+        }
+    }
+
+    public function searchProdutos($estabelecimento_id)
+    {
+        header('Content-Type: application/json; charset=utf-8');
+        
+        //PEGA O PRODUTO PELO GET DE QUERY
+        $query = $_GET['query'] ?? '';
+
+        $produtosModel = new ProdutosModel();
+        $produtos = $produtosModel->searchByEstabelecimentoAndQuery($estabelecimento_id, $query);
+
+        echo json_encode([
+            'status' => 'success',
+            'produtos' => $produtos
+        ], JSON_UNESCAPED_UNICODE);
+    }
+
 }

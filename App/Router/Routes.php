@@ -5,7 +5,7 @@ $routes = [
     '/' => 'DashClienteController@index',
     '/restaurantes' => 'RestaurantesController@index',
     '/restaurante/{id}' => 'RestaurantesController@indexRestaurante',
-    '/pedidos' => 'PedidosController@index',
+    '/pedidos/{id}' => 'PedidosController@indexEmpresa',
     /* ROTAS EMPRESARIAIS */
     '/empresarial' => 'HomeController@index',
     '/empresarial/cadastro' => 'CadastroController@index',
@@ -34,5 +34,9 @@ $routes = [
     /* ROTAS ESPECIALMENTE DA EMPRESA PARA A EMPRESA: */
     '/api/produtos/cadastrar' => 'ProdutosController@cadastrar',
     '/api/produtos/editar' => 'ProdutosController@atualizar',
+    '/api/produtos/procurar/{id}' => 'ProdutosController@searchProdutos',
     '/api/visualizar/produtos/{id}' => 'ProdutosController@getProdutos',
+    /* ROTA ADMINISTRAÇÃO */
+    '/api/autenticar/admin' => 'LoginController@autenticarAdmin',
+    '/admin/login' => 'AdminController@index',
 ];

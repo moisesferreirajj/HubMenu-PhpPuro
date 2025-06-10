@@ -307,6 +307,11 @@ INSERT INTO `vendas` (`id`, `referencia`, `transacao_id`, `status_pagamento`, `e
 	(9, 'VEND009', 'TXN009', 'Cancelado', 3, 95.00, '2025-05-14 15:41:03'),
 	(10, 'VEND010', 'TXN010', 'Aprovado', 1, 150.20, '2025-05-14 15:41:03');
 
+
+-- Adicioando campo status na tabela db_hubmenu.produtos
+ALTER TABLE produtos
+ADD `status_produtos` boolean AFTER `imagem`;
+
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;

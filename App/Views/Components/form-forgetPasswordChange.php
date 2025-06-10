@@ -12,15 +12,15 @@
         <h1>Esqueceu Senha</h1>
         <form method="POST" action="/api/autenticar/changepassword">
             <div class="form-group">
-                <label for="nova_senha"><i class="fas fa-user"></i> Nova Senha</label>
+                <label for="nova_senha"><i class="fas fa-user"></i> Nova senha</label>
                 <div class="input-group">
                     <input type="password" class="form-control" id="nova_senha" name="nova_senha" placeholder="Sua nova senha" required>
                 </div>
-                <label for="confirmar_nova_senha" style="margin-top: 20px; gap:20px"><i class="fas fa-user"></i> Nova Senha</label>
+                <label for="confirmar_nova_senha" style="margin-top: 20px; gap:20px"><i class="fas fa-user"></i> Confirme a nova senha</label>
                 <div class="input-group">
                     <input type="password" class="form-control" id="confirmar_nova_senha" name="confirmar_nova_senha" placeholder="Confirme a nova senha" required>
                 </div>
-                <p>Enviaremos um código por Gmail</p>
+                <p>Digite a nova senha</p>
             </div>
             <button type="submit" class="btn">Trocar senha</button>
             <div class="links">

@@ -3,7 +3,9 @@
 
 :root {
     --primary-color: #257459;
+    --primary: #257459;
     --primary-dark: #c6da52;
+    --secondary: #085238;
     --light-color: #f8f9fa; 
     --secondary-color: #ff6b6b;
     --accent-color: #ffc107;
@@ -12,6 +14,12 @@
     --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
 
 }
+
+.banner-estabelecimento img {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
 
 body {
     background-color: #f5f5f5 !important;
@@ -24,6 +32,50 @@ body {
 .bi-search::before {
     margin: 15px;
 }
+
+#filter-group .btn {
+    transition: all 0.3s ease;
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-weight: 600;
+}
+
+#filter-group .btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 8px rgba(37, 116, 89, 0.4);
+    transform: translateY(-2px);
+}
+
+#filter-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px; /* Espaço entre os botões */
+    margin-bottom: 20px;
+}
+
+#produtos-lista .col {
+    transition: all 0.3s ease;
+}
+
+#filter-group .btn {
+    transition: all 0.3s ease;
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-weight: 600;
+}
+
+#filter-group .btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 8px rgba(37, 116, 89, 0.4);
+    transform: translateY(-2px);
+}
+
+
 
 .search-container {
     display: flex;

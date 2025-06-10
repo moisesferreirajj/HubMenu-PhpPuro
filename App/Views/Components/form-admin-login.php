@@ -1,16 +1,16 @@
 <div class="container">
     <div class="image-section">
         <div class="image-overlay">
-            <h2>Gerencie seu restaurante com facilidade!</h2>
-            <p>Acesse o HubMenu para controlar cardápios, pedidos e clientes em uma única plataforma intuitiva</p>
+            <h2>Administração do HubMenu</h2>
+            <p>Acesse o painel de controle para começar a gerenciar!</p>
         </div>
     </div>
     <div class="login-section">
         <div class="logo">
             <?php @require_once __DIR__ . '/svg-logo.php'; ?>
         </div>
-        <h1>Acesso - Login</h1>
-        <form method="POST" action="/api/autenticar/usuario">
+        <h1>Acesso Administrativo</h1>
+        <form method="POST" action="/api/autenticar/admin">
             <div class="form-group">
                 <label for="email"><i class="fas fa-user"></i> Email</label>
                 <div class="input-group">
@@ -29,8 +29,6 @@
             <button type="submit" class="btn">Entrar</button>
             <div class="links">
                 <a href="./"><i class="fas fa-arrow-left"></i> Voltar ao Início</a>
-                <a href="./esqueceuSenha"><i class="fa-solid fa-lock"></i> Esqueceu a Senha</a>
-                <a href="./cadastro"><i class="fas fa-sign-in-alt"></i> Cadastrar-se</a>
             </div>
         </form>
         <div class="moving-light"></div>

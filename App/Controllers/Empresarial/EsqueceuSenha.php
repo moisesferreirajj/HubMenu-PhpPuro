@@ -49,14 +49,14 @@ class EsqueceuSenha extends RenderView
             $mail->isSMTP();                                      //Send using SMTP
             $mail->Host = 'smtp.gmail.com';                 //Set the SMTP server to send through
             $mail->SMTPAuth = true;                             //Enable SMTP authentication
-            $mail->Username = 'contatosistemassenai@gmail.com';               //SMTP username
-            $mail->Password = 'nwpk zlni mlhs hzww';                         //SMTP password
+            $mail->Username = PHPMAILER_USERNAME;               //SMTP username
+            $mail->Password = PHPMAILER_PASSWORD;                         //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;   //Enable implicit TLS encryption
             $mail->Port = 587;                              //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
-            $mail->setFrom('contatosistemassenai@gmail.com', 'HubMenu');
-            $mail->addAddress($_SESSION['email_usuario'],);     //Add a recipient
+            $mail->setFrom(PHPMAILER_USERNAME, 'HubMenu');
+            $mail->addAddress($_SESSION['email_usuario'], );     //Add a recipient
 
             //Content
             $mail->isHTML(true);
@@ -101,7 +101,7 @@ class EsqueceuSenha extends RenderView
         $codigo = $this->gerarCodigo(5);
 
         $_SESSION['email_usuario'] = $emailExists->email;
-        $_SESSION['nome_usuario'] = $emailExists->nome;
+        $_SESSION['id_usuario'] = $emailExists->id;
         $_SESSION['codigo'] = $codigo;
         $_SESSION['codigo_expira'] = time() + 300;
 
@@ -125,15 +125,9 @@ class EsqueceuSenha extends RenderView
             exit;
         }
 
-        if ($metodo_envio == 'email') {
-            $_SESSION['metodo_envio'] = $metodo_envio;
-            header("Location: /empresarial/esqueceuSenha");
-            exit;
-        } else {
-            $_SESSION['metodo_envio'] = $metodo_envio;
-            header("Location: /empresarial/esqueceuSenha");
-            exit;
-        }
+        $_SESSION['metodo_envio'] = $metodo_envio;
+        header("Location: /empresarial/esqueceuSenha");
+        exit;
     }
 
     public function code()
@@ -146,7 +140,7 @@ class EsqueceuSenha extends RenderView
         $codigo_inserido = $_POST['codigo'];
 
         if ($codigo_inserido != $_SESSION['codigo']) {
-            header("Location: /empresarial/esqueceuSenha");
+            echo "<script>alert('O código está incorreto!'); window.location.href = '/empresarial/esqueceuSenha';</script>";
             exit;
         }
 
@@ -158,11 +152,37 @@ class EsqueceuSenha extends RenderView
 
     public function changePassword()
     {
+        $users = new UsuariosModel();
+        $usuario = $users->findById($_SESSION['usuario_id']);
+        $usuarioPassword = $usuario->results[0] ?? null;
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: /empresarial/esqueceuSenha');
             exit;
         }
 
+        $nova_senha = $_POST['nova_senha'];
+        $confirmar_nova_senha = $_POST['confirmar_nova_senha'];
+        $senha_usuario = $usuarioPassword->senha;
 
+        $hash_nova_senha = password_hash($nova_senha, PASSWORD_DEFAULT);
+
+        if (!$nova_senha) {
+            header("Location: /empresarial/esqueceuSenha");
+            exit;
+        }
+
+        if ($nova_senha && $confirmar_nova_senha) {
+            if (!($nova_senha == $confirmar_nova_senha)) {
+                echo "<script>alert('As senhas não correspondem'); window.location.href = '/empresarial/esqueceuSenha';</script>";
+                exit;
+            }
+
+            $updatePassword = $users->updatePassword($hash_nova_senha, $_SESSION['id_usuario']);
+            
+            echo "<script>alert('Sua senha foi atualizada, você pode usá-la para entrar em sua conta!'); window.location.href = '/empresarial/login';</script>";
+
+            session_destroy();
+        }
     }
 }
