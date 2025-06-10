@@ -3,6 +3,7 @@
 @require_once __DIR__ . '/../../global.php';
 
 session_start();
+
 ?>
 
 <!DOCTYPE html>
@@ -19,13 +20,22 @@ session_start();
 </head>
 
 <body>
-    
+
     <?php
     if (!isset($_SESSION['metodo_envio'])) {
         require_once __DIR__ . '/../Components/SendTypeForgetPassword.php';
         exit;
     }
     if ($_SESSION['metodo_envio'] == 'email') {
+
+        if (isset($_SESSION['codigo'], $_SESSION['codigo_expira']) && time() < $_SESSION['codigo_expira']) {
+            if ($_SESSION['codigo_inserido'] && $_SESSION['codigo_inserido'] == $_SESSION['codigo']){
+                require_once __DIR__ . '/../Components/form-forgetPasswordChange.php';
+                exit;
+            }
+            require_once __DIR__ . '/../Components/form-forgetPasswordCode.php';
+            exit;
+        }
         require_once __DIR__ . '/../Components/form-forgetPasswordEmail.php';
         exit;
     } else {

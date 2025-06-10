@@ -13,7 +13,7 @@ $routes = [
     '/empresarial/esqueceuSenha' => 'EsqueceuSenha@index',
     '/empresarial/sobre' => 'SobreController@index',
     '/empresarial/suporte' => 'SuporteController@index',
-    '/empresarial/funcionalidades'=> 'FuncionalidadesController@index',
+    '/empresarial/funcionalidades' => 'FuncionalidadesController@index',
     /* ROTAS GLOBAIS */
     '/user/{id}' => 'UserController@show',
     /* ROTAS DE ADMIN */
@@ -21,6 +21,8 @@ $routes = [
     '/api/cadastrar/usuario' => 'CadastroController@cadastrar',
     '/api/autenticar/senha' => 'EsqueceuSenha@autenticar',
     '/api/autenticar/sendtype' => 'EsqueceuSenha@sendType',
+    '/api/autenticar/code' => 'EsqueceuSenha@code',
+    '/api/autenticar/changepassword' => 'EsqueceuSenha@changePassword',
     '/cadastro/produtos' => 'ProdutosController@index',
     /* ROTAS DE API ABAIXO: */
     '/api/visualizar/categorias' => 'ProdutosController@getCategorias',
@@ -28,11 +30,9 @@ $routes = [
     '/api/send/SMS' => 'SendSMSController@sendSMS',
     /* ROTAS ESPECIALMENTE DA EMPRESA PARA O CLIENTE: */
     '/cardapio/{id}' => 'CardapioController@indexCliente',
-    '/gerenciar/cardapio/{id}'=> 'CardapioController@indexAdmin',
+    '/gerenciar/cardapio/{id}' => 'CardapioController@indexAdmin',
     /* ROTAS ESPECIALMENTE DA EMPRESA PARA A EMPRESA: */
     '/api/produtos/cadastrar' => 'ProdutosController@cadastrar',
     '/api/produtos/editar' => 'ProdutosController@atualizar',
     '/api/visualizar/produtos/{id}' => 'ProdutosController@getProdutos',
-]
-
-?>
+];

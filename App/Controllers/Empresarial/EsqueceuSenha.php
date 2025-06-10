@@ -37,7 +37,7 @@ class EsqueceuSenha extends RenderView
         return $codigo;
     }
 
-    public function enviaEmail()
+    public function enviaEmail($codigo)
     {
 
         //Create an instance; passing `true` enables exceptions
@@ -55,34 +55,21 @@ class EsqueceuSenha extends RenderView
             $mail->Port = 587;                              //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
-            $mail->setFrom('contatosistemassenai@gmail.com', 'Mailer');
-            $mail->addAddress($_SESSION['email_usuario'], );     //Add a recipient
+            $mail->setFrom('contatosistemassenai@gmail.com', 'HubMenu');
+            $mail->addAddress($_SESSION['email_usuario'],);     //Add a recipient
 
             //Content
             $mail->isHTML(true);
             $mail->CharSet = 'UTF-8';                                  //Set email format to HTML
             $mail->Subject = 'Código senha - HUBMENU';
-            $mail->Body = 'Segue código para recuperação de senha: <br><br><b>' . $this->gerarCodigo(5) . '<b>';
-            $mail->AltBody = 'Segue código para recuperação de senha: ' . $this->gerarCodigo(5);
+            $mail->Body = 'Segue código para recuperação de senha: <br><br><b>' . $codigo . '<b>';
+            $mail->AltBody = 'Segue código para recuperação de senha: ' . $codigo;
 
             $mail->send();
             echo 'Message has been sent';
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
-
-        // // Para definir a variável com expiração de 1 minuto:
-        // $_SESSION['codigo'] = 'valor_do_codigo';
-        // $_SESSION['codigo_expira'] = time() + 60; // 60 segundos
-
-        // // Para checar se ainda está válida:
-        // if (isset($_SESSION['codigo'], $_SESSION['codigo_expira']) && time() < $_SESSION['codigo_expira']) {
-        //     // Ainda válido
-        //     $codigo = $_SESSION['codigo'];
-        // } else {
-        //     // Expirou
-        //     unset($_SESSION['codigo'], $_SESSION['codigo_expira']);
-        // }
     }
 
     public function autenticar()
@@ -101,7 +88,7 @@ class EsqueceuSenha extends RenderView
 
         $users = new UsuariosModel();
         $usuario = $users->buscarPorEmail($email);
-        $emailExists = $usuario->results[0];
+        $emailExists = $usuario->results[0] ?? null;
 
         if (!$emailExists) {
             // Por segurança, não informe se o e-mail existe ou não
@@ -109,13 +96,18 @@ class EsqueceuSenha extends RenderView
             exit;
         }
 
-        $_SESSION['email_usuario'] = $emailExists->email;
-        $_SESSION['nome_usuario'] = $emailExists->nome;
-
         echo "<script>alert('Se o e-mail estiver cadastrado, você receberá instruções.'); window.location.href = '/empresarial/esqueceuSenha';</script>";
 
+        $codigo = $this->gerarCodigo(5);
 
-        $this->enviaEmail();
+        $_SESSION['email_usuario'] = $emailExists->email;
+        $_SESSION['nome_usuario'] = $emailExists->nome;
+        $_SESSION['codigo'] = $codigo;
+        $_SESSION['codigo_expira'] = time() + 300;
+
+        $this->enviaEmail($codigo);
+
+        header("Location: /empresarial/esqueceuSenha");
         exit();
     }
 
@@ -142,5 +134,35 @@ class EsqueceuSenha extends RenderView
             header("Location: /empresarial/esqueceuSenha");
             exit;
         }
+    }
+
+    public function code()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: /empresarial/esqueceuSenha');
+            exit;
+        }
+
+        $codigo_inserido = $_POST['codigo'];
+
+        if ($codigo_inserido != $_SESSION['codigo']) {
+            header("Location: /empresarial/esqueceuSenha");
+            exit;
+        }
+
+        $_SESSION['codigo_inserido'] = $codigo_inserido;
+
+        header("Location: /empresarial/esqueceuSenha");
+        exit;
+    }
+
+    public function changePassword()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: /empresarial/esqueceuSenha');
+            exit;
+        }
+
+
     }
 }
