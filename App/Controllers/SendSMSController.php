@@ -9,8 +9,8 @@ class SendSMSController extends RenderView
 
         $usuario = IAgente_USER;
         $senha = IAgente_PASS;
-        $celular = '47989096846';
-        $mensagem = urlencode('Yohan é muito baitola e adora o comunismo e votou no Lula!');
+        $celular = '47991270120';
+        $mensagem = urlencode('Fabio lindao!');
 
         $url_api = "https://api.iagentesms.com.br/webservices/http.php?metodo=envio"
             . "&usuario={$usuario}"
