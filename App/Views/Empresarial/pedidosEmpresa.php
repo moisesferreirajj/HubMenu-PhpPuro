@@ -1,7 +1,7 @@
 <?php 
-@require_once __DIR__ . '/../../global.php'; 
-@require_once __DIR__ . '/../../Models/PedidosModel.php';
-@require_once __DIR__ . '/../../Models/ProdutosModel.php';
+require_once __DIR__ . '/../../global.php'; 
+require_once __DIR__ . '/../../Models/PedidosModel.php';
+require_once __DIR__ . '/../../Models/ProdutosModel.php';
 
 $orders = new PedidosModel;
 $items = new ProdutosModel;
@@ -28,7 +28,9 @@ $itemsResponse = $items->findOrderProdById($ordersResponse[0]->pedido_id);
     <title><?= $Title ?> Pedidos</title>
 <body>
     
+    <?php require_once __DIR__ . '/../../Views/Components/Cadastros/cadastrarPedidos.php'; ?>
     <?php require_once __DIR__ . '/../../Views/Components/sidebar.php'; ?>
+
     <div class="header">
         <div class="container">
             <button type="button" onclick="openNav()" id="open-btn" class="open-btn">
@@ -65,6 +67,7 @@ $itemsResponse = $items->findOrderProdById($ordersResponse[0]->pedido_id);
                                 <span class="quantity"><?php echo intval($item->quantidade) ?></span>
                                 <span class="item-name"><?php echo htmlspecialchars($item->nome) ?></span>
                             </div>
+                            <span class="item-observations"><?php echo htmlspecialchars($item->descricao) ?></span>
                         </div>
                     <?php endforeach; ?>
                     <div class="actions">

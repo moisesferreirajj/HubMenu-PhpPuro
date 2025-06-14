@@ -154,4 +154,15 @@ public function searchByEstabelecimentoAndQuery($estabelecimento_id, $query)
     return $result->results ? $result->results : [];
 }
 
+public function searchByEstabelecimentoAndCondition($estabelecimento_id)
+{
+    $db = new Database();
+    $sql = "SELECT p.id,p.nome, p.descricao, p.valor, p.imagem FROM produtos p JOIN estabelecimentos e ON p.estabelecimento_id = e.id WHERE e.id = :id AND p.status_produtos = 1;";
+    $params = [
+        ':id' => $estabelecimento_id,
+    ];
+    $result = $db->execute_query($sql, $params);
+    return $result->results ? $result->results : [];
+}
+
 }
