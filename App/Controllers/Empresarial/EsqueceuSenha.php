@@ -1,12 +1,13 @@
 <?php
 
+// Include Composer's autoloader
+require_once __DIR__ . '/../../../vendor/autoload.php';
+
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-
-session_start();
 
 class EsqueceuSenha extends RenderView
 {
@@ -22,13 +23,7 @@ class EsqueceuSenha extends RenderView
 
     function gerarCodigo($tamanho = 5)
     {
-        $caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        $codigo = '';
-        for ($i = 0; $i < $tamanho; $i++) {
-            $indice = random_int(0, strlen($caracteres) - 1);
-            $codigo .= $caracteres[$indice];
-        }
-        return $codigo;
+        return substr(str_shuffle("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"), 0, $tamanho);
     }
 
     public function enviaEmail($codigo)
@@ -50,7 +45,7 @@ class EsqueceuSenha extends RenderView
 
             //Recipients
             $mail->setFrom(PHPMAILER_USERNAME, 'HubMenu');
-            $mail->addAddress($_SESSION['email_usuario'], );     //Add a recipient
+            $mail->addAddress($_SESSION['email_usuario'], $_SESSION['usuario_nome']);     //Add a recipient
 
             //Content
             $mail->isHTML(true);
@@ -73,36 +68,75 @@ class EsqueceuSenha extends RenderView
             exit();
         }
 
-        $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+        if ($_SESSION['metodo_envio'] == 'email') {
+            $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
 
-        if (!$email) {
-            echo "<script>alert('Informe um e-mail válido.'); window.location.href = '/empresarial/esqueceuSenha';</script>";
+            if (!$email) {
+                echo "<script>alert('Informe um e-mail válido.'); window.location.href = '/empresarial/esqueceuSenha';</script>";
+                exit();
+            }
+
+            $users = new UsuariosModel();
+            $usuario = $users->buscarPorEmail($email);
+            $emailExists = $usuario->results[0] ?? null;
+
+            if (!$emailExists) {
+                // Por segurança, não informe se o e-mail existe ou não
+                echo "<script>alert('Se o e-mail estiver cadastrado, você receberá instruções.'); window.location.href = '/empresarial/esqueceuSenha';</script>";
+                exit;
+            }
+
+            echo "<script>alert('Se o e-mail estiver cadastrado, você receberá instruções.'); window.location.href = '/empresarial/esqueceuSenha';</script>";
+
+            $codigo = $this->gerarCodigo(5);
+
+            $_SESSION['email_usuario'] = $emailExists->email;
+            $_SESSION['id_usuario'] = $emailExists->id;
+            $_SESSION['codigo'] = $codigo;
+            $_SESSION['codigo_expira'] = time() + 300;
+
+            $this->enviaEmail($codigo);
             exit();
         }
 
-        $users = new UsuariosModel();
-        $usuario = $users->buscarPorEmail($email);
-        $emailExists = $usuario->results[0] ?? null;
+        if ($_SESSION['metodo_envio'] == 'sms') {
+            $telefone = trim($_POST['telefone']);
 
-        if (!$emailExists) {
-            // Por segurança, não informe se o e-mail existe ou não
-            echo "<script>alert('Se o e-mail estiver cadastrado, você receberá instruções.'); window.location.href = '/empresarial/esqueceuSenha';</script>";
-            exit;
+            // Remove tudo que não for número
+            $telefoneOnlyNumbers = preg_replace('/[^0-9]/', '', $telefone);
+
+            if (strlen($telefoneOnlyNumbers) < 10 || strlen($telefoneOnlyNumbers) > 11) {
+                echo "<script>alert('Formato de telefone inválido.'); window.location.href = '/empresarial/esqueceuSenha';</script>";
+                exit();
+            }
+
+            $users = new UsuariosModel();
+            $usuario = $users->buscarPorTelefone($telefone);
+            $telefoneExists = $usuario->results[0] ?? null;
+
+            if (!$telefoneExists) {
+                echo "<script>alert('Se o telefone estiver cadastrado, você receberá um SMS.'); window.location.href = '/empresarial/esqueceuSenha';</script>";
+                exit;
+            }
+
+            $codigo = $this->gerarCodigo(5);
+
+            $_SESSION['telefone_usuario'] = $telefoneExists->telefone;
+            $_SESSION['id_usuario'] = $telefoneExists->id;
+            $_SESSION['codigo'] = $codigo;
+            $_SESSION['codigo_expira'] = time() + 300;
+
+            // Instancia SendSMSController e envia o SMS
+            $smsenvio = new SendSMSController();
+            $resultado = $smsenvio->sendSMS($codigo, $telefoneOnlyNumbers);
+
+            if ($resultado['success']) {
+                echo "<script>alert('SMS enviado com sucesso!'); window.location.href = '/empresarial/esqueceuSenha';</script>";
+            } else {
+                echo "<script>alert('Erro ao enviar SMS: " . $resultado['message'] . "'); window.location.href = '/empresarial/esqueceuSenha';</script>";
+            }
+            exit();
         }
-
-        echo "<script>alert('Se o e-mail estiver cadastrado, você receberá instruções.'); window.location.href = '/empresarial/esqueceuSenha';</script>";
-
-        $codigo = $this->gerarCodigo(5);
-
-        $_SESSION['email_usuario'] = $emailExists->email;
-        $_SESSION['id_usuario'] = $emailExists->id;
-        $_SESSION['codigo'] = $codigo;
-        $_SESSION['codigo_expira'] = time() + 300;
-
-        $this->enviaEmail($codigo);
-
-        header("Location: /empresarial/esqueceuSenha");
-        exit();
     }
 
     public function sendType()
@@ -147,8 +181,6 @@ class EsqueceuSenha extends RenderView
     public function changePassword()
     {
         $users = new UsuariosModel();
-        $usuario = $users->findById($_SESSION['usuario_id']);
-        $usuarioPassword = $usuario->results[0] ?? null;
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: /empresarial/esqueceuSenha');
@@ -157,7 +189,6 @@ class EsqueceuSenha extends RenderView
 
         $nova_senha = $_POST['nova_senha'];
         $confirmar_nova_senha = $_POST['confirmar_nova_senha'];
-        $senha_usuario = $usuarioPassword->senha;
 
         $hash_nova_senha = password_hash($nova_senha, PASSWORD_DEFAULT);
 
@@ -172,8 +203,8 @@ class EsqueceuSenha extends RenderView
                 exit;
             }
 
-            $updatePassword = $users->updatePassword($hash_nova_senha, $_SESSION['id_usuario']);
-            
+            $users->updatePassword($hash_nova_senha, $_SESSION['id_usuario']);
+
             echo "<script>alert('Sua senha foi atualizada, você pode usá-la para entrar em sua conta!'); window.location.href = '/empresarial/login';</script>";
 
             session_destroy();

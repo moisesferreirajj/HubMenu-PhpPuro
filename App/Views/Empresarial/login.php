@@ -1,9 +1,3 @@
-<?php
-
-session_start();
-
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -20,7 +14,7 @@ session_start();
 </head>
 
 <body>
-    <?php include_once __DIR__ . '/../Components/form-login.php'; ?>d
+    <?php include_once __DIR__ . '/../Components/form-login.php'; ?>
 </body>
 
 </html>

@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 class CardapioController extends RenderView
 {
     public function indexCliente($id)

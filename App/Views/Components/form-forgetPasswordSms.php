@@ -12,9 +12,9 @@
         <h1>Esqueceu Senha</h1>
         <form method="POST" action="/api/autenticar/senha">
             <div class="form-group">
-                <label for="telefone"><i class="fas fa-user"></i>Telefone</label>
+                <label for="telefone"><i class="fas fa-user"></i> Telefone</label>
                 <div class="input-group">
-                    <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="Seu telefone" required>
+                    <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="(00) 00000-0000" required>
                 </div>
                 <p>Enviaremos um código por SMS</p>
             </div>
@@ -27,3 +27,28 @@
         <div class="moving-light"></div>
     </div>
 </div>
+
+<script>
+    // Máscara e validação de telefone em tempo real
+    document.getElementById('telefone').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não é dígito
+
+        // Aplica a máscara
+        if (value.length <= 10) {
+            // Formato para telefone fixo: (00) 0000-0000
+            value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+        } else {
+            // Formato para celular: (00) 00000-0000
+            value = value.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
+        }
+
+        e.target.value = value;
+    });
+
+    // Remove formatação visual ao focar no campo (opcional)
+    document.getElementById('telefone').addEventListener('focus', function(e) {
+        if (e.target.value === '') {
+            e.target.placeholder = '(00) 00000-0000';
+        }
+    });
+</script>

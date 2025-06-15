@@ -15,12 +15,17 @@ class PedidosModel {
         return $result->results; // retorna apenas os resultados
     }
 
-    public function getOrderByCompanyId($id) {
-        $query = "SELECT DISTINCT * FROM pedidos p JOIN pedidos_produtos pp ON pp.pedido_id = p.id JOIN estabelecimentos e ON e.id = p.estabelecimento_id JOIN usuarioS u ON p.usuario_id = u.id WHERE e.id = :id GROUP BY p.id";
+   public function getOrderByCompanyId($id) {
+        $query = "SELECT p.id as id, u.nome as nome 
+                FROM pedidos p 
+                JOIN usuarios u ON p.usuario_id = u.id 
+                WHERE p.estabelecimento_id = :id 
+                GROUP BY p.id";
         $params = [':id' => $id];
         $result = $this->db->execute_query($query, $params);
-        return $result->results ? $result->results : [];
-    }
+        return $result->results;
+    }   
+
     public function getOrderByUser($id) {
         $query = "SELECT * FROM pedidos WHERE id = :id";
         $params = [':id' => $id];

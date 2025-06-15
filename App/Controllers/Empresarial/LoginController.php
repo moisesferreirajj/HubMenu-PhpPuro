@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 class LoginController extends RenderView
 {
     public function index()

@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/Database.php';
-
 class UsuariosModel
 {
     /**
@@ -88,14 +86,19 @@ class UsuariosModel
     public function buscarPorEmail($email)
     {
         $db = new Database();
-        $sql = "SELECT id, nome, senha, cargo_id, email FROM usuarios WHERE email = :email LIMIT 1";
+        $sql = "SELECT id, nome, senha, email FROM usuarios WHERE email = :email LIMIT 1";
         $params = [':email' => $email];
 
         return $db->execute_query($sql, $params);
+    }
 
-        // if (isset($response->status) && $response->status === 'success' && !empty($response->results)) {
-        //     return $response->results[0]; // sempre objeto
-        // }
+    public function buscarPorTelefone($telefone)
+    {
+        $db = new Database();
+        $sql = "SELECT id, nome, senha, telefone FROM usuarios WHERE telefone = :telefone LIMIT 1";
+        $params = [':telefone' => $telefone];
+
+        return $db->execute_query($sql, $params);
     }
 
     public function updatePassword($senha, $id){

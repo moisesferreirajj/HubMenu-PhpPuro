@@ -21,7 +21,7 @@ $tempoRestante = isset($_SESSION['codigo_expira']) ? max(0, $_SESSION['codigo_ex
                 <div class="input-group">
                     <input type="text" class="form-control" id="codigo" name="codigo" placeholder="Insira o código" required>
                 </div>
-                <p>informe o código enviado em seu gmail</p>
+                <p>informe o código enviado</p>
             </div>
             <button type="submit" class="btn">Verificar</button>
             <div id="timer" style="font-weight:bold; color:#d9534f; margin-top:10px; display:flex; justify-content:center;"></div>

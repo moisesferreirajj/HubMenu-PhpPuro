@@ -6,7 +6,6 @@ require_once __DIR__ . '/../../Models/ProdutosModel.php';
 $orders = new PedidosModel;
 $items = new ProdutosModel;
 $ordersResponse = $orders->getOrderByCompanyId(1);
-$itemsResponse = $items->findOrderProdById($ordersResponse[0]->pedido_id);
 
 ?>
 
@@ -58,13 +57,23 @@ $itemsResponse = $items->findOrderProdById($ordersResponse[0]->pedido_id);
             <?php foreach($ordersResponse as $pedido): ?>
                 <div class="card">
                     <div class="card-header">
-                        <span class="order-id">Pedido <?= htmlspecialchars($pedido->pedido_id) ?></span>
+                        <span class="order-id">Pedido <?= htmlspecialchars($pedido->id) ?></span>
                         <span class="order-client"><?= htmlspecialchars($pedido->nome) ?></span>
                     </div>
-                    <?php foreach($itemsResponse as $item): ?>
+                    <?php 
+                    
+                    $itemsResponse = $items->findOrderProdById($pedido->id);
+                    if (!$itemsResponse) {
+                        echo '<div class="alert alert-warning">Nenhum item encontrado para este pedido.</div>';
+                        continue;
+                    }
+
+                    foreach($itemsResponse as $item): 
+                    
+                    ?>
                         <div class="item">
                             <div class="item-info">
-                                <span class="quantity"><?php echo intval($item->quantidade) ?></span>
+                                <span class="quantity"><?php echo intval($item->quantidade) ?>x</span>
                                 <span class="item-name"><?php echo htmlspecialchars($item->nome) ?></span>
                             </div>
                             <span class="item-observations"><?php echo htmlspecialchars($item->descricao) ?></span>

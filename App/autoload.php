@@ -1,5 +1,10 @@
 <?php
 
+// Inicia a sessão somente se ainda não foi iniciada
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 spl_autoload_register(function($class) {
     $classPath = str_replace('\\', DIRECTORY_SEPARATOR, $class);
     $baseDir = __DIR__ . '/';

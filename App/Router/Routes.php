@@ -19,11 +19,15 @@ $routes = [
     /* ROTAS DE ADMIN */
     '/api/autenticar/usuario' => 'LoginController@autenticar',
     '/api/cadastrar/usuario' => 'CadastroController@cadastrar',
+    /* ROTAS ENVIO EMAIL - ESQUECEU A SENHA */
     '/api/autenticar/senha' => 'EsqueceuSenha@autenticar',
     '/api/autenticar/sendtype' => 'EsqueceuSenha@sendType',
     '/api/autenticar/code' => 'EsqueceuSenha@code',
     '/api/autenticar/changepassword' => 'EsqueceuSenha@changePassword',
+    /* ROTA CADASTRO DE PRODUTOS */
     '/cadastro/produtos' => 'ProdutosController@index',
+    /* ROTA DE LOG - ERROS */
+    '/admin/logs' => 'LogsController@index',
     /* ROTAS DE API ABAIXO: */
     '/api/visualizar/categorias' => 'ProdutosController@getCategorias',
     '/api/visualizar/estabelecimentos' => 'ProdutosController@getEstabelecimentos',

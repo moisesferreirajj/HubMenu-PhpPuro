@@ -21,11 +21,20 @@ class ProdutosModel
     public function findOrderProdById($id)
     {
         $db = new Database();
-        $sql = "SELECT pp.quantidade, p.nome, p.descricao, p.valor FROM produtos p JOIN pedidos_produtos pp ON p.id = pp.produto_id WHERE pp.pedido_id = :id;";
+        // Consulta para obter produtos associados ao pedido
+        $sql = "SELECT pp.quantidade, p.nome, p.descricao, p.valor 
+                FROM produtos p 
+                JOIN pedidos_produtos pp ON p.id = pp.produto_id 
+                WHERE p.id = :id;";
         $params = [':id' => $id];
+        
+        // Executa a consulta
         $result = $db->execute_query($sql, $params);
-        return $result->results ? $result->results : [];
+        
+        // Retorna os resultados ou um array vazio se não houver resultados
+        return $result->results ?? []; // Usando o operador null coalescing para simplificar
     }
+
 
      /**
      * Busca os produtos pelo ID do Estabelecimento.
