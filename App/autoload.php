@@ -7,8 +7,11 @@ spl_autoload_register(function($class) {
     $possiblePaths = [
         $baseDir . $classPath . '.php',
         $baseDir . 'Models' . DIRECTORY_SEPARATOR . $class . '.php',
+        $baseDir . 'Controllers' . DIRECTORY_SEPARATOR . $classPath . DIRECTORY_SEPARATOR . $class . '.php',
+        $baseDir . 'Controllers' . DIRECTORY_SEPARATOR . $class . '.php',
         $baseDir . 'Utils' . DIRECTORY_SEPARATOR . $class . '.php',
         $baseDir . 'Core' . DIRECTORY_SEPARATOR . $class . '.php',
+        $baseDir . 'global.php',
     ];
 
     //INCLUI O PRIMEIRO ARQUIVO DA CLASSE

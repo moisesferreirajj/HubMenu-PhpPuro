@@ -6,12 +6,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-//Load Composer's autoloader (created by composer, not included with PHPMailer)
-require 'vendor/autoload.php';
-
-// load global variables
-require_once __DIR__ . '/../../global.php';
-
 session_start();
 
 class EsqueceuSenha extends RenderView

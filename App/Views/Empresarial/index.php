@@ -1,9 +1,5 @@
 <?php
 
-@require_once __DIR__ . '/../../global.php';
-@require_once __DIR__ . '/../../Models/EstabelecimentosModel.php';
-@require_once __DIR__ . '/../../Models/AvaliacoesModel.php';
-
 // Realizando a consulta no banco de dados - Estabelecimentos
 $estabelecimentosModel = new EstabelecimentosModel();
 $response = $estabelecimentosModel->MoreStars();
@@ -163,7 +159,7 @@ if ($response->status === 'error') {
                             <h3><?= $estabelecimento->nome ?></h3>
                             <p><?= $estabelecimento->tipo ?></p>
                         </div>
-                        <img src="Views/Assets/Images/verified.png" alt="imagem-verificado" id="verified">
+                        <img src="/Views/Assets/Images/verified.png" alt="imagem-verificado" id="verified">
                     </div>
                 <?php endforeach; ?>
             </div>

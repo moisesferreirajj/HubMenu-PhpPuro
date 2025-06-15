@@ -1,2 +1,0 @@
-- PHPMailer usado para envio de e-mails.
-- php-webdriver usado para automação com Selenium.
