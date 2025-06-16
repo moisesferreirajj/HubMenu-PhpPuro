@@ -59,7 +59,7 @@
         .search-filter-bar {
             background: white;
             padding: 2rem 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
         .search-box {
@@ -141,14 +141,14 @@
             overflow: hidden;
             transition: all 0.3s ease;
             border: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             height: 100%;
             cursor: pointer;
         }
 
         .restaurant-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
 
         .restaurant-image {
@@ -164,7 +164,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.7));
+            background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.7));
         }
 
         .restaurant-info {
@@ -358,7 +358,8 @@
             <div class="row">
                 <div class="col-lg-6 mx-auto">
                     <div class="search-box">
-                        <input type="text" class="form-control" placeholder="Buscar restaurantes, pratos ou tipos de comida..." id="searchInput">
+                        <input type="text" class="form-control"
+                            placeholder="Buscar restaurantes, pratos ou tipos de comida..." id="searchInput">
                         <i class="fas fa-search search-icon"></i>
                     </div>
                 </div>
@@ -425,16 +426,19 @@
                 <div class="col-md-3 mb-4">
                     <h5 class="mb-3">Para Restaurantes</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Cadastre seu Restaurante</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Cadastre seu
+                                Restaurante</a></li>
                         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Entregadores</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Planos para Parceiros</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Planos para
+                                Parceiros</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md-3 mb-4">
                     <h5 class="mb-3">Para Você</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Restaurantes próximos</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Restaurantes
+                                próximos</a></li>
                         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Pizzarias</a></li>
                         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">Hamburguerias</a></li>
                         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-white-50">HubMenu Card</a></li>
@@ -473,7 +477,7 @@
         let currentFilter = 'all';
         let searchTerm = '';
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             loadRestaurants();
             setupEventListeners();
         });
@@ -504,7 +508,7 @@
 
         function loadRestaurants() {
             const container = document.getElementById('restaurants-container');
-            
+
             const xhr = new XMLHttpRequest();
             xhr.open('GET', '/api/visualizar/estabelecimentos', true);
 
@@ -545,40 +549,61 @@
             // Update active filter button
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            
+
             currentFilter = event.target.getAttribute('data-filter');
             currentPage = 1;
             applyFilters();
         }
 
         function applyFilters() {
+            // Aplica os filtros de busca e categoria
             filteredRestaurants = allRestaurants.filter(restaurant => {
-                // Search filter
-                const matchesSearch = !searchTerm || 
-                    restaurant.nome.toLowerCase().includes(searchTerm) ||
-                    (restaurant.tipo && restaurant.tipo.toLowerCase().includes(searchTerm));
+                // Filtro de busca - verifica nome e tipo do restaurante
+                const matchesSearch = !searchTerm ||
+                    restaurant.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    (restaurant.tipo && restaurant.tipo.toLowerCase().includes(searchTerm.toLowerCase()));
 
-                // Category filter
+                // Filtro de categoria
                 let matchesCategory = true;
+
+                // Se não for 'todos', aplica filtros específicos
                 if (currentFilter !== 'all') {
-                    if (currentFilter === 'rating') {
-                        matchesCategory = parseFloat(restaurant.media_avaliacao) >= 4.0;
-                    } else {
-                        matchesCategory = restaurant.tipo && 
-                            restaurant.tipo.toLowerCase().includes(currentFilter.toLowerCase());
+                    switch (currentFilter) {
+                        case 'rating':
+                            // Filtra por avaliação maior ou igual a 4.0
+                            matchesCategory = parseFloat(restaurant.media_avaliacao) >= 4.0;
+                            break;
+                        default:
+                            // Filtra por tipo de restaurante
+                            matchesCategory = restaurant.tipo &&
+                                restaurant.tipo.toLowerCase().includes(currentFilter.toLowerCase());
                     }
                 }
 
                 return matchesSearch && matchesCategory;
             });
 
-            // Sort by rating for better results
+            // Ordena os resultados
             if (currentFilter === 'rating') {
-                filteredRestaurants.sort((a, b) => 
-                    parseFloat(b.media_avaliacao) - parseFloat(a.media_avaliacao)
+                // Ordena por avaliação (maior para menor)
+                filteredRestaurants.sort((a, b) => {
+                    const ratingA = parseFloat(a.media_avaliacao) || 0;
+                    const ratingB = parseFloat(b.media_avaliacao) || 0;
+                    return ratingB - ratingA;
+                });
+            } else {
+                // Ordena por nome (ordem alfabética)
+                filteredRestaurants.sort((a, b) =>
+                    a.nome.localeCompare(b.nome, 'pt-BR')
                 );
             }
 
+            // Limita a quantidade de resultados para 5 quando filtrar por avaliação
+            if (currentFilter === 'rating') {
+                filteredRestaurants = filteredRestaurants.slice(0, 6);
+            }
+
+            // Reset da paginação e atualização da exibição
             currentPage = 1;
             displayRestaurants();
             updateResultsCount();
@@ -640,7 +665,7 @@
                         <h3 class="restaurant-name">${restaurant.nome}</h3>
                         <p class="restaurant-category">${restaurant.tipo || 'Restaurante'}</p>
                         
-                        <div class="restaurant-meta">
+                        <div class="restaurant-meta" style="gap:10px;">
                             <div class="rating">
                                 <i class="fas fa-star"></i>
                                 ${rating}
@@ -708,10 +733,10 @@
             if (page >= 1 && page <= totalPages) {
                 currentPage = page;
                 displayRestaurants();
-                
+
                 // Scroll to top of restaurants section
-                document.querySelector('.restaurants-section').scrollIntoView({ 
-                    behavior: 'smooth' 
+                document.querySelector('.restaurants-section').scrollIntoView({
+                    behavior: 'smooth'
                 });
             }
         }
@@ -719,7 +744,7 @@
         function updateResultsCount() {
             const resultsCount = document.getElementById('results-count');
             const total = filteredRestaurants.length;
-            
+
             if (total === 0) {
                 resultsCount.textContent = 'Nenhum restaurante encontrado';
             } else if (total === 1) {
@@ -747,7 +772,7 @@
                     </button>
                 </div>
             `;
-            
+
             const resultsCount = document.getElementById('results-count');
             resultsCount.textContent = 'Erro ao carregar restaurantes';
         }

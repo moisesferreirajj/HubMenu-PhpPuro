@@ -86,7 +86,19 @@ class UsuariosModel
     public function buscarPorEmail($email)
     {
         $db = new Database();
-        $sql = "SELECT id, nome, senha, email FROM usuarios WHERE email = :email LIMIT 1";
+        $sql = "SELECT 
+                u.id, 
+                u.nome, 
+                u.senha, 
+                u.email, 
+                eu.estabelecimento_id,
+                c.id as cargo_id,
+                c.nome as cargo_nome
+            FROM usuarios u
+            LEFT JOIN estabelecimentos_usuarios eu ON eu.usuario_id = u.id
+            LEFT JOIN cargos c ON c.id = eu.cargo_id
+            WHERE u.email = :email
+            LIMIT 1";
         $params = [':email' => $email];
 
         return $db->execute_query($sql, $params);
@@ -101,7 +113,8 @@ class UsuariosModel
         return $db->execute_query($sql, $params);
     }
 
-    public function updatePassword($senha, $id){
+    public function updatePassword($senha, $id)
+    {
         $db = new Database();
         $sql = "UPDATE usuarios SET 
                     senha = :senha 

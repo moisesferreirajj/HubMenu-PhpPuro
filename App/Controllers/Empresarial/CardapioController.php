@@ -23,6 +23,11 @@ class CardapioController extends RenderView
 
     public function indexAdmin($id): void
     {
+        if (!isset($_SESSION['usuario_cargo'])){
+            echo "<script>alert('Você não está logado em uma conta!'); window.location.href = '/empresarial/login';</script>";
+            exit();
+        }
+
         $produtoModel = new ProdutosModel();
         $estabelecimentosModel = new EstabelecimentosModel();
 
@@ -32,12 +37,6 @@ class CardapioController extends RenderView
         $produtos = ($produtosResponse->status === 'success') ? $produtosResponse->results : [];
         // Mantendo como objeto para facilitar uso na view
         $estabelecimento = ($estabelecimentoResponse->status === 'success') ? $estabelecimentoResponse->results : null;
-
-        // Debug - imprime o estabelecimento e para a execução para você ver os dados
-        // echo '<pre>Estabelecimento:' . PHP_EOL;
-        // print_r($estabelecimento);
-        // echo '</pre>';
-        // exit;
 
         $this->loadView('empresarial/cardapioEmpresa', [
             'Title' => 'HubMenu |',
