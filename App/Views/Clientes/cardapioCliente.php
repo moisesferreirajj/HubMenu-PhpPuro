@@ -1,5 +1,3 @@
-<?php @require_once __DIR__ . '/../../global.php'; ?>
-
 <?php
 // Realizando a consulta do Cardápio específico para aquela empresa, exemplo:
 // /cardapio/{id} | cardapio/1 - Aparece Pizza Margherita e Yohan;

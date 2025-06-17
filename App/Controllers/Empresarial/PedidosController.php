@@ -1,9 +1,5 @@
 <?php
 
-
-@require_once __DIR__ . '/../../Models/ProdutosModel.php';
-@require_once __DIR__ . '/../../Models/PedidosModel.php';
-@require_once __DIR__ . '/../../Models/UsuariosModel.php';
 class PedidosController extends RenderView
 {
     public function indexEmpresa(){

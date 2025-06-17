@@ -23,10 +23,7 @@ class CardapioController extends RenderView
 
     public function indexAdmin($id): void
     {
-        if (!isset($_SESSION['usuario_cargo'])){
-            echo "<script>alert('Você não está logado em uma conta!'); window.location.href = '/empresarial/login';</script>";
-            exit();
-        }
+        // AcessoController::verificarAcesso('/gerenciar/cardapio/{id}', $_SESSION['usuario_cargo']);
 
         $produtoModel = new ProdutosModel();
         $estabelecimentosModel = new EstabelecimentosModel();

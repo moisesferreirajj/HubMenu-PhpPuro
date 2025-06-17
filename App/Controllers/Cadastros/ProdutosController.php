@@ -1,9 +1,5 @@
 <?php
 
-@require_once __DIR__ . '/../../Models/ProdutosModel.php';
-@require_once __DIR__ . '/../../Models/EstabelecimentosModel.php';
-@require_once __DIR__ . '/../../Models/CategoriasModel.php';
-
 class ProdutosController extends RenderView
 {
     /**

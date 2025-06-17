@@ -134,7 +134,7 @@ class ProdutosModel
     }
 
     //Ativar & Desativar - QUERY BASICA
-    public function desativar($id)
+    public function desativarProduto($id)
     {
         $db = new Database();
         $sql = "UPDATE produtos SET status_produtos = 0 WHERE id = :id";
@@ -142,7 +142,7 @@ class ProdutosModel
         return $db->execute_non_query($sql, $params);
     }
 
-    public function ativar($id)
+    public function ativarProduto($id)
     {
         $db = new Database();
         $sql = "UPDATE produtos SET status_produtos = 1 WHERE id = :id";
