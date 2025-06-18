@@ -92,13 +92,35 @@ class UsuariosModel
                 u.senha, 
                 u.email, 
                 eu.estabelecimento_id,
-                c.id as cargo_id,
-                c.nome as cargo_nome
+                COALESCE(eu.cargo_id, u.cargo_id) AS cargo_id,
+                c.nome AS cargo_nome
             FROM usuarios u
             LEFT JOIN estabelecimentos_usuarios eu ON eu.usuario_id = u.id
-            LEFT JOIN cargos c ON c.id = eu.cargo_id
+            LEFT JOIN cargos c ON c.id = COALESCE(eu.cargo_id, u.cargo_id)
             WHERE u.email = :email
-            LIMIT 1";
+            LIMIT 1;
+            ";
+        $params = [':email' => $email];
+
+        return $db->execute_query($sql, $params);
+    }
+
+        /**
+     * Busca um admin pelo email. (query demoniaca)
+     */
+    public function buscarAdmin($email)
+    {
+        $db = new Database();
+        $sql = "SELECT 
+                id,
+                nome,
+                email,
+                senha,
+                cargo_id            
+            FROM usuarios 
+            WHERE email = :email
+            LIMIT 1;
+            ";
         $params = [':email' => $email];
 
         return $db->execute_query($sql, $params);

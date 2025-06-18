@@ -4,12 +4,6 @@ class LoginController extends RenderView
 {
     public function index()
     {
-        // Se já está logado, redireciona direto
-        if (!empty($_SESSION['usuario_id'])) {
-            header('Location: /gerenciar/cardapio/1');
-            exit();
-        }
-
         $this->loadView(
             'empresarial/login',
             [
@@ -72,7 +66,7 @@ class LoginController extends RenderView
         }
 
         $users = new UsuariosModel();
-        $usuarioBusca = $users->buscarPorEmail($email);
+        $usuarioBusca = $users->buscarAdmin($email);
         $usuario = $usuarioBusca->results[0] ?? null;
 
         if (!$usuario || !password_verify($password, $usuario->senha)) {

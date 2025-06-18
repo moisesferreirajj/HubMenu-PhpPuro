@@ -1,11 +1,13 @@
 function openNav() {
-    document.getElementById("sidebar").classList.add("openNav");
-    document.getElementById("open-btn").style.display = "none";
-    document.getElementById("address").style.display = "block";
+    const sidebar = document.getElementById("sidebar");
+    if (sidebar) {
+        sidebar.classList.add("openNav");
+    }
 }
 
 function closeNav() {
-    document.getElementById("sidebar").classList.remove("openNav");
-    document.getElementById("open-btn").style.display = "block";
-    document.getElementById("address").style.display = "none";
+    const sidebar = document.getElementById("sidebar");
+    if (sidebar) {
+        sidebar.classList.remove("openNav");
+    }
 }

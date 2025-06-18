@@ -218,4 +218,23 @@ class ProdutosController extends RenderView
         ], JSON_UNESCAPED_UNICODE);
     }
 
+    public function excluir()
+    {
+        $id = $_POST['id'] ?? json_decode(file_get_contents('php://input'), true)['id'] ?? null;
+        
+        if (!$id) {
+            echo json_encode(['status' => 'error', 'message' => 'ID inválido']);
+            return;
+        }
+
+        $model = new ProdutosModel();
+        $result = $model->delete($id);
+
+        if ($result->status === 'success' && $result->affected_rows > 0) {
+            echo json_encode(['status' => 'success', 'message' => 'Produto excluído com sucesso']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Produto não encontrado ou não foi excluído']);
+        }
+    }
+
 }

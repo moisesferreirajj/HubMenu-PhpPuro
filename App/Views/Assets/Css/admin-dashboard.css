@@ -1,0 +1,504 @@
+@import url('/Views/Assets/Css/admin-sidebar.css');
+
+/* Ajustar o main content quando navbar mobile está ativa */
+@media (max-width: 767.98px) {
+    .main-content {
+        margin-left: 0;
+        padding-top: 70px; /* Espaço para a navbar mobile */
+    }
+    
+    .container-fluid {
+        padding: 20px 15px !important;
+    }
+}
+
+/* =================================
+   MAIN CONTENT
+   ================================= */
+
+.main-content {
+    margin-left: 280px;
+    min-height: 100vh;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.main-content.expanded {
+    margin-left: 80px;
+}
+
+/* Desktop Topbar */
+.topbar {
+    background: white;
+    padding: 15px 25px;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 998;
+    backdrop-filter: blur(10px);
+}
+
+.btn-toggle {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    border: none;
+    font-size: 16px;
+    color: white;
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+.btn-toggle:hover {
+    background: linear-gradient(45deg, #2980b9, #3498db);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+}
+
+.btn-toggle:active {
+    transform: translateY(0);
+}
+
+/* =================================
+   STAT CARDS
+   ================================= */
+
+.stat-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+}
+
+.stat-primary::before {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+}
+
+.stat-success::before {
+    background: linear-gradient(45deg, #28a745, #1e7e34);
+}
+
+.stat-warning::before {
+    background: linear-gradient(45deg, #ffc107, #e0a800);
+}
+
+.stat-info::before {
+    background: linear-gradient(45deg, #17a2b8, #138496);
+}
+
+.stat-card .card-body {
+    padding: 25px;
+}
+
+.stat-card .card-title {
+    color: #666;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+.stat-card h3 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    opacity: 0.8;
+}
+
+.stat-primary .stat-icon {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+}
+
+.stat-success .stat-icon {
+    background: linear-gradient(45deg, #28a745, #1e7e34);
+    color: white;
+}
+
+.stat-warning .stat-icon {
+    background: linear-gradient(45deg, #ffc107, #e0a800);
+    color: white;
+}
+
+.stat-info .stat-icon {
+    background: linear-gradient(45deg, #17a2b8, #138496);
+    color: white;
+}
+
+/* =================================
+   CARDS E TABELAS
+   ================================= */
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.card-header {
+    background: white;
+    border-bottom: 1px solid #e9ecef;
+    padding: 20px;
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.card-title {
+    color: #333;
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.table {
+    font-size: 14px;
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+    color: #666;
+    padding: 15px;
+    background-color: #f8f9fa;
+}
+
+.table td {
+    padding: 15px;
+    vertical-align: middle;
+    border-top: 1px solid #e9ecef;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.badge {
+    font-size: 11px;
+    padding: 6px 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* =================================
+   RESPONSIVO
+   ================================= */
+
+/* Tablet */
+@media (max-width: 991.98px) {
+    .stat-card h3 {
+        font-size: 24px;
+    }
+    
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 767.98px) {
+    /* Ocultar sidebar desktop */
+    .sidebar {
+        display: none !important;
+    }
+    
+    /* Ajustar main content para mobile */
+    .main-content {
+        margin-left: 0 !important;
+        padding-top: 70px;
+    }
+    
+    /* Ocultar topbar desktop */
+    .topbar {
+        display: none !important;
+    }
+    
+    /* Ajustar cards para mobile */
+    .stat-card .card-body {
+        padding: 20px;
+    }
+    
+    .stat-card h3 {
+        font-size: 22px;
+    }
+    
+    .stat-card .card-title {
+        font-size: 13px;
+    }
+    
+    .stat-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+    
+    /* Ajustar container */
+    .container-fluid {
+        padding: 15px !important;
+    }
+    
+    /* Ajustar tabela para mobile */
+    .table {
+        font-size: 13px;
+    }
+    
+    .table th,
+    .table td {
+        padding: 10px 8px;
+    }
+    
+    .card-header {
+        padding: 15px;
+    }
+    
+    .card-body {
+        padding: 15px;
+    }
+    
+    /* Ajustar título dos cards */
+    .card-title {
+        font-size: 16px;
+    }
+    
+    /* Botões menores no mobile */
+    .btn-sm {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+}
+
+/* Mobile pequeno */
+@media (max-width: 575.98px) {
+    .mobile-navbar-header {
+        padding: 12px 15px;
+    }
+    
+    .mobile-navbar-header h5 {
+        font-size: 16px;
+    }
+    
+    .mobile-nav-link {
+        padding: 14px 15px;
+    }
+    
+    .mobile-user-section {
+        padding: 15px;
+    }
+    
+    .main-content {
+        padding-top: 65px;
+    }
+    
+    .container-fluid {
+        padding: 10px !important;
+    }
+    
+    .stat-card .card-body {
+        padding: 15px;
+    }
+    
+    .stat-card h3 {
+        font-size: 20px;
+    }
+    
+    .stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .card-header {
+        padding: 12px;
+    }
+    
+    .card-body {
+        padding: 12px;
+    }
+    
+    .table th,
+    .table td {
+        padding: 8px 6px;
+    }
+    
+    /* Ocultar colunas extras na tabela em telas muito pequenas */
+    .table .d-none.d-sm-table-cell {
+        display: none !important;
+    }
+}
+
+/* =================================
+   ANIMAÇÕES
+   ================================= */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        max-height: 0;
+        opacity: 0;
+    }
+    to {
+        max-height: 100vh;
+        opacity: 1;
+    }
+}
+
+.stat-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+.mobile-menu.show {
+    animation: slideDown 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Estados de hover melhorados */
+.sidebar .nav-link:hover i,
+.mobile-nav-link:hover i {
+    transform: scale(1.1);
+    color: #3498db;
+}
+
+.sidebar .nav-link.active i,
+.mobile-nav-link.active i {
+    color: #3498db;
+}
+
+/* =================================
+   UTILITÁRIOS EXTRAS
+   ================================= */
+
+/* Ajustar botões para melhor experiência mobile */
+@media (max-width: 767.98px) {
+    .btn {
+        border-radius: 8px;
+        font-weight: 500;
+    }
+    
+    .btn-sm {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+    
+    /* Melhorar área de toque dos links mobile */
+    .mobile-nav-link {
+        min-height: 48px;
+        -webkit-tap-highlight-color: rgba(52, 152, 219, 0.2);
+    }
+    
+    .mobile-menu-toggle {
+        min-height: 44px;
+        min-width: 44px;
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
+    }
+}
+
+/* Melhoramentos para acessibilidade */
+.mobile-nav-link:focus,
+.sidebar .nav-link:focus {
+    outline: 2px solid #3498db;
+    outline-offset: 2px;
+}
+
+.mobile-menu-toggle:focus,
+.btn-toggle:focus {
+    outline: 2px solid #3498db;
+    outline-offset: 2px;
+}
+
+/* Estados de loading (opcional) */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Indicador de menu ativo no mobile */
+.mobile-navbar-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-menu.show ~ .mobile-navbar-header::after {
+    opacity: 1;
+}
+
+/* Smooth scroll para mobile */
+@media (max-width: 767.98px) {
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    body {
+        -webkit-overflow-scrolling: touch;
+    }
+}

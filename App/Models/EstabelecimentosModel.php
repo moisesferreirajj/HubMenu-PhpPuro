@@ -2,6 +2,13 @@
 
 class EstabelecimentosModel
 {
+    private $db;
+
+    public function __construct()
+    {
+        $this->db = new Database();
+    }
+
 
     /**
      * Busca um usuário pelo ID.
@@ -27,9 +34,8 @@ class EstabelecimentosModel
     /**
      * Insere um novo usuário no banco de dados.
      */
-    public function insert($nome, $cep, $endereco = null, $cnpj, $imagem = null, $cor1 = null, $cor2 = null, $cor3 = null, $tipo, $media_avaliacao)
+    public function insert($nome, $cep, $cnpj, $tipo, $media_avaliacao, $endereco = null, $imagem = null, $cor1 = null, $cor2 = null, $cor3 = null)
     {
-
         $db = new Database();
         $sql = "INSERT INTO estabelecimentos (nome, cep, endereco, cnpj, imagem, cor1, cor2, cor3, tipo, media_avaliacao)
                 VALUES (:nome, :cep, :endereco, :cnpj, :imagem, :cor1, :cor2, :cor3, :tipo, :media_avaliacao)";
@@ -51,7 +57,7 @@ class EstabelecimentosModel
     /**
      * Atualiza os dados de um usuário existente.
      */
-    public function update($id, $nome, $cep, $endereco = null, $cnpj, $imagem = null, $cor1 = null, $cor2 = null, $cor3 = null, $tipo, $media_avaliacao)
+    public function update($id, $nome, $cep, $cnpj, $tipo, $media_avaliacao, $endereco = null, $imagem = null, $cor1 = null, $cor2 = null, $cor3 = null)
     {
         $db = new Database();
         $sql = "UPDATE estabelecimentos SET 
@@ -99,4 +105,12 @@ class EstabelecimentosModel
         $sql = "SELECT media_avaliacao, nome, tipo, imagem FROM estabelecimentos ORDER BY media_avaliacao DESC LIMIT 5";
         return $db->execute_query($sql);
     }
+
+    public function findNewest()
+    {
+        $db = new Database();
+        $sql = "SELECT id, nome, endereco, media_avaliacao, tipo, imagem FROM estabelecimentos ORDER BY id DESC LIMIT 5";
+        return $db->execute_query($sql);
+    }
+
 }

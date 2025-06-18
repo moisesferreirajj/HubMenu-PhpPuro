@@ -14,6 +14,7 @@ $routes = [
     '/empresarial/sobre' => 'SobreController@index',
     '/empresarial/suporte' => 'SuporteController@index',
     '/empresarial/funcionalidades' => 'FuncionalidadesController@index',
+    '/empresarial/logout' => 'LogoutController@index',
     /* ROTAS GLOBAIS */
     '/user/{id}' => 'UserController@show',
     /* ROTAS DE ADMIN */
@@ -26,8 +27,6 @@ $routes = [
     '/api/autenticar/changepassword' => 'EsqueceuSenha@changePassword',
     /* ROTA CADASTRO DE PRODUTOS */
     '/cadastro/produtos' => 'ProdutosController@index',
-    /* ROTA DE LOG - ERROS */
-    '/admin/logs' => 'LogsController@index',
     /* ROTAS DE API ABAIXO: */
     '/api/visualizar/categorias' => 'ProdutosController@getCategorias',
     '/api/visualizar/estabelecimentos' => 'ProdutosController@getEstabelecimentos',
@@ -37,10 +36,14 @@ $routes = [
     '/gerenciar/cardapio/{id}' => 'CardapioController@indexAdmin',
     /* ROTAS ESPECIALMENTE DA EMPRESA PARA A EMPRESA: */
     '/api/produtos/cadastrar' => 'ProdutosController@cadastrar',
+    '/api/produtos/desativar' => 'ProdutosController@desativar',
     '/api/produtos/editar' => 'ProdutosController@atualizar',
+    '/api/produtos/excluir' => 'ProdutosController@excluir',
     '/api/produtos/procurar/{id}' => 'ProdutosController@searchProdutos',
     '/api/visualizar/produtos/{id}' => 'ProdutosController@getProdutos',
     /* ROTA ADMINISTRAÇÃO */
     '/api/autenticar/admin' => 'LoginController@autenticarAdmin',
-    '/admin/login' => 'AdminController@index',
+    '/admin' => 'AdminController@index',
+    '/admin/dashboard' => 'AdminController@dashboard',
+    '/admin/logs' => 'LogsController@index'
 ];

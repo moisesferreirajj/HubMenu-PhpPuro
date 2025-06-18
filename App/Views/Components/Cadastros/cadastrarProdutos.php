@@ -73,4 +73,6 @@ document.getElementById('cadastrarModal').addEventListener('hidden.bs.modal', fu
   const backdrop = document.querySelector('.modal-backdrop');
   if (backdrop) backdrop.remove();
 });
+
 </script>
+
