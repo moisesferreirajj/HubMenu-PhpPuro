@@ -18,27 +18,33 @@ class PedidosController extends RenderView
         );
     }
 
-    public function registerOrder()
-    {
-        $pedidos = new PedidosModel();
-        $users = new UsuariosModel();
+        public function registerOrder()
+        {
+            $usuarioDonoId = $_SESSION['usuario_id'];
+            $nomeUsuario = $_POST['nome_usuario'];
+            $produtoIds = $_POST['produto_id'];
+            $quantidades = $_POST['quantidade'];
+            $valorTotal = $_POST['valor_total'];
 
-        // Pega o id do dono logado
-        $usuarioDonoId = $_SESSION['usuario_id'];
-        $data = [
-            'usuario_id' => $_POST['usuario_id'],
-            'produto_id' => $_POST['produto_id'],
-            'quantidade' => $_POST['quantidade'],
-            'valor_total' => $_POST['valor_total'],
-            'status' => 'Pendente',
-            'data_pedido' => date('Y-m-d H:i:s')
-        ];
+            $pedidosModel = new PedidosModel();
+            
+            // Registrar cliente convidado
+            $pedidosModel->registerGuestClient($nomeUsuario);
 
-        $pedidosModel = new PedidosModel();
-        $usuario = new UsuariosModel();
-        $pedidosModel->insert($data[]);
+            // Registrar pedido (você deveria receber o ID do novo pedido)
+            $pedidoId = $pedidosModel->registerOrder([
+                'valor_total' => $valorTotal,
+                'status' => 'Pendente',
+                'data_pedido' => date('Y-m-d H:i:s')
+            ]);
 
-        header('Location: /empresarial/pedidos');
-        exit;
-    }
+            // Associar produtos ao pedido
+            foreach ($produtoIds as $index => $produtoId) {
+                $quantidade = $quantidades[$index];
+                $pedidosModel->registerOrderProducts($pedidoId, $produtoId, $quantidade);
+            }
+
+            exit;
+        }
+
 }

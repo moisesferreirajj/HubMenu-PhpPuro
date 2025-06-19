@@ -139,7 +139,7 @@ $erroProdutos = $Erro ?? null;
         <?php require_once __DIR__ . '/../../Views/Components/Cadastros/cadastrarProdutos.php'; ?>
 
         <!-- Modal para editar produtos -->
-        <?php require_once __DIR__ . '/../../Views/Components/Cadastros/editigeneProdutos.php'; ?>
+        <?php require_once __DIR__ . '/../../Views/Components/Cadastros/editarProdutos.php'; ?>
     </div>
 
     <!-- Bootstrap Bundle -->

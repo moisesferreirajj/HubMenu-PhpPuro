@@ -43,22 +43,37 @@ class PedidosModel {
         return $result->results ? $result->results[0] : null;
     }
 
-    public function insert($produtoId, $observacao, $valor_total, $estabelecimento_id, $categoria_id)
+    public function registerOrder()
     {
         $db = new Database();
         $sql = "INSERT INTO pedidos (nome, descricao, valor, imagem, estabelecimento_id, categoria_id)
                 VALUES (:nome, :descricao, :valor, :imagem, :estabelecimento_id, :categoria_id)";
         $params = [
-            ':nome' => $nome,
-            ':descricao' => $descricao,
-            ':valor' => $valor,
-            ':imagem' => $imagem,
-            ':estabelecimento_id' => $estabelecimento_id,
-            ':categoria_id' => $categoria_id
+
         ];
         return $db->execute_non_query($sql, $params);
     }
 
+    public function registerGuestClient($nome_cliente){
+        $db = new Database();
+        $sql = "INSERT INTO usuarios (nome) 
+                VALUES (:nome)";
+        $params = [
+            ':nome' => $nome_cliente,
+        ];
+        $result = $db->execute_non_query($sql, $params);
+    }
+
+    public function registerOrderProducts($productId, $quantity) {
+        $db = new Database();
+        $sql = "INSERT INTO pedidos_produtos (produto_id, quantidade)
+                VALUES ( :produto_id, :quantidade)";
+        $params = [
+            ':produto_id' => $productId, 
+            ':quantidade' => $quantity
+        ];
+        return $db->execute_non_query($sql, $params);
+    }
 
     // Agrupa os produtos por pedido
 
