@@ -23,7 +23,7 @@ class CardapioController extends RenderView
 
     public function indexAdmin($id): void
     {
-        AcessoController::verificarAcesso('/gerenciar/cardapio/{id}', $_SESSION['usuario_cargo']);
+        AcessoController::verificarAcesso('/gerenciar/cardapio/{id}', $_SESSION['usuario_cargo'], $id);
 
         $produtoModel = new ProdutosModel();
         $estabelecimentosModel = new EstabelecimentosModel();

@@ -1,4 +1,4 @@
-<?php 
+z<?php 
 require_once __DIR__ . '/../../../Models/ProdutosModel.php';
 $produtosModel = new ProdutosModel();
 $menuProducts = $produtosModel->searchByEstabelecimentoAndCondition(1);
@@ -22,7 +22,7 @@ $menuProducts = $produtosModel->searchByEstabelecimentoAndCondition(1);
                     </div>
                     <div class="row mb-3 sla">
                         <div class="col-md-6 mb-3 products-list" >
-                            <label for="nome" class="form-label">Produto(s):</label>
+                            <label for="order" class="form-label">Produto(s):</label>
                             <?php if (!empty($menuProducts)): ?>
                                 <?php foreach ($menuProducts as $produtos): ?>
                                     <div class="products-item row border rounded p-2 mb-2" data-id="<?php echo $produtos->id; ?>">

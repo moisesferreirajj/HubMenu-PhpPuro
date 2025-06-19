@@ -22,10 +22,23 @@ class ProdutosModel
     {
         $db = new Database();
         // Consulta para obter produtos associados ao pedido
-        $sql = "SELECT pp.quantidade, p.nome, p.descricao, p.valor 
-                FROM produtos p 
-                JOIN pedidos_produtos pp ON p.id = pp.produto_id 
-                WHERE p.id = :id;";
+        $sql = "SELECT 
+                pp.pedido_id,
+                pp.quantidade,
+                pp.preco_unitario,
+                pr.id AS produto_id,
+                pr.nome,
+                pr.descricao,
+                pr.imagem,
+                c.nome AS categoria_nome
+            FROM 
+                pedidos_produtos pp
+            JOIN 
+                produtos pr ON pp.produto_id = pr.id
+            LEFT JOIN 
+                categorias c ON pr.categoria_id = c.id
+            WHERE 
+                pp.pedido_id = :id";
         $params = [':id' => $id];
         
         // Executa a consulta

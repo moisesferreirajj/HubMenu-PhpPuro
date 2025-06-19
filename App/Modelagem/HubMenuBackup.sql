@@ -312,6 +312,16 @@ INSERT INTO `vendas` (`id`, `referencia`, `transacao_id`, `status_pagamento`, `e
 ALTER TABLE produtos
 ADD `status_produtos` boolean AFTER `imagem`;
 
+ALTER TABLE usuarios
+ADD COLUMN cargo_id INT NULL AFTER telefone,
+ADD CONSTRAINT fk_usuarios_cargo
+    FOREIGN KEY (cargo_id) REFERENCES cargos(id);
+
+UPDATE usuarios u
+    JOIN estabelecimentos_usuarios eu ON eu.usuario_id = u.id
+SET u.cargo_id = eu.cargo_id
+WHERE u.cargo_id IS NULL;
+
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;

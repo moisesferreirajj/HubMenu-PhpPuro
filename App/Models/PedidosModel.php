@@ -14,11 +14,23 @@ class PedidosModel {
     }
 
    public function getOrderByCompanyId($id) {
-        $query = "SELECT p.id as id, u.nome as nome 
-                FROM pedidos p 
-                JOIN usuarios u ON p.usuario_id = u.id 
-                WHERE p.estabelecimento_id = :id 
-                GROUP BY p.id";
+        $query = "SELECT 
+                p.id,
+                p.valor_total,
+                p.observacao,
+                p.avaliacao,
+                p.data_pedido,
+                u.nome
+            FROM 
+                pedidos p
+            JOIN 
+                usuarios u ON p.usuario_id = u.id
+            JOIN 
+                estabelecimentos e ON p.estabelecimento_id = e.id
+            WHERE 
+                p.estabelecimento_id = :id
+            ORDER BY 
+                p.data_pedido DESC";
         $params = [':id' => $id];
         $result = $this->db->execute_query($query, $params);
         return $result->results;
@@ -31,7 +43,7 @@ class PedidosModel {
         return $result->results ? $result->results[0] : null;
     }
 
-    public function insert($nome, $descricao, $valor, $imagem, $estabelecimento_id, $categoria_id)
+    public function insert($produtoId, $observacao, $valor_total, $estabelecimento_id, $categoria_id)
     {
         $db = new Database();
         $sql = "INSERT INTO pedidos (nome, descricao, valor, imagem, estabelecimento_id, categoria_id)

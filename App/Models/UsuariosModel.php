@@ -98,15 +98,14 @@ class UsuariosModel
             LEFT JOIN estabelecimentos_usuarios eu ON eu.usuario_id = u.id
             LEFT JOIN cargos c ON c.id = COALESCE(eu.cargo_id, u.cargo_id)
             WHERE u.email = :email
-            LIMIT 1;
-            ";
+            LIMIT 1";
         $params = [':email' => $email];
 
         return $db->execute_query($sql, $params);
     }
 
-        /**
-     * Busca um admin pelo email. (query demoniaca)
+    /**
+     * Busca um admin pelo email
      */
     public function buscarAdmin($email)
     {

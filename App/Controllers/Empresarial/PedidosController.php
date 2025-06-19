@@ -2,10 +2,10 @@
 
 class PedidosController extends RenderView
 {
-    public function indexEmpresa()
+    public function indexEmpresa($id)
     {
 
-        AcessoController::verificarAcesso('/pedidos/{id}', $_SESSION['usuario_cargo']);
+        AcessoController::verificarAcesso('/pedidos/{id}', $_SESSION['usuario_cargo'], $id);
 
         $users = new UsuariosModel();
         $pedidos = (new PedidosModel())->getOrders();
@@ -25,20 +25,18 @@ class PedidosController extends RenderView
 
         // Pega o id do dono logado
         $usuarioDonoId = $_SESSION['usuario_id'];
-        $estabUsuario = $this->getEstabelecimentoByUsuario($usuarioDonoId);
-        $estabelecimentoId = $estabUsuario->estabelecimento_id ?? null;
-
         $data = [
-            'estabelecimento_id' => $estabelecimentoId,
-            'nome_cliente' => $_POST['nome_cliente'] ?? '',
-            'observacao' => $_POST['observacao'] ?? '',
-            'total' => $_POST['total'] ?? 0,
-            'data_pedido' => date('Y-m-d H:i:s'),
-            'status' => 'novo',
-            'produtos' => $_POST['produtos'] ?? []
+            'usuario_id' => $_POST['usuario_id'],
+            'produto_id' => $_POST['produto_id'],
+            'quantidade' => $_POST['quantidade'],
+            'valor_total' => $_POST['valor_total'],
+            'status' => 'Pendente',
+            'data_pedido' => date('Y-m-d H:i:s')
         ];
 
-        $pedidos->createOrder($data);
+        $pedidosModel = new PedidosModel();
+        $usuario = new UsuariosModel();
+        $pedidosModel->insert($data[]);
 
         header('Location: /empresarial/pedidos');
         exit;
