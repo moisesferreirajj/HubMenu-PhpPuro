@@ -42,7 +42,7 @@
                 ? '/../Components/form-forgetPasswordEmail.php'
                 : '/../Components/form-forgetPasswordSms.php';
             require_once __DIR__ . $form;
-        }
+        } 
         exit;
     }
     ?>

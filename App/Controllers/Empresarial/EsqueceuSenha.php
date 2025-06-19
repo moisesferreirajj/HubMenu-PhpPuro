@@ -80,6 +80,12 @@ class EsqueceuSenha extends RenderView
             $usuario = $users->buscarPorEmail($email);
             $emailExists = $usuario->results[0] ?? null;
 
+            // para desenvolvimento
+            // if ($emailExists == null) {
+            //     echo "Busca Vazia"; 
+            //     exit;
+            // }
+
             if (!$emailExists) {
                 // Por segurança, não informe se o e-mail existe ou não
                 echo "<script>alert('Se o e-mail estiver cadastrado, você receberá instruções.'); window.location.href = '/empresarial/esqueceuSenha';</script>";
@@ -119,7 +125,7 @@ class EsqueceuSenha extends RenderView
                 exit;
             }
 
-            $codigo = $this->gerarCodigo(5);
+            $codigo = $this->gerarCodigo(5);      
 
             $_SESSION['telefone_usuario'] = $telefoneExists->telefone;
             $_SESSION['id_usuario'] = $telefoneExists->id;
