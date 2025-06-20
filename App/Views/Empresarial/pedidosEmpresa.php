@@ -1,12 +1,10 @@
-<?php 
-require_once __DIR__ . '/../../global.php'; 
-require_once __DIR__ . '/../../Models/PedidosModel.php';
-require_once __DIR__ . '/../../Models/ProdutosModel.php';
-
+<?php
 $orders = new PedidosModel;
 $items = new ProdutosModel;
-$ordersResponse = $orders->getOrderByCompanyId(1);
-
+$usuariosModel = new UsuariosModel();
+$userCompany = $usuariosModel->getCompanyByUserId($_SESSION['usuario_id']);
+$menuProducts = $items->searchByEstabelecimentoAndCondition($userCompany);
+$ordersResponse = $orders->getOrderByCompanyId($userCompany);
 ?>
 
 <!DOCTYPE html>
@@ -69,7 +67,7 @@ $ordersResponse = $orders->getOrderByCompanyId(1);
                     }
 
                     foreach($itemsResponse as $item): 
-                    
+
                     ?>
                         <div class="item">
                             <div class="item-info">

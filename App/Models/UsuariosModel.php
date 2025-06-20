@@ -79,7 +79,6 @@ class UsuariosModel
         return $db->execute_non_query($sql, $params);
     }
 
-
     /**
      * Busca um usuário pelo email. (query demoniaca)
      */
@@ -145,5 +144,27 @@ class UsuariosModel
             ':id' => $id,
         ];
         return $db->execute_non_query($sql, $params);
+    }
+
+    public function findByEstabelecimentoId($estabelecimento_id)
+    {
+        $db = new Database();
+        $sql = "SELECT u.*, c.nome as cargo_nome, eu.cargo_id 
+                FROM usuarios u
+                INNER JOIN estabelecimentos_usuarios eu ON u.id = eu.usuario_id
+                LEFT JOIN cargos c ON eu.cargo_id = c.id
+                WHERE eu.estabelecimento_id = :estabelecimento_id";
+        $params = [':estabelecimento_id' => $estabelecimento_id];
+        $result = $db->execute_query($sql, $params);
+        return $result->results ?? [];
+    }
+
+    public function getCompanyByUserId($id)
+    {
+        $db = new Database();
+        $sql = "SELECT e.id FROM estabelecimentos e JOIN estabelecimentos_usuarios eu ON e.id = eu.estabelecimento_id JOIN usuarios u ON u.id = eu.usuario_id WHERE u.id = :id";
+        $params = [':id' => $id];
+        $result = $db->execute_query($sql, $params);
+        return $result->results[0]->id ?? null;
     }
 }

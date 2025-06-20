@@ -5,7 +5,7 @@ class PedidosController extends RenderView
     public function indexEmpresa($id)
     {
 
-        AcessoController::verificarAcesso('/pedidos/{id}', $_SESSION['usuario_cargo'], $id);
+        AcessoController::verificarAcesso('/pedidos/{id}', $_SESSION['usuario_cargo'], $_SESSION['estabelecimento_id']);
 
         $users = new UsuariosModel();
         $pedidos = (new PedidosModel())->getOrders();
@@ -18,33 +18,32 @@ class PedidosController extends RenderView
         );
     }
 
-        public function registerOrder()
-        {
-            $usuarioDonoId = $_SESSION['usuario_id'];
-            $nomeUsuario = $_POST['nome_usuario'];
-            $produtoIds = $_POST['produto_id'];
-            $quantidades = $_POST['quantidade'];
-            $valorTotal = $_POST['valor_total'];
+    public function registerOrder()
+    {
+        AcessoController::verificarAcesso('/pedidos/registerOrder', $_SESSION['usuario_cargo'], $_SESSION['estabelecimento_id']);
+        
+        $estabelecimentoId = $_SESSION['estabelecimento_id']; // forçado pela sessão
+        $nomeUsuario = $_POST['nome_cliente'];
+        $produtoIds = $_POST['products'];
+        $valorTotal = $_POST['valor_total'];
 
-            $pedidosModel = new PedidosModel();
-            
-            // Registrar cliente convidado
-            $pedidosModel->registerGuestClient($nomeUsuario);
+        $pedidosModel = new PedidosModel();
+        $usuarioId = $pedidosModel->registerGuestClient($nomeUsuario);
 
-            // Registrar pedido (você deveria receber o ID do novo pedido)
-            $pedidoId = $pedidosModel->registerOrder([
-                'valor_total' => $valorTotal,
-                'status' => 'Pendente',
-                'data_pedido' => date('Y-m-d H:i:s')
-            ]);
+        $pedidoId = $pedidosModel->registerOrder([
+            'usuario_id' => $usuarioId,
+            'estabelecimento_id' => $estabelecimentoId,
+            'valor_total' => $valorTotal,
+            'status' => 'Pendente',
+            'data_pedido' => date('Y-m-d H:i:s')
+        ]);
 
-            // Associar produtos ao pedido
-            foreach ($produtoIds as $index => $produtoId) {
-                $quantidade = $quantidades[$index];
-                $pedidosModel->registerOrderProducts($pedidoId, $produtoId, $quantidade);
-            }
-
-            exit;
+        foreach ($produtoIds as $index => $produtoId) {
+            $pedidosModel->registerOrderProducts($pedidoId, $produtoId);
         }
+
+        echo "<script>alert('Pedido Cadastrado'); window.history.back();</script>";
+        exit();
+    }
 
 }

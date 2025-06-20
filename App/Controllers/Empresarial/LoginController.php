@@ -47,7 +47,7 @@ class LoginController extends RenderView
         $_SESSION['usuario_cargo'] = $usuario->cargo_nome ?? '';
         $_SESSION['estabelecimento_id'] = $usuario->estabelecimento_id ?? '';
 
-        echo "<script>alert('Login realizado com sucesso!'); window.location.href = '/empresarial';</script>";
+        echo "<script>alert('Login realizado com sucesso!'); window.location.href = '/empresarial/dashboard/" . $_SESSION['estabelecimento_id'] . "'; </script>";
         exit();
     }
 

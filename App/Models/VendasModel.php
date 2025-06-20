@@ -80,4 +80,42 @@ class VendasModel
         $params = [':id' => $id];
         return $db->execute_non_query($sql, $params);
     }
+    
+    public function findByEstabelecimentoId($estabelecimento_id)
+    {
+        $db = new Database();
+        $sql = "SELECT * FROM vendas WHERE estabelecimento_id = :estabelecimento_id";
+        $params = [':estabelecimento_id' => $estabelecimento_id];
+        $result = $db->execute_query($sql, $params);
+        return $result->results ?? [];
+    }
+
+    // Vendas por mês (para gráfico)
+    public function getVendasPorMes($estabelecimento_id)
+    {
+        $db = new Database();
+        $sql = "SELECT DATE_FORMAT(data_venda, '%m/%Y') as mes, SUM(valor_total) as total
+            FROM vendas
+            WHERE estabelecimento_id = :estabelecimento_id
+            GROUP BY mes
+            ORDER BY data_venda";
+        $params = [':estabelecimento_id' => $estabelecimento_id];
+        $result = $db->execute_query($sql, $params);
+        return $result->results ?? [];
+    }
+
+    // Top estabelecimentos por vendas (ranking geral)
+    public function getTopEstabelecimentos($limit = 5)
+    {
+        $db = new Database();
+        $sql = "SELECT e.nome, SUM(v.valor_total) as total_vendas
+            FROM vendas v
+            JOIN estabelecimentos e ON v.estabelecimento_id = e.id
+            GROUP BY v.estabelecimento_id
+            ORDER BY total_vendas DESC
+            LIMIT :limit";
+        $params = [':limit' => $limit];
+        $result = $db->execute_query($sql, $params);
+        return $result->results ?? [];
+    }
 }

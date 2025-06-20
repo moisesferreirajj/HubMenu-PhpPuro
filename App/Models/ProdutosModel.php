@@ -15,7 +15,7 @@ class ProdutosModel
         return $db->execute_query($sql, $params);
     }
 
-        /**
+    /**
      * Busca um produto pelo ID.
      */
     public function findOrderProdById($id)
@@ -40,22 +40,27 @@ class ProdutosModel
             WHERE 
                 pp.pedido_id = :id";
         $params = [':id' => $id];
-        
+
         // Executa a consulta
         $result = $db->execute_query($sql, $params);
-        
+
         // Retorna os resultados ou um array vazio se não houver resultados
         return $result->results ?? []; // Usando o operador null coalescing para simplificar
     }
 
 
-     /**
+    /**
      * Busca os produtos pelo ID do Estabelecimento.
      */
     public function findByEstabelecimentoId($estabelecimento_id)
     {
+
         $db = new Database();
-        $sql = "SELECT * FROM produtos WHERE estabelecimento_id = :estabelecimento_id";
+        $sql = "SELECT p.*, c.nome as categoria_nome, e.nome as estabelecimento_nome
+        FROM produtos p 
+        LEFT JOIN categorias c ON p.categoria_id = c.id 
+        LEFT JOIN estabelecimentos e ON p.estabelecimento_id = e.id
+        WHERE p.estabelecimento_id = :estabelecimento_id";
         $params = [':estabelecimento_id' => $estabelecimento_id];
         return $db->execute_query($sql, $params);
     }
@@ -95,7 +100,7 @@ class ProdutosModel
     public function update($id, $nome, $descricao, $valor, $imagem, $estabelecimento_id, $categoria_id)
     {
         $db = new Database();
-        
+
         if ($imagem !== null) {
             $sql = "UPDATE produtos SET 
                         nome = :nome, 
@@ -163,28 +168,27 @@ class ProdutosModel
         return $db->execute_non_query($sql, $params);
     }
 
-public function searchByEstabelecimentoAndQuery($estabelecimento_id, $query)
-{
-    $db = new Database();
-    $query = "%$query%";
-    $sql = "SELECT * FROM produtos WHERE estabelecimento_id = :estabelecimento_id AND nome LIKE :query AND status_produtos = 1";
-    $params = [
-        ':estabelecimento_id' => $estabelecimento_id,
-        ':query' => $query,
-    ];
-    $result = $db->execute_query($sql, $params);
-    return $result->results ? $result->results : [];
-}
+    public function searchByEstabelecimentoAndQuery($estabelecimento_id, $query)
+    {
+        $db = new Database();
+        $query = "%$query%";
+        $sql = "SELECT * FROM produtos WHERE estabelecimento_id = :estabelecimento_id AND nome LIKE :query AND status_produtos = 1";
+        $params = [
+            ':estabelecimento_id' => $estabelecimento_id,
+            ':query' => $query,
+        ];
+        $result = $db->execute_query($sql, $params);
+        return $result->results ? $result->results : [];
+    }
 
-public function searchByEstabelecimentoAndCondition($estabelecimento_id)
-{
-    $db = new Database();
-    $sql = "SELECT p.id,p.nome, p.descricao, p.valor, p.imagem FROM produtos p JOIN estabelecimentos e ON p.estabelecimento_id = e.id WHERE e.id = :id AND p.status_produtos = 1;";
-    $params = [
-        ':id' => $estabelecimento_id,
-    ];
-    $result = $db->execute_query($sql, $params);
-    return $result->results ? $result->results : [];
-}
-
+    public function searchByEstabelecimentoAndCondition($estabelecimento_id)
+    {
+        $db = new Database();
+        $sql = "SELECT p.id,p.nome, p.descricao, p.valor, p.imagem FROM produtos p JOIN estabelecimentos e ON p.estabelecimento_id = e.id WHERE e.id = :id";
+        $params = [
+            ':id' => $estabelecimento_id
+        ];
+        $result = $db->execute_query($sql, $params);
+        return $result->results ?? [];
+    }
 }

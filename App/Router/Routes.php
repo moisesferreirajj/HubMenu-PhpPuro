@@ -8,6 +8,7 @@ $routes = [
     '/pedidos/{id}' => 'PedidosController@indexEmpresa',
     /* ROTAS EMPRESARIAIS */
     '/empresarial' => 'HomeController@index',
+    '/empresarial/dashboard/{id}' => 'DashboardController@index',
     '/empresarial/cadastro' => 'CadastroController@index',
     '/empresarial/login' => 'LoginController@index',
     '/empresarial/esqueceuSenha' => 'EsqueceuSenha@index',
@@ -30,6 +31,7 @@ $routes = [
     /* ROTAS DE API ABAIXO: */
     '/api/visualizar/categorias' => 'ProdutosController@getCategorias',
     '/api/visualizar/estabelecimentos' => 'ProdutosController@getEstabelecimentos',
+    '/api/visualizar/produtos' => 'ProdutosController@getProdutos',
     '/api/send/SMS' => 'SendSMSController@sendSMS',
     /* ROTAS ESPECIALMENTE DA EMPRESA PARA O CLIENTE: */
     '/cardapio/{id}' => 'CardapioController@indexCliente',
@@ -41,6 +43,8 @@ $routes = [
     '/api/produtos/excluir' => 'ProdutosController@excluir',
     '/api/produtos/procurar/{id}' => 'ProdutosController@searchProdutos',
     '/api/visualizar/produtos/{id}' => 'ProdutosController@getProdutos',
+    '/pedidos/registerOrder' => 'PedidosController@registerOrder',
+
     /* ROTA ADMINISTRAÇÃO */
     '/api/autenticar/admin' => 'LoginController@autenticarAdmin',
     '/admin' => 'AdminController@index',
