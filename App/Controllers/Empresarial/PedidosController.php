@@ -20,17 +20,21 @@ class PedidosController extends RenderView
 
     public function registerOrder()
     {
+        // Verifica permissão e sessão
         AcessoController::verificarAcesso('/pedidos/registerOrder', $_SESSION['usuario_cargo'], $_SESSION['estabelecimento_id']);
-        
+
         $estabelecimentoId = $_SESSION['estabelecimento_id'];
         $nomeUsuario = $_POST['nome_cliente'];
-        $produtoIds = $_POST['products'];
-        $valorTotal = $_POST['valor_total'];
-        $quantidades = $_POST['quantidade']; // array: [produto_id => quantidade]
+        $produtoIds = $_POST['products'] ?? [];
+        $valorTotal = str_replace(',', '.', $_POST['valor_total']);
+        $quantidades = $_POST['quantidade'] ?? [];
+        $observacoes = $_POST['observacao'] ?? [];
 
+        // 1. Cria usuário "guest" para o pedido
         $pedidosModel = new PedidosModel();
         $usuarioId = $pedidosModel->registerGuestClient($nomeUsuario);
 
+        // 2. Cria o pedido
         $pedidoId = $pedidosModel->registerOrder([
             'usuario_id' => $usuarioId,
             'estabelecimento_id' => $estabelecimentoId,
@@ -39,16 +43,14 @@ class PedidosController extends RenderView
             'data_pedido' => date('Y-m-d H:i:s')
         ]);
 
+        // 3. Adiciona os produtos ao pedido
         foreach ($produtoIds as $produtoId) {
             $quantidade = isset($quantidades[$produtoId]) ? (int)$quantidades[$produtoId] : 1;
-            // Busque o preço unitário do produto
             $produto = (new ProdutosModel())->findById($produtoId);
-            $preco_unitario = $produto->valor ?? 0;
+            $preco_unitario = $produto->results[0]->valor ?? 0;
 
-            $result = $pedidosModel->registerOrderProducts($pedidoId, $produtoId, $quantidade, $preco_unitario);
-            if ($result->status !== 'success') {
-                var_dump($result); exit;
-            }
+            $pedidosModel->registerOrderProducts($pedidoId, $produtoId, $quantidade, $preco_unitario);
+            // Se quiser salvar observação por produto, crie um campo na tabela pedidos_produtos e salve aqui
         }
 
         echo "<script>alert('Pedido cadastrado com sucesso!'); window.location.href = '/pedidos';</script>";
