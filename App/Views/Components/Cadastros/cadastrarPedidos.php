@@ -30,7 +30,7 @@ $userCompany = $usuariosModel->getCompanyByUserId($_SESSION['usuario_id']);
                                         <div class="d-flex align-items-center gap-2 justify-content-between">
                                             <div class="d-flex align-items-center gap-2 card-pro">
                                                 <img src="<?php echo htmlspecialchars($produtos->imagem); ?>" alt="<?php echo htmlspecialchars($produtos->nome); ?>" class="img-thumbnail" style="max-width:100px;">
-                                                <input type="checkbox" name="products[]" id="product_<?php echo $produtos->id; ?>" value="<?php echo $produtos->id; ?>" data-valor="<?php echo $produtos->valor; ?>" class="produto">
+                                                <input type="checkbox" name="products[]" value="<?= $produtos->id ?>" class="produto" id="product_<?= $produtos->id ?>">
                                                 <label for="product_<?php echo $produtos->id; ?>" class="mb-0">
                                                     <?php echo htmlspecialchars($produtos->nome); ?> - R$ <?php echo number_format($produtos->valor, 2, ',', '.'); ?>
                                                 </label>
@@ -38,6 +38,12 @@ $userCompany = $usuariosModel->getCompanyByUserId($_SESSION['usuario_id']);
                                             <div class="obs">
                                                 <label for="observacao" class="form-label mb-0">Observação:</label>
                                                 <textarea class="form-control" id="observacao" name="observacao[<?php echo $produtos->id; ?>]" rows="3" placeholder=""></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="quantidade_<?php echo $produtos->id; ?>" class="form-label">Quantidade:</label>
+                                                <input type="number" name="quantidade[<?= $produtos->id ?>]" value="1" min="1" class="form-control" style="width:80px;display:inline-block;">
                                             </div>
                                         </div>
                                     </div>
@@ -69,7 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let total = 0;
         checkboxes.forEach(product => {
             if (product.checked) {
-                total += parseFloat(product.getAttribute('data-valor'));
+                const productId = product.getAttribute('data-id');
+                const quantidade = document.querySelector(`input[name="quantidade[${productId}]"]`).value;
+                total += parseFloat(product.getAttribute('data-valor')) * quantidade;
             }
         });
         const totalFormatted = total.toFixed(2).replace('.', ',');

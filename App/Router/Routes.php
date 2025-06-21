@@ -43,7 +43,7 @@ $routes = [
     '/api/produtos/excluir' => 'ProdutosController@excluir',
     '/api/produtos/procurar/{id}' => 'ProdutosController@searchProdutos',
     '/api/visualizar/produtos/{id}' => 'ProdutosController@getProdutos',
-    '/pedidos/registerOrder' => 'PedidosController@registerOrder',
+    '/pedidos/registerOrder' => 'Empresarial/PedidosController@registerOrder',
 
     /* ROTA ADMINISTRAÇÃO */
     '/api/autenticar/admin' => 'LoginController@autenticarAdmin',

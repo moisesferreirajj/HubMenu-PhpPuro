@@ -48,13 +48,20 @@ class PedidosModel
         return $result->results ? $result->results[0] : null;
     }
 
-    public function registerOrder()
+    public function registerOrder($dados)
     {
         $db = new Database();
-        $sql = "INSERT INTO pedidos (nome, descricao, valor, imagem, estabelecimento_id, categoria_id)
-                VALUES (:nome, :descricao, :valor, :imagem, :estabelecimento_id, :categoria_id)";
-        $params = [];
-        return $db->execute_non_query($sql, $params);
+        $sql = "INSERT INTO pedidos (usuario_id, estabelecimento_id, valor_total, status, data_pedido)
+                VALUES (:usuario_id, :estabelecimento_id, :valor_total, :status, :data_pedido)";
+        $params = [
+            ':usuario_id' => $dados['usuario_id'],
+            ':estabelecimento_id' => $dados['estabelecimento_id'],
+            ':valor_total' => $dados['valor_total'],
+            ':status' => $dados['status'],
+            ':data_pedido' => $dados['data_pedido'],
+        ];
+        $result = $db->execute_non_query($sql, $params);
+        return $result->last_id; // Retorna o ID do pedido inserido
     }
 
     public function registerGuestClient($nome_cliente)
@@ -62,17 +69,20 @@ class PedidosModel
         $db = new Database();
         $sql = "INSERT INTO usuarios (nome) VALUES (:nome)";
         $params = [':nome' => $nome_cliente];
-        $result = $this->db->execute_query($sql, $params);
-        return $result->results ?? null;
+        $result = $db->execute_non_query($sql, $params);
+        return $result->last_id; // Aqui você pega o ID gerado
     }
 
-    public function registerOrderProducts($productId, $quantity)
+    public function registerOrderProducts($pedidoId, $productId, $quantidade, $preco_unitario)
     {
         $db = new Database();
-        $sql = "INSERT INTO pedidos_produtos (produto_id)
-                VALUES ( :produto_id)";
+        $sql = "INSERT INTO pedidos_produtos (pedido_id, produto_id, quantidade, preco_unitario)
+                VALUES (:pedido_id, :produto_id, :quantidade, :preco_unitario)";
         $params = [
+            ':pedido_id' => $pedidoId,
             ':produto_id' => $productId,
+            ':quantidade' => $quantidade,
+            ':preco_unitario' => $preco_unitario
         ];
         return $db->execute_non_query($sql, $params);
     }
