@@ -54,7 +54,7 @@
                     </label>
                 </div>
 
-                <button type="submit">
+                <button id="btn-cadastrar" type="submit">
                     <i class="fas fa-user-plus"></i> Cadastrar-se
                 </button>
             </form>
