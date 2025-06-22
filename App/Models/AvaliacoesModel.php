@@ -77,4 +77,21 @@ class AvaliacoesModel
         $params = [':id' => $id];
         return $db->execute_non_query($sql, $params);
     }
+
+    public function getByEstabelecimento($estabelecimento_id, $limit = 10)
+    {
+        $db = new Database();
+        $sql = "SELECT a.*, u.nome as usuario_nome
+            FROM avaliacoes a
+            INNER JOIN usuarios u ON a.usuario_id = u.id
+            WHERE a.estabelecimento_id = :estabelecimento_id
+            ORDER BY a.data_avaliacao DESC
+            LIMIT $limit";
+        $params = [
+            ':estabelecimento_id' => $estabelecimento_id,
+        ];
+
+        $result = $db->execute_query($sql, $params);
+        return $result->results ?? [];
+    }
 }

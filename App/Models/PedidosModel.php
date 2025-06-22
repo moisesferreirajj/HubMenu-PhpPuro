@@ -13,7 +13,7 @@ class PedidosModel
     {
         $query = "SELECT * FROM pedidos";
         $result = $this->db->execute_query($query);
-        return $result->results; // retorna apenas os resultados
+        return $result->results ?? []; // retorna apenas os resultados
     }
 
     public function getOrderByCompanyId($id)
@@ -37,7 +37,7 @@ class PedidosModel
                 p.data_pedido DESC";
         $params = [':id' => $id];
         $result = $this->db->execute_query($query, $params);
-        return $result->results;
+        return $result->results ?? [];
     }
 
     public function getOrderByUser($id)

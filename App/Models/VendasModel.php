@@ -80,7 +80,7 @@ class VendasModel
         $params = [':id' => $id];
         return $db->execute_non_query($sql, $params);
     }
-    
+
     public function findByEstabelecimentoId($estabelecimento_id)
     {
         $db = new Database();
@@ -115,6 +115,52 @@ class VendasModel
             ORDER BY total_vendas DESC
             LIMIT :limit";
         $params = [':limit' => $limit];
+        $result = $db->execute_query($sql, $params);
+        return $result->results ?? [];
+    }
+
+    public function getTopProdutos($estabelecimento_id, $limit = 5)
+    {
+        $db = new Database();
+        $sql = "SELECT p.nome, SUM(pp.quantidade) AS total_vendido
+            FROM pedidos pd
+            INNER JOIN pedidos_produtos pp ON pd.id = pp.pedido_id
+            INNER JOIN produtos p ON pp.produto_id = p.id
+            WHERE pd.estabelecimento_id = :estabelecimento_id
+            GROUP BY p.id, p.nome
+            ORDER BY total_vendido DESC
+            LIMIT $limit";
+
+        $params = [':estabelecimento_id' => $estabelecimento_id];
+        $result = $db->execute_query($sql, $params);
+        return $result->results ?? [];
+    }
+
+    public function getVendasPorHora($estabelecimento_id)
+    {
+        $db = new Database();
+        $sql = "SELECT HOUR(data_venda) as hora, COUNT(*) as total
+            FROM vendas
+            WHERE estabelecimento_id = :estabelecimento_id
+            GROUP BY hora
+            ORDER BY hora";
+        $params = [':estabelecimento_id' => $estabelecimento_id];
+        $result = $db->execute_query($sql, $params);
+        return $result->results ?? [];
+    }
+
+    public function getVendasPorCategoria($estabelecimento_id)
+    {
+        $db = new Database();
+        $sql = "SELECT c.nome as categoria, SUM(pp.quantidade) as total
+            FROM pedidos p
+            INNER JOIN pedidos_produtos pp ON p.id = pp.pedido_id
+            INNER JOIN produtos pr ON pp.produto_id = pr.id
+            INNER JOIN categorias c ON pr.categoria_id = c.id
+            WHERE p.estabelecimento_id = :estabelecimento_id
+            GROUP BY c.id, c.nome
+            ORDER BY total DESC";
+        $params = [':estabelecimento_id' => $estabelecimento_id];
         $result = $db->execute_query($sql, $params);
         return $result->results ?? [];
     }

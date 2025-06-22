@@ -27,7 +27,9 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+            background: #f8fafc;
+            /* cor sólida clara */
             min-height: 100vh;
         }
 
@@ -222,7 +224,13 @@
             border-radius: 15px;
             padding: 25px;
             box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
-            margin-top: 20px;
+            margin-top: 0;
+            /* Deixe zero para alinhar */
+            height: 100%;
+            /* Garante que o container acompanhe o canvas */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .data-table {
@@ -401,10 +409,17 @@
             max-height: 400px;
         }
 
-        .chart {
-            min-height: 320px;
-            max-height: 400px;
-            height: 320px;
+        .chart,
+        .chart-container canvas {
+            min-height: 400px !important;
+            max-height: 400px !important;
+            height: 400px !important;
+        }
+
+        #relatorios .chart-container canvas {
+            min-height: 400px !important;
+            max-height: 400px !important;
+            height: 400px !important;
         }
     </style>
 </head>
@@ -425,6 +440,9 @@
             </a>
             <a href="#" class="menu-item" data-page="pedidos">
                 <i class="fas fa-shopping-cart"></i> Pedidos
+            </a>
+            <a href="#" class="menu-item" data-page="categorias">
+                <i class="fas fa-tags"></i> Categorias
             </a>
             <a href="#" class="menu-item" data-page="usuarios">
                 <i class="fas fa-users"></i> Usuários
@@ -502,7 +520,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="chart-container">
-                            <h5><i class="fas fa-chart-pie"></i> Top Estabelecimentos</h5>
+                            <h5><i class="fas fa-chart-pie"></i> Melhores Produtos</h5>
                             <canvas id="topEstablishmentsChart" class="chart"></canvas>
                         </div>
                     </div>
@@ -530,8 +548,8 @@
                                             <td><?= htmlspecialchars($pedidorecente->id) ?></td>
                                             <td><?= htmlspecialchars($pedidorecente->cliente_nome) ?></td>
                                             <td><?= htmlspecialchars($pedidorecente->estabelecimento_nome) ?></td>
-                                            <td>R$ 29,90</td>
-                                            <td>14/05/2025</td>
+                                            <td>R$<?= number_format($pedidorecente->valor_total, 2, ',', '.') ?></td>
+                                            <td><?= date('d/m/Y', strtotime($pedidorecente->data_pedido)) ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -567,7 +585,7 @@
                             <?php foreach ($Produtos as $produto): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($produto->id) ?></td>
-                                    <td><?= htmlspecialchars($produto->nome) ?></td>
+                                    <td><?= ucwords(htmlspecialchars($produto->nome)) ?></td>
                                     <td><?= htmlspecialchars($produto->categoria_nome) ?></td>
                                     <td><?= htmlspecialchars($produto->estabelecimento_nome) ?></td>
                                     <td><?= htmlspecialchars($produto->valor) ?></td>
@@ -600,38 +618,57 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Cliente</th>
-                                <th>Estabelecimento</th>
                                 <th>Valor Total</th>
-                                <th>Data</th>
                                 <th>Observação</th>
+                                <th>Avaliação</th>
+                                <th>Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($Pedidos as $pedido): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($pedido->id) ?></td>
+                                    <td><?= ucwords(htmlspecialchars($pedido->nome)) ?></td>
+                                    <td><?= htmlspecialchars($pedido->valor_total) ?></td>
+                                    <td><?= htmlspecialchars($pedido->observacao) ?></td>
+                                    <td><?= number_format($pedido->avaliacao, 1, '.', ',') ?></td>
+                                    <td><?= date('d/m/Y', strtotime($pedido->data_pedido)) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Categorias Page -->
+            <div class="page-content" id="categorias">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="page-title">Categorias</h2>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoriaModal">
+                        <i class="fas fa-plus"></i> Nova Categoria
+                    </button>
+                </div>
+                <div class="data-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>João Silva</td>
-                                <td>Pizzaria Saborosa</td>
-                                <td>R$ 29,90</td>
-                                <td>14/05/2025</td>
-                                <td>Sem cebola</td>
-                                <td>
-                                    <button class="btn-action btn-view"><i class="fas fa-eye"></i></button>
-                                    <button class="btn-action btn-edit"><i class="fas fa-edit"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Maria Oliveira</td>
-                                <td>Churrascaria Boi na Brasa</td>
-                                <td>R$ 59,90</td>
-                                <td>14/05/2025</td>
-                                <td>Ponto da carne: mal passada</td>
-                                <td>
-                                    <button class="btn-action btn-view"><i class="fas fa-eye"></i></button>
-                                    <button class="btn-action btn-edit"><i class="fas fa-edit"></i></button>
-                                </td>
-                            </tr>
+                            <?php foreach ($Categorias as $categoria): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($categoria->id) ?></td>
+                                    <td><?= htmlspecialchars($categoria->nome) ?></td>
+                                    <td>
+                                        <button class="btn-action btn-edit-categoria" data-id="<?= $categoria->id ?>" data-nome="<?= htmlspecialchars($categoria->nome) ?>"><i class="fas fa-edit"></i></button>
+
+                                        <button class="btn-action btn-delete-categoria" data-id="<?= $categoria->id ?>"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -659,30 +696,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>João Silva</td>
-                                <td>joao@example.com</td>
-                                <td>Administrador</td>
-                                <td>(47) 99999-0001</td>
-                                <td>
-                                    <button class="btn-action btn-view"><i class="fas fa-eye"></i></button>
-                                    <button class="btn-action btn-edit"><i class="fas fa-edit"></i></button>
-                                    <button class="btn-action btn-delete"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Maria Oliveira</td>
-                                <td>maria@example.com</td>
-                                <td>Gerente</td>
-                                <td>(47) 99999-0002</td>
-                                <td>
-                                    <button class="btn-action btn-view"><i class="fas fa-eye"></i></button>
-                                    <button class="btn-action btn-edit"><i class="fas fa-edit"></i></button>
-                                    <button class="btn-action btn-delete"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
+                            <?php foreach ($Usuarios as $usuario): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($usuario->id) ?></td>
+                                    <td><?= ucwords(htmlspecialchars($usuario->nome)) ?></td>
+                                    <td><?= htmlspecialchars($usuario->email) ?></td>
+                                    <td><?= htmlspecialchars($usuario->cargo_nome) ?></td>
+                                    <td><?= htmlspecialchars($usuario->telefone) ?></td>
+                                    <td>
+                                        <button class="btn-action btn-view" data-id="<?= $produto->id ?>"><i class="fas fa-eye"></i></button>
+                                        <button class="btn-action btn-edit" data-id="<?= $produto->id ?>"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-action btn-delete" data-id="<?= $produto->id ?>"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -698,7 +725,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Referência</th>
-                                <th>Estabelecimento</th>
+                                <th>Transação ID</th>
                                 <th>Valor Total</th>
                                 <th>Status</th>
                                 <th>Data</th>
@@ -706,27 +733,28 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php foreach ($Vendas as $venda): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($venda->id) ?></td>
+                                    <td><?= htmlspecialchars($venda->referencia) ?></td>
+                                    <td><?= htmlspecialchars($venda->transacao_id) ?></td>
+                                    <td><?= number_format(htmlspecialchars($venda->valor_total), 2, '.', ',') ?></td>
+                                    <td>
+                                        <?php if ($venda->status_pagamento == 'Aprovado'): ?>
+                                            <span class="status-badge status-approved">Aprovado</span>
+                                        <?php elseif ($venda->status_pagamento == 'Cancelado'): ?>
+                                            <span class="status-badge status-cancelled">Cancelado</span>
+                                        <?php else: ?>
+                                            <span class="status-badge status-pending">Pendente</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td><?= date('d/m/Y', strtotime($venda->data_venda)) ?></td>
+                                    <td>
+                                        <button class="btn-action btn-edit"><i class="fas fa-edit"></i> Status</button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                             <tr>
-                                <td>1</td>
-                                <td>VEND001</td>
-                                <td>Pizzaria Saborosa</td>
-                                <td>R$ 150,00</td>
-                                <td><span class="status-badge status-pending">Pendente</span></td>
-                                <td>14/05/2025</td>
-                                <td>
-                                    <button class="btn-action btn-view"><i class="fas fa-eye"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>VEND002</td>
-                                <td>Churrascaria Boi na Brasa</td>
-                                <td>R$ 230,50</td>
-                                <td><span class="status-badge status-approved">Aprovado</span></td>
-                                <td>14/05/2025</td>
-                                <td>
-                                    <button class="btn-action btn-view"><i class="fas fa-eye"></i></button>
-                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -734,6 +762,20 @@
             </div>
 
             <!-- Avaliações Page -->
+            <?php
+
+            $mediaGeral = 0;
+            $qtdeAvaliacoes = count($Avaliacoes);
+
+            if ($qtdeAvaliacoes > 0) {
+                $soma = 0;
+                foreach ($Avaliacoes as $a) {
+                    $soma += floatval($a->avaliacao);
+                }
+                $mediaGeral = $soma / $qtdeAvaliacoes;
+            }
+
+            ?>
             <div class="page-content" id="avaliacoes">
                 <h2 class="page-title">Avaliações</h2>
 
@@ -741,15 +783,15 @@
                     <div class="col-md-6">
                         <div class="stats-card primary">
                             <div class="icon"><i class="fas fa-star"></i></div>
-                            <h3>4.5</h3>
-                            <p>Média Geral dos Estabelecimentos</p>
+                            <h3><?= number_format($mediaGeral, 1, ',', '.') ?></h3>
+                            <p>Média Geral</p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="stats-card success">
                             <div class="icon"><i class="fas fa-mobile-alt"></i></div>
-                            <h3>4.2</h3>
-                            <p>Média do Sistema</p>
+                            <h3><?= $qtdeAvaliacoes ?></h3>
+                            <p>Qtde. de Avaliações</p>
                         </div>
                     </div>
                 </div>
@@ -760,37 +802,21 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Usuário</th>
-                                <th>Estabelecimento</th>
                                 <th>Avaliação</th>
                                 <th>Comentário</th>
                                 <th>Data</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>João Silva</td>
-                                <td>Pizzaria Saborosa</td>
-                                <td>⭐⭐⭐⭐⭐</td>
-                                <td>Excelente pizza, massa crocante e ingredientes frescos!</td>
-                                <td>14/05/2025</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Maria Oliveira</td>
-                                <td>Churrascaria Boi na Brasa</td>
-                                <td>⭐⭐⭐⭐</td>
-                                <td>Boa comida, mas o atendimento poderia ser mais rápido.</td>
-                                <td>13/05/2025</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Pedro Santos</td>
-                                <td>Pizzaria Saborosa</td>
-                                <td>⭐⭐⭐⭐⭐</td>
-                                <td>Delivery rápido e pizza quente. Recomendo!</td>
-                                <td>12/05/2025</td>
-                            </tr>
+                            <?php foreach ($Avaliacoes as $avaliacao): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($avaliacao->id) ?></td>
+                                    <td><?= htmlspecialchars($avaliacao->usuario_nome) ?></td>
+                                    <td><?= number_format($avaliacao->avaliacao, 1, ',', '.') ?></td>
+                                    <td><?= htmlspecialchars($avaliacao->comentario) ?></td>
+                                    <td><?= date('d/m/Y', strtotime($avaliacao->data_avaliacao)) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -799,9 +825,16 @@
             <!-- Relatórios Page -->
             <div class="page-content" id="relatorios">
                 <h2 class="page-title">Relatórios</h2>
-
-                <div class="row mb-4">
-                    <div class="col-md-12">
+                <div class="row">
+                    <!-- Horários de Pico (maior) -->
+                    <div class="col-md-8">
+                        <div class="chart-container">
+                            <h5><i class="fas fa-clock"></i> Horários de Pico</h5>
+                            <canvas id="peakHoursChart" class="chart" height="400"></canvas>
+                        </div>
+                    </div>
+                    <!-- Vendas por Categoria (menor) -->
+                    <div class="col-md-4">
                         <div class="chart-container">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h5><i class="fas fa-chart-bar"></i> Vendas por Categoria</h5>
@@ -813,86 +846,9 @@
                                     </select>
                                 </div>
                             </div>
-                            <canvas id="categoryChart"></canvas>
+                            <canvas id="categoryChart" class="chart" height="400"></canvas>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="chart-container">
-                            <h5><i class="fas fa-clock"></i> Horários de Pico</h5>
-                            <canvas id="peakHoursChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="chart-container">
-                            <h5><i class="fas fa-map-marker-alt"></i> Vendas por Região</h5>
-                            <canvas id="regionChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Estabelecimento -->
-    <div class="modal fade" id="estabelecimentoModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="fas fa-store"></i> Novo Estabelecimento</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Nome do Estabelecimento</label>
-                                    <input type="text" class="form-control" placeholder="Digite o nome">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Tipo</label>
-                                    <select class="form-select">
-                                        <option>Selecione o tipo</option>
-                                        <option>Pizzaria</option>
-                                        <option>Churrascaria</option>
-                                        <option>Lanchonete</option>
-                                        <option>Restaurante</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Endereço</label>
-                            <input type="text" class="form-control" placeholder="Endereço completo">
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Telefone</label>
-                                    <input type="tel" class="form-control" placeholder="(47) 99999-9999">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Email</label>
-                                    <input type="email" class="form-control" placeholder="contato@estabelecimento.com">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Descrição</label>
-                            <textarea class="form-control" rows="3" placeholder="Descreva o estabelecimento"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Salvar Estabelecimento</button>
                 </div>
             </div>
         </div>
@@ -1019,6 +975,31 @@
         </div>
     </div>
 
+    <!-- Modal Categoria -->
+    <div class="modal fade" id="categoriaModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="formCategoria">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i class="fas fa-tags"></i> Categoria</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="categoriaId" name="id">
+                        <div class="mb-3">
+                            <label class="form-label">Nome da Categoria</label>
+                            <input type="text" class="form-control" id="categoriaNome" name="nome" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
@@ -1063,6 +1044,11 @@
             });
         });
 
+        // Transforma o array PHP em JS
+        const vendasPorMes = <?= json_encode($VendasPorMes) ?>;
+        const vendasLabels = vendasPorMes.map(v => v.mes);
+        const vendasData = vendasPorMes.map(v => parseFloat(v.total));
+
         // Initialize charts
         window.addEventListener('load', () => {
             // Sales Chart
@@ -1070,10 +1056,10 @@
             new Chart(salesCtx, {
                 type: 'line',
                 data: {
-                    labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+                    labels: vendasLabels,
                     datasets: [{
                         label: 'Vendas (R$)',
-                        data: [1200, 1900, 3000, 5000, 2000, 3000],
+                        data: vendasData,
                         borderColor: '#6366f1',
                         backgroundColor: 'rgba(99, 102, 241, 0.1)',
                         borderWidth: 3,
@@ -1106,14 +1092,24 @@
             });
 
             // Top Establishments Chart
-            const topEstCtx = document.getElementById('topEstablishmentsChart').getContext('2d');
-            new Chart(topEstCtx, {
+            const topProdutos = <?= json_encode($TopProdutos) ?>;
+            const topProdutosLabels = topProdutos.map(p => p.nome);
+            const topProdutosData = topProdutos.map(p => parseInt(p.total_vendido));
+
+            const topProdCtx = document.getElementById('topEstablishmentsChart').getContext('2d');
+            new Chart(topProdCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Pizzaria Saborosa', 'Churrascaria Boi na Brasa', 'Outros'],
+                    labels: topProdutosLabels,
                     datasets: [{
-                        data: [40, 35, 25],
-                        backgroundColor: ['#6366f1', '#10b981', '#f59e0b'],
+                        data: topProdutosData,
+                        backgroundColor: [
+                            '#6366f1',
+                            '#10b981',
+                            '#f59e0b',
+                            '#ef4444',
+                            '#8b5cf6'
+                        ],
                         borderWidth: 0
                     }]
                 },
@@ -1129,14 +1125,18 @@
             });
 
             // Category Chart
+            const vendasPorCategoria = <?= json_encode($VendasPorCategoria) ?>;
+            const categoriaLabels = vendasPorCategoria.map(v => v.categoria);
+            const categoriaData = vendasPorCategoria.map(v => parseInt(v.total));
+
             const categoryCtx = document.getElementById('categoryChart').getContext('2d');
             new Chart(categoryCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['Pizzas', 'Carnes', 'Bebidas', 'Sobremesas', 'Lanches'],
+                    labels: categoriaLabels,
                     datasets: [{
                         label: 'Vendas por Categoria',
-                        data: [65, 59, 80, 81, 56],
+                        data: categoriaData,
                         backgroundColor: [
                             '#6366f1',
                             '#10b981',
@@ -1172,15 +1172,26 @@
                 }
             });
 
+            const vendasPorHora = <?= json_encode($VendasPorHora) ?>;
+            // Gera labels de 0h até 23h
+            const horasLabels = Array.from({
+                length: 24
+            }, (_, i) => (i < 10 ? '0' : '') + i + 'h');
+            // Preenche os dados, colocando 0 onde não houver venda
+            const horasData = horasLabels.map((label, i) => {
+                const found = vendasPorHora.find(v => parseInt(v.hora) === i);
+                return found ? parseInt(found.total) : 0;
+            });
+
             // Peak Hours Chart
             const peakHoursCtx = document.getElementById('peakHoursChart').getContext('2d');
             new Chart(peakHoursCtx, {
                 type: 'line',
                 data: {
-                    labels: ['6h', '9h', '12h', '15h', '18h', '21h', '24h'],
+                    labels: horasLabels,
                     datasets: [{
                         label: 'Pedidos por Hora',
-                        data: [2, 8, 25, 12, 35, 42, 15],
+                        data: horasData,
                         borderColor: '#10b981',
                         backgroundColor: 'rgba(16, 185, 129, 0.1)',
                         borderWidth: 3,
@@ -1207,35 +1218,6 @@
                             grid: {
                                 display: false
                             }
-                        }
-                    }
-                }
-            });
-
-            // Region Chart
-            const regionCtx = document.getElementById('regionChart').getContext('2d');
-            new Chart(regionCtx, {
-                type: 'pie',
-                data: {
-                    labels: ['Centro', 'Norte', 'Sul', 'Leste', 'Oeste'],
-                    datasets: [{
-                        data: [30, 20, 25, 15, 10],
-                        backgroundColor: [
-                            '#6366f1',
-                            '#10b981',
-                            '#f59e0b',
-                            '#ef4444',
-                            '#8b5cf6'
-                        ],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
                         }
                     }
                 }

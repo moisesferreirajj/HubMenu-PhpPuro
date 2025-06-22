@@ -13,35 +13,51 @@ class DashboardController extends RenderView
         $pedidosModel = new PedidosModel();
         $usuariosModel = new UsuariosModel();
         $vendasModel = new VendasModel();
+        $avaliacoesModel = new AvaliacoesModel();
+        $categoriasModel = new CategoriasModel();
 
         // Dados principais
         $estabelecimento = $estabelecimentosModel->findById($id)->results[0] ?? null;
         $produtosObj = $produtoModel->findByEstabelecimentoId($id);
         $produtos = $produtosObj->results ?? [];
         $pedidos = $pedidosModel->getOrderByCompanyId($id) ?? [];
-        $usuarios = $usuariosModel->findByEstabelecimentoId($id) ?? []; // Função nova, veja abaixo
-        $vendas = $vendasModel->findByEstabelecimentoId($id) ?? []; // Função nova, veja abaixo
+        $usuarios = $usuariosModel->findByEstabelecimentoId($id) ?? [];
+        $vendas = $vendasModel->findByEstabelecimentoId($id) ?? [];
 
         // Pedidos recentes (últimos 10)
-        $pedidosRecentes = $pedidosModel->getRecentOrdersByCompanyId($id, 10) ?? []; // Função nova
+        $pedidosRecentes = $pedidosModel->getRecentOrdersByCompanyId($id, 10) ?? [];
 
         // Vendas por mês (para gráfico)
-        $vendasPorMes = $vendasModel->getVendasPorMes($id) ?? []; // Função nova
+        $vendasPorMes = $vendasModel->getVendasPorMes($id) ?? [];
+        $vendasPorHora = $vendasModel->getVendasPorHora($id) ?? [];
+        $vendasPorCategoria = $vendasModel->getVendasPorCategoria($id) ?? [];
 
         // Top estabelecimentos (para gráfico, pode ser só o próprio ou ranking geral)
-        $topEstabelecimentos = $vendasModel->getTopEstabelecimentos() ?? []; // Função nova
+        $topEstabelecimentos = $vendasModel->getTopEstabelecimentos() ?? [];
+        // Top produtos de cada estabelecimento
+        $topProdutos = $vendasModel->getTopProdutos($id) ?? [];
+
+        $avaliacoes = $avaliacoesModel->getByEstabelecimento($id, 10); // 10 últimas avaliações
+
+        $CategoriasObj = $categoriasModel->findAll($id) ?? [];
+        $categorias = $CategoriasObj->results ?? [];
 
         $this->loadView('empresarial/dashboard', [
             'Title' => 'HubMenu | Dashboard',
             'EstabelecimentoID' => $id,
             'Estabelecimento' => $estabelecimento,
             'Produtos' => $produtos,
+            'TopProdutos' => $topProdutos,
             'Pedidos' => $pedidos,
             'Usuarios' => $usuarios,
             'Vendas' => $vendas,
+            'VendasPorHora' => $vendasPorHora,
+            'VendasPorMes' => $vendasPorMes,
+            'VendasPorCategoria' => $vendasPorCategoria,
             'TopEstabelecimentos' => $topEstabelecimentos,
             'PedidosRecentes' => $pedidosRecentes,
-            'VendasPorMes' => $vendasPorMes
+            'Avaliacoes' => $avaliacoes,
+            'Categorias' => $categorias
         ]);
     }
 }
