@@ -51,14 +51,14 @@ class TestRegisterUser:
             checkbox = self.driver.find_element(By.ID, "aceito_termos")
             checkbox.click()
 
-            time.sleep(5)
+            time.sleep(8)
             submit_button = self.driver.find_element(By.ID, "btn-cadastrar")
             submit_button.click()
         except Exception as e:
             self.driver.quit()  
 
 service = webdriver.Chrome()
-addressUrl = service.get("http://localhost:8080/gerenciar/cardapio/3")
+addressUrl = service.get("http://localhost:8080/empresarial/cadastro")
 
 testUnir = TestRegisterUser(addressUrl, service)
 
