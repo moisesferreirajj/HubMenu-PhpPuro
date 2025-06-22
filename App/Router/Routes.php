@@ -43,11 +43,15 @@ $routes = [
     '/api/produtos/excluir' => 'ProdutosController@excluir',
     '/api/produtos/procurar/{id}' => 'ProdutosController@searchProdutos',
     '/api/visualizar/produtos/{id}' => 'ProdutosController@getProdutos',
-    '/pedidos/registerOrder' => 'Empresarial/PedidosController@registerOrder',
 
     /* ROTA ADMINISTRAÇÃO */
     '/api/autenticar/admin' => 'LoginController@autenticarAdmin',
     '/admin' => 'AdminController@index',
     '/admin/dashboard' => 'AdminController@dashboard',
-    '/admin/logs' => 'LogsController@index'
+    '/admin/logs' => 'LogsController@index',
+
+    /* ROTAS DE PEDIDOS */
+    '/api/pedidos/register' => 'PedidosController@registerOrder',
+    '/api/pedidos/atualizar-status' => 'PedidosController@atualizarStatus',
+
 ];

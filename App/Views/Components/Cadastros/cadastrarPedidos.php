@@ -6,50 +6,58 @@ $userCompany = $usuariosModel->getCompanyByUserId($_SESSION['usuario_id']);
 <div class="modal fade" id="cadastrarModal" tabindex="-1" aria-labelledby="cadastrarModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form class="pro_frm" method="POST" action="/pedidos/registerOrder" enctype="multipart/form-data">
-                
-            
+            <form method="POST" action="/api/pedidos/register">
                 <div class="modal-header">
                     <h5 class="modal-title" id="cadastrarModalLabel">Novo Pedido</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row mb-3">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <label for="nome_cliente" class="form-label">Identificação do Cliente *</label>
-                            <input type="text" class="form-control" id="nome_cliente" name="nome_cliente" placeholder="Ex: Mesa 5, João, Balcão 3..." required>
-                            <input type="hidden" name="estabelecimento_id" value="<?php echo htmlspecialchars($userCompany); ?>">
+                            <input type="text" class="form-control" id="nome_cliente" name="nome_cliente" required>
+                            <input type="hidden" name="estabelecimento_id" value="<?= $userCompany ?>">
                         </div>
                     </div>
-                    <div class="row mb-3 sla">
-                        <div class="col-md-6 mb-3 products-list">
-                            <label for="order" class="form-label">Produto(s):</label>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label class="form-label">Produtos:</label>
+                            
                             <?php if (!empty($menuProducts)): ?>
-                                <?php foreach ($menuProducts as $produtos): ?>
-                                    <div class="products-item row border rounded p-2 mb-2" data-id="<?php echo $produtos->id; ?>">
-                                        <div class="d-flex align-items-center gap-2 justify-content-between">
-                                            <div class="d-flex align-items-center gap-2 card-pro">
-                                                <img src="<?php echo htmlspecialchars($produtos->imagem); ?>" alt="<?php echo htmlspecialchars($produtos->nome); ?>" class="img-thumbnail" style="max-width:100px;">
-                                                <input type="checkbox" name="products[]" value="<?= $produtos->id ?>" class="produto" id="product_<?= $produtos->id ?>">
-                                                <label for="product_<?php echo $produtos->id; ?>" class="mb-0">
-                                                    <?php echo htmlspecialchars($produtos->nome); ?> - R$ <?php echo number_format($produtos->valor, 2, ',', '.'); ?>
-                                                </label>
+                                <div class="products-list">
+                                    <?php foreach ($menuProducts as $produto): ?>
+                                        <div class="products-item row border rounded p-2 mb-2" data-id="<?= $produto->id ?>">
+                                            <div class="d-flex align-items-center gap-2 justify-content-between">
+                                                <div class="d-flex align-items-center gap-2 card-pro">
+                                                    <?php if ($produto->imagem): ?>
+                                                        <img src="<?= htmlspecialchars($produto->imagem) ?>" 
+                                                             alt="<?= htmlspecialchars($produto->nome) ?>" 
+                                                             class="img-thumbnail" style="max-width:100px;">
+                                                    <?php endif; ?>
+                                                    <input type="checkbox" name="products[]" value="<?= $produto->id ?>" 
+                                                           class="produto" id="product_<?= $produto->id ?>">
+                                                    <label for="product_<?= $produto->id ?>" class="mb-0">
+                                                        <?= htmlspecialchars($produto->nome) ?> - R$ <?= number_format($produto->valor, 2, ',', '.') ?>
+                                                    </label>
+                                                </div>
+                                                <div class="obs">
+                                                    <label for="observacao" class="form-label mb-0">Observação:</label>
+                                                    <textarea class="form-control" name="observacao[<?= $produto->id ?>]" rows="2"></textarea>
+                                                </div>
                                             </div>
-                                            <div class="obs">
-                                                <label for="observacao" class="form-label mb-0">Observação:</label>
-                                                <textarea class="form-control" id="observacao" name="observacao[<?php echo $produtos->id; ?>]" rows="3" placeholder=""></textarea>
+                                            <div class="row mt-2">
+                                                <div class="col-md-6">
+                                                    <label for="quantidade_<?= $produto->id ?>" class="form-label">Quantidade:</label>
+                                                    <input type="number" name="quantidade[<?= $produto->id ?>]" 
+                                                           value="1" min="1" class="form-control" style="width:80px;">
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label for="quantidade_<?php echo $produtos->id; ?>" class="form-label">Quantidade:</label>
-                                                <input type="number" name="quantidade[<?= $produtos->id ?>]" value="1" min="1" class="form-control" style="width:80px;display:inline-block;">
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
+                                    <?php endforeach; ?>
+                                </div>
                             <?php else: ?>
-                                <p>Nenhum produto disponível.</p>
+                                <div class="alert alert-warning">Nenhum produto disponível.</div>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -58,12 +66,13 @@ $userCompany = $usuariosModel->getCompanyByUserId($_SESSION['usuario_id']);
                     <p>Total: R$ <span id="total-value">0,00</span></p>
                     <input type="hidden" id="valor_total" name="valor_total" value="0.00">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" id="regis_pro" class="btn btn-primary">Cadastrar</button>
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('cadastrarModal');
@@ -71,25 +80,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalInput = document.getElementById('valor_total');
 
     function calcTotal() {
-        const checkboxes = document.querySelectorAll('.produto');
+        const checkboxes = document.querySelectorAll('.produto:checked');
         let total = 0;
-        checkboxes.forEach(product => {
-            if (product.checked) {
-                const productId = product.getAttribute('data-id');
-                const quantidade = document.querySelector(`input[name="quantidade[${productId}]"]`).value;
-                total += parseFloat(product.getAttribute('data-valor')) * quantidade;
-            }
+        
+        checkboxes.forEach(checkbox => {
+            const productId = checkbox.value;
+            const quantidade = document.querySelector(`input[name="quantidade[${productId}]"]`).value;
+            const precoText = checkbox.closest('.card-pro').querySelector('label').textContent.split('R$ ')[1];
+            const preco = parseFloat(precoText.replace('.', '').replace(',', '.'));
+            
+            total += preco * quantidade;
         });
-        const totalFormatted = total.toFixed(2).replace('.', ',');
+        
+        const totalFormatted = total.toLocaleString('pt-BR', {minimumFractionDigits: 2});
         totalSpan.textContent = totalFormatted;
-        totalInput.value = totalFormatted;
+        totalInput.value = total.toFixed(2);
     }
 
     modal.addEventListener('shown.bs.modal', () => {
         const checkboxes = document.querySelectorAll('.produto');
-        checkboxes.forEach(product => {
-            product.addEventListener('change', calcTotal);
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', calcTotal);
         });
+        
+        const quantityInputs = document.querySelectorAll('input[type="number"]');
+        quantityInputs.forEach(input => {
+            input.addEventListener('change', calcTotal);
+        });
+        
         calcTotal();
     });
 });

@@ -1,60 +1,95 @@
 <?php
+require_once 'App/Controllers/Cadastros/ProdutosController.php';
+class PedidosController {
+    private $pedidosModel;
+    private $produtosModel;
+    private $usuariosModel;
 
-class PedidosController extends RenderView
-{
-    public function indexEmpresa($id)
-    {
-
-        AcessoController::verificarAcesso('/pedidos/{id}', 'admin', '1');
-
-        $users = new UsuariosModel();
-        $pedidos = (new PedidosModel())->getOrders();
-        $produtos = (new ProdutosModel())->findAll();
-        $this->loadView(
-            'empresarial/pedidosEmpresa',
-            [
-                'Title' => 'HubMenu |'
-            ],
-        );
+    public function __construct() {
+        $this->pedidosModel = new PedidosModel();
+        $this->produtosModel = new ProdutosModel();
+        $this->usuariosModel = new UsuariosModel();
     }
 
-    public function registerOrder()
-    {
-        // Verifica permissão e sessão
-        AcessoController::verificarAcesso('/pedidos/registerOrder', $_SESSION['usuario_cargo'], $_SESSION['estabelecimento_id']);
+    public function indexEmpresa() {
+        $userCompany = $this->usuariosModel->getCompanyByUserId($_SESSION['usuario_id']);
+        $ordersResponse = $this->pedidosModel->getOrderByCompanyId($userCompany);
+        $menuProducts = $this->produtosModel->searchByEstabelecimentoAndCondition($userCompany);
+        
+        require_once 'Views/pedidosEmpresa.php';
+    }
 
-        $estabelecimentoId = $_SESSION['estabelecimento_id'];
-        $nomeUsuario = $_POST['nome_cliente'];
-        $produtoIds = $_POST['products'] ?? [];
-        $valorTotal = str_replace(',', '.', $_POST['valor_total']);
-        $quantidades = $_POST['quantidade'] ?? [];
-        $observacoes = $_POST['observacao'] ?? [];
-
-        // 1. Cria usuário "guest" para o pedido
-        $pedidosModel = new PedidosModel();
-        $usuarioId = $pedidosModel->registerGuestClient($nomeUsuario);
-
-        // 2. Cria o pedido
-        $pedidoId = $pedidosModel->registerOrder([
-            'usuario_id' => $usuarioId,
-            'estabelecimento_id' => $estabelecimentoId,
-            'valor_total' => $valorTotal,
-            'status' => 'Pendente',
-            'data_pedido' => date('Y-m-d H:i:s')
-        ]);
-
-        // 3. Adiciona os produtos ao pedido
-        foreach ($produtoIds as $produtoId) {
-            $quantidade = isset($quantidades[$produtoId]) ? (int)$quantidades[$produtoId] : 1;
-            $produto = (new ProdutosModel())->findById($produtoId);
-            $preco_unitario = $produto->results[0]->valor ?? 0;
-
-            $pedidosModel->registerOrderProducts($pedidoId, $produtoId, $quantidade, $preco_unitario);
-            // Se quiser salvar observação por produto, crie um campo na tabela pedidos_produtos e salve aqui
+    public function registerOrder() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $userCompany = $this->usuariosModel->getCompanyByUserId($_SESSION['usuario_id']);
+                
+                // Calcula o valor total
+                $valor_total = 0;
+                $produtos_info = [];
+                
+                foreach ($_POST['products'] as $produto_id) {
+                    $produto = $this->produtosModel->findById($produto_id);
+                    $quantidade = $_POST['quantidade'][$produto_id] ?? 1;
+                    $valor_total += $produto->valor * $quantidade;
+                    
+                    $produtos_info[] = [
+                        'produto_id' => $produto_id,
+                        'quantidade' => $quantidade,
+                        'observacao' => $_POST['observacao'][$produto_id] ?? null
+                    ];
+                }
+                
+                // Cadastra o pedido
+                $pedido_id = $this->pedidosModel->cadastrarPedido([
+                    'usuario_id' => $_SESSION['usuario_id'],
+                    'estabelecimento_id' => $userCompany,
+                    'nome_cliente' => $_POST['nome_cliente'],
+                    'valor_total' => $valor_total
+                ]);
+                
+                // Cadastra os produtos do pedido
+                foreach ($produtos_info as $produto) {
+                    $this->pedidosModel->adicionarProdutoPedido(
+                        $pedido_id,
+                        $produto['produto_id'],
+                        $produto['quantidade'],
+                        $produto['observacao']
+                    );
+                }
+                
+                $_SESSION['mensagem'] = 'Pedido cadastrado com sucesso!';
+                $_SESSION['tipo_mensagem'] = 'success';
+                
+            } catch (Exception $e) {
+                $_SESSION['mensagem'] = 'Erro ao cadastrar pedido: ' . $e->getMessage();
+                $_SESSION['tipo_mensagem'] = 'danger';
+            }
+            
+            header('Location: /pedidos/' . $userCompany);
+            exit();
         }
-
-        echo "<script>alert('Pedido cadastrado com sucesso!'); window.location.href = '/pedidos';</script>";
-        exit();
     }
 
+    public function atualizarStatus() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $pedido_id = $_POST['pedido_id'];
+                $status = $_POST['status'];
+                
+                $this->pedidosModel->atualizarStatusPedido($pedido_id, $status);
+                
+                $_SESSION['mensagem'] = 'Status atualizado com sucesso!';
+                $_SESSION['tipo_mensagem'] = 'success';
+                
+            } catch (Exception $e) {
+                $_SESSION['mensagem'] = 'Erro ao atualizar status: ' . $e->getMessage();
+                $_SESSION['tipo_mensagem'] = 'danger';
+            }
+            
+            $userCompany = $this->usuariosModel->getCompanyByUserId($_SESSION['usuario_id']);
+            header('Location: /pedidos/' . $userCompany);
+            exit();
+        }
+    }
 }

@@ -14,15 +14,12 @@ $ordersResponse = $orders->getOrderByCompanyId($userCompany);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" rel="stylesheet" href="/Views/Assets/Css/pedidosEmpresa.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- BOOTSTRAP GERENCIAMENTO -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link rel="icon" href="/Views/Assets/Images/favicon.png">
     <link type="text/css" rel="stylesheet" href="/Views/Assets/Vendor/bootstrap.min.css">
-    <script href="/Views/Assets/Vendor/bootstrap.min.js"></script>
-    <script src="/Views/Assets/Vendor/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="/Views/Assets/Css/Components/sidebar.css">
-    <script src="/Views/Assets/Js/sidebar.js"></script>
-
     <title><?= $Title ?> Pedidos</title>
+</head>
 <body>
     
     <?php require_once __DIR__ . '/../../Views/Components/Cadastros/cadastrarPedidos.php'; ?>
@@ -42,7 +39,6 @@ $ordersResponse = $orders->getOrderByCompanyId($userCompany);
                         <i class="bi bi-search"></i>
                     </button>
                 </div>
-
             </div>
             <div class="actions-right">
                 <button id="open_cad" data-bs-toggle="modal" data-bs-target="#cadastrarModal" onclick="closeNav()" class="btn btn-light btn-circle">
@@ -51,40 +47,69 @@ $ordersResponse = $orders->getOrderByCompanyId($userCompany);
             </div>
         </div>
     </div>
-        <div class="order-container">
-            <?php foreach($ordersResponse as $pedido): ?>
-                <div class="card">
-                    <div class="card-header">
-                        <span class="order-id">Pedido <?= htmlspecialchars($pedido->id) ?></span>
-                        <span class="order-client"><?= htmlspecialchars($pedido->nome) ?></span>
-                    </div>
-                    <?php 
-                    
-                    $itemsResponse = $items->findOrderProdById($pedido->id);
-                    if (!$itemsResponse) {
-                        echo '<div class="alert alert-warning">Nenhum item encontrado para este pedido.</div>';
-                        continue;
-                    }
 
-                    foreach($itemsResponse as $item): 
+    <?php if (isset($_SESSION['mensagem'])): ?>
+        <div class="container mt-3">
+            <div class="alert alert-<?= $_SESSION['tipo_mensagem'] ?>">
+                <?= $_SESSION['mensagem'] ?>
+            </div>
+        </div>
+        <?php unset($_SESSION['mensagem']); unset($_SESSION['tipo_mensagem']); ?>
+    <?php endif; ?>
 
-                    ?>
+    <div class="order-container">
+        <?php foreach($ordersResponse as $pedido): ?>
+            <div class="card">
+                <div class="card-header">
+                    <span class="order-id">Pedido #<?= htmlspecialchars($pedido->id) ?></span>
+                    <span class="order-client"><?= htmlspecialchars($pedido->nome) ?></span>
+                    <span class="order-status badge bg-<?= 
+                        $pedido->status == 'entregue' ? 'success' : 
+                        ($pedido->status == 'cancelado' ? 'danger' : 
+                        ($pedido->status == 'preparando' ? 'warning' : 'info'))
+                    ?>">
+                        <?= ucfirst($pedido->status) ?>
+                    </span>
+                </div>
+                
+                <?php 
+                $itemsResponse = $this->pedidosModel->findOrderProdById($pedido->id);
+                if (empty($itemsResponse)): ?>
+                    <div class="alert alert-warning m-3">Nenhum item encontrado para este pedido.</div>
+                <?php else: ?>
+                    <?php foreach($itemsResponse as $item): ?>
                         <div class="item">
                             <div class="item-info">
-                                <span class="quantity"><?php echo intval($item->quantidade) ?>x</span>
-                                <span class="item-name"><?php echo htmlspecialchars($item->nome) ?></span>
+                                <span class="quantity"><?= intval($item->quantidade) ?>x</span>
+                                <span class="item-name"><?= htmlspecialchars($item->nome) ?></span>
+                                <span class="item-price">R$ <?= number_format($item->valor, 2, ',', '.') ?></span>
                             </div>
-                            <span class="item-observations"><?php echo htmlspecialchars($item->descricao) ?></span>
+                            <?php if (!empty($item->descricao)): ?>
+                                <span class="item-observations"><?= htmlspecialchars($item->descricao) ?></span>
+                            <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
-                    <div class="actions">
-                        <button class="btn btn-outline-danger status_pedido">Cancelar</button>
-                        <button class="btn btn-success status_pedido">PRONTO</button>
-                    </div>
+                <?php endif; ?>
+                
+                <div class="actions">
+                    <form method="POST" action="/api/pedidos/atualizar-status" class="d-inline">
+                        <input type="hidden" name="pedido_id" value="<?= $pedido->id ?>">
+                        <input type="hidden" name="status" value="cancelado">
+                        <button type="submit" class="btn btn-outline-danger">Cancelar</button>
+                    </form>
+                    
+                    <form method="POST" action="/api/pedidos/atualizar-status" class="d-inline">
+                        <input type="hidden" name="pedido_id" value="<?= $pedido->id ?>">
+                        <input type="hidden" name="status" value="entregue">
+                        <button type="submit" class="btn btn-success">Concluir</button>
+                    </form>
                 </div>
-            <?php endforeach; ?>
-        </div>
-    
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <script src="/Views/Assets/Vendor/bootstrap.bundle.min.js"></script>
+    <script src="/Views/Assets/Js/sidebar.js"></script>
     <script src="/Views/Assets/Js/FooterLayout.js"></script>
     <footer-layout></footer-layout>
 </body>
