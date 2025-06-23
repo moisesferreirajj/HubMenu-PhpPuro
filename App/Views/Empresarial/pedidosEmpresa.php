@@ -1,12 +1,3 @@
-<?php
-$orders = new PedidosModel;
-$items = new ProdutosModel;
-$usuariosModel = new UsuariosModel();
-$userCompany = $usuariosModel->getCompanyByUserId($_SESSION['usuario_id']);
-$menuProducts = $items->searchByEstabelecimentoAndCondition($userCompany);
-$ordersResponse = $orders->getOrderByCompanyId($userCompany);
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -18,7 +9,7 @@ $ordersResponse = $orders->getOrderByCompanyId($userCompany);
     <link rel="icon" href="/Views/Assets/Images/favicon.png">
     <link type="text/css" rel="stylesheet" href="/Views/Assets/Vendor/bootstrap.min.css">
     <link rel="stylesheet" href="/Views/Assets/Css/Components/sidebar.css">
-    <title><?= $Title ?> Pedidos</title>
+    <title>HubMenu | Pedidos</title>
 </head>
 <body>
     
@@ -48,64 +39,52 @@ $ordersResponse = $orders->getOrderByCompanyId($userCompany);
         </div>
     </div>
 
-    <?php if (isset($_SESSION['mensagem'])): ?>
-        <div class="container mt-3">
-            <div class="alert alert-<?= $_SESSION['tipo_mensagem'] ?>">
-                <?= $_SESSION['mensagem'] ?>
+    <div class="order-container">
+    <?php foreach ($orders as $pedido): ?>
+        <div class="card">
+            <div class="card-header">
+                <span class="order-id">Pedido #<?= htmlspecialchars($pedido->id) ?></span>
+                <span class="order-client"><?= htmlspecialchars($pedido->cliente ?? $pedido->nome) ?></span>
+                <span class="order-status badge bg-<?= 
+                    $pedido->status == 'entregue' ? 'success' : 
+                    ($pedido->status == 'cancelado' ? 'danger' : 
+                    ($pedido->status == 'preparando' ? 'warning' : 'info'))
+                ?>">
+                    <?= ucfirst($pedido->status) ?>
+                </span>
+            </div>
+
+            <?php if (!empty($pedido->produtos) && is_array($pedido->produtos)): ?>
+                <?php foreach ($pedido->produtos as $item): ?>
+                    <div class="item">
+                        <div class="item-info">
+                            <span class="quantity"><?= intval($item->quantidade) ?>x</span>
+                            <span class="item-name"><?= htmlspecialchars($item->nome) ?></span>
+                            <span class="item-price"> | R$ <?= number_format($item->valor, 2, ',', '.') ?></span>
+                        </div>
+                        <span class="item-observations">- <?= htmlspecialchars($item->descricao) ?></span>
+                        <span class="item-observations">[ <?= htmlspecialchars($pedido->observacao) ?> ]</span>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Nenhum produto encontrado para este pedido.</p>
+            <?php endif; ?>
+
+            <div class="actions">
+                <form method="POST" action="/api/pedidos/atualizar-status" class="d-inline">
+                    <input type="hidden" name="pedido_id" value="<?= $pedido->id ?>">
+                    <input type="hidden" name="status" value="cancelado">
+                    <button type="submit" class="btn btn-outline-danger">Cancelar</button>
+                </form>
+
+                <form method="POST" action="/api/pedidos/atualizar-status" class="d-inline">
+                    <input type="hidden" name="pedido_id" value="<?= $pedido->id ?>">
+                    <input type="hidden" name="status" value="entregue">
+                    <button type="submit" class="btn btn-success">Concluir</button>
+                </form>
             </div>
         </div>
-        <?php unset($_SESSION['mensagem']); unset($_SESSION['tipo_mensagem']); ?>
-    <?php endif; ?>
-
-    <div class="order-container">
-        <?php foreach($ordersResponse as $pedido): ?>
-            <div class="card">
-                <div class="card-header">
-                    <span class="order-id">Pedido #<?= htmlspecialchars($pedido->id) ?></span>
-                    <span class="order-client"><?= htmlspecialchars($pedido->nome) ?></span>
-                    <span class="order-status badge bg-<?= 
-                        $pedido->status == 'entregue' ? 'success' : 
-                        ($pedido->status == 'cancelado' ? 'danger' : 
-                        ($pedido->status == 'preparando' ? 'warning' : 'info'))
-                    ?>">
-                        <?= ucfirst($pedido->status) ?>
-                    </span>
-                </div>
-                
-                <?php 
-                $itemsResponse = $this->pedidosModel->findOrderProdById($pedido->id);
-                if (empty($itemsResponse)): ?>
-                    <div class="alert alert-warning m-3">Nenhum item encontrado para este pedido.</div>
-                <?php else: ?>
-                    <?php foreach($itemsResponse as $item): ?>
-                        <div class="item">
-                            <div class="item-info">
-                                <span class="quantity"><?= intval($item->quantidade) ?>x</span>
-                                <span class="item-name"><?= htmlspecialchars($item->nome) ?></span>
-                                <span class="item-price">R$ <?= number_format($item->valor, 2, ',', '.') ?></span>
-                            </div>
-                            <?php if (!empty($item->descricao)): ?>
-                                <span class="item-observations"><?= htmlspecialchars($item->descricao) ?></span>
-                            <?php endif; ?>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-                
-                <div class="actions">
-                    <form method="POST" action="/api/pedidos/atualizar-status" class="d-inline">
-                        <input type="hidden" name="pedido_id" value="<?= $pedido->id ?>">
-                        <input type="hidden" name="status" value="cancelado">
-                        <button type="submit" class="btn btn-outline-danger">Cancelar</button>
-                    </form>
-                    
-                    <form method="POST" action="/api/pedidos/atualizar-status" class="d-inline">
-                        <input type="hidden" name="pedido_id" value="<?= $pedido->id ?>">
-                        <input type="hidden" name="status" value="entregue">
-                        <button type="submit" class="btn btn-success">Concluir</button>
-                    </form>
-                </div>
-            </div>
-        <?php endforeach; ?>
+    <?php endforeach; ?>
     </div>
 
     <script src="/Views/Assets/Vendor/bootstrap.bundle.min.js"></script>

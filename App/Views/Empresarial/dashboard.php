@@ -1,3 +1,58 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Cadastro de Produto
+    if (isset($_POST['acao']) && $_POST['acao'] === 'cadastrar_produto') {
+        $produtosModel = new ProdutosModel();
+        $nome = $_POST['nome'] ?? '';
+        $descricao = $_POST['descricao'] ?? '';
+        $valor = $_POST['valor'] ?? 0;
+        $categoria_id = $_POST['categoria_id'] ?? null;
+        $estabelecimento_id = $_POST['estabelecimento_id'] ?? null;
+        $status_produtos = $_POST['status_produtos'] ?? 1;
+        $imagem = null;
+
+        // Upload de imagem (opcional)
+        if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
+            $ext = strtolower(pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION));
+            $permitidas = ['png', 'jpg', 'jpeg', 'webp'];
+            if (in_array($ext, $permitidas)) {
+                $nomeImagem = uniqid() . '.' . $ext;
+                $destino = __DIR__ . '/../../Views/Assets/Images/Produtos/' . $nomeImagem;
+                if (move_uploaded_file($_FILES['imagem']['tmp_name'], $destino)) {
+                    $imagem = '/Views/Assets/Images/Produtos/' . $nomeImagem;
+                }
+            }
+        }
+
+        $produtosModel->insert($nome, $descricao, $valor, $imagem, $estabelecimento_id, $categoria_id, $status_produtos);
+        header('Location: ' . $_SERVER['REQUEST_URI']);
+        exit;
+    }
+
+    // Cadastro de Usuário
+    if (isset($_POST['acao']) && $_POST['acao'] === 'cadastrar_usuario') {
+        $usuariosModel = new UsuariosModel();
+        $nome = $_POST['nome'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $cargo = $_POST['cargo'] ?? '';
+        $telefone = $_POST['telefone'] ?? '';
+        $senha = password_hash($_POST['senha'] ?? '', PASSWORD_DEFAULT);
+        $usuariosModel->insert($nome, $senha, $email, $cargo, null, $telefone);
+        header('Location: ' . $_SERVER['REQUEST_URI']);
+        exit;
+    }
+
+    // Cadastro de Categoria
+    if (isset($_POST['acao']) && $_POST['acao'] === 'cadastrar_categoria') {
+        $categoriasModel = new CategoriasModel();
+        $nome = $_POST['nome'] ?? '';
+        $categoriasModel->insert($nome);
+        header('Location: ' . $_SERVER['REQUEST_URI']);
+        exit;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -314,7 +369,7 @@
         }
 
         .modal-header {
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            background: var(--dark-color);
             color: white;
             border: none;
         }
@@ -338,7 +393,7 @@
         }
 
         .btn-primary {
-            background: linear-gradient(45deg, var(--primary-color), #8b5cf6);
+            background: var(--accent-color);
             border: none;
             border-radius: 10px;
             padding: 12px 25px;
@@ -456,6 +511,9 @@
             <a href="#" class="menu-item" data-page="relatorios">
                 <i class="fas fa-file-alt"></i> Relatórios
             </a>
+            <a href="/empresarial/logout" class="menu-item">
+                <i class="fas fa-sign-out"></i> Logout
+            </a>
         </nav>
     </div>
 
@@ -484,26 +542,31 @@
                     <div class="col-md-3 mb-3">
                         <div class="stats-card primary animate__animated animate__fadeInUp">
                             <div class="icon"><i class="fas fa-store"></i></div>
-                            <h3>R$ <?= number_format(array_sum(array_map(fn($v) => $v->valor_total, $Vendas)), 2, ',', '.') ?? '0' ?></h3>
+                            <h3>R$
+                                <?= number_format(array_sum(array_map(fn($v) => $v->valor_total, $Vendas)), 2, ',', '.') ?? '0' ?>
+                            </h3>
                             <p>Total Vendas</p>
                         </div>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <div class="stats-card success animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+                        <div class="stats-card success animate__animated animate__fadeInUp"
+                            style="animation-delay: 0.1s;">
                             <div class="icon"><i class="fas fa-box"></i></div>
                             <h3><?= count($Produtos) ?? '0' ?></h3>
                             <p>Produtos</p>
                         </div>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <div class="stats-card warning animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                        <div class="stats-card warning animate__animated animate__fadeInUp"
+                            style="animation-delay: 0.2s;">
                             <div class="icon"><i class="fas fa-shopping-cart"></i></div>
                             <h3><?= count($Pedidos) ?? '0' ?></h3>
                             <p>Pedidos</p>
                         </div>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <div class="stats-card danger animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
+                        <div class="stats-card danger animate__animated animate__fadeInUp"
+                            style="animation-delay: 0.3s;">
                             <div class="icon"><i class="fas fa-users"></i></div>
                             <h3><?= count($Usuarios) ?? '0' ?></h3>
                             <p>Usuários</p>
@@ -537,7 +600,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Cliente</th>
-                                        <th>Estabelecimento</th>
+                                        <th>Status</th>
                                         <th>Valor</th>
                                         <th>Data</th>
                                     </tr>
@@ -547,7 +610,15 @@
                                         <tr>
                                             <td><?= htmlspecialchars($pedidorecente->id) ?></td>
                                             <td><?= htmlspecialchars($pedidorecente->cliente_nome) ?></td>
-                                            <td><?= htmlspecialchars($pedidorecente->estabelecimento_nome) ?></td>
+                                            <td>
+                                                <?php if ($pedidorecente->status == "entregue"): ?>
+                                                    <span class="status-badge status-approved">Entregue</span>
+                                                <?php elseif($pedidorecente->status == "preparando"): ?>
+                                                    <span class="status-badge status-pending">Preparando</span>
+                                                <?php else: ?>
+                                                    <span class="status-badge status-cancelled">Cancelado</span>
+                                                <?php endif; ?>
+                                            </td>
                                             <td>R$<?= number_format($pedidorecente->valor_total, 2, ',', '.') ?></td>
                                             <td><?= date('d/m/Y', strtotime($pedidorecente->data_pedido)) ?></td>
                                         </tr>
@@ -597,9 +668,12 @@
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <button class="btn-action btn-view" data-id="<?= $produto->id ?>"><i class="fas fa-eye"></i></button>
-                                        <button class="btn-action btn-edit" data-id="<?= $produto->id ?>"><i class="fas fa-edit"></i></button>
-                                        <button class="btn-action btn-delete" data-id="<?= $produto->id ?>"><i class="fas fa-trash"></i></button>
+                                        <button class="btn-action btn-view" data-id="<?= $produto->id ?>"><i
+                                                class="fas fa-eye"></i></button>
+                                        <button class="btn-action btn-edit" data-id="<?= $produto->id ?>"><i
+                                                class="fas fa-edit"></i></button>
+                                        <button class="btn-action btn-delete" data-id="<?= $produto->id ?>"><i
+                                                class="fas fa-trash"></i></button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -628,7 +702,7 @@
                             <?php foreach ($Pedidos as $pedido): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($pedido->id) ?></td>
-                                    <td><?= ucwords(htmlspecialchars($pedido->nome)) ?></td>
+                                    <td><?= ucwords(htmlspecialchars($pedido->cliente)) ?></td>
                                     <td><?= htmlspecialchars($pedido->valor_total) ?></td>
                                     <td><?= htmlspecialchars($pedido->observacao) ?></td>
                                     <td><?= number_format($pedido->avaliacao, 1, '.', ',') ?></td>
@@ -663,9 +737,12 @@
                                     <td><?= htmlspecialchars($categoria->id) ?></td>
                                     <td><?= htmlspecialchars($categoria->nome) ?></td>
                                     <td>
-                                        <button class="btn-action btn-edit-categoria" data-id="<?= $categoria->id ?>" data-nome="<?= htmlspecialchars($categoria->nome) ?>"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-action btn-edit-categoria" data-id="<?= $categoria->id ?>"
+                                            data-nome="<?= htmlspecialchars($categoria->nome) ?>"><i
+                                                class="fas fa-edit"></i></button>
 
-                                        <button class="btn-action btn-delete-categoria" data-id="<?= $categoria->id ?>"><i class="fas fa-trash"></i></button>
+                                        <button class="btn-action btn-delete-categoria" data-id="<?= $categoria->id ?>"><i
+                                                class="fas fa-trash"></i></button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -704,9 +781,12 @@
                                     <td><?= htmlspecialchars($usuario->cargo_nome) ?></td>
                                     <td><?= htmlspecialchars($usuario->telefone) ?></td>
                                     <td>
-                                        <button class="btn-action btn-view" data-id="<?= $produto->id ?>"><i class="fas fa-eye"></i></button>
-                                        <button class="btn-action btn-edit" data-id="<?= $produto->id ?>"><i class="fas fa-edit"></i></button>
-                                        <button class="btn-action btn-delete" data-id="<?= $produto->id ?>"><i class="fas fa-trash"></i></button>
+                                        <button class="btn-action btn-view" data-id="<?= $usuario->id ?>"><i
+                                                class="fas fa-eye"></i></button>
+                                        <button class="btn-action btn-edit" data-id="<?= $usuario->id ?>"><i
+                                                class="fas fa-edit"></i></button>
+                                        <button class="btn-action btn-delete" data-id="<?= $usuario->id ?>"><i
+                                                class="fas fa-trash"></i></button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -858,64 +938,55 @@
     <div class="modal fade" id="produtoModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="fas fa-box"></i> Novo Produto</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
+                <form method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="acao" value="cadastrar_produto">
+                    <input type="hidden" name="estabelecimento_id" value="<?= $EstabelecimentoID ?>">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i class="fas fa-box"></i> Novo Produto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Nome do Produto</label>
-                                    <input type="text" class="form-control" placeholder="Digite o nome do produto">
-                                </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nome do Produto</label>
+                                <input type="text" class="form-control" name="nome" required>
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Categoria</label>
-                                    <select class="form-select">
-                                        <option>Selecione a categoria</option>
-                                        <option>Pizzas</option>
-                                        <option>Carnes</option>
-                                        <option>Bebidas</option>
-                                        <option>Sobremesas</option>
-                                    </select>
-                                </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Categoria</label>
+                                <select class="form-select" name="categoria_id" required>
+                                    <option selected disabled>Selecione a categoria</option>
+                                    <?php foreach ($Categorias as $categoria): ?>
+                                        <option value="<?= $categoria->id ?>"><?= htmlspecialchars($categoria->nome) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Estabelecimento</label>
-                                    <select class="form-select">
-                                        <option>Selecione o estabelecimento</option>
-                                        <option>Pizzaria Saborosa</option>
-                                        <option>Churrascaria Boi na Brasa</option>
-                                    </select>
-                                </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Valor</label>
+                                <input type="number" class="form-control" name="valor" step="0.10" required>
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Valor</label>
-                                    <input type="number" class="form-control" placeholder="0,00" step="0.01">
-                                </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Status</label>
+                                <select class="form-select" name="status_produtos" required>
+                                    <option value="1">Ativo</option>
+                                    <option value="0">Inativo</option>
+                                </select>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Descrição</label>
-                            <textarea class="form-control" rows="3" placeholder="Descreva o produto"></textarea>
+                            <textarea class="form-control" name="descricao" rows="3"></textarea>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Imagem do Produto</label>
-                            <input type="file" class="form-control" accept="image/*">
+                            <input type="file" class="form-control" name="imagem" accept="image/*">
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Salvar Produto</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Produto</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -924,26 +995,28 @@
     <div class="modal fade" id="usuarioModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="fas fa-user"></i> Novo Usuário</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
+                <form method="POST" id="formUsuario">
+                    <input type="hidden" name="acao" value="cadastrar_usuario">
+                    <input type="hidden" name="id" id="usuarioId">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i class="fas fa-user"></i> Novo Usuário</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Nome Completo</label>
-                            <input type="text" class="form-control" placeholder="Digite o nome completo">
+                            <input type="text" class="form-control" name="nome" id="usuarioNome" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <input type="email" class="form-control" placeholder="email@exemplo.com">
+                            <input type="email" class="form-control" name="email" id="usuarioEmail" required>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Cargo</label>
-                                    <select class="form-select">
-                                        <option>Selecione o cargo</option>
+                                    <select class="form-select" name="cargo" id="usuarioCargo" required>
+                                        <option value="">Selecione o cargo</option>
                                         <option>Administrador</option>
                                         <option>Gerente</option>
                                         <option>Funcionário</option>
@@ -953,24 +1026,24 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Telefone</label>
-                                    <input type="tel" class="form-control" placeholder="(47) 99999-9999">
+                                    <input type="tel" class="form-control" name="telefone" id="usuarioTelefone">
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Senha</label>
-                            <input type="password" class="form-control" placeholder="Digite a senha">
+                            <input type="password" class="form-control" name="senha" id="usuarioSenha" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Confirmar Senha</label>
-                            <input type="password" class="form-control" placeholder="Confirme a senha">
+                            <input type="password" class="form-control" name="senha2" id="usuarioSenha2" required>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Salvar Usuário</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Usuário</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -979,16 +1052,17 @@
     <div class="modal fade" id="categoriaModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="formCategoria">
+                <form method="POST" id="formCategoria">
+                    <input type="hidden" name="acao" value="cadastrar_categoria">
+                    <input type="hidden" name="id" id="categoriaId">
                     <div class="modal-header">
                         <h5 class="modal-title"><i class="fas fa-tags"></i> Categoria</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" id="categoriaId" name="id">
                         <div class="mb-3">
                             <label class="form-label">Nome da Categoria</label>
-                            <input type="text" class="form-control" id="categoriaNome" name="nome" required>
+                            <input type="text" class="form-control" name="nome" id="categoriaNome" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -1025,6 +1099,10 @@
 
         menuItems.forEach(item => {
             item.addEventListener('click', (e) => {
+                // Se for o botão de logout, deixa o link funcionar normalmente
+                if (item.getAttribute('href') === '/empresarial/logout') {
+                    return;
+                }
                 e.preventDefault();
 
                 // Remove active class from all menu items
@@ -1043,6 +1121,7 @@
                 }
             });
         });
+
 
         // Transforma o array PHP em JS
         const vendasPorMes = <?= json_encode($VendasPorMes) ?>;
@@ -1250,7 +1329,7 @@
 
         // Visualizar produto
         document.querySelectorAll('.btn-view').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 const id = this.getAttribute('data-id');
                 fetch(`/api/visualizar/produtos/${id}`)
                     .then(res => res.json())
@@ -1263,7 +1342,7 @@
 
         // Editar produto (exemplo: abrir modal para edição)
         document.querySelectorAll('.btn-edit').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 const id = this.getAttribute('data-id');
                 fetch(`/api/visualizar/produtos/${id}`)
                     .then(res => res.json())
@@ -1277,16 +1356,16 @@
 
         // Excluir produto
         document.querySelectorAll('.btn-delete').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 if (confirm('Deseja realmente excluir este produto?')) {
                     const id = this.getAttribute('data-id');
                     fetch('/api/produtos/excluir', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded'
-                            },
-                            body: 'id=' + encodeURIComponent(id)
-                        })
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: 'id=' + encodeURIComponent(id)
+                    })
                         .then(res => res.json())
                         .then(resp => {
                             if (resp.success) {

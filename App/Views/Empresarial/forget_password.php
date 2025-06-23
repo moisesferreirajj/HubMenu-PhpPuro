@@ -14,7 +14,6 @@
 <body>
 
     <?php
-    // Função auxiliar para validar código
     function validarCodigo()
     {
         if (isset($_SESSION['codigo_inserido']) && $_SESSION['codigo_inserido'] == ($_SESSION['codigo'] ?? null)) {
@@ -36,13 +35,13 @@
         exit;
     }
 
-    if ($_SESSION['metodo_envio'] == 'email' || $_SESSION['metodo_envio'] == 'sms') {
+    if ($_SESSION['metodo_envio'] == 'email'/* || $_SESSION['metodo_envio'] == 'sms'*/) {
         if (!validarCodigo()) {
             $form = $_SESSION['metodo_envio'] == 'email'
                 ? '/../Components/form-forgetPasswordEmail.php'
                 : '/../Components/form-forgetPasswordSms.php';
             require_once __DIR__ . $form;
-        } 
+        }
         exit;
     }
     ?>

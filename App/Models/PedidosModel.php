@@ -1,91 +1,179 @@
 <?php
-class PedidosModel {
+class PedidosModel
+{
     private $db;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = new Database();
     }
 
-    public function getOrderByCompanyId($estabelecimento_id) {
+    public function getOrders()
+    {
         $sql = "SELECT p.id, p.nome_cliente as nome, p.data_pedido, p.status 
                 FROM pedidos p
-                WHERE p.estabelecimento_id = :estabelecimento_id
                 ORDER BY p.data_pedido DESC";
-        
-        $params = [':estabelecimento_id' => $estabelecimento_id];
-        $result = $this->db->execute_query($sql, $params);
-        
+
+        $result = $this->db->execute_query($sql);
+
         return $result->status === 'success' ? $result->results : [];
     }
 
-    public function findOrderProdById($pedido_id) {
-        $sql = "SELECT pp.quantidade, pr.nome, pp.observacao as descricao, pr.valor
+    public function getOrderByCompanyId($estabelecimento_id)
+    {
+        // 1. Buscar pedidos
+        $sqlPedidos = "SELECT 
+                p.id, 
+                u.nome AS cliente, 
+                p.valor_total, 
+                p.observacao,
+                p.status, 
+                p.avaliacao, 
+                p.data_pedido
+            FROM pedidos p
+            JOIN usuarios u ON u.id = p.usuario_id
+            WHERE p.estabelecimento_id = :estabelecimento_id
+            ORDER BY p.data_pedido DESC";
+
+        $params = [':estabelecimento_id' => $estabelecimento_id];
+        $resultPedidos = $this->db->execute_query($sqlPedidos, $params);
+
+        if ($resultPedidos->status !== 'success') {
+            return [];
+        }
+
+        $pedidos = $resultPedidos->results;
+
+        // 2. Para cada pedido, buscar produtos
+        foreach ($pedidos as &$pedido) {
+            $sqlProdutos = "SELECT 
+                    pp.quantidade, 
+                    pr.nome, 
+                    pr.descricao, 
+                    pp.preco_unitario AS valor
+                FROM pedidos_produtos pp
+                JOIN produtos pr ON pr.id = pp.produto_id
+                WHERE pp.pedido_id = :pedido_id";
+
+            $paramsProdutos = [':pedido_id' => $pedido->id];
+            $resultProdutos = $this->db->execute_query($sqlProdutos, $paramsProdutos);
+
+            if ($resultProdutos->status === 'success') {
+                $pedido->produtos = $resultProdutos->results;
+            } else {
+                $pedido->produtos = [];
+            }
+        }
+
+        return $pedidos;
+    }
+
+    public function findOrderProdById($pedido_id)
+    {
+        $sql = "SELECT pp.quantidade, pr.nome, pp.observacao, pp.status as descricao, pr.valor
                 FROM pedidos_produtos pp
                 JOIN produtos pr ON pp.produto_id = pr.id
                 WHERE pp.pedido_id = :pedido_id";
-        
+
         $params = [':pedido_id' => $pedido_id];
         $result = $this->db->execute_query($sql, $params);
-        
+
         return $result->status === 'success' ? $result->results : [];
     }
 
-    public function cadastrarPedido($dados) {
+    public function cadastrarPedido($dados)
+    {
         $sql = "INSERT INTO pedidos (usuario_id, estabelecimento_id, nome_cliente, valor_total, status, data_pedido) 
                 VALUES (:usuario_id, :estabelecimento_id, :nome_cliente, :valor_total, 'pendente', NOW())";
-        
+
         $params = [
             ':usuario_id' => $dados['usuario_id'],
             ':estabelecimento_id' => $dados['estabelecimento_id'],
             ':nome_cliente' => $dados['nome_cliente'],
             ':valor_total' => $dados['valor_total']
         ];
-        
+
         $result = $this->db->execute_non_query($sql, $params);
-        
+
         if ($result->status === 'error') {
             throw new Exception($result->message);
         }
-        
+
         return $result->last_id;
     }
 
-    public function adicionarProdutoPedido($pedido_id, $produto_id, $quantidade, $observacao = null) {
+    public function adicionarProdutoPedido($pedido_id, $produto_id, $quantidade, $observacao = null)
+    {
         $sql = "INSERT INTO pedidos_produtos (pedido_id, produto_id, quantidade, preco_unitario, observacao)
                 SELECT :pedido_id, :produto_id, :quantidade, p.valor, :observacao
                 FROM produtos p
                 WHERE p.id = :produto_id";
-        
+
         $params = [
             ':pedido_id' => $pedido_id,
             ':produto_id' => $produto_id,
             ':quantidade' => $quantidade,
             ':observacao' => $observacao
         ];
-        
+
         $result = $this->db->execute_non_query($sql, $params);
-        
+
         if ($result->status === 'error') {
             throw new Exception($result->message);
         }
-        
+
         return $result->affected_rows > 0;
     }
 
-    public function atualizarStatusPedido($pedido_id, $status) {
+    public function atualizarStatusPedido($pedido_id, $status)
+    {
         $sql = "UPDATE pedidos SET status = :status WHERE id = :pedido_id";
-        
+
         $params = [
             ':pedido_id' => $pedido_id,
             ':status' => $status
         ];
-        
+
         $result = $this->db->execute_non_query($sql, $params);
-        
+
         if ($result->status === 'error') {
             throw new Exception($result->message);
         }
-        
+
         return $result->affected_rows > 0;
     }
+
+    public function searchByEstabelecimentoAndCondition($estabelecimento_id)
+    {
+        if (!$estabelecimento_id) {
+            throw new Exception('ID do estabelecimento não fornecido.');
+        }
+
+        $sql = "SELECT * FROM produtos WHERE estabelecimento_id = :estabelecimento_id";
+        $params = [':estabelecimento_id' => $estabelecimento_id];
+        $result = $this->db->execute_query($sql, $params);
+
+        return $result->status === 'success' ? $result->results : [];
+    }
+
+    public function getRecentOrdersByCompanyId($estabelecimento_id, $limit = 4)
+{
+    $db = new Database();
+    $sql = "SELECT 
+                pedidos.id,
+                clientes.nome AS cliente_nome,
+                estabelecimentos.nome AS estabelecimento_nome,
+                pedidos.status,
+                pedidos.valor_total,
+                pedidos.data_pedido
+            FROM pedidos
+            JOIN usuarios AS clientes ON clientes.id = pedidos.usuario_id
+            JOIN estabelecimentos ON estabelecimentos.id = pedidos.estabelecimento_id
+            WHERE pedidos.estabelecimento_id = :estabelecimento_id
+            ORDER BY pedidos.data_pedido DESC
+            LIMIT $limit";
+    $params = [':estabelecimento_id' => $estabelecimento_id];
+    $result = $db->execute_query($sql, $params);
+    return $result->status === 'success' ? $result->results : [];
+}
 }

@@ -177,6 +177,8 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
   `usuario_id` int(11) NOT NULL,
   `estabelecimento_id` int(11) NOT NULL,
   `observacao` text DEFAULT NULL,
+  `status` varchar(40) NOT NULL,
+  `status` varchar(50) DEFAULT NULL,
   `avaliacao` int(11) DEFAULT NULL,
   `valor_total` decimal(10,2) NOT NULL,
   `data_pedido` datetime DEFAULT current_timestamp(),
@@ -188,17 +190,17 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Copiando dados para a tabela db_hubmenu.pedidos: ~10 rows (aproximadamente)
-INSERT INTO `pedidos` (`id`, `usuario_id`, `estabelecimento_id`, `observacao`, `avaliacao`, `valor_total`, `data_pedido`) VALUES
-	(1, 1, 1, 'Sem cebola', 5, 29.90, '2025-05-14 15:41:03'),
-	(2, 2, 2, 'Ponto da carne: mal passada', 4, 59.90, '2025-05-14 15:41:03'),
-	(3, 3, 3, 'Sem wasabi', 5, 39.90, '2025-05-14 15:41:03'),
-	(4, 4, 4, 'Adicionar maionese', 4, 19.90, '2025-05-14 15:41:03'),
-	(5, 5, 5, 'Pão bem assado', 5, 4.50, '2025-05-14 15:41:03'),
-	(6, 6, 6, 'Café sem açúcar', 4, 4.50, '2025-05-14 15:41:03'),
-	(7, 7, 7, 'Sem queijo', 3, 24.90, '2025-05-14 15:41:03'),
-	(8, 8, 8, 'Adicionar picles', 5, 25.90, '2025-05-14 15:41:03'),
-	(9, 9, 9, 'Sorvete com calda de chocolate', 5, 9.90, '2025-05-14 15:41:03'),
-	(10, 11, 1, 'Cerveja bem gelada', 4, 12.90, '2025-05-14 15:41:03');
+INSERT INTO `pedidos` (`id`, `usuario_id`, `estabelecimento_id`, `observacao`, `status`, `avaliacao`, `valor_total`, `data_pedido`) VALUES
+	(1, 1, 1, 'Sem cebola', 'preparando', 5, 29.90, '2025-05-14 15:41:03'),
+	(2, 2, 1, 'Ponto da carne: mal passada', 'preparando', 4, 59.90, '2025-05-14 15:41:03'),
+	(3, 3, 3, 'Sem wasabi', 'preparando', 5, 39.90, '2025-05-14 15:41:03'),
+	(4, 4, 4, 'Adicionar maionese', 'preparando', 4, 19.90, '2025-05-14 15:41:03'),
+	(5, 5, 5, 'Pão bem assado', 'preparando', 5, 4.50, '2025-05-14 15:41:03'),
+	(6, 6, 6, 'Café sem açúcar', 'preparando', 4, 4.50, '2025-05-14 15:41:03'),
+	(7, 7, 7, 'Sem queijo', 'preparando', 3, 24.90, '2025-05-14 15:41:03'),
+	(8, 8, 8, 'Adicionar picles', 'preparando', 5, 25.90, '2025-05-14 15:41:03'),
+	(9, 9, 9, 'Sorvete com calda de chocolate', 'preparando', 5, 9.90, '2025-05-14 15:41:03'),
+	(10, 11, 1, 'Cerveja bem gelada', 'entregue', 4, 12.90, '2025-05-14 15:41:03');
 
 -- Copiando estrutura para tabela db_hubmenu.pedidos_produtos
 CREATE TABLE IF NOT EXISTS `pedidos_produtos` (
@@ -236,9 +238,9 @@ CREATE TABLE IF NOT EXISTS `produtos` (
   KEY `categoria_id` (`categoria_id`),
   CONSTRAINT `produtos_ibfk_1` FOREIGN KEY (`estabelecimento_id`) REFERENCES `estabelecimentos` (`id`),
   CONSTRAINT `produtos_ibfk_2` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela db_hubmenu.produtos: ~27 rows (aproximadamente)
+-- Copiando dados para a tabela db_hubmenu.produtos: ~28 rows (aproximadamente)
 INSERT INTO `produtos` (`id`, `nome`, `descricao`, `valor`, `imagem`, `status_produtos`, `estabelecimento_id`, `categoria_id`) VALUES
 	(1, 'Pizza Margherita', 'Molho de tomate, mussarela e manjericão', 29.90, '/Views/Assets/Images/Produtos/6830ce694ee14.webp', 1, 1, 1),
 	(2, 'Picanha na Brasa', 'Picanha grelhada com acompanhamentos', 59.90, '/Views/Assets/Images/Produtos/68432c01e5ea5.jpg', 1, 2, 2),
@@ -266,7 +268,9 @@ INSERT INTO `produtos` (`id`, `nome`, `descricao`, `valor`, `imagem`, `status_pr
 	(27, 'Big Malassada', 'Malasadas são donuts feitos com fermento e enriquecidos com ovos, manteiga e, às vezes, leite evaporado ou fresco. Depois de fritos, são passados ​​em açúcar. (OBS.: é um sonho de padaria)', 25.00, '/Views/Assets/Images/Produtos/6843318c5ad45.jpg', 1, 3, 5),
 	(28, 'Guaraná Jesus', 'refri doce', 3.00, '/Views/Assets/Images/Produtos/68433edbceb34.jpg', 1, 1, 10),
 	(29, 'Petit Gateau', 'Bolo e sorvete', 23.00, '/Views/Assets/Images/Produtos/68433b1b7fd40.jpg', 1, 1, 9),
-	(30, 'Banana', 'Penca de banana', 12.00, '/Views/Assets/Images/Produtos/68433f1c53f0f.jpg', 1, 1, 9);
+	(30, 'Banana', 'Penca de banana', 12.00, '/Views/Assets/Images/Produtos/68433f1c53f0f.jpg', 1, 1, 9),
+	(33, 'Pizza Margherita', 'sim', 100.00, '/Views/Assets/Images/Produtos/6859a1d9f34e0.png', NULL, 2, 1),
+	(35, 'SUGAR UNITED', 'ACUCAR DO BRASIL', 50.00, '/Views/Assets/Images/Produtos/6859af8a31dc0.jpg', 1, 1, 9);
 
 -- Copiando estrutura para tabela db_hubmenu.usuarios
 CREATE TABLE IF NOT EXISTS `usuarios` (
@@ -282,7 +286,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   UNIQUE KEY `email` (`email`),
   KEY `fk_usuarios_cargo` (`cargo_id`),
   CONSTRAINT `fk_usuarios_cargo` FOREIGN KEY (`cargo_id`) REFERENCES `cargos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Copiando dados para a tabela db_hubmenu.usuarios: ~12 rows (aproximadamente)
 INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `cargo_id`, `cep`, `endereco`, `telefone`) VALUES

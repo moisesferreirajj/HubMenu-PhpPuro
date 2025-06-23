@@ -1,7 +1,5 @@
 <?php
 
-@require_once __DIR__ . '/Database.php';
-
 class ProdutosModel
 {
     /**
@@ -11,17 +9,16 @@ class ProdutosModel
     {
         $db = new Database();
         $sql = "SELECT * FROM produtos WHERE id = :id";
-        $params = [':id' => $id];
+        $params = [':id' => intval($id)];
         return $db->execute_query($sql, $params);
     }
 
     /**
-     * Busca um produto pelo ID.
+     * Busca produtos associados a um pedido pelo ID.
      */
     public function findOrderProdById($id)
     {
         $db = new Database();
-        // Consulta para obter produtos associados ao pedido
         $sql = "SELECT 
                 pp.pedido_id,
                 pp.quantidade,
@@ -39,29 +36,24 @@ class ProdutosModel
                 categorias c ON pr.categoria_id = c.id
             WHERE 
                 pp.pedido_id = :id";
-        $params = [':id' => $id];
+        $params = [':id' => intval($id)];
 
-        // Executa a consulta
         $result = $db->execute_query($sql, $params);
-
-        // Retorna os resultados ou um array vazio se não houver resultados
-        return $result->results ?? []; // Usando o operador null coalescing para simplificar
+        return $result->results ?? [];
     }
-
 
     /**
      * Busca os produtos pelo ID do Estabelecimento.
      */
     public function findByEstabelecimentoId($estabelecimento_id)
     {
-
         $db = new Database();
         $sql = "SELECT p.*, c.nome as categoria_nome, e.nome as estabelecimento_nome
-        FROM produtos p 
-        LEFT JOIN categorias c ON p.categoria_id = c.id 
-        LEFT JOIN estabelecimentos e ON p.estabelecimento_id = e.id
-        WHERE p.estabelecimento_id = :estabelecimento_id";
-        $params = [':estabelecimento_id' => $estabelecimento_id];
+                FROM produtos p 
+                LEFT JOIN categorias c ON p.categoria_id = c.id 
+                LEFT JOIN estabelecimentos e ON p.estabelecimento_id = e.id
+                WHERE p.estabelecimento_id = :estabelecimento_id AND p.status_produtos = 1";
+        $params = [':estabelecimento_id' => intval($estabelecimento_id)];
         return $db->execute_query($sql, $params);
     }
 
@@ -78,18 +70,19 @@ class ProdutosModel
     /**
      * Insere um novo produto no banco de dados.
      */
-    public function insert($nome, $descricao, $valor, $imagem, $estabelecimento_id, $categoria_id)
+    public function insert($nome, $descricao, $valor, $imagem, $estabelecimento_id, $categoria_id, $status_produtos )
     {
         $db = new Database();
-        $sql = "INSERT INTO produtos (nome, descricao, valor, imagem, estabelecimento_id, categoria_id)
-                VALUES (:nome, :descricao, :valor, :imagem, :estabelecimento_id, :categoria_id)";
+        $sql = "INSERT INTO produtos (nome, descricao, valor, imagem, estabelecimento_id, categoria_id, status_produtos)
+                VALUES (:nome, :descricao, :valor, :imagem, :estabelecimento_id, :categoria_id, :status_produtos)";
         $params = [
-            ':nome' => $nome,
-            ':descricao' => $descricao,
-            ':valor' => $valor,
+            ':nome' => trim($nome),
+            ':descricao' => trim($descricao),
+            ':valor' => floatval($valor),
             ':imagem' => $imagem,
-            ':estabelecimento_id' => $estabelecimento_id,
-            ':categoria_id' => $categoria_id
+            ':estabelecimento_id' => intval($estabelecimento_id),
+            ':categoria_id' => intval($categoria_id),
+            ':status_produtos' => intval($status_produtos)
         ];
         return $db->execute_non_query($sql, $params);
     }
@@ -111,13 +104,13 @@ class ProdutosModel
                         categoria_id = :categoria_id
                     WHERE id = :id";
             $params = [
-                ':id' => $id,
-                ':nome' => $nome,
-                ':descricao' => $descricao,
-                ':valor' => $valor,
+                ':id' => intval($id),
+                ':nome' => trim($nome),
+                ':descricao' => trim($descricao),
+                ':valor' => floatval($valor),
                 ':imagem' => $imagem,
-                ':estabelecimento_id' => $estabelecimento_id,
-                ':categoria_id' => $categoria_id
+                ':estabelecimento_id' => intval($estabelecimento_id),
+                ':categoria_id' => intval($categoria_id)
             ];
         } else {
             $sql = "UPDATE produtos SET 
@@ -128,12 +121,12 @@ class ProdutosModel
                         categoria_id = :categoria_id
                     WHERE id = :id";
             $params = [
-                ':id' => $id,
-                ':nome' => $nome,
-                ':descricao' => $descricao,
-                ':valor' => $valor,
-                ':estabelecimento_id' => $estabelecimento_id,
-                ':categoria_id' => $categoria_id
+                ':id' => intval($id),
+                ':nome' => trim($nome),
+                ':descricao' => trim($descricao),
+                ':valor' => floatval($valor),
+                ':estabelecimento_id' => intval($estabelecimento_id),
+                ':categoria_id' => intval($categoria_id)
             ];
         }
 
@@ -147,47 +140,59 @@ class ProdutosModel
     {
         $db = new Database();
         $sql = "DELETE FROM produtos WHERE id = :id";
-        $params = [':id' => $id];
+        $params = [':id' => intval($id)];
         return $db->execute_non_query($sql, $params);
     }
 
-    //Ativar & Desativar - QUERY BASICA
+    /**
+     * Desativa um produto.
+     */
     public function desativarProduto($id)
     {
         $db = new Database();
         $sql = "UPDATE produtos SET status_produtos = 0 WHERE id = :id";
-        $params = [':id' => $id];
+        $params = [':id' => intval($id)];
         return $db->execute_non_query($sql, $params);
     }
 
+    /**
+     * Ativa um produto.
+     */
     public function ativarProduto($id)
     {
         $db = new Database();
         $sql = "UPDATE produtos SET status_produtos = 1 WHERE id = :id";
-        $params = [':id' => $id];
+        $params = [':id' => intval($id)];
         return $db->execute_non_query($sql, $params);
     }
 
+    /**
+     * Busca produtos por termo de pesquisa e ID do estabelecimento.
+     */
     public function searchByEstabelecimentoAndQuery($estabelecimento_id, $query)
     {
         $db = new Database();
-        $query = "%$query%";
+        $query = "%" . trim($query) . "%";
         $sql = "SELECT * FROM produtos WHERE estabelecimento_id = :estabelecimento_id AND nome LIKE :query AND status_produtos = 1";
         $params = [
-            ':estabelecimento_id' => $estabelecimento_id,
+            ':estabelecimento_id' => intval($estabelecimento_id),
             ':query' => $query,
         ];
         $result = $db->execute_query($sql, $params);
-        return $result->results ? $result->results : [];
+        return $result->results ?? [];
     }
 
+    /**
+     * Busca produtos por condição e ID do estabelecimento.
+     */
     public function searchByEstabelecimentoAndCondition($estabelecimento_id)
     {
         $db = new Database();
-        $sql = "SELECT p.id,p.nome, p.descricao, p.valor, p.imagem FROM produtos p JOIN estabelecimentos e ON p.estabelecimento_id = e.id WHERE e.id = :id";
-        $params = [
-            ':id' => $estabelecimento_id
-        ];
+        $sql = "SELECT p.id, p.nome, p.descricao, p.valor, p.imagem 
+                FROM produtos p 
+                JOIN estabelecimentos e ON p.estabelecimento_id = e.id 
+                WHERE e.id = :id";
+        $params = [':id' => intval($estabelecimento_id)];
         $result = $db->execute_query($sql, $params);
         return $result->results ?? [];
     }

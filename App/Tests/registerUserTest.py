@@ -11,7 +11,7 @@ user = {
     "endereco" : "Rua das Flores, 123",
     "email" : "zozo@mail.com",
     "telefone" : "1234567890",
-    "password" : "zozo123",
+    "password" : "Ana&Jordan123",
 }
 
 ids_formulario = [
@@ -25,6 +25,7 @@ ids_formulario = [
 
 key_id  = {
     "name": "nome",
+    "cep": "cep",
     "endereco": "endereco",
     "email": "email",
     "telefone": "telefone",
@@ -36,30 +37,31 @@ class TestRegisterUser:
         self.address = address
         self.driver = driver
     
-    def fill_product_form(self):
+    def fill_user_form(self):
         try:
             for key_user, id_form in key_id.items():
-                time.sleep(5)
+                time.sleep(3)
                 element = self.driver.find_element(By.ID, id_form)
                 element.send_keys(user[key_user])
 
-            time.sleep(5)
+            time.sleep(3)
             confirm = self.driver.find_element(By.ID, "confirmar-senha")
             confirm.send_keys(user["password"])
 
-            time.sleep(5)
-            checkbox = self.driver.find_element(By.ID, "aceito_termos")
+            time.sleep(3)
+            checkbox = self.driver.find_element(By.ID, "aceito-termos")
             checkbox.click()
 
-            time.sleep(8)
+            time.sleep(5)
             submit_button = self.driver.find_element(By.ID, "btn-cadastrar")
             submit_button.click()
         except Exception as e:
             self.driver.quit()  
 
 service = webdriver.Chrome()
-addressUrl = service.get("http://localhost:8080/empresarial/cadastro")
+service.maximize_window()
+addressUrl = service.get("http://10.3.76.83:8080/empresarial/cadastro")
 
 testUnir = TestRegisterUser(addressUrl, service)
 
-testUnir.fill_product_form()
+testUnir.fill_user_form()

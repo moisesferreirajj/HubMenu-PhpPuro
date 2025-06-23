@@ -2,9 +2,6 @@
 
 class ProdutosController extends RenderView
 {
-    /**
-     * Exibe o formulário para cadastro de produto.
-     */
     public function index()
     {
         $estabelecimentos = (new EstabelecimentosModel())->findAll();
@@ -15,13 +12,8 @@ class ProdutosController extends RenderView
         ]);
     }
 
-    /**
-     * Processa o cadastro de um produto.
-     */
     public function cadastrar()
     {
-        session_start();
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nome = $_POST['nome'];
             $descricao = $_POST['descricao'];
@@ -33,7 +25,6 @@ class ProdutosController extends RenderView
                 die('Estabelecimento não informado.');
             }
 
-            //UPLOAD DE IMAGEM
             if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
                 $ext = strtolower(pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION));
                 $permitidas = ['png', 'jpg', 'jpeg', 'webp'];
@@ -49,52 +40,39 @@ class ProdutosController extends RenderView
                     die('Erro ao salvar a imagem.');
                 }
 
-                $imagemPath = '/Views/Assets/Images/Produtos/' . $nomeImagem;
+            $imagemPath = '/Views/Assets/Images/Produtos/' . $nomeImagem;
             } else {
                 die('Imagem não enviada corretamente.');
             }
 
             $produtosModel = new ProdutosModel();
-            $produtosModel->insert($nome, $descricao, $valor, $imagemPath, $estabelecimento_id, $categoria_id);
+            $produtosModel->insert($nome, $descricao, $valor, $imagemPath, $estabelecimento_id, $categoria_id, 1);
 
-            echo "<script>alert('Produto cadastrado com sucesso!')</script>";
-            header(header: "Location: /gerenciar/cardapio/$estabelecimento_id");
+            echo "<script>
+                alert('Produto cadastrado com sucesso!');
+                window.location.href = '/gerenciar/cardapio/$estabelecimento_id';
+            </script>";
+            exit;
         }
     }
 
-    /**
-     * Exibe todas as categorias via API.
-     */
     public function getCategorias(): void
     {
         header('Content-Type: application/json; charset=utf-8');
-
         $categorias = (new CategoriasModel())->findAll();
-        echo json_encode([
-            'status' => 'success',
-            'categorias' => $categorias
-        ], JSON_UNESCAPED_UNICODE);
+        echo json_encode(['status' => 'success', 'categorias' => $categorias], JSON_UNESCAPED_UNICODE);
     }
 
-    /**
-     * Exibe todos os estabelecimentos via API.
-     */
     public function getEstabelecimentos(): void
     {
         header('Content-Type: application/json; charset=utf-8');
-
         $estabelecimentos = (new EstabelecimentosModel())->findAll();
-        echo json_encode([
-            'status' => 'success',
-            'estabelecimentos' => $estabelecimentos
-        ], JSON_UNESCAPED_UNICODE);
+        echo json_encode(['status' => 'success', 'estabelecimentos' => $estabelecimentos], JSON_UNESCAPED_UNICODE);
     }
-
 
     public function atualizar()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            //RECEBE OS DADOS DO FORM
             $id = $_POST['id'];
             $nome = $_POST['nome'];
             $descricao = $_POST['descricao'];
@@ -102,7 +80,6 @@ class ProdutosController extends RenderView
             $categoria_id = $_POST['categoria_id'];
             $estabelecimento_id = $_POST['estabelecimento_id'];
 
-            //VERIFICA SE A IMAGEM FOI ENVIADA
             if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
                 $ext = strtolower(pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION));
                 $extensoesPermitidas = ['png', 'jpg', 'jpeg', 'webp'];
@@ -111,7 +88,6 @@ class ProdutosController extends RenderView
                     die('Apenas imagens nos formatos .png, .jpg, .jpeg ou .webp são permitidas.');
                 }
 
-                //GERANDO O NOME ÚNICO DO ARQUIVO
                 $nomeImagem = uniqid() . '.' . $ext;
                 $caminhoDestino = __DIR__ . '/../../Views/Assets/Images/Produtos/' . $nomeImagem;
 
@@ -119,27 +95,19 @@ class ProdutosController extends RenderView
                     die('Erro ao salvar a imagem.');
                 }
 
-                //IMAGEM SERÁ GUARDADA AQUI
-                $imagemPath = '/Views/Assets/Images/Produtos/' . $nomeImagem;
+                $imagemPath = $nomeImagem;
             } else {
                 $imagemPath = null;
             }
 
             $produtosModel = new ProdutosModel();
+            $produtosModel->update($id, $nome, $descricao, $valor, $imagemPath, $estabelecimento_id, $categoria_id);
 
-            //ATUALIZAÇÃO NO BANCO
-            $produtosModel->update(
-                $id,
-                $nome,
-                $descricao,
-                $valor,
-                $imagemPath,
-                $estabelecimento_id,
-                $categoria_id
-            );
-
-            echo "<script>alert('Produto editado com sucesso!')</script>";
-            header(header: "Location: /gerenciar/cardapio/$estabelecimento_id");
+            echo "<script>
+                alert('Produto editado com sucesso!');
+                window.location.href = '/gerenciar/cardapio/$estabelecimento_id';
+            </script>";
+            exit;
         } else {
             echo "Erro: Requisição inválida.";
         }
@@ -150,11 +118,7 @@ class ProdutosController extends RenderView
         header('Content-Type: application/json; charset=utf-8');
         $produtosModel = new ProdutosModel();
         $produtos = $produtosModel->findByEstabelecimentoId($estabelecimento_id);
-
-        echo json_encode([
-            'status' => 'success',
-            'produtos' => $produtos
-        ], JSON_UNESCAPED_UNICODE);
+        echo json_encode(['status' => 'success', 'produtos' => $produtos], JSON_UNESCAPED_UNICODE);
     }
 
     public function getProdutoPorId($id)
@@ -164,15 +128,9 @@ class ProdutosController extends RenderView
         $produto = $produtosModel->findById($id);
 
         if ($produto) {
-            echo json_encode([
-                'status' => 'success',
-                'produto' => $produto[0]
-            ], JSON_UNESCAPED_UNICODE);
+            echo json_encode(['status' => 'success', 'produto' => $produto[0]], JSON_UNESCAPED_UNICODE);
         } else {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Produto não encontrado'
-            ]);
+            echo json_encode(['status' => 'error', 'message' => 'Produto não encontrado']);
         }
     }
 
@@ -181,7 +139,7 @@ class ProdutosController extends RenderView
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id'] ?? null;
             if ($id) {
-                (new ProdutosModel())->desativar($id);
+                (new ProdutosModel())->desativarProduto($id);
                 echo json_encode(['status' => 'success', 'message' => 'Produto desativado com sucesso.']);
             } else {
                 echo json_encode(['status' => 'error', 'message' => 'ID do produto não informado.']);
@@ -194,7 +152,7 @@ class ProdutosController extends RenderView
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id'] ?? null;
             if ($id) {
-                (new ProdutosModel())->ativar($id);
+                (new ProdutosModel())->ativarProduto($id);
                 echo json_encode(['status' => 'success', 'message' => 'Produto ativado com sucesso.']);
             } else {
                 echo json_encode(['status' => 'error', 'message' => 'ID do produto não informado.']);
@@ -205,23 +163,15 @@ class ProdutosController extends RenderView
     public function searchProdutos($estabelecimento_id)
     {
         header('Content-Type: application/json; charset=utf-8');
-        
-        //PEGA O PRODUTO PELO GET DE QUERY
         $query = $_GET['query'] ?? '';
-
         $produtosModel = new ProdutosModel();
         $produtos = $produtosModel->searchByEstabelecimentoAndQuery($estabelecimento_id, $query);
-
-        echo json_encode([
-            'status' => 'success',
-            'produtos' => $produtos
-        ], JSON_UNESCAPED_UNICODE);
+        echo json_encode(['status' => 'success', 'produtos' => $produtos], JSON_UNESCAPED_UNICODE);
     }
 
     public function excluir()
     {
         $id = $_POST['id'] ?? json_decode(file_get_contents('php://input'), true)['id'] ?? null;
-        
         if (!$id) {
             echo json_encode(['status' => 'error', 'message' => 'ID inválido']);
             return;
@@ -236,5 +186,4 @@ class ProdutosController extends RenderView
             echo json_encode(['status' => 'error', 'message' => 'Produto não encontrado ou não foi excluído']);
         }
     }
-
 }

@@ -159,12 +159,21 @@ class UsuariosModel
         return $result->results ?? [];
     }
 
-    public function getCompanyByUserId($id)
+    public function getCompanyByUserId($user_id)
     {
         $db = new Database();
-        $sql = "SELECT e.id FROM estabelecimentos e JOIN estabelecimentos_usuarios eu ON e.id = eu.estabelecimento_id JOIN usuarios u ON u.id = eu.usuario_id WHERE u.id = :id";
-        $params = [':id' => $id];
+        $sql = "SELECT e.id 
+                FROM estabelecimentos e
+                JOIN estabelecimentos_usuarios eu ON e.id = eu.estabelecimento_id
+                WHERE eu.usuario_id = :user_id
+                LIMIT 1";
+        $params = [':user_id' => $user_id];
         $result = $db->execute_query($sql, $params);
-        return $result->results[0]->id ?? null;
+
+        if ($result->status === 'success' && !empty($result->results)) {
+            return (int) $result->results[0]->id;
+        }
+        return null;
     }
+
 }

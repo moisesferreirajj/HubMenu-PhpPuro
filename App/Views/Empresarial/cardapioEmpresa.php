@@ -134,7 +134,7 @@ $erroProdutos = $Erro ?? null;
                 <?php endforeach; ?>
             </div>
         </div>
-
+        
         <!-- Modal de cadastro de produtos -->
         <?php require_once __DIR__ . '/../../Views/Components/Cadastros/cadastrarProdutos.php'; ?>
 

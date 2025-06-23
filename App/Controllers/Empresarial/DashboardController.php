@@ -39,7 +39,7 @@ class DashboardController extends RenderView
 
         $avaliacoes = $avaliacoesModel->getByEstabelecimento($id, 10); // 10 últimas avaliações
 
-        $CategoriasObj = $categoriasModel->findAll($id) ?? [];
+        $CategoriasObj = $categoriasModel->findAll() ?? [];
         $categorias = $CategoriasObj->results ?? [];
 
         $this->loadView('empresarial/dashboard', [

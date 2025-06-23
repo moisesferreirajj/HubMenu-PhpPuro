@@ -106,44 +106,44 @@ class EsqueceuSenha extends RenderView
             exit();
         }
 
-        if ($_SESSION['metodo_envio'] == 'sms') {
-            $telefone = trim($_POST['telefone']);
+        // if ($_SESSION['metodo_envio'] == 'sms') {
+        //     $telefone = trim($_POST['telefone']);
 
-            // Remove tudo que não for número
-            $telefoneOnlyNumbers = preg_replace('/[^0-9]/', '', $telefone);
+        //     // Remove tudo que não for número
+        //     $telefoneOnlyNumbers = preg_replace('/[^0-9]/', '', $telefone);
 
-            if (strlen($telefoneOnlyNumbers) < 10 || strlen($telefoneOnlyNumbers) > 11) {
-                echo "<script>alert('Formato de telefone inválido.'); window.location.href = '/empresarial/esqueceuSenha';</script>";
-                exit();
-            }
+        //     if (strlen($telefoneOnlyNumbers) < 10 || strlen($telefoneOnlyNumbers) > 11) {
+        //         echo "<script>alert('Formato de telefone inválido.'); window.location.href = '/empresarial/esqueceuSenha';</script>";
+        //         exit();
+        //     }
 
-            $users = new UsuariosModel();
-            $usuario = $users->buscarPorTelefone($telefone);
-            $telefoneExists = $usuario->results[0] ?? null;
+        //     $users = new UsuariosModel();
+        //     $usuario = $users->buscarPorTelefone($telefone);
+        //     $telefoneExists = $usuario->results[0] ?? null;
 
-            if (!$telefoneExists) {
-                echo "<script>alert('Se o telefone estiver cadastrado, você receberá um SMS.'); window.location.href = '/empresarial/esqueceuSenha';</script>";
-                exit;
-            }
+        //     if (!$telefoneExists) {
+        //         echo "<script>alert('Se o telefone estiver cadastrado, você receberá um SMS.'); window.location.href = '/empresarial/esqueceuSenha';</script>";
+        //         exit;
+        //     }
 
-            $codigo = $this->gerarCodigo(5);
+        //     $codigo = $this->gerarCodigo(5);
 
-            $_SESSION['telefone_usuario'] = $telefoneExists->telefone;
-            $_SESSION['id_usuario'] = $telefoneExists->id;
-            $_SESSION['codigo'] = $codigo;
-            $_SESSION['codigo_expira'] = time() + 300;
+        //     $_SESSION['telefone_usuario'] = $telefoneExists->telefone;
+        //     $_SESSION['id_usuario'] = $telefoneExists->id;
+        //     $_SESSION['codigo'] = $codigo;
+        //     $_SESSION['codigo_expira'] = time() + 300;
 
-            // Instancia SendSMSController e envia o SMS
-            $smsenvio = new SendSMSController();
-            $resultado = $smsenvio->sendSMS($codigo, $telefoneOnlyNumbers);
+        //     // Instancia SendSMSController e envia o SMS
+        //     $smsenvio = new SendSMSController();
+        //     $resultado = $smsenvio->sendSMS($codigo, $telefoneOnlyNumbers);
 
-            if ($resultado['success']) {
-                echo "<script>alert('SMS enviado com sucesso!'); window.location.href = '/empresarial/esqueceuSenha';</script>";
-            } else {
-                echo "<script>alert('Erro ao enviar SMS: " . $resultado['message'] . "'); window.location.href = '/empresarial/esqueceuSenha';</script>";
-            }
-            exit();
-        }
+        //     if ($resultado['success']) {
+        //         echo "<script>alert('SMS enviado com sucesso!'); window.location.href = '/empresarial/esqueceuSenha';</script>";
+        //     } else {
+        //         echo "<script>alert('Erro ao enviar SMS: " . $resultado['message'] . "'); window.location.href = '/empresarial/esqueceuSenha';</script>";
+        //     }    
+        //     exit();
+        // }
     }
 
     public function sendType()

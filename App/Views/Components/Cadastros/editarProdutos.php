@@ -43,12 +43,12 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
           <button type="submit" name="acao" value="salvar" class="btn btn-primary">Salvar alterações</button>
           <button type="button" name="acao" value="excluir" class="btn btn-danger" id="btnExcluir">Excluir</button>
-          <button type="submit" name="acao" value="desativar" id="btnDesativar" class="btn btn-secondary">Desativar</button>
+          <button type="button" name="acao" value="desativar" class="btn btn-secondary" id="btnDesativar">Desativar</button>
         </div>
       </form>
     </div>
   </div>
-</div>
+  </div>
 
 <!-- Script para preencher o modal -->
 <script>
