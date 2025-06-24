@@ -41,8 +41,10 @@ $routes = [
     '/api/send/SMS' => 'SendSMSController@sendSMS',
 
     /* ROTAS ESPECIALMENTE DA EMPRESA PARA O CLIENTE: */
+    '/api/estabelecimento/editar' => 'GerenciarController@editarEstabelecimento',
     '/cardapio/{id}' => 'CardapioController@indexCliente',
     '/gerenciar/cardapio/{id}' => 'CardapioController@indexAdmin',
+    '/gerenciar/estabelecimento/{id}' => 'GerenciarController@index',
     '/gerenciar/lixeira/{id}' => 'CardapioController@lixeira',
 
     /* ROTAS ESPECIALMENTE DA EMPRESA PARA A EMPRESA: */
@@ -63,5 +65,8 @@ $routes = [
     /* ROTAS DE PEDIDOS */
     '/api/pedidos/register' => 'PedidosController@registerOrder',
     '/api/pedidos/atualizar-status' => 'PedidosController@atualizarStatus',
+
+    /* ROTAS DE CATEGORIAS */
+    '/api/categorias/excluir' => 'CategoriasController@excluir',
 
 ];

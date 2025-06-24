@@ -6,57 +6,55 @@ import time
 
 
 user = {
-    "name" : "Zara Rotert",
-    "email" : "zaza@mail.com",
-    "telefone" : "0987654321",
-    "password" : "Ana&Jordan321",
+    "name" : "Zoe Rotert",
+    "cep" : 89120323,
+    "endereco" : "Rua das Flores, 123",
+    "email" : "zozo@mail.com",
+    "telefone" : "1234567890",
+    "password" : "Ana&Jordan123",
 }
 
 ids_formulario = [
-    "usuarioNome",
-    "usuarioEmail",
-    "usuarioTelefone",
-    "usuarioSenha",
+    "nome",
+    "cep",
+    "endereco",
+    "email",
+    "telefone",
+    "senha",
 ]
 
 key_id  = {
-    "name": "usuarioNome",
-    "email": "usuarioEmail",
-    "telefone": "usuarioTelefone",
-    "password": "usuarioSenha"
+    "name": "nome",
+    "cep": "cep",
+    "endereco": "endereco",
+    "email": "email",
+    "telefone": "telefone",
+    "password": "senha"
 }
 
-class TestRegisterUser:
+class TestRegisterLogin:
     def __init__(self, address, driver):
         self.address = address
         self.driver = driver
     
     def fill_user_form(self):
         try:
-            self.driver.findElement(By.ID, "user_page").click()
-            time.sleep(3)
-            
             for key_user, id_form in key_id.items():
                 time.sleep(3)
                 element = self.driver.find_element(By.ID, id_form)
                 element.send_keys(user[key_user])
 
             time.sleep(3)
-            confirm = self.driver.find_element(By.ID, "usuarioSenha2")
+            confirm = self.driver.find_element(By.ID, "confirmar-senha")
             confirm.send_keys(user["password"])
 
-            select_role = self.driver.find_element(By.ID, "usuarioCargo")
-            dropdown = Select(select_role)
             time.sleep(3)
-            dropdown.select_by_value("3")
-            time.sleep(3)
+            checkbox = self.driver.find_element(By.ID, "aceito-termos")
+            checkbox.click()
 
             time.sleep(5)
-            submit_button = self.driver.find_element(By.ID, "regis_usu")
+            submit_button = self.driver.find_element(By.ID, "btn-cadastrar")
             submit_button.click()
-
-            self.driver.findElement(By.ID, "user_page").click()
-
         except Exception as e:
             self.driver.quit()  
 
@@ -64,6 +62,6 @@ service = webdriver.Chrome()
 service.maximize_window()
 addressUrl = service.get("http://10.3.76.83:8080/empresarial/dashboard/1")
 
-testUnir = TestRegisterUser(addressUrl, service)
+testUnir = TestRegisterLogin(addressUrl, service)
 
 testUnir.fill_user_form()

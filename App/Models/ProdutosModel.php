@@ -78,30 +78,45 @@ class ProdutosModel
     /**
      * Atualiza os dados de um produto existente.
      */
-    public function update($id, $nome, $descricao, $valor, $imagem, $estabelecimento_id, $categoria_id)
+    public function update($id, $nome, $descricao, $valor, $imagem, $estabelecimento_id, $categoria_id, $status_produtos)
     {
         $db = new Database();
 
         if ($imagem !== null) {
-            $sql = "UPDATE produtos SET nome = :nome, descricao = :descricao, valor = :valor, imagem = :imagem,
-                    estabelecimento_id = :estabelecimento_id, categoria_id = :categoria_id WHERE id = :id";
+            $sql = "UPDATE produtos SET 
+                    nome = :nome, 
+                    descricao = :descricao, 
+                    valor = :valor, 
+                    imagem = :imagem,
+                    status_produtos = :status_produtos,
+                    estabelecimento_id = :estabelecimento_id, 
+                    categoria_id = :categoria_id 
+                WHERE id = :id";
             $params = [
                 ':id' => intval($id),
                 ':nome' => trim($nome),
                 ':descricao' => trim($descricao),
                 ':valor' => floatval($valor),
                 ':imagem' => $imagem,
+                ':status_produtos' => intval($status_produtos),
                 ':estabelecimento_id' => intval($estabelecimento_id),
                 ':categoria_id' => intval($categoria_id)
             ];
         } else {
-            $sql = "UPDATE produtos SET nome = :nome, descricao = :descricao, valor = :valor,
-                    estabelecimento_id = :estabelecimento_id, categoria_id = :categoria_id WHERE id = :id";
+            $sql = "UPDATE produtos SET 
+                    nome = :nome, 
+                    descricao = :descricao, 
+                    valor = :valor, 
+                    status_produtos = :status_produtos,
+                    estabelecimento_id = :estabelecimento_id, 
+                    categoria_id = :categoria_id 
+                WHERE id = :id";
             $params = [
                 ':id' => intval($id),
                 ':nome' => trim($nome),
                 ':descricao' => trim($descricao),
                 ':valor' => floatval($valor),
+                ':status_produtos' => intval($status_produtos),
                 ':estabelecimento_id' => intval($estabelecimento_id),
                 ':categoria_id' => intval($categoria_id)
             ];
@@ -147,18 +162,19 @@ class ProdutosModel
      * Busca produtos inativos por ID do estabelecimento.
      */
     /**
- * Busca produtos inativos de um estabelecimento específico.
- *
- * @param int $estabelecimento_id
- * @return array Lista de produtos inativos (como objetos)
- */
-public function listarDesativados($estabelecimento_id) {
-    try {
-        $estabelecimento_id = intval($estabelecimento_id);
-        error_log("Executando listarDesativados com estabelecimento_id: $estabelecimento_id");
+     * Busca produtos inativos de um estabelecimento específico.
+     *
+     * @param int $estabelecimento_id
+     * @return array Lista de produtos inativos (como objetos)
+     */
+    public function listarDesativados($estabelecimento_id)
+    {
+        try {
+            $estabelecimento_id = intval($estabelecimento_id);
+            error_log("Executando listarDesativados com estabelecimento_id: $estabelecimento_id");
 
-        $db = new Database();
-        $sql = "
+            $db = new Database();
+            $sql = "
             SELECT p.*, c.nome AS categoria_nome 
             FROM produtos p
             LEFT JOIN categorias c ON p.categoria_id = c.id
@@ -166,18 +182,18 @@ public function listarDesativados($estabelecimento_id) {
               AND p.status_produtos = 0
         ";
 
-        $params = [':estabelecimento_id' => $estabelecimento_id];
-        $result = $db->execute_query($sql, $params);
+            $params = [':estabelecimento_id' => $estabelecimento_id];
+            $result = $db->execute_query($sql, $params);
 
-        $produtos = $result->results ?? [];
-        error_log('Produtos inativos encontrados: ' . count($produtos));
+            $produtos = $result->results ?? [];
+            error_log('Produtos inativos encontrados: ' . count($produtos));
 
-        return $produtos;
-    } catch (Exception $e) {
-        error_log('Erro ao listar produtos inativos: ' . $e->getMessage());
-        return [];
+            return $produtos;
+        } catch (Exception $e) {
+            error_log('Erro ao listar produtos inativos: ' . $e->getMessage());
+            return [];
+        }
     }
-}
 
 
     /**

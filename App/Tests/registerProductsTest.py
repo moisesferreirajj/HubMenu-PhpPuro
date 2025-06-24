@@ -12,35 +12,50 @@ class TestRegisterProducts:
     
     def fill_product_form(self):
         try:
+            # Acessa a página de cadastro de produtos
+            self.driver.findElement(By.ID, "products_page").click()
+
             time.sleep(3)
-            open_form = self.driver.find_element(By.ID, "open_cad")
+            open_form = self.driver.find_element(By.ID, "registerPro")
             open_form.click()
             time.sleep(3)
 
             # Procura pelos campos e envia os dados corretos
             # Nome do produto
             input_name = self.driver.find_element(By.ID, "nome")
-            input_name.send_keys("Big Malassada")
+            input_name.send_keys("Carbonara")
             time.sleep(3)
             # Valor do produto
             input_valor = self.driver.find_element(By.ID, "valor")
-            input_valor.send_keys("25")
-            time.sleep(3)
-            # Imagem do produto
-            input_img = self.driver.find_element(By.ID, "imagem")
-            input_img.send_keys(r"C:\Users\nubmo\Downloads\sonho.jpg")
+            input_valor.send_keys("50")
             time.sleep(3)
 
+            
             select_type = self.driver.find_element(By.ID, "categoria_id")
             dropdown = Select(select_type)
             time.sleep(3)
-
-            dropdown.select_by_value("5")
+            dropdown.select_by_value("7")
             time.sleep(3)
 
+
+            select_status = self.driver.find_element(By.ID, "status_produto")
+            dropdown = Select(select_status)
+            time.sleep(3)
+            dropdown.select_by_value("1")
+            time.sleep(3)
+
+
+
             input_descricao = self.driver.find_element(By.ID, "descricao")
-            input_descricao.send_keys("Malasadas são donuts feitos com fermento e enriquecidos com ovos, manteiga e, às vezes, leite evaporado ou fresco. Depois de fritos, são passados ​​em açúcar. (OBS.: é um sonho de padaria)")
+            input_descricao.send_keys("Carbonara é um prato italiano feito com massa, ovos, queijo, guanciale e pimenta-do-reino. Cremoso e tradicional, vem de Roma.")
             time.sleep(2)
+
+            
+            # Imagem do produto
+            input_img = self.driver.find_element(By.ID, "imagem")
+            input_img.send_keys(r"/App/Tests/img")
+            time.sleep(3)
+
 
             submit_form = self.driver.find_element(By.ID, "regis_pro")
             submit_form.click()
@@ -48,7 +63,7 @@ class TestRegisterProducts:
             self.driver.quit()  
 
 service = webdriver.Chrome()
-addressUrl = service.get("http://localhost:8080/gerenciar/cardapio/3")
+addressUrl = service.get("http://localhost:8080/empresarial/dashboard/1")
 
 testUnir = TestRegisterProducts(addressUrl, service)
 

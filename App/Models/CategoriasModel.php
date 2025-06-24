@@ -45,13 +45,8 @@ class CategoriasModel
     public function update($id, $nome)
     {
         $db = new Database();
-        $sql = "UPDATE categorias SET 
-                    nome = :nome, 
-                WHERE id = :id";
-        $params = [
-            ':nome' => $nome,
-            ':id' => $id
-        ];
+        $sql = "UPDATE categorias SET nome = :nome WHERE id = :id";
+        $params = [':nome' => $nome, ':id' => $id];
         return $db->execute_non_query($sql, $params);
     }
 

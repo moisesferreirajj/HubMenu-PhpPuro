@@ -71,8 +71,8 @@ function renderizarEstabelecimentos(estabelecimentos, container) {
             : 'Grátis';
 
         card.innerHTML = `
-            <div class="card restaurant-card h-100">
-                <img src="${estabelecimento.imagem || 'https://via.placeholder.com/300x150'}" 
+            <div class="card restaurant-card h-100" style="cursor: pointer;" onclick="window.location.href='/cardapio/${estabelecimento.id}'">
+                <img src="${estabelecimento.imagem}" 
                     class="card-img-top fixed-img" alt="${estabelecimento.nome}">
                 <div class="card-body">
                     <h5 class="card-title">${estabelecimento.nome}</h5>

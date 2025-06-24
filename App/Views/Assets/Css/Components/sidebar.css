@@ -3,14 +3,16 @@
     padding: 0;
     width: 250px;
     position: fixed;
+    top: 0;
+    left: 0;
     height: 100vh;
-    overflow: auto;
-    transition: transform 0.5s ease;
-    z-index: 9999;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+    z-index: 1060; /* Acima da navbar (1050) */
     background: linear-gradient(160deg, #ffffff, #ffffff, #d3d3d3);
     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
-    flex-direction: column;
     display: flex;
+    flex-direction: column;
     transform: translateX(-100%);
 }
 
@@ -19,12 +21,13 @@
 }
 
 .sidebar a {
-    display: block;
+    display: flex;
+    align-items: center;
     text-decoration: none;
     padding: 15px;
-    align-items: center;
     color: #232c29;
     font-weight: 500;
+    transition: background 0.3s, transform 0.2s;
 }
 
 .sidebar a:focus {
@@ -32,20 +35,15 @@
     outline-offset: 4px;
 }
 
-.bi-trash {
-    font-size: 1.2rem; /* Tamanho do ícone */
-    vertical-align: right; /* Alinhamento */
-}
-
 .side-item {
     margin-left: 20px;
     margin-right: 20px;
     border-radius: 10px;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.2s;
 }
 
 .side-item:hover,
-#active {
+.active {
     background: rgba(223, 223, 223, 0.25);
     border-radius: 15px;
     color: rgb(0, 0, 0);
@@ -56,7 +54,6 @@
     background: rgba(255, 255, 255, 0.15);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.575);
     transform: translateX(4px);
-    transition: all 0.2s ease-in-out;
 }
 
 .side-item i {
@@ -64,6 +61,7 @@
     height: auto;
     color: #232c29;
     margin-right: 10px;
+    font-size: 1.2rem;
 }
 
 .sidebar span {
@@ -79,38 +77,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 30px;
-}
-
-.opt {
-    margin-top: auto;
-    border-top: 1px solid #868686cc;
-    margin-left: 15px;
-    margin-right: 15px;
-}
-
-.opt .end-opt:hover {
-    font-weight: 400;
-    color: black;
-    transform: none;
-    transition: none;
-    background: none;
-    border-radius: 0;
-    box-shadow: none;
-    border: none;
-}
-
-.opt .end-opt i {
-    margin-right: 10px;
-    font-size: 18px;
-    color: #000000;
-    transition: color 0.3s ease;
-}
-
-.empresa svg {
-    width: 150px;
-    height: auto;
-    justify-self: center;
 }
 
 .close-btn {
@@ -123,26 +91,28 @@
     cursor: pointer;
 }
 
+.close-btn i {
+    font-size: 24px;
+    color: #0e7a56;
+}
+
+.empresa svg {
+    width: 150px;
+    height: auto;
+    align-self: center;
+}
+
 #open-btn {
     position: fixed;
     top: 10px;
     left: 10px;
-    z-index: 10001;
+    z-index: 1051; /* Entre navbar e sidebar */
     margin: 0;
     padding: 10px;
     background-color: white;
     border: 2px solid #0e7a56;
     border-radius: 50px;
     cursor: pointer;
-}
-
-.content {
-    margin-left: 0;
-    transition: margin-left 0.5s ease;
-}
-
-.sidebar.openNav ~ .content {
-    margin-left: 250px;
 }
 
 @media screen and (max-width: 950px) {
@@ -152,21 +122,20 @@
         left: 0;
         right: 0;
         height: 70px;
-        color: black;
-        justify-content: space-around;
-        align-items: center;
-        box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
-        z-index: 10000;
         width: 100%;
         flex-direction: row;
-        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+        z-index: 10000;
         transform: none !important;
     }
-
+    .sidebar.openNav {
+        transform: none !important;
+    }
     .wrap-btn {
         display: none;
     }
-
     .sidebar a {
         text-decoration: none;
         padding: 10px 15px;
@@ -174,14 +143,7 @@
         flex-direction: column;
         align-items: center;
         margin: 0;
-        padding: 0;
     }
-
-    .open-btn,
-    .close-btn {
-        display: none;
-    }
-
     .side-item {
         display: flex;
         align-items: center;
@@ -189,37 +151,24 @@
         width: 50px;
         margin: 0;
     }
-
     .side-item i {
         height: 25px;
         width: 40px;
+        font-size: 1.5rem;
     }
-
     .side-item span {
-        font-size: 11px;
-        margin-left: 0;
         display: none;
     }
-
     .sidebar a:hover {
         background-color: #ffffff41;
         border-radius: 4px;
     }
-
-    .content {
-        margin-left: 0;
-    }
-
-    #active {
+    .active {
         background: #b5b6b680;
         border-radius: 12px;
     }
-
-    .opt {
-        display: none;
-    }
-
-    #open-btn {
+    #open-btn,
+    .close-btn {
         display: none;
     }
 }

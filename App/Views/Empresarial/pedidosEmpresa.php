@@ -53,22 +53,23 @@
                     <?= ucfirst($pedido->status) ?>
                 </span>
             </div>
-
+            <div class="card-body">
             <?php if (!empty($pedido->produtos) && is_array($pedido->produtos)): ?>
                 <?php foreach ($pedido->produtos as $item): ?>
                     <div class="item">
                         <div class="item-info">
                             <span class="quantity"><?= intval($item->quantidade) ?>x</span>
                             <span class="item-name"><?= htmlspecialchars($item->nome) ?></span>
-                            <span class="item-price"> | R$ <?= number_format($item->valor, 2, ',', '.') ?></span>
+                            <span class="item-price" style="margin-left: 8px;">| R$ <?= number_format($item->valor, 2, ',', '.') ?></span>
                         </div>
                         <span class="item-observations">- <?= htmlspecialchars($item->descricao) ?></span>
-                        <span class="item-observations">[ <?= htmlspecialchars($pedido->observacao) ?> ]</span>
+                        <span class="item-observations">[ <?= htmlspecialchars($item->observacao) ?> ]</span>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
                 <p>Nenhum produto encontrado para este pedido.</p>
             <?php endif; ?>
+            </div>
 
             <div class="actions">
                 <form method="POST" action="/api/pedidos/atualizar-status" class="d-inline">

@@ -57,7 +57,7 @@ class EstabelecimentosModel
     /**
      * Atualiza os dados de um usuário existente.
      */
-    public function update($id, $nome, $cep, $cnpj, $tipo, $media_avaliacao, $endereco = null, $imagem = null, $cor1 = null, $cor2 = null, $cor3 = null)
+    public function update($id, $nome, $cep, $cnpj, $tipo, $media_avaliacao, $endereco = null, $imagem = null, $banner = null, $cor1 = null, $cor2 = null, $cor3 = null)
     {
         $db = new Database();
         $sql = "UPDATE estabelecimentos SET 
@@ -65,7 +65,8 @@ class EstabelecimentosModel
                     cep = :cep, 
                     endereco = :endereco, 
                     cnpj = :cnpj, 
-                    imagem = :imagem, 
+                    imagem = :imagem,
+                    banner = :banner,
                     cor1 = :cor1,
                     cor2 = :cor2,
                     cor3 = :cor3,
@@ -78,6 +79,7 @@ class EstabelecimentosModel
             ':endereco' => $endereco,
             ':cnpj' => $cnpj,
             ':imagem' => $imagem,
+            ':banner' => $banner,
             ':cor1' => $cor1,
             ':cor2' => $cor2,
             ':cor3' => $cor3,

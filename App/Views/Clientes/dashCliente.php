@@ -127,7 +127,6 @@
             <h2 class="section-title mb-4">Melhores Restaurantes</h2>
 
             <div class="row g-4" id="estabelecimentos-container">
-                <!-- Os estabelecimentos serão carregados aqui via AJAX -->
                 <div class="col-12 text-center py-5">
                     <div class="spinner-border text-primary" role="status">
                         <span class="visually-hidden">Carregando...</span>

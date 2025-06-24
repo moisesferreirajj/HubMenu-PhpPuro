@@ -50,7 +50,8 @@ class PedidosModel
                     pp.quantidade, 
                     pr.nome, 
                     pr.descricao, 
-                    pp.preco_unitario AS valor
+                    pp.preco_unitario AS valor,
+                    pp.observacao
                 FROM pedidos_produtos pp
                 JOIN produtos pr ON pr.id = pp.produto_id
                 WHERE pp.pedido_id = :pedido_id";
@@ -185,5 +186,21 @@ class PedidosModel
         $params = [':estabelecimento_id' => $estabelecimento_id];
         $result = $db->execute_query($sql, $params);
         return $result->status === 'success' ? $result->results : [];
+    }
+
+    public function atualizarStatus($pedido_id, $status)
+    {
+        $sql = "UPDATE pedidos SET status = :status WHERE id = :pedido_id";
+        $params = [
+            ':pedido_id' => $pedido_id,
+            ':status' => $status
+        ];
+        $result = $this->db->execute_non_query($sql, $params);
+
+        if ($result->status === 'error') {
+            throw new Exception($result->message);
+        }
+
+        return $result->affected_rows > 0;
     }
 }

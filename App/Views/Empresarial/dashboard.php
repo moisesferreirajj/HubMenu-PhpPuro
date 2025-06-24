@@ -1,73 +1,20 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Cadastro de Produto
-    if (isset($_POST['acao']) && $_POST['acao'] === 'cadastrar_produto') {
-        $produtosModel = new ProdutosModel();
-        $nome = $_POST['nome'] ?? '';
-        $descricao = $_POST['descricao'] ?? '';
-        $valor = $_POST['valor'] ?? 0;
-        $categoria_id = $_POST['categoria_id'] ?? null;
-        $estabelecimento_id = $_POST['estabelecimento_id'] ?? null;
-        $status_produtos = $_POST['status_produtos'] ?? 1;
-        $imagem = null;
 
-        // Upload de imagem (opcional)
-        if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-            $ext = strtolower(pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION));
-            $permitidas = ['png', 'jpg', 'jpeg', 'webp'];
-            if (in_array($ext, $permitidas)) {
-                $nomeImagem = uniqid() . '.' . $ext;
-                $destino = __DIR__ . '/../../Views/Assets/Images/Produtos/' . $nomeImagem;
-                if (move_uploaded_file($_FILES['imagem']['tmp_name'], $destino)) {
-                    $imagem = '/Views/Assets/Images/Produtos/' . $nomeImagem;
-                }
-            }
-        }
+    $dashboard = new DashboardController();
 
-        $produtosModel->insert($nome, $descricao, $valor, $imagem, $estabelecimento_id, $categoria_id, $status_produtos);
-        header('Location: ' . $_SERVER['REQUEST_URI']);
-        exit;
-    }
+    // cadastro, edit e delete de categoria
+    $dashboard->Categoria();
 
-    // Cadastro de Usuário
-    if (isset($_POST['acao']) && $_POST['acao'] === 'cadastrar_usuario') {
-        $usuariosModel = new UsuariosModel();
-        $nome = $_POST['nome'] ?? '';
-        $email = $_POST['email'] ?? '';
-        $telefone = $_POST['telefone'] ?? '';
-        $senha = $_POST['senha'] ?? '';
-        $senha2 = $_POST['senha2'] ?? '';
-        $cargo_id = $_POST['cargo'] ?? '';
-        $estabelecimento_id = $_POST['estabelecimento_id'] ?? null;
+    // cadastro, edit e delete de usuario
+    $dashboard->Usuario();
 
-        if ($senha !== $senha2) {
-            echo "<script>alert('Cadastro Realizado!'); window.location.href = '" . $_SERVER['REQUEST_URI'] . "';</script>";
-            exit;
-        }
+    // cadastro, edit e delete de produto
+    $dashboard->Produto();
 
-        $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
-
-        // 1. Insere o usuário
-        $usuario_id = $usuariosModel->insert($nome, $senhaHash, $email, $cargo_id, null, null, $telefone);
-
-        // 2. Insere o vínculo na tabela estabelecimentos_usuarios
-        if ($usuario_id && $estabelecimento_id && $cargo_id) {
-            $estabUsuariosModel = new EstabelecimentosUsuariosModel();
-            $estabUsuariosModel->insert($estabelecimento_id, $usuario_id, $cargo_id);
-        }
-
-        echo "<script>alert('Cadastro Realizado'); window.history.back()</script>";
-        exit;
-    }
-
-    // Cadastro de Categoria
-    if (isset($_POST['acao']) && $_POST['acao'] === 'cadastrar_categoria') {
-        $categoriasModel = new CategoriasModel();
-        $nome = $_POST['nome'] ?? '';
-        $categoriasModel->insert($nome);
-        header('Location: ' . $_SERVER['REQUEST_URI']);
-        exit;
-    }
+    // cadastro, edit e delete de pedido
+    $dashboard->Pedido();
 }
 ?>
 
@@ -508,19 +455,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="#" class="menu-item active" data-page="dashboard">
                 <i class="fas fa-tachometer-alt"></i> Dashboard
             </a>
-            <a href="#" class="menu-item" data-page="produtos">
+            <a href="#" class="menu-item" data-page="produtos" id="products_page">
                 <i class="fas fa-box"></i> Produtos
             </a>
-            <a href="#" class="menu-item" data-page="pedidos">
+            <a href="#" class="menu-item" data-page="pedidos" id="orders_page">
                 <i class="fas fa-shopping-cart"></i> Pedidos
             </a>
-            <a href="#" class="menu-item" data-page="categorias">
+            <a href="#" class="menu-item" data-page="categorias" id="category_page">
                 <i class="fas fa-tags"></i> Categorias
             </a>
-            <a href="#" class="menu-item" data-page="usuarios">
+            <a href="#" class="menu-item" data-page="usuarios" id="user_page">
                 <i class="fas fa-users"></i> Usuários
             </a>
-            <a href="#" class="menu-item" data-page="vendas">
+            <a href="#" class="menu-item" data-page="vendas" id="sell_page">
                 <i class="fas fa-chart-line"></i> Vendas
             </a>
             <a href="#" class="menu-item" data-page="avaliacoes">
@@ -554,7 +501,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="content-area">
             <!-- Dashboard Page -->
             <div class="page-content active" id="dashboard">
-                <h2 class="page-title">Dashboard Geral</h2>
+                <h2 class="page-title">Dashboard Goeral</h2>
                 <!-- Stats Cards -->
                 <div class="row mb-4">
                     <div class="col-md-3 mb-3">
@@ -652,7 +599,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="page-content" id="produtos">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2 class="page-title">Produtos</h2>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#produtoModal">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#produtoModal"
+                        id="registerPro">
                         <i class="fas fa-plus"></i> Novo Produto
                     </button>
                 </div>
@@ -686,12 +634,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <button class="btn-action btn-view" data-id="<?= $produto->id ?>"><i
-                                                class="fas fa-eye"></i></button>
-                                        <button class="btn-action btn-edit" data-id="<?= $produto->id ?>"><i
-                                                class="fas fa-edit"></i></button>
-                                        <button class="btn-action btn-delete" data-id="<?= $produto->id ?>"><i
-                                                class="fas fa-trash"></i></button>
+                                        <button class="btn-action btn-edit btn-edit-produto"
+    data-id="<?= $produto->id ?>"
+    data-nome="<?= htmlspecialchars($produto->nome) ?>"
+    data-categoria="<?= $produto->categoria_id ?>"
+    data-valor="<?= htmlspecialchars($produto->valor) ?>"
+    data-descricao="<?= htmlspecialchars($produto->descricao) ?>"
+    data-status="<?= $produto->status_produtos ?>">
+                                        <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-action btn-delete btn-delete-produto" data-id="<?= $produto->id ?>">
+                                        <i class="fas fa-trash"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -715,6 +669,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <th>Status</th>
                                 <th>Avaliação</th>
                                 <th>Data</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -734,7 +689,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <?php endif; ?>
                                     </td>
                                     <td><?= number_format((float) ($pedido->avaliacao ?? 0), 1, ',', '.') ?></td>
-                                    <td><?= $pedido->data_pedido ? date('d/m/Y', strtotime($pedido->data_pedido)) : '' ?></td>
+                                    <td><?= $pedido->data_pedido ? date('d/m/Y', strtotime($pedido->data_pedido)) : '' ?>
+                                    </td>
+                                    <td><button class="btn-action btn-edit btn-edit-pedido" data-id="<?= $pedido->id ?>">
+                                            <i class="fas fa-edit"></i></button></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -746,7 +704,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="page-content" id="categorias">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2 class="page-title">Categorias</h2>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoriaModal">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoriaModal"
+                        id="registerCat">
                         <i class="fas fa-plus"></i> Nova Categoria
                     </button>
                 </div>
@@ -765,11 +724,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <td><?= htmlspecialchars($categoria->id) ?></td>
                                     <td><?= htmlspecialchars($categoria->nome) ?></td>
                                     <td>
-                                        <button class="btn-action btn-edit-categoria" data-id="<?= $categoria->id ?>"
+                                        <button class="btn-action btn-edit btn-edit-categoria" data-id="<?= $categoria->id ?>"
                                             data-nome="<?= htmlspecialchars($categoria->nome) ?>"><i
                                                 class="fas fa-edit"></i></button>
 
-                                        <button class="btn-action btn-delete-categoria" data-id="<?= $categoria->id ?>"><i
+                                        <button class="btn-action btn-delete btn-delete-categoria" data-id="<?= $categoria->id ?>"><i
                                                 class="fas fa-trash"></i></button>
                                     </td>
                                 </tr>
@@ -809,8 +768,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <td><?= htmlspecialchars($usuario->cargo_nome) ?></td>
                                     <td><?= htmlspecialchars($usuario->telefone) ?></td>
                                     <td>
-                                        <button class="btn-action btn-view" data-id="<?= $usuario->id ?>"><i
-                                                class="fas fa-eye"></i></button>
                                         <button class="btn-action btn-edit" data-id="<?= $usuario->id ?>"><i
                                                 class="fas fa-edit"></i></button>
                                         <button class="btn-action btn-delete" data-id="<?= $usuario->id ?>"><i
@@ -963,61 +920,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <!-- Modal Produto -->
-    <div class="modal fade" id="produtoModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <form method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="acao" value="cadastrar_produto">
-                    <input type="hidden" name="estabelecimento_id" value="<?= $EstabelecimentoID ?>">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><i class="fas fa-box"></i> Novo Produto</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Nome do Produto</label>
-                                <input type="text" class="form-control" name="nome" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Categoria</label>
-                                <select class="form-select" name="categoria_id" required>
-                                    <option selected disabled>Selecione a categoria</option>
-                                    <?php foreach ($Categorias as $categoria): ?>
-                                        <option value="<?= $categoria->id ?>"><?= htmlspecialchars($categoria->nome) ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Valor</label>
-                                <input type="number" class="form-control" name="valor" step="0.10" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Status</label>
-                                <select class="form-select" name="status_produtos" required>
-                                    <option value="1">Ativo</option>
-                                    <option value="0">Inativo</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Descrição</label>
-                            <textarea class="form-control" name="descricao" rows="3"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Imagem do Produto</label>
-                            <input type="file" class="form-control" name="imagem" accept="image/*">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Salvar Produto</button>
-                    </div>
-                </form>
-            </div>
+<div class="modal fade" id="produtoModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form method="POST" enctype="multipart/form-data" id="formProduto">
+        <input type="hidden" name="acao" id="produtoAcao" value="cadastrar_produto">
+        <input type="hidden" name="id" id="produtoId">
+        <input type="hidden" name="estabelecimento_id" value="<?= $EstabelecimentoID ?>">
+        <div class="modal-header">
+          <h5 class="modal-title" id="produtoModalTitle"><i class="fas fa-box"></i> Produto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Nome do Produto</label>
+              <input type="text" class="form-control" name="nome" id="produtoNome" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Categoria</label>
+              <select class="form-select" name="categoria_id" id="produtoCategoria" required>
+                <option selected disabled>Selecione a categoria</option>
+                <?php foreach ($Categorias as $categoria): ?>
+                  <option value="<?= $categoria->id ?>"><?= htmlspecialchars($categoria->nome) ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Valor</label>
+              <input type="number" class="form-control" name="valor" id="produtoValor" step="0.10" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Status</label>
+              <select class="form-select" name="status_produtos" id="produtoStatus" required>
+                <option value="1">Ativo</option>
+                <option value="0">Inativo</option>
+              </select>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Descrição</label>
+            <textarea class="form-control" name="descricao" id="produtoDescricao" rows="3"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Imagem do Produto</label>
+            <input type="file" class="form-control" name="imagem" id="produtoImagem" accept="image/*">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="regis_pro">Salvar Produto</button>
+        </div>
+      </form>
     </div>
+  </div>
+</div>
 
     <!-- Modal Usuário -->
     <div class="modal fade" id="usuarioModal" tabindex="-1">
@@ -1057,7 +1014,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Telefone</label>
-                                    <input type="tel" class="form-control" name="telefone" id="usuarioTelefone" pattern="^\(\d{2}\)\s?\d{4,5}-\d{4}$" placeholder="(DDD) xxxxx-xxxx" required>
+                                    <input type="tel" class="form-control" name="telefone" id="usuarioTelefone"
+                                        pattern="^\(\d{2}\)\s?\d{4,5}-\d{4}$" placeholder="(DDD) xxxxx-xxxx" required>
                                 </div>
                             </div>
                         </div>
@@ -1071,8 +1029,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Salvar Usuário</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Cancelar</button>
+                        <button type="submit" id="regis_usu" class="btn btn-primary">Salvar Usuário</button>
                     </div>
                 </form>
             </div>
@@ -1080,28 +1038,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <!-- Modal Categoria -->
-    <div class="modal fade" id="categoriaModal" tabindex="-1">
+<div class="modal fade" id="categoriaModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="POST" id="formCategoria">
+        <input type="hidden" name="acao" id="categoriaAcao" value="cadastrar_categoria">
+        <input type="hidden" name="id" id="categoriaId">
+        <div class="modal-header">
+          <h5 class="modal-title" id="categoriaModalTitle">Categoria</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Nome da Categoria</label>
+            <input type="text" class="form-control" name="nome" id="categoriaNome" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+    <!-- Modal Editar Status do Pedido -->
+    <div class="modal fade" id="editarStatusPedidoModal" tabindex="-1" aria-labelledby="editarStatusPedidoLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <form method="POST" id="formCategoria">
-                    <input type="hidden" name="acao" value="cadastrar_categoria">
-                    <input type="hidden" name="id" id="categoriaId">
+            <form id="formEditarStatusPedido" method="POST">
+                <input type="hidden" name="acao" value="editar_status_pedido">
+                <input type="hidden" name="pedido_id" id="editPedidoId">
+                <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title"><i class="fas fa-tags"></i> Categoria</h5>
+                        <h5 class="modal-title" id="editarStatusPedidoLabel">Editar Status do Pedido</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label">Nome da Categoria</label>
-                            <input type="text" class="form-control" name="nome" id="categoriaNome" required>
+                            <label for="editPedidoStatus" class="form-label">Status</label>
+                            <select class="form-select" name="status" id="editPedidoStatus" required>
+                                <option value="preparando">Preparando</option>
+                                <option value="entregue">Entregue</option>
+                                <option value="cancelado">Cancelado</option>
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary">Salvar</button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -1358,59 +1347,128 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             observer.observe(el);
         });
 
-        // Visualizar produto
-        document.querySelectorAll('.btn-view').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-                fetch(`/api/visualizar/produtos/${id}`)
-                    .then(res => res.json())
-                    .then(produto => {
-                        alert('Produto: ' + produto.nome + '\nValor: R$ ' + produto.valor);
-                        // Aqui você pode abrir um modal e preencher os campos
-                    });
+        // Editar status do pedido
+        document.querySelectorAll('.btn-edit-pedido').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const pedidoId = this.getAttribute('data-id');
+                const row = this.closest('tr');
+                const statusText = row.querySelector('td:nth-child(5) .status-badge').textContent.trim().toLowerCase();
+                let statusValue = 'preparando';
+                if (statusText === 'entregue') statusValue = 'entregue';
+                else if (statusText === 'cancelado') statusValue = 'cancelado';
+                document.getElementById('editPedidoId').value = pedidoId;
+                document.getElementById('editPedidoStatus').value = statusValue;
+                const modal = new bootstrap.Modal(document.getElementById('editarStatusPedidoModal'));
+                modal.show();
             });
         });
 
-        // Editar produto (exemplo: abrir modal para edição)
-        document.querySelectorAll('.btn-edit').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-                fetch(`/api/visualizar/produtos/${id}`)
-                    .then(res => res.json())
-                    .then(produto => {
-                        // Preencha o modal de edição com os dados do produto
-                        // Exemplo: document.getElementById('edit-nome').value = produto.nome;
-                        alert('Abrir modal de edição para: ' + produto.nome);
-                    });
-            });
+        // Abrir modal para NOVO produto
+        document.getElementById('registerPro').addEventListener('click', function () {
+        document.getElementById('produtoModalTitle').textContent = 'Novo Produto';
+        document.getElementById('produtoAcao').value = 'cadastrar_produto';
+        document.getElementById('produtoId').value = '';
+        document.getElementById('produtoNome').value = '';
+        document.getElementById('produtoCategoria').value = '';
+        document.getElementById('produtoValor').value = '';
+        document.getElementById('produtoDescricao').value = '';
+        document.getElementById('produtoImagem').value = '';
+        document.getElementById('produtoStatus').value = '1';
         });
+
+        // Abrir modal para EDITAR produto
+        document.querySelectorAll('.btn-edit-produto').forEach(btn => {
+    btn.addEventListener('click', function () {
+        const id = this.getAttribute('data-id');
+        const nome = this.getAttribute('data-nome');
+        const categoria = this.getAttribute('data-categoria');
+        const valor = this.getAttribute('data-valor');
+        const descricao = this.getAttribute('data-descricao');
+        const status = this.getAttribute('data-status'); // Adicione se quiser editar status
+
+        document.getElementById('produtoModalTitle').textContent = 'Editar Produto';
+        document.getElementById('produtoAcao').value = 'editar_produto';
+        document.getElementById('produtoId').value = id;
+        document.getElementById('produtoNome').value = nome;
+        document.getElementById('produtoCategoria').value = categoria;
+        document.getElementById('produtoValor').value = valor;
+        document.getElementById('produtoDescricao').value = descricao;
+        if (status) document.getElementById('produtoStatus').value = status;
+        document.getElementById('produtoImagem').value = '';
+        const modal = new bootstrap.Modal(document.getElementById('produtoModal'));
+        modal.show();
+    });
+});
 
         // Excluir produto
-        document.querySelectorAll('.btn-delete').forEach(btn => {
-            btn.addEventListener('click', function() {
+        document.querySelectorAll('.btn-delete-produto').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
                 if (confirm('Deseja realmente excluir este produto?')) {
-                    const id = this.getAttribute('data-id');
                     fetch('/api/produtos/excluir', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded'
-                            },
-                            body: 'id=' + encodeURIComponent(id)
-                        })
-                        .then(res => res.json())
-                        .then(resp => {
-                            if (resp.success) {
-                                alert('Produto excluído com sucesso!');
-                                location.reload();
-                            } else {
-                                alert('Erro ao excluir produto: ' + (resp.error || ''));
-                            }
-                        });
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: 'id=' + encodeURIComponent(id)
+                    })
+                    .then(res => res.json())
+                    .then(resp => {
+                        if (resp.status === 'success') {
+                            alert('Produto excluído com sucesso!');
+                            location.reload();
+                        } else {
+                            alert('Erro ao excluir produto: ' + (resp.message || ''));
+                        }
+                    });
                 }
             });
         });
 
-        document.getElementById('usuarioTelefone').addEventListener('input', function(e) {
+        // Abrir modal para NOVA categoria
+        document.getElementById('registerCat').addEventListener('click', function () {
+        document.getElementById('categoriaModalTitle').textContent = 'Nova Categoria';
+        document.getElementById('categoriaAcao').value = 'cadastrar_categoria';
+        document.getElementById('categoriaId').value = '';
+        document.getElementById('categoriaNome').value = '';
+        });
+
+        // Abrir modal para EDITAR categoria
+        document.querySelectorAll('.btn-edit-categoria').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
+                const nome = this.getAttribute('data-nome');
+                document.getElementById('categoriaModalTitle').textContent = 'Editar Categoria';
+                document.getElementById('categoriaAcao').value = 'editar_categoria';
+                document.getElementById('categoriaId').value = id;
+                document.getElementById('categoriaNome').value = nome;
+                const modal = new bootstrap.Modal(document.getElementById('categoriaModal'));
+                modal.show();
+            });
+        });
+
+        // Excluir categoria
+        document.querySelectorAll('.btn-delete-categoria').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
+                if (confirm('Deseja realmente excluir esta categoria?')) {
+                    fetch('/api/categorias/excluir', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: 'id=' + encodeURIComponent(id)
+                    })
+                    .then(res => res.json())
+                    .then(resp => {
+                        if (resp.status === 'success') {
+                             alert('Categoria excluída com sucesso!');
+                            location.reload();
+                        } else {
+                            alert('Erro ao excluir categoria: ' + (resp.message || ''));
+                        }
+                    });
+                }
+            });
+        });
+
+        document.getElementById('usuarioTelefone').addEventListener('input', function (e) {
             let value = e.target.value.replace(/\D/g, '');
             if (value.length > 11) value = value.slice(0, 11);
 
@@ -1429,7 +1487,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
 
         // Validação de senha igual
-        document.getElementById('formUsuario').addEventListener('submit', function(e) {
+        document.getElementById('formUsuario').addEventListener('submit', function (e) {
             const senha = document.getElementById('usuarioSenha').value;
             const senha2 = document.getElementById('usuarioSenha2').value;
             if (senha !== senha2) {

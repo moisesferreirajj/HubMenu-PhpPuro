@@ -44,7 +44,7 @@ class CardapioController extends RenderView
         ]);
     }
 
-        public function lixeira($id): void
+    public function lixeira($id): void
     {
         AcessoController::verificarAcesso('/gerenciar/lixeira/{id}', $_SESSION['usuario_cargo'], $id);
 
@@ -59,8 +59,6 @@ class CardapioController extends RenderView
         $estabelecimento = ($estabelecimentoResponse->status === 'success') ? $estabelecimentoResponse->results : null;
         $erro = empty($produtos) && !is_array($produtosInativos) ? 'Erro ao carregar produtos inativos.' : null;
 
-        error_log("Renderizando lixeira.php com " . count($produtos) . " produtos inativos");
-
         $this->loadView('empresarial/lixeira', [
             'Title' => 'HubMenu | Lixeira',
             'ProdutosInativos' => $produtos,
@@ -69,4 +67,5 @@ class CardapioController extends RenderView
             'Erro' => $erro
         ]);
     }
+
 }
