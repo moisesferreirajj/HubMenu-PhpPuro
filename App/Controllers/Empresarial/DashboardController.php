@@ -15,6 +15,7 @@ class DashboardController extends RenderView
         $vendasModel = new VendasModel();
         $avaliacoesModel = new AvaliacoesModel();
         $categoriasModel = new CategoriasModel();
+        $cargosModel = new CargosModel();
 
         // Dados principais
         $estabelecimento = $estabelecimentosModel->findById($id)->results[0] ?? null;
@@ -42,6 +43,9 @@ class DashboardController extends RenderView
         $CategoriasObj = $categoriasModel->findAll() ?? [];
         $categorias = $CategoriasObj->results ?? [];
 
+        $cargosObj = $cargosModel->findAll();
+        $cargos = $cargosObj->results ?? [];
+
         $this->loadView('empresarial/dashboard', [
             'Title' => 'HubMenu | Dashboard',
             'EstabelecimentoID' => $id,
@@ -57,7 +61,8 @@ class DashboardController extends RenderView
             'TopEstabelecimentos' => $topEstabelecimentos,
             'PedidosRecentes' => $pedidosRecentes,
             'Avaliacoes' => $avaliacoes,
-            'Categorias' => $categorias
+            'Categorias' => $categorias,
+            'Cargos' => $cargos
         ]);
     }
 }

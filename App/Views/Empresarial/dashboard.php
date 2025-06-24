@@ -34,11 +34,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $usuariosModel = new UsuariosModel();
         $nome = $_POST['nome'] ?? '';
         $email = $_POST['email'] ?? '';
-        $cargo = $_POST['cargo'] ?? '';
         $telefone = $_POST['telefone'] ?? '';
-        $senha = password_hash($_POST['senha'] ?? '', PASSWORD_DEFAULT);
-        $usuariosModel->insert($nome, $senha, $email, $cargo, null, $telefone);
-        header('Location: ' . $_SERVER['REQUEST_URI']);
+        $senha = $_POST['senha'] ?? '';
+        $senha2 = $_POST['senha2'] ?? '';
+        $cargo_id = $_POST['cargo'] ?? '';
+        $estabelecimento_id = $_POST['estabelecimento_id'] ?? null;
+
+        if ($senha !== $senha2) {
+            echo "<script>alert('Cadastro Realizado!'); window.location.href = '" . $_SERVER['REQUEST_URI'] . "';</script>";
+            exit;
+        }
+
+        $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+
+        // 1. Insere o usuário
+        $usuario_id = $usuariosModel->insert($nome, $senhaHash, $email, $cargo_id, null, null, $telefone);
+
+        // 2. Insere o vínculo na tabela estabelecimentos_usuarios
+        if ($usuario_id && $estabelecimento_id && $cargo_id) {
+            $estabUsuariosModel = new EstabelecimentosUsuariosModel();
+            $estabUsuariosModel->insert($estabelecimento_id, $usuario_id, $cargo_id);
+        }
+
+        echo "<script>alert('Cadastro Realizado'); window.history.back()</script>";
         exit;
     }
 
@@ -613,7 +631,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             <td>
                                                 <?php if ($pedidorecente->status == "entregue"): ?>
                                                     <span class="status-badge status-approved">Entregue</span>
-                                                <?php elseif($pedidorecente->status == "preparando"): ?>
+                                                <?php elseif ($pedidorecente->status == "preparando"): ?>
                                                     <span class="status-badge status-pending">Preparando</span>
                                                 <?php else: ?>
                                                     <span class="status-badge status-cancelled">Cancelado</span>
@@ -694,6 +712,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <th>Cliente</th>
                                 <th>Valor Total</th>
                                 <th>Observação</th>
+                                <th>Status</th>
                                 <th>Avaliação</th>
                                 <th>Data</th>
                             </tr>
@@ -701,12 +720,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <tbody>
                             <?php foreach ($Pedidos as $pedido): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($pedido->id) ?></td>
-                                    <td><?= ucwords(htmlspecialchars($pedido->cliente)) ?></td>
-                                    <td><?= htmlspecialchars($pedido->valor_total) ?></td>
-                                    <td><?= htmlspecialchars($pedido->observacao) ?></td>
-                                    <td><?= number_format($pedido->avaliacao, 1, '.', ',') ?></td>
-                                    <td><?= date('d/m/Y', strtotime($pedido->data_pedido)) ?></td>
+                                    <td><?= htmlspecialchars((string) ($pedido->id ?? '')) ?></td>
+                                    <td><?= ucwords(htmlspecialchars((string) ($pedido->cliente ?? ''))) ?></td>
+                                    <td><?= number_format((float) ($pedido->valor_total ?? 0), 2, ',', '.') ?></td>
+                                    <td><?= htmlspecialchars((string) ($pedido->observacao ?? '')) ?></td>
+                                    <td>
+                                        <?php if (($pedido->status ?? '') === "entregue"): ?>
+                                            <span class="status-badge status-approved">Entregue</span>
+                                        <?php elseif (($pedido->status ?? '') === "preparando"): ?>
+                                            <span class="status-badge status-pending">Preparando</span>
+                                        <?php else: ?>
+                                            <span class="status-badge status-cancelled">Cancelado</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td><?= number_format((float) ($pedido->avaliacao ?? 0), 1, ',', '.') ?></td>
+                                    <td><?= $pedido->data_pedido ? date('d/m/Y', strtotime($pedido->data_pedido)) : '' ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -818,7 +846,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <td><?= htmlspecialchars($venda->id) ?></td>
                                     <td><?= htmlspecialchars($venda->referencia) ?></td>
                                     <td><?= htmlspecialchars($venda->transacao_id) ?></td>
-                                    <td><?= number_format(htmlspecialchars($venda->valor_total), 2, '.', ',') ?></td>
+                                    <td><?= number_format(htmlspecialchars($venda->valor_total), 2, ',', '.') ?></td>
                                     <td>
                                         <?php if ($venda->status_pagamento == 'Aprovado'): ?>
                                             <span class="status-badge status-approved">Aprovado</span>
@@ -995,7 +1023,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="modal fade" id="usuarioModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="POST" id="formUsuario">
+                <form method="POST" id="formUsuario" autocomplete="off">
+                    <input type="hidden" name="estabelecimento_id" value="<?= $EstabelecimentoID ?>">
                     <input type="hidden" name="acao" value="cadastrar_usuario">
                     <input type="hidden" name="id" id="usuarioId">
                     <div class="modal-header">
@@ -1016,17 +1045,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="mb-3">
                                     <label class="form-label">Cargo</label>
                                     <select class="form-select" name="cargo" id="usuarioCargo" required>
-                                        <option value="">Selecione o cargo</option>
-                                        <option>Administrador</option>
-                                        <option>Gerente</option>
-                                        <option>Funcionário</option>
+                                        <option value="" selected disabled>Selecione o cargo</option>
+                                        <?php
+                                        foreach ($Cargos as $cargo) {
+                                            echo '<option value="' . htmlspecialchars($cargo->id) . '">' . htmlspecialchars($cargo->nome) . '</option>';
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Telefone</label>
-                                    <input type="tel" class="form-control" name="telefone" id="usuarioTelefone">
+                                    <input type="tel" class="form-control" name="telefone" id="usuarioTelefone" pattern="^\(\d{2}\)\s?\d{4,5}-\d{4}$" placeholder="(DDD) xxxxx-xxxx" required>
                                 </div>
                             </div>
                         </div>
@@ -1329,7 +1360,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Visualizar produto
         document.querySelectorAll('.btn-view').forEach(btn => {
-            btn.addEventListener('click', function () {
+            btn.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
                 fetch(`/api/visualizar/produtos/${id}`)
                     .then(res => res.json())
@@ -1342,7 +1373,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Editar produto (exemplo: abrir modal para edição)
         document.querySelectorAll('.btn-edit').forEach(btn => {
-            btn.addEventListener('click', function () {
+            btn.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
                 fetch(`/api/visualizar/produtos/${id}`)
                     .then(res => res.json())
@@ -1356,16 +1387,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Excluir produto
         document.querySelectorAll('.btn-delete').forEach(btn => {
-            btn.addEventListener('click', function () {
+            btn.addEventListener('click', function() {
                 if (confirm('Deseja realmente excluir este produto?')) {
                     const id = this.getAttribute('data-id');
                     fetch('/api/produtos/excluir', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        body: 'id=' + encodeURIComponent(id)
-                    })
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            body: 'id=' + encodeURIComponent(id)
+                        })
                         .then(res => res.json())
                         .then(resp => {
                             if (resp.success) {
@@ -1377,6 +1408,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         });
                 }
             });
+        });
+
+        document.getElementById('usuarioTelefone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.slice(0, 11);
+
+            if (value.length > 10) {
+                // Celular: (99) 99999-9999
+                value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
+            } else if (value.length > 6) {
+                // Fixo: (99) 9999-9999
+                value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+            } else if (value.length > 2) {
+                value = value.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+            } else if (value.length > 0) {
+                value = value.replace(/^(\d{0,2})/, '($1');
+            }
+            e.target.value = value.trim();
+        });
+
+        // Validação de senha igual
+        document.getElementById('formUsuario').addEventListener('submit', function(e) {
+            const senha = document.getElementById('usuarioSenha').value;
+            const senha2 = document.getElementById('usuarioSenha2').value;
+            if (senha !== senha2) {
+                alert('As senhas não conferem!');
+                e.preventDefault();
+            }
         });
     </script>
 </body>

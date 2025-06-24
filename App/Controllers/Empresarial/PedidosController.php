@@ -2,13 +2,9 @@
 
 class PedidosController {
 
-    /**
-     * Lista pedidos e produtos da empresa, recebendo o ID da empresa via parâmetro
-     */
-    public function indexEmpresa()
-    {
-        $uri = $_SERVER['REQUEST_URI']; // ex: /pedidos/1
-        $segments = explode('/', trim($uri, '/')); // ['pedidos', '1']
+    public function indexEmpresa() {
+        $uri = $_SERVER['REQUEST_URI'];
+        $segments = explode('/', trim($uri, '/'));
         $companyId = isset($segments[1]) ? (int)$segments[1] : null;
 
         if (!$companyId) {
@@ -26,9 +22,6 @@ class PedidosController {
         require_once 'Views/Empresarial/pedidosEmpresa.php';
     }
 
-    /**
-     * Registra novo pedido para a empresa do usuário logado
-     */
     public function registerOrder() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
@@ -40,66 +33,71 @@ class PedidosController {
                 $pedidosModel = new PedidosModel();
                 $produtosModel = new ProdutosModel();
 
-                // Pega empresa do usuário
                 $userCompany = $usuariosModel->getCompanyByUserId($_SESSION['usuario_id']);
-                if (!$userCompany || !isset($userCompany)) {
+                $estabelecimento_id = is_object($userCompany) ? $userCompany->id : $userCompany;
+
+                if (!$estabelecimento_id) {
                     throw new Exception('Empresa do usuário não encontrada.');
                 }
 
-                $valor_total = 0;
+                // Recolhe produtos do POST
                 $produtos_info = [];
+                if (!empty($_POST['products'])) {
+                    foreach ($_POST['products'] as $produto_id) {
+                        $produtos_info[] = [
+                            'produto_id' => $produto_id,
+                            'quantidade' => $_POST['quantidade'][$produto_id] ?? 1,
+                            'observacao' => $_POST['observacao'][$produto_id] ?? null
+                        ];
+                    }
+                }
+                $valor_total = 0;
 
-                foreach ($_POST['products'] as $produto_id) {
-                    $produto = $produtosModel->findById($produto_id);
-                    $quantidade = $_POST['quantidade'][$produto_id] ?? 1;
-                    $valor_total += $produto->valor * $quantidade;
-
-                    $produtos_info[] = [
-                        'produto_id' => $produto_id,
-                        'quantidade' => $quantidade,
-                        'observacao' => $_POST['observacao'][$produto_id] ?? null
-                    ];
+                // Calcula valor total (opcional)
+                foreach ($produtos_info as $produto) {
+                    $produtoInfo = $produtosModel->findById($produto['produto_id']);
+                    if ($produtoInfo) {
+                        $valor_total += $produtoInfo->valor * $produto['quantidade'];
+                    }
                 }
 
-                // Cadastra pedido
+                // Cria o pedido principal
                 $pedido_id = $pedidosModel->cadastrarPedido([
                     'usuario_id' => $_SESSION['usuario_id'],
-                    'estabelecimento_id' => $userCompany,
-                    'nome_cliente' => $_POST['nome_cliente'],
+                    'estabelecimento_id' => $estabelecimento_id,
                     'valor_total' => $valor_total
                 ]);
 
-                // Adiciona produtos no pedido
+                if (!$pedido_id) {
+                    throw new Exception("Erro ao cadastrar pedido.");
+                }
+
+                // Adiciona produtos ao pedido
                 foreach ($produtos_info as $produto) {
                     $pedidosModel->adicionarProdutoPedido(
                         $pedido_id,
                         $produto['produto_id'],
                         $produto['quantidade'],
-                        $produto['observacao']
+                        $produto['observacao'] ?? null // Evita erro se não existir
                     );
                 }
 
-                $_SESSION['mensagem'] = 'Pedido cadastrado com sucesso!';
-                $_SESSION['tipo_mensagem'] = 'success';
-
-                header('Location: /pedidos/' . $userCompany);
-                exit();
+                echo "<script>
+                        alert('Pedido cadastrado com sucesso!');
+                        window.location.href = '/pedidos/{$estabelecimento_id}';
+                      </script>";
+                exit;
 
             } catch (Exception $e) {
-                $_SESSION['mensagem'] = 'Erro ao cadastrar pedido: ' . $e->getMessage();
-                $_SESSION['tipo_mensagem'] = 'danger';
-
-                // Redireciona para a página da empresa do usuário (se possível)
-                $userCompanyId = isset($userCompany) ? $userCompany : '';
-                header('Location: /pedidos/' . $userCompanyId);
-                exit();
+                echo "<script>
+                        alert('Erro ao cadastrar pedido: " . addslashes($e->getMessage()) . "');
+                        window.history.back();
+                      </script>";
+                exit;
             }
         }
     }
 
-    /**
-     * Atualiza status do pedido
-     */
     public function atualizarStatus() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
@@ -114,20 +112,42 @@ class PedidosController {
                 $_SESSION['mensagem'] = 'Status atualizado com sucesso!';
                 $_SESSION['tipo_mensagem'] = 'success';
 
-                // Redireciona para a página anterior
-                $referer = $_SERVER['HTTP_REFERER'] ?? '/';
-                header('Location: ' . $referer);
-                exit();
+                header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '/'));
+                exit;
 
             } catch (Exception $e) {
                 $_SESSION['mensagem'] = 'Erro ao atualizar status: ' . $e->getMessage();
                 $_SESSION['tipo_mensagem'] = 'danger';
 
-                $referer = $_SERVER['HTTP_REFERER'] ?? '/';
-                header('Location: ' . $referer);
-                exit();
+                header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '/'));
+                exit;
             }
         }
     }
 
+    public function salvar() {
+        session_start();
+
+        if (!isset($_SESSION['usuario_id'])) {
+            die('Usuário não autenticado!');
+        }
+
+        $nomeCliente = $_POST['nome_usuario'];
+        $usuarioLogadoId = $_SESSION['usuario_id'];
+
+        $usuariosModel = new UsuariosModel();
+        $pedidosModel = new PedidosModel();
+
+        $clienteId = $usuariosModel->criar($nomeCliente);
+
+        $dadosPedido = [
+            'nome_usuario' => $nomeCliente,
+            'id_usuario' => $usuarioLogadoId
+        ];
+
+        $pedidosModel->criar($dadosPedido);
+
+        header("Location: /pedidos");
+        exit;
+    }
 }

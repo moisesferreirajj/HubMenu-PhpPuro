@@ -16,8 +16,6 @@ $menuProducts = $menuProductsObj->results ?? [];
                 <div class="modal-body">
                     <div class="row mb-3">
                         <div class="col-md-12">
-                            <label for="nome_cliente" class="form-label">Identificação do Cliente *</label>
-                            <input type="text" class="form-control" id="nome_cliente" name="nome_cliente" required>
                             <input type="hidden" name="estabelecimento_id" value="<?= $userCompany?? '' ?>">
                         </div>
                     </div>
@@ -72,41 +70,68 @@ $menuProducts = $menuProductsObj->results ?? [];
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const modal = document.getElementById('cadastrarModal');
-        const totalSpan = document.getElementById('total-value');
-        const totalInput = document.getElementById('valor_total');
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('cadastrarModal');
+    const totalSpan = document.getElementById('total-value');
+    const totalInput = document.getElementById('valor_total');
+    
+    // Função para extrair o preço de forma mais robusta
+    function extractPrice(priceText) {
+        const match = priceText.match(/R\$\s*([\d.,]+)/);
+        if (!match) return 0;
+        
+        return parseFloat(match[1]
+            .replace(/\./g, '')
+            .replace(',', '.'));
+    }
 
-        function calcTotal() {
-            const checkboxes = document.querySelectorAll('.produto:checked');
-            let total = 0;
+    function calcTotal() {
+        const checkboxes = document.querySelectorAll('.produto:checked');
+        let total = 0;
 
-            checkboxes.forEach(checkbox => {
+        checkboxes.forEach(checkbox => {
+            try {
                 const productId = checkbox.value;
-                const quantidade = document.querySelector(`input[name="quantidade[${productId}]"]`).value;
-                const precoText = checkbox.closest('.card-pro').querySelector('label').textContent.split('R$ ')[1];
-                const preco = parseFloat(precoText.replace('.', '').replace(',', '.'));
+                const quantidadeInput = document.querySelector(`input[name="quantidade[${productId}]"]`);
+                const quantidade = parseInt(quantidadeInput.value) || 0;
+                
+                const label = checkbox.closest('.card-pro').querySelector('label');
+                const preco = extractPrice(label.textContent);
 
                 total += preco * quantidade;
-            });
-
-            const totalFormatted = total.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-            totalSpan.textContent = totalFormatted;
-            totalInput.value = total.toFixed(2);
-        }
-
-        modal.addEventListener('shown.bs.modal', () => {
-            const checkboxes = document.querySelectorAll('.produto');
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', calcTotal);
-            });
-
-            const quantityInputs = document.querySelectorAll('input[type="number"]');
-            quantityInputs.forEach(input => {
-                input.addEventListener('change', calcTotal);
-            });
-
-            calcTotal();
+            } catch (e) {
+                console.error('Erro ao calcular item:', e);
+            }
         });
-    });
+
+        const totalFormatted = total.toLocaleString('pt-BR', { 
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+        
+        totalSpan.textContent = totalFormatted;
+        totalInput.value = total.toFixed(2);
+    }
+
+    // Adiciona listeners permanentemente
+    function setupEventListeners() {
+        document.querySelectorAll('.produto').forEach(checkbox => {
+            checkbox.addEventListener('change', calcTotal);
+        });
+
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            input.addEventListener('input', calcTotal);
+            input.addEventListener('change', calcTotal);
+        });
+    }
+
+    // Configura os listeners quando o modal é aberto
+    modal.addEventListener('show.bs.modal', setupEventListeners);
+    
+    // Também configura imediatamente caso o modal já esteja aberto
+    if (modal.classList.contains('show')) {
+        setupEventListeners();
+        calcTotal();
+    }
+});
 </script>

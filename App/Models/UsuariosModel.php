@@ -26,20 +26,26 @@ class UsuariosModel
     /**
      * Insere um novo usuário no banco de dados.
      */
-    public function insert($nome, $senha, $email, $cep = null, $endereco = null, $telefone = null)
+    public function insert($nome, $senha, $email, $cargo_id = null, $cep = null, $endereco = null, $telefone = null)
     {
         $db = new Database();
-        $sql = "INSERT INTO usuarios (nome, senha, email, cep, endereco, telefone)
-                VALUES (:nome, :senha, :email, :cep, :endereco, :telefone)";
+        $sql = "INSERT INTO usuarios (nome, senha, email, cargo_id, cep, endereco, telefone)
+            VALUES (:nome, :senha, :email, :cargo_id, :cep, :endereco, :telefone)";
         $params = [
             ':nome' => $nome,
             ':senha' => $senha,
             ':email' => $email,
+            ':cargo_id' => $cargo_id,
             ':cep' => $cep,
             ':endereco' => $endereco,
             ':telefone' => $telefone
         ];
-        return $db->execute_non_query($sql, $params);
+
+        $result = $db->execute_non_query($sql, $params);
+        if ($result && $result->status) {
+            return $result->last_id;
+        }
+        return null;
     }
 
     /**
@@ -176,4 +182,18 @@ class UsuariosModel
         return null;
     }
 
+    public function criar($nome)
+    {
+        $db = new Database();
+        $sql = "INSERT INTO usuarios (nome) VALUES (:nome)";
+        $params = [':nome' => $nome];
+
+        $res = $db->execute_non_query($sql, $params);
+
+        if ($res->status === 'success') {
+            return $res->last_id; // Aqui você recupera o ID criado
+        }
+
+        return null; // Se falhar
+    }
 }

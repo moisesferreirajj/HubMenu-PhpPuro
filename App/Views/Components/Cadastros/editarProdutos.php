@@ -43,7 +43,7 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
           <button type="submit" name="acao" value="salvar" class="btn btn-primary">Salvar alterações</button>
           <button type="button" name="acao" value="excluir" class="btn btn-danger" id="btnExcluir">Excluir</button>
-          <button type="button" name="acao" value="desativar" class="btn btn-secondary" id="btnDesativar">Desativar</button>
+          <button type="button" name="acao" value="desativar" class="btn btn-secondary" id="desativarProduto">Desativar</button>
         </div>
       </form>
     </div>
@@ -107,6 +107,7 @@ document.getElementById('editModal').addEventListener('hidden.bs.modal', functio
   const backdrop = document.querySelector('.modal-backdrop');
   if (backdrop) backdrop.remove();
 });
+// Botões
 
 document.getElementById('btnExcluir').addEventListener('click', async () => {
     const id = document.getElementById('edit_id').value;
@@ -142,8 +143,8 @@ document.getElementById('btnExcluir').addEventListener('click', async () => {
     }
 });
 
-document.getElementById('btnDesativar').addEventListener('click', async () => {
-  const id = document.getElementById('edit_id').value;
+document.getElementById('desativarProduto').addEventListener('click', async () => {
+  const id = document.getElementById('edit-id').value;
   await fetch('/api/produtos/desativar', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},

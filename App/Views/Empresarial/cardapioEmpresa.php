@@ -1,6 +1,4 @@
 <?php
-require_once __DIR__ . '/../../global.php';
-require_once __DIR__ . '/../../Models/EstabelecimentosModel.php';
 
 $produtos = $Produtos ?? [];
 $estabelecimento = $Estabelecimento ?? null;
@@ -228,6 +226,41 @@ $erroProdutos = $Erro ?? null;
                 });
             });
         });
+        // Ação do botão "Desativar"
+    // document.getElementById('desativarProduto').addEventListener('click', function () {
+    //     const id = document.getElementById('desativarProduto').value;
+    //     if (!id) {
+    //         alert('ID do produto não informado.');
+    //         return;
+    //     }
+
+    //     if (!confirm('Tem certeza que deseja desativar este produto?')) {
+    //         return;
+    //     }
+
+    //     fetch('/api/produtos/desativar', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/x-www-form-urlencoded',
+    //         },
+    //         body: `id=${encodeURIComponent(id)}`
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         if (data.status === 'success') {
+    //             alert(data.message);
+    //             const modal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
+    //             modal.hide();
+    //             document.querySelector(`.card[data-id="${id}"]`).closest('.col').remove();
+    //         } else {
+    //             alert(data.message);
+    //         }
+    //     })
+    //     .catch(error => {
+    //         console.error('Erro:', error);
+    //         alert('Erro ao desativar o produto.');
+    //     });
+    // });
     </script>
 </body>
 </html>

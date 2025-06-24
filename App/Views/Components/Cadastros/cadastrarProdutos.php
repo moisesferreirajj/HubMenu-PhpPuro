@@ -12,7 +12,7 @@
             <div class="col-md-6 mb-3">
               <label for="nome" class="form-label">Nome do Produto:</label>
               <input type="text" class="form-control" id="nome" name="nome" required>
-            </div>
+            </div> 
             <div class="col-md-6 mb-3">
               <label for="valor" class="form-label">Valor:</label>
               <div class="input-group" id="valor-group">

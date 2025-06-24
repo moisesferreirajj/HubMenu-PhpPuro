@@ -10,9 +10,9 @@ class ProdutosModel
         $db = new Database();
         $sql = "SELECT * FROM produtos WHERE id = :id";
         $params = [':id' => intval($id)];
-        return $db->execute_query($sql, $params);
+        $result = $db->execute_query($sql, $params);
+        return $result->results[0] ?? [];
     }
-
     /**
      * Busca produtos associados a um pedido pelo ID.
      */
