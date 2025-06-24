@@ -43,6 +43,7 @@ $routes = [
     /* ROTAS ESPECIALMENTE DA EMPRESA PARA O CLIENTE: */
     '/cardapio/{id}' => 'CardapioController@indexCliente',
     '/gerenciar/cardapio/{id}' => 'CardapioController@indexAdmin',
+    '/gerenciar/lixeira/{id}' => 'ProdutoController@lixeira',
 
     /* ROTAS ESPECIALMENTE DA EMPRESA PARA A EMPRESA: */
     '/api/produtos/cadastrar' => 'ProdutosController@cadastrar',
@@ -51,6 +52,7 @@ $routes = [
     '/api/produtos/excluir' => 'ProdutosController@excluir',
     '/api/produtos/procurar/{id}' => 'ProdutosController@searchProdutos',
     '/api/visualizar/produtos/{id}' => 'ProdutosController@getProdutos',
+    '/api/produtos/ativar' => 'ProdutosController@ativar',
 
     /* ROTA ADMINISTRAÇÃO */
     '/api/autenticar/admin' => 'LoginController@autenticarAdmin',

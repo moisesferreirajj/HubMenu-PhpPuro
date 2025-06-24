@@ -29,10 +29,16 @@
         <i class="fa-solid fa-chart-column"></i>
         <span class="link-name"> Relatórios</span>
     </a>
+    <a class="side-item" href="lixeira">
+        <i class="fa-solid fa-trash"></i>
+        <span class="link-name"> Lixeira</span>
+    </a>
     <div class="opt">
-        <a class="side-item end-opt" href="/gerenciar/conta">
+        <a class="side-item" href="/gerenciar/conta">
             <i class="fa-solid fa-gear"></i>
             <span class="link-name"> Configurações</span>
         </a>
+    
+    
     </div>
 </div>

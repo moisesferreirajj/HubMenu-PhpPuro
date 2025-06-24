@@ -32,6 +32,11 @@
     outline-offset: 4px;
 }
 
+.bi-trash {
+    font-size: 1.2rem; /* Tamanho do ícone */
+    vertical-align: right; /* Alinhamento */
+}
+
 .side-item {
     margin-left: 20px;
     margin-right: 20px;

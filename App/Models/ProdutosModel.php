@@ -165,6 +165,26 @@ class ProdutosModel
         $params = [':id' => intval($id)];
         return $db->execute_non_query($sql, $params);
     }
+    
+// Método para listar produtos desativados
+public function listarDesativados($estabelecimento_id) {
+    try {
+        $db = new Database();
+        $params = [':id' => intval($id)];
+        error_log("Executando listarDesativados com estabelecimento_id: $estabelecimento_id");
+        $sql = "SELECT p.*, c.nome AS categoria_nome 
+                  FROM produtos p 
+                  LEFT JOIN categorias c ON p.categoria_id = c.id 
+                  WHERE p.estabelecimento_id = :estabelecimento_id AND p.ativo = 0";
+
+        error_log('Produtos desativados encontrados: ' . count($result));
+        return $result;
+    } catch (PDOException $e) {
+        error_log('Erro ao listar produtos desativados: ' . $e->getMessage());
+        return false;
+    }
+}
+
 
     /**
      * Busca produtos por termo de pesquisa e ID do estabelecimento.

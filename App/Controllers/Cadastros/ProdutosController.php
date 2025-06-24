@@ -160,6 +160,8 @@ class ProdutosController extends RenderView
         }
     }
 
+
+    
     public function searchProdutos($estabelecimento_id)
     {
         header('Content-Type: application/json; charset=utf-8');

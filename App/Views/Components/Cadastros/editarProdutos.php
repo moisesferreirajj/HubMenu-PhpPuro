@@ -144,14 +144,41 @@ document.getElementById('btnExcluir').addEventListener('click', async () => {
 });
 
 document.getElementById('desativarProduto').addEventListener('click', async () => {
-  const id = document.getElementById('edit-id').value;
-  await fetch('/api/produtos/desativar', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({id})
-  });
-  location.reload(); // Ou atualize a UI
-});
+    const id = document.getElementById('edit_id').value; // Corrigido pra 'edit_id'
 
+    if (!id) {
+        alert('ID do produto não encontrado.');
+        return;
+    }
+
+    if (confirm('Tem certeza que deseja desativar este produto?')) {
+        try {
+            // Envia como form-urlencoded, igual ao btnExcluir
+            const formData = new FormData();
+            formData.append('id', id);
+
+            const response = await fetch('/api/produtos/desativar', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                alert(data.message);
+                // Fechar o modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
+                modal.hide();
+                // Recarregar a página, como no btnExcluir
+                location.reload();
+            } else {
+                alert('Erro: ' + data.message);
+            }
+        } catch (error) {
+            alert('Erro ao comunicar com o servidor: ' + error.message);
+            console.error(error);
+        }
+    }
+});
 
 </script>
