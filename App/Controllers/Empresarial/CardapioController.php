@@ -43,4 +43,30 @@ class CardapioController extends RenderView
             'Erro' => $produtosResponse->status === 'error' ? $produtosResponse->message : null
         ]);
     }
+
+        public function lixeira($id): void
+    {
+        AcessoController::verificarAcesso('/gerenciar/lixeira/{id}', $_SESSION['usuario_cargo'], $id);
+
+        $produtoModel = new ProdutosModel();
+        $estabelecimentosModel = new EstabelecimentosModel();
+
+        // Buscar produtos inativos
+        $produtosInativos = $produtoModel->listarDesativados($id);
+        $estabelecimentoResponse = $estabelecimentosModel->findById($id);
+
+        $produtos = is_array($produtosInativos) ? $produtosInativos : [];
+        $estabelecimento = ($estabelecimentoResponse->status === 'success') ? $estabelecimentoResponse->results : null;
+        $erro = empty($produtos) && !is_array($produtosInativos) ? 'Erro ao carregar produtos inativos.' : null;
+
+        error_log("Renderizando lixeira.php com " . count($produtos) . " produtos inativos");
+
+        $this->loadView('empresarial/lixeira', [
+            'Title' => 'HubMenu | Lixeira',
+            'ProdutosInativos' => $produtos,
+            'Estabelecimento' => $estabelecimento,
+            'EstabelecimentoID' => $id,
+            'Erro' => $erro
+        ]);
+    }
 }

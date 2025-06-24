@@ -43,7 +43,7 @@ $routes = [
     /* ROTAS ESPECIALMENTE DA EMPRESA PARA O CLIENTE: */
     '/cardapio/{id}' => 'CardapioController@indexCliente',
     '/gerenciar/cardapio/{id}' => 'CardapioController@indexAdmin',
-    '/gerenciar/lixeira/{id}' => 'ProdutoController@lixeira',
+    '/gerenciar/lixeira/{id}' => 'CardapioController@lixeira',
 
     /* ROTAS ESPECIALMENTE DA EMPRESA PARA A EMPRESA: */
     '/api/produtos/cadastrar' => 'ProdutosController@cadastrar',

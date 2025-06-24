@@ -1,0 +1,4 @@
+[2025-06-24 01:49:05] Erro [2] Undefined variable $produtos - Arquivo: C:\Users\cauti\OneDrive\Documentos\GitHub\HubMenu-PhpPuro\App\Views\Empresarial\lixeira.php - Linha: 2
+[2025-06-24 01:49:05] Exceção não capturada: count(): Argument #1 ($value) must be of type Countable|array, null given - Arquivo: C:\Users\cauti\OneDrive\Documentos\GitHub\HubMenu-PhpPuro\App\Views\Empresarial\lixeira.php - Linha: 2
+[2025-06-24 01:49:06] Erro [2] Undefined variable $produtos - Arquivo: C:\Users\cauti\OneDrive\Documentos\GitHub\HubMenu-PhpPuro\App\Views\Empresarial\lixeira.php - Linha: 2
+[2025-06-24 01:49:06] Exceção não capturada: count(): Argument #1 ($value) must be of type Countable|array, null given - Arquivo: C:\Users\cauti\OneDrive\Documentos\GitHub\HubMenu-PhpPuro\App\Views\Empresarial\lixeira.php - Linha: 2

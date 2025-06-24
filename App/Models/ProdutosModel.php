@@ -13,44 +13,32 @@ class ProdutosModel
         $result = $db->execute_query($sql, $params);
         return $result->results[0] ?? [];
     }
+
     /**
      * Busca produtos associados a um pedido pelo ID.
      */
     public function findOrderProdById($id)
     {
         $db = new Database();
-        $sql = "SELECT 
-                pp.pedido_id,
-                pp.quantidade,
-                pp.preco_unitario,
-                pr.id AS produto_id,
-                pr.nome,
-                pr.descricao,
-                pr.imagem,
-                c.nome AS categoria_nome
-            FROM 
-                pedidos_produtos pp
-            JOIN 
-                produtos pr ON pp.produto_id = pr.id
-            LEFT JOIN 
-                categorias c ON pr.categoria_id = c.id
-            WHERE 
-                pp.pedido_id = :id";
+        $sql = "SELECT pp.pedido_id, pp.quantidade, pp.preco_unitario, pr.id AS produto_id, pr.nome, pr.descricao, pr.imagem, c.nome AS categoria_nome
+                FROM pedidos_produtos pp
+                JOIN produtos pr ON pp.produto_id = pr.id
+                LEFT JOIN categorias c ON pr.categoria_id = c.id
+                WHERE pp.pedido_id = :id";
         $params = [':id' => intval($id)];
-
         $result = $db->execute_query($sql, $params);
         return $result->results ?? [];
     }
 
     /**
-     * Busca os produtos pelo ID do Estabelecimento.
+     * Busca produtos pelo ID do Estabelecimento.
      */
     public function findByEstabelecimentoId($estabelecimento_id)
     {
         $db = new Database();
-        $sql = "SELECT p.*, c.nome as categoria_nome, e.nome as estabelecimento_nome
-                FROM produtos p 
-                LEFT JOIN categorias c ON p.categoria_id = c.id 
+        $sql = "SELECT p.*, c.nome AS categoria_nome, e.nome AS estabelecimento_nome
+                FROM produtos p
+                LEFT JOIN categorias c ON p.categoria_id = c.id
                 LEFT JOIN estabelecimentos e ON p.estabelecimento_id = e.id
                 WHERE p.estabelecimento_id = :estabelecimento_id AND p.status_produtos = 1";
         $params = [':estabelecimento_id' => intval($estabelecimento_id)];
@@ -70,7 +58,7 @@ class ProdutosModel
     /**
      * Insere um novo produto no banco de dados.
      */
-    public function insert($nome, $descricao, $valor, $imagem, $estabelecimento_id, $categoria_id, $status_produtos )
+    public function insert($nome, $descricao, $valor, $imagem, $estabelecimento_id, $categoria_id, $status_produtos)
     {
         $db = new Database();
         $sql = "INSERT INTO produtos (nome, descricao, valor, imagem, estabelecimento_id, categoria_id, status_produtos)
@@ -95,14 +83,8 @@ class ProdutosModel
         $db = new Database();
 
         if ($imagem !== null) {
-            $sql = "UPDATE produtos SET 
-                        nome = :nome, 
-                        descricao = :descricao, 
-                        valor = :valor, 
-                        imagem = :imagem,
-                        estabelecimento_id = :estabelecimento_id,
-                        categoria_id = :categoria_id
-                    WHERE id = :id";
+            $sql = "UPDATE produtos SET nome = :nome, descricao = :descricao, valor = :valor, imagem = :imagem,
+                    estabelecimento_id = :estabelecimento_id, categoria_id = :categoria_id WHERE id = :id";
             $params = [
                 ':id' => intval($id),
                 ':nome' => trim($nome),
@@ -113,13 +95,8 @@ class ProdutosModel
                 ':categoria_id' => intval($categoria_id)
             ];
         } else {
-            $sql = "UPDATE produtos SET 
-                        nome = :nome, 
-                        descricao = :descricao, 
-                        valor = :valor, 
-                        estabelecimento_id = :estabelecimento_id,
-                        categoria_id = :categoria_id
-                    WHERE id = :id";
+            $sql = "UPDATE produtos SET nome = :nome, descricao = :descricao, valor = :valor,
+                    estabelecimento_id = :estabelecimento_id, categoria_id = :categoria_id WHERE id = :id";
             $params = [
                 ':id' => intval($id),
                 ':nome' => trim($nome),
@@ -165,23 +142,40 @@ class ProdutosModel
         $params = [':id' => intval($id)];
         return $db->execute_non_query($sql, $params);
     }
-    
-// Método para listar produtos desativados
+
+    /**
+     * Busca produtos inativos por ID do estabelecimento.
+     */
+    /**
+ * Busca produtos inativos de um estabelecimento específico.
+ *
+ * @param int $estabelecimento_id
+ * @return array Lista de produtos inativos (como objetos)
+ */
 public function listarDesativados($estabelecimento_id) {
     try {
-        $db = new Database();
-        $params = [':id' => intval($id)];
+        $estabelecimento_id = intval($estabelecimento_id);
         error_log("Executando listarDesativados com estabelecimento_id: $estabelecimento_id");
-        $sql = "SELECT p.*, c.nome AS categoria_nome 
-                  FROM produtos p 
-                  LEFT JOIN categorias c ON p.categoria_id = c.id 
-                  WHERE p.estabelecimento_id = :estabelecimento_id AND p.ativo = 0";
 
-        error_log('Produtos desativados encontrados: ' . count($result));
-        return $result;
-    } catch (PDOException $e) {
-        error_log('Erro ao listar produtos desativados: ' . $e->getMessage());
-        return false;
+        $db = new Database();
+        $sql = "
+            SELECT p.*, c.nome AS categoria_nome 
+            FROM produtos p
+            LEFT JOIN categorias c ON p.categoria_id = c.id
+            WHERE p.estabelecimento_id = :estabelecimento_id
+              AND p.status_produtos = 0
+        ";
+
+        $params = [':estabelecimento_id' => $estabelecimento_id];
+        $result = $db->execute_query($sql, $params);
+
+        $produtos = $result->results ?? [];
+        error_log('Produtos inativos encontrados: ' . count($produtos));
+
+        return $produtos;
+    } catch (Exception $e) {
+        error_log('Erro ao listar produtos inativos: ' . $e->getMessage());
+        return [];
     }
 }
 
@@ -193,7 +187,8 @@ public function listarDesativados($estabelecimento_id) {
     {
         $db = new Database();
         $query = "%" . trim($query) . "%";
-        $sql = "SELECT * FROM produtos WHERE estabelecimento_id = :estabelecimento_id AND nome LIKE :query AND status_produtos = 1";
+        $sql = "SELECT * FROM produtos
+                WHERE estabelecimento_id = :estabelecimento_id AND nome LIKE :query AND status_produtos = 1";
         $params = [
             ':estabelecimento_id' => intval($estabelecimento_id),
             ':query' => $query,
@@ -208,9 +203,9 @@ public function listarDesativados($estabelecimento_id) {
     public function searchByEstabelecimentoAndCondition($estabelecimento_id)
     {
         $db = new Database();
-        $sql = "SELECT p.id, p.nome, p.descricao, p.valor, p.imagem 
-                FROM produtos p 
-                JOIN estabelecimentos e ON p.estabelecimento_id = e.id 
+        $sql = "SELECT p.id, p.nome, p.descricao, p.valor, p.imagem
+                FROM produtos p
+                JOIN estabelecimentos e ON p.estabelecimento_id = e.id
                 WHERE e.id = :id";
         $params = [':id' => intval($estabelecimento_id)];
         $result = $db->execute_query($sql, $params);
