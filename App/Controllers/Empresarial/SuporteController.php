@@ -1,14 +1,16 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 class SuporteController extends RenderView
 {
-    public function index(){
+    public function index()
+    {
         $users = new UsuariosModel();
 
-        $this->loadView('empresarial/suporte',
-            [
-                'Title' => 'HubMenu |'
-            ],
-        );
+        $this->loadView('empresarial/suporte', [
+            'Title' => 'HubMenu |'
+        ]);
     }
 }

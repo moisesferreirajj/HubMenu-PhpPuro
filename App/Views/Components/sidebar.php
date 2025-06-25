@@ -28,7 +28,7 @@
     </a>
     <a class="side-item <?= $actual_page == 'relatorios.php' ? 'active' : '' ?>" href="/empresarial/dashboard/<?= $estabelecimentoId ?>">
         <i class="fa-solid fa-chart-column"></i>
-        <span class="link-name">Relatórios</span>
+        <span class="link-name">Dashboard</span>
     </a>
     <a class="side-item <?= $actual_page == 'lixeira.php' ? 'active' : '' ?>" href="/gerenciar/lixeira/<?= $estabelecimentoId ?>">
         <i class="fa-solid fa-trash"></i>

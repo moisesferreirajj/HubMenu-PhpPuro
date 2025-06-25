@@ -213,9 +213,8 @@ th, td {
     font-weight: bolder !important;
 }
 
-/* Estilização moderna para os cards de produtos */
 .products-list {
-    max-height: 400px;
+    max-height: 370px;
     overflow-y: auto;
     padding: 20px !important;
     background: linear-gradient(135deg, #f8f9ff 0%, #e8f0fe 100%);
@@ -480,3 +479,4 @@ th, td {
         padding: 8px 0;
     }
 }
+

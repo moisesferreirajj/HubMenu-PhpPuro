@@ -1,6 +1,4 @@
 <?php 
-   require_once __DIR__ . '/../../global.php';
-   require_once __DIR__ . '/../../Models/UsuariosModel.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -21,7 +19,7 @@
 <body>
 
 
-    <?php require_once __DIR__ . '/../Views/Components/sidebar.php'; ?>
+    <?php require_once __DIR__ . '/../../Views/Components/sidebar.php'; ?>
     <div class="header">
         <div class="header-btn">
             <button type="button" onclick="openNav()" id="open-btn" class="open-btn">
@@ -56,7 +54,6 @@
         </div>
     </div>
 
-    
     <div class="orders">
             <div class="order-card">
                 <div class="order-heading">

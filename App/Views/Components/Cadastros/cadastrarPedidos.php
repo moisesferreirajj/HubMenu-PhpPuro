@@ -14,6 +14,15 @@ $menuProducts = $menuProductsObj->results ?? [];
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="cliente_id" class="form-label">Identificação do Cliente:</label>
+                            <input type="text" name="nome_cliente" id="nome_cliente" class="form-control" placeholder="Digite o ID ou nome do cliente" required>
+                            <input type="hidden" name="cliente_nome" id="cliente_nome">
+                            <p id="cliente_nome_display" class="mt-2"></p>
+                        </div>
+                    </div>
+
                     <div class="row mb-3">
                         <div class="col-md-12">
                             <input type="hidden" name="estabelecimento_id" value="<?= $userCompany?? '' ?>">
@@ -133,5 +142,15 @@ document.addEventListener('DOMContentLoaded', () => {
         setupEventListeners();
         calcTotal();
     }
+
+    const nomeClienteInput = document.getElementById('nome_cliente');
+    const clienteNomeHidden = document.getElementById('cliente_nome');
+    const clienteNomeDisplay = document.getElementById('cliente_nome_display');
+
+    nomeClienteInput.addEventListener('input', () => {
+        const nomeCliente = nomeClienteInput.value.trim();
+        clienteNomeHidden.value = nomeCliente;
+        clienteNomeDisplay.textContent = nomeCliente ? `Cliente: ${nomeCliente}` : '';
+    });
 });
 </script>

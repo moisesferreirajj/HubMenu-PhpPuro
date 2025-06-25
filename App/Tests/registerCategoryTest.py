@@ -18,7 +18,8 @@ class TestRegisterCategory:
             time.sleep(3)
 
             print("Clicando em login...")
-            self.driver.find_element(By.ID, "login").click()
+            self.driver.find_element(By.ID, "logar").click()
+            time.sleep(10)
 
             print("Acessando página de categoria...")
             page_cat = self.driver.find_element(By.CSS_SELECTOR, "a[href='#']")
@@ -47,7 +48,7 @@ class TestRegisterCategory:
             self.driver.quit()
 driver = webdriver.Chrome()
 driver.maximize_window()
-addressUrl = "http://26.123.71.60:8080/empresarial/login"
+addressUrl = "http://10.3.76.83:8080/empresarial/login"
 driver.get(addressUrl)
 
 testUnir = TestRegisterCategory(addressUrl, driver)

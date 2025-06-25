@@ -1,6 +1,19 @@
+# Ativa o mecanismo de reescrita
 RewriteEngine On
 
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
+# Define a base do site (se estiver em subdiretório, ajuste aqui)
+RewriteBase /
 
-RewriteRule ^(.*)$ index.php?url=$1 [QSA]
+# Evita reescrita se o arquivo ou diretório existir fisicamente
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redireciona todas as requisições para o index.php, enviando a URL amigável como parâmetro
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+
+# Força UTF-8
+AddDefaultCharset utf-8
+
+# Habilita a exibição de erros detalhados (desative em produção)
+# php_flag display_errors on
+# php_value error_reporting 32767

@@ -2,6 +2,7 @@
         class AccountManager {
             constructor() {
                 this.form = document.getElementById('accountForm');
+                this.bannerCropper = null; // Corrigido: propriedade da classe
                 this.initializeEventListeners();
                 this.initializePreview();
                 this.loadSavedData();
@@ -75,9 +76,63 @@
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     if (type === 'profile') {
-                        document.getElementById('profileImagePreview').src = e.target.result;
+                        const profileImagePreview = document.getElementById('profileImagePreview');
+                        if (profileImagePreview) {
+                            profileImagePreview.src = e.target.result;
+                        }
                     } else if (type === 'banner') {
-                        document.getElementById('bannerPreview').style.backgroundImage = `url(${e.target.result})`;
+                        const bannerCropImage = document.getElementById('bannerCropImage');
+                        if (!bannerCropImage) return;
+                        bannerCropImage.src = e.target.result;
+                        const modalEl = document.getElementById('bannerCropModal');
+                        if (!modalEl) return;
+                        const modal = new bootstrap.Modal(modalEl);
+                        modal.show();
+
+                        // Destroi cropper anterior se existir
+                        if (this.bannerCropper) {
+                            this.bannerCropper.destroy();
+                        }
+                        // Inicializa cropper
+                        bannerCropImage.onload = () => {
+                            this.bannerCropper = new Cropper(bannerCropImage, {
+                                aspectRatio: 16 / 5,
+                                viewMode: 2,
+                                autoCropArea: 1,
+                                movable: true,
+                                zoomable: true,
+                                scalable: true,
+                                rotatable: false,
+                            });
+                        };
+
+                        // Ao clicar em "Recortar e Usar"
+                        const cropBtn = document.getElementById('cropBannerBtn');
+                        if (cropBtn) {
+                            cropBtn.onclick = () => {
+                                if (this.bannerCropper) {
+                                    const canvas = this.bannerCropper.getCroppedCanvas({
+                                        width: 1200,
+                                        height: 375,
+                                    });
+                                    const bannerPreview = document.getElementById('bannerPreview');
+                                    if (bannerPreview) {
+                                        bannerPreview.style.backgroundImage = `url(${canvas.toDataURL()})`;
+                                    }
+
+                                    canvas.toBlob((blob) => {
+                                        const croppedFile = new File([blob], file.name, { type: blob.type });
+                                        const dataTransfer = new DataTransfer();
+                                        dataTransfer.items.add(croppedFile);
+                                        document.getElementById('banner').files = dataTransfer.files;
+                                    }, file.type);
+
+                                    bootstrap.Modal.getInstance(modalEl).hide();
+                                    this.bannerCropper.destroy();
+                                    this.bannerCropper = null;
+                                }
+                            };
+                        }
                     }
                 };
                 reader.readAsDataURL(file);
@@ -223,16 +278,6 @@
             }
         }
 
-        function loadSampleData() {
-            document.getElementById('nome').value = 'Empresa Exemplo Ltda';
-            document.getElementById('tipo').value = 'Tecnologia e Inovação';
-            document.getElementById('cnpj').value = '12.345.678/0001-90';
-            document.getElementById('cep').value = '01234-567';
-            document.getElementById('endereco').value = 'Rua das Flores, 123, Centro, São Paulo - SP';
-            
-            accountManager.initializePreview();
-            accountManager.showToast('Sucesso', 'Dados de exemplo carregados!', 'success');
-        }
-
         // Initialize the application
         const accountManager = new AccountManager();
+

@@ -1,4 +1,4 @@
-d<?php
+<?php
 
 class CadastroController extends RenderView
 {
@@ -24,10 +24,40 @@ class CadastroController extends RenderView
 
             $users = new UsuariosModel();
             $usuario = $users->buscarPorEmail($email);
-            $usuarioExistente = $usuario->results[0] ?? '';
+            $usuarioExistente = $usuario->results[0] ?? null;
 
-            if ($usuarioExistente->email == '' && $usuarioExistente->telefone == '') {
-                if ($users->insert($nome, $senha, $email, $cep, $endereco, $telefone)) {
+            if (!$usuarioExistente || ($usuarioExistente->email == '' && $usuarioExistente->telefone == '')) {
+                // Insere usuário e pega o ID
+                $usuarioInsert = $users->insert($nome, $senha, $email, null, $cep, $endereco, $telefone);
+                $usuarioId = $usuarioInsert->last_id ?? null;
+
+                if ($usuarioId) {
+                    // Cria estabelecimento padrão e pega o ID
+                    $estabelecimentosModel = new EstabelecimentosModel();
+                    $estabInsert = $estabelecimentosModel->insert(
+                        "Restaurante",
+                        $cep,
+                        "00.000.000/0000-00",
+                        "Restaurante",
+                        0,
+                        $endereco,
+                        null,
+                        null,
+                        "#000000",
+                        "#000000",
+                        "#000000"
+                    );
+                    $estabelecimentoId = $estabInsert->last_id ?? null;
+
+                    if ($estabelecimentoId) {
+                        $estabelecimentosUsuariosModel = new EstabelecimentosUsuariosModel();
+                        $estabelecimentosUsuariosModel->insert(
+                            $usuarioId,
+                            '1',
+                            $estabelecimentoId
+                        );
+                    }
+
                     echo "<script>
                         alert('Cadastro realizado com sucesso!');
                         window.location.href = '/empresarial/login';

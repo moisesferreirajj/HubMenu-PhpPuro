@@ -44,6 +44,30 @@
     color: #0e7a56;
 }
 
+        .btn-circle {
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .btn-circle:hover {
+            background-color: #e9ecef;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .btn-circle i {
+            margin: 0;
+        }
+        .back-button-container {
+            padding: 1rem;
+            display: flex;
+            justify-content: flex-start;
+        }
+
 .category-badge {
     position: absolute;
     top: 10px;
@@ -83,6 +107,37 @@
     color: #6c757d;
 }
 
+/* Centralização do grupo de filtros (usado em cliente e editor) */
+.filter-group-centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.filter-group-centered .btn-group {
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Centralização da barra de pesquisa (usado no nível cliente) */
+.search-container-centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.search-container-centered .search-container {
+    max-width: 500px; /* Limita a largura da barra de pesquisa */
+    width: 100%;
+    display: flex; /* Garante que input e botão fiquem alinhados */
+    align-items: center;
+}
+
 /* Ajuste responsivo */
 @media (max-width: 576px) {
     .card {
@@ -93,5 +148,9 @@
     }
     .card-title {
         font-size: 1rem;
+    }
+    .search-container-centered .search-container {
+        max-width: 100%; /* Barra de pesquisa ocupa toda a largura em telas pequenas */
+        padding: 0 10px;
     }
 }

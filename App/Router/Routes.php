@@ -24,6 +24,7 @@ $routes = [
     /* ROTAS DE ADMIN */
     '/api/autenticar/usuario' => 'LoginController@autenticar',
     '/api/cadastrar/usuario' => 'CadastroController@cadastrar',
+    '/api/criar/relatorio/{id}' => 'RelatorioController@gerarPdfRelatorio',
 
     /* ROTAS ENVIO EMAIL - ESQUECEU A SENHA */
     '/api/autenticar/senha' => 'EsqueceuSenha@autenticar',

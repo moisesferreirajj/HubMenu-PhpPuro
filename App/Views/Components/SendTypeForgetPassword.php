@@ -15,8 +15,8 @@
                 <div class="select-method-btns">
                     <input type="radio" class="btn-check" name="metodo_envio" id="btn-email" value="email">
                     <label for="btn-email" class="btn-select">E-mail</label>
-                    <input type="radio" class="btn-check" name="metodo_envio" id="btn-sms" value="sms">
-                    <label for="btn-sms" class="btn-select">Mensagem SMS</label>
+                    <!-- <input type="radio" class="btn-check" name="metodo_envio" id="btn-sms" value="sms">
+                    <label for="btn-sms" class="btn-select">Mensagem SMS</label> -->
                 </div>
                 <p>Selecione a forma de envio do código</p>
             </div>

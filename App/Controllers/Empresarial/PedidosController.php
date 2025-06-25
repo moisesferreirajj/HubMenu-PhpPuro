@@ -28,19 +28,28 @@ class PedidosController {
                 if (!isset($_SESSION['usuario_id'])) {
                     throw new Exception('Usuário não autenticado.');
                 }
-
+    
                 $usuariosModel = new UsuariosModel();
                 $pedidosModel = new PedidosModel();
                 $produtosModel = new ProdutosModel();
-
+    
                 $userCompany = $usuariosModel->getCompanyByUserId($_SESSION['usuario_id']);
                 $estabelecimento_id = is_object($userCompany) ? $userCompany->id : $userCompany;
-
+    
                 if (!$estabelecimento_id) {
                     throw new Exception('Empresa do usuário não encontrada.');
                 }
-
-                // Recolhe produtos do POST
+    
+                // Recebe o nome do cliente do formulário
+                $nomeCliente = $_POST['nome_cliente'] ?? null;
+                if (!$nomeCliente) {
+                    throw new Exception("Nome do cliente é obrigatório");
+                }
+    
+                // Cria o cliente na tabela usuarios e pega o id gerado
+                $clienteId = $usuariosModel->criar($nomeCliente);
+    
+                // Prepara os produtos selecionados
                 $produtos_info = [];
                 if (!empty($_POST['products'])) {
                     foreach ($_POST['products'] as $produto_id) {
@@ -51,43 +60,44 @@ class PedidosController {
                         ];
                     }
                 }
+    
+                // Calcula o valor total do pedido
                 $valor_total = 0;
-
-                // Calcula valor total (opcional)
                 foreach ($produtos_info as $produto) {
                     $produtoInfo = $produtosModel->findById($produto['produto_id']);
                     if ($produtoInfo) {
                         $valor_total += $produtoInfo->valor * $produto['quantidade'];
                     }
                 }
-
-                // Cria o pedido principal
+    
+                // Cadastra o pedido usando o id do cliente criado
                 $pedido_id = $pedidosModel->cadastrarPedido([
-                    'usuario_id' => $_SESSION['usuario_id'],
+                    'usuario_id' => $clienteId,
                     'estabelecimento_id' => $estabelecimento_id,
-                    'valor_total' => $valor_total
+                    'valor_total' => $valor_total,
+                    'observacao' => $_POST['observacao_geral'] ?? null
                 ]);
-
+    
                 if (!$pedido_id) {
                     throw new Exception("Erro ao cadastrar pedido.");
                 }
-
+    
                 // Adiciona produtos ao pedido
                 foreach ($produtos_info as $produto) {
                     $pedidosModel->adicionarProdutoPedido(
                         $pedido_id,
                         $produto['produto_id'],
                         $produto['quantidade'],
-                        $produto['observacao'] ?? null // Evita erro se não existir
+                        $produto['observacao'] ?? null
                     );
                 }
-
+    
                 echo "<script>
                         alert('Pedido cadastrado com sucesso!');
                         window.location.href = '/pedidos/{$estabelecimento_id}';
                       </script>";
                 exit;
-
+    
             } catch (Exception $e) {
                 echo "<script>
                         alert('Erro ao cadastrar pedido: " . addslashes($e->getMessage()) . "');
@@ -97,6 +107,7 @@ class PedidosController {
             }
         }
     }
+    
 
     public function atualizarStatus() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -138,7 +149,6 @@ class PedidosController {
         $usuariosModel = new UsuariosModel();
         $pedidosModel = new PedidosModel();
 
-        $clienteId = $usuariosModel->criar($nomeCliente);
 
         $dadosPedido = [
             'nome_usuario' => $nomeCliente,
@@ -149,5 +159,30 @@ class PedidosController {
 
         header("Location: /pedidos");
         exit;
+    }
+
+    public function salvarCliente($cliente) {
+        session_start();
+
+        $usuariosModel = new UsuariosModel();
+
+        if (!isset($_SESSION['usuario_id'])) {
+            die('Usuário não autenticado!');
+        }
+
+        $guestClient = $_POST['cliente_id'];
+
+        $clienteNome = $_POST['nome_cliente'] ?? null;
+        if (!$clienteNome) {
+            throw new Exception("Nome do cliente é obrigatório");
+        }
+
+        $clienteId = $usuariosModel->criar($clienteNome);
+        if (!$clienteId) {
+            throw new Exception("Erro ao criar cliente visitante");
+        }
+        header("Location: /pedidos");
+        exit;
+
     }
 }

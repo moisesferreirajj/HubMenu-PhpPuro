@@ -6,10 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $Title ?? 'Gerenciamento de Contas' ?></title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="/Views/Assets/Css/gerenciar.css" rel="stylesheet">
+    <!-- Cropper.js CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+    <style>
+        .btn-circle {
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .btn-circle:hover {
+            background-color: #e9ecef;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .btn-circle i {
+            margin: 0;
+        }
+        .back-button-container {
+            padding: 1rem;
+            display: flex;
+            justify-content: flex-start;
+        }
+    </style>
 </head>
 <body>
+    <!-- Botão voltar -->
+    <div class="back-button-container">
+        <a href="/gerenciar/cardapio/<?= htmlspecialchars($EstabelecimentoID ?? '1'); ?>" class="btn btn-light btn-circle" title="Voltar ao Cardápio" aria-label="Voltar ao Cardápio">
+            <i class="bi bi-arrow-left"></i>
+        </a>
+    </div>
+
     <div class="container-fluid">
         <div class="main-container">
             <!-- Header Section -->
@@ -197,19 +232,38 @@
                             <i class="fas fa-undo"></i>
                             Resetar
                         </button>
-                        <button type="button" class="btn btn-secondary" onclick="loadSampleData()">
-                            <i class="fas fa-magic"></i>
-                            Dados de Exemplo
-                        </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
+    <!-- Modal para crop do banner -->
+    <div class="modal fade" id="bannerCropModal" tabindex="-1" aria-labelledby="bannerCropModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="bannerCropModalLabel">Ajustar Banner</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div>
+              <img id="bannerCropImage" style="max-width:100%; max-height:400px;">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="cropBannerBtn" class="btn btn-primary">Recortar e Usar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Toast Notifications -->
     <div class="toast-container"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script src="/Views/Assets/Js/gerenciar.js"></script>
+    <!-- Cropper.js JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 </body>
 </html>

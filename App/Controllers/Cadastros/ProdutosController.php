@@ -101,7 +101,7 @@ class ProdutosController extends RenderView
             }
 
             $produtosModel = new ProdutosModel();
-            $produtosModel->update($id, $nome, $descricao, $valor, $imagemPath, $estabelecimento_id, $categoria_id);
+            $produtosModel->update($id, $nome, $descricao, $valor, $imagemPath, $estabelecimento_id, $categoria_id, 1);
 
             echo "<script>
                 alert('Produto editado com sucesso!');

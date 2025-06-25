@@ -27,7 +27,7 @@ class AvaliacoesSistemaModel
     /**
      * Insere um novo usuário no banco de dados.
      */
-    public function insert($usuario_id, $estabelecimento_id, $avaliacao, $comentario = null, $data_avaliacao)
+    public function insert($usuario_id, $estabelecimento_id, $avaliacao, $data_avaliacao, $comentario = null)
     {
 
         $db = new Database();
@@ -45,7 +45,7 @@ class AvaliacoesSistemaModel
     /**
      * Atualiza os dados de um usuário existente.
      */
-    public function update($id, $usuario_id, $estabelecimento_id, $avaliacao, $comentario = null, $data_avaliacao)
+    public function update($id, $usuario_id, $estabelecimento_id, $avaliacao, $data_avaliacao, $comentario = null)
     {
         $db = new Database();
         $sql = "UPDATE avaliacoes_sistema SET 

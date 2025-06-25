@@ -44,7 +44,7 @@
         <div class="card">
             <div class="card-header">
                 <span class="order-id">Pedido #<?= htmlspecialchars($pedido->id) ?></span>
-                <span class="order-client"><?= htmlspecialchars($pedido->cliente ?? $pedido->nome) ?></span>
+                <span class="order-client"><?= htmlspecialchars($pedido->cliente) ?></span>
                 <span class="order-status badge bg-<?= 
                     $pedido->status == 'entregue' ? 'success' : 
                     ($pedido->status == 'cancelado' ? 'danger' : 

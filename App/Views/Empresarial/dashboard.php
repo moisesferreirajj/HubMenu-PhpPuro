@@ -70,16 +70,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             z-index: 1000;
             transition: all 0.3s ease;
             box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+            transform: translateX(0); /* Garante posição inicial correta */
         }
 
+        /* Estado colapsado do sidebar */
         .sidebar.collapsed {
             width: 80px;
+        }
+
+        /* Ajustes para o conteúdo quando sidebar está colapsado */
+        .sidebar.collapsed .sidebar-header h3,
+        .sidebar.collapsed .sidebar-header .subtitle {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar.collapsed .menu-item {
+            justify-content: center;
+            padding: 15px 10px;
+        }
+
+        .sidebar.collapsed .menu-item i {
+            margin-right: 0;
+        }
+
+        .sidebar.collapsed .menu-item span {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
         }
 
         .sidebar-header {
             padding: 20px;
             text-align: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden; /* Evita quebra de layout */
         }
 
         .sidebar-header h3 {
@@ -87,12 +115,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin: 0;
             font-weight: bold;
             font-size: 1.5rem;
+            transition: all 0.3s ease;
         }
 
         .sidebar-header .subtitle {
             color: rgba(255, 255, 255, 0.7);
             font-size: 0.9rem;
             margin-top: 5px;
+            transition: all 0.3s ease;
         }
 
         .sidebar-menu {
@@ -100,12 +130,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .sidebar-menu .menu-item {
-            display: block;
+            display: flex;
+            align-items: center;
             padding: 15px 25px;
             color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
             transition: all 0.3s ease;
             border-left: 3px solid transparent;
+            white-space: nowrap; /* Evita quebra de texto */
         }
 
         .sidebar-menu .menu-item:hover,
@@ -119,12 +151,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .sidebar-menu .menu-item i {
             width: 20px;
             margin-right: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-menu .menu-item span {
+            transition: all 0.3s ease;
         }
 
         .main-content {
             margin-left: 280px;
             padding: 0;
             transition: all 0.3s ease;
+            min-height: 100vh;
         }
 
         .main-content.expanded {
@@ -146,6 +185,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-size: 1.2rem;
             color: var(--dark-color);
             cursor: pointer;
+            padding: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            color: var(--primary-color);
+            transform: scale(1.1);
         }
 
         .user-info {
@@ -386,25 +432,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             display: block;
         }
 
+        /* Mobile responsivo */
         @media (max-width: 768px) {
             .sidebar {
-                width: 100vw;
-                height: 0;
-                min-height: 0;
-                max-height: 0;
+                width: 280px;
+                transform: translateX(-100%); /* Esconde completamente em mobile */
+                transition: transform 0.3s ease;
                 position: fixed;
                 left: 0;
                 top: 0;
                 z-index: 2000;
-                overflow: hidden;
-                transition: max-height 0.3s ease, height 0.3s ease;
+                overflow-y: auto;
             }
 
             .sidebar.show {
-                height: auto;
-                max-height: 100vh;
-                min-height: 100vh;
-                overflow-y: auto;
+                transform: translateX(0); /* Mostra o sidebar */
+            }
+            
+            .sidebar.collapsed {
+                width: 280px; /* Mantém largura completa em mobile */
+                transform: translateX(-100%); /* Ainda esconde quando colapsado */
+            }
+            
+            .sidebar.collapsed.show {
+                transform: translateX(0); /* Sobrepõe collapsed em mobile */
             }
 
             .main-content {
@@ -413,6 +464,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             .main-content.expanded {
                 margin-left: 0;
+            }
+
+            .btn-relatorio {
+                width: 100% !important;
+                margin: auto !important;
+            }
+
+            /* Overlay para mobile quando sidebar está aberto */
+            .sidebar.show::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 280px;
+                width: calc(100vw - 280px);
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: -1;
             }
         }
 
@@ -447,6 +515,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             min-height: 400px !important;
             max-height: 400px !important;
             height: 400px !important;
+        }
+
+        .btn-relatorio {
+            width: 20%;
+            margin-left: 10px;
+        }
+
+        /* Animação suave para todos os elementos do sidebar */
+        .sidebar * {
+            transition: all 0.3s ease;
         }
     </style>
 </head>
@@ -484,7 +562,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <i class="fas fa-file-alt"></i> Relatórios
             </a>
             <a href="/gerenciar/cardapio/<?= $EstabelecimentoID ?>" class="menu-item">
-                <i class="fas fa-sign-out"></i> Cardápio
+                <i class="fa fa-pencil-alt"></i> Cardápio
             </a>
             <a href="/empresarial/logout" class="menu-item">
                 <i class="fas fa-sign-out"></i> Logout
@@ -511,7 +589,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="content-area">
             <!-- Dashboard Page -->
             <div class="page-content active" id="dashboard">
-                <h2 class="page-title">Dashboard Goeral</h2>
+                <h2 class="page-title">Dashboard Geral</h2>
                 <!-- Stats Cards -->
                 <div class="row mb-4">
                     <div class="col-md-3 mb-3">
@@ -937,6 +1015,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <canvas id="categoryChart" class="chart" height="400"></canvas>
                         </div>
                     </div>
+
+                    <a href="/api/criar/relatorio/<?= $EstabelecimentoID ?>" class="btn btn-relatorio btn-primary mt-3">
+                        <i class="fas fa-file-alt"></i> Gerar Relatório
+                    </a>
                 </div>
             </div>
         </div>
@@ -1151,18 +1233,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script>
         // Toggle sidebar
-        const toggleBtn = document.getElementById('toggleBtn');
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('mainContent');
+const toggleBtn = document.getElementById('toggleBtn');
+const sidebar = document.getElementById('sidebar');
+const mainContent = document.getElementById('mainContent');
 
-        toggleBtn.addEventListener('click', () => {
-            if (window.innerWidth <= 768) {
-                sidebar.classList.toggle('show');
-            } else {
-                sidebar.classList.toggle('collapsed');
-                mainContent.classList.toggle('expanded');
-            }
-        });
+let sidebarClosed = false; // Controla o estado do sidebar no desktop
+
+toggleBtn.addEventListener('click', () => {
+    if (window.innerWidth <= 768) {
+        // Mobile: apenas toggle da classe 'show'
+        sidebar.classList.toggle('show');
+    } else {
+        // Desktop: toggle entre fechado completo e colapsado/aberto
+        if (sidebarClosed) {
+            // Se está fechado, abrir para estado normal
+            sidebar.style.transform = 'translateX(0)';
+            mainContent.style.marginLeft = '280px';
+            sidebar.classList.remove('collapsed');
+            mainContent.classList.remove('expanded');
+            sidebarClosed = false;
+        } else {
+            // Se está aberto, fechar completamente
+            sidebar.style.transform = 'translateX(-100%)';
+            mainContent.style.marginLeft = '0';
+            sidebarClosed = true;
+        }
+    }
+});
+
+// Fechar sidebar ao clicar fora dele em mobile
+document.addEventListener('click', (e) => {
+    if (window.innerWidth <= 768) {
+        const isClickInsideSidebar = sidebar.contains(e.target);
+        const isToggleBtn = toggleBtn.contains(e.target);
+        
+        if (!isClickInsideSidebar && !isToggleBtn && sidebar.classList.contains('show')) {
+            sidebar.classList.remove('show');
+        }
+    }
+});
+
+// Ajustar comportamento ao redimensionar a tela
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+        // Desktop: remover classe 'show' se existir e resetar estado
+        sidebar.classList.remove('show');
+        if (!sidebarClosed) {
+            sidebar.style.transform = 'translateX(0)';
+            mainContent.style.marginLeft = '280px';
+        }
+    } else {
+        // Mobile: remover classes de desktop e resetar estilos inline
+        sidebar.classList.remove('collapsed');
+        mainContent.classList.remove('expanded');
+        sidebar.style.transform = '';
+        mainContent.style.marginLeft = '';
+        sidebarClosed = false;
+    }
+});
 
         // Page navigation
         const menuItems = document.querySelectorAll('.menu-item');

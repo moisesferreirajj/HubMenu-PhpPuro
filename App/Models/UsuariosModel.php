@@ -183,17 +183,43 @@ class UsuariosModel
     }
 
     public function criar($nome)
-    {
-        $db = new Database();
-        $sql = "INSERT INTO usuarios (nome) VALUES (:nome)";
-        $params = [':nome' => $nome];
+{
+    $db = new Database();
 
-        $res = $db->execute_non_query($sql, $params);
 
-        if ($res->status === 'success') {
-            return $res->last_id; // Aqui você recupera o ID criado
-        }
+    $email = strtolower($nome) . rand(100, 9999) . '@gmail.com' ;
+    $senha = password_hash(bin2hex(random_bytes(4)), PASSWORD_DEFAULT);
+    $cargo_id = 10; 
+    $cep = rand(10000, 99999) . '-' . rand(100, 999);
+    $endereco = 'Rua ' . ucfirst(bin2hex(random_bytes(3))) . ', ' . rand(1, 999);
+    $telefone = '(47) 9' . rand(8000, 9999) . '-' . rand(1000, 9999);
 
-        return null; // Se falhar
+    $sql = "INSERT INTO usuarios (nome, email, senha, cargo_id, cep, endereco, telefone)
+            VALUES (:nome, :email, :senha, :cargo_id, :cep, :endereco, :telefone)";
+
+    $params = [
+        ':nome' => $nome,
+        ':email' => $email,
+        ':senha' => $senha,
+        ':cargo_id' => $cargo_id,
+        ':cep' => $cep,
+        ':endereco' => $endereco,
+        ':telefone' => $telefone,
+    ];
+
+    $result = $db->execute_non_query($sql, $params);
+
+    if ($result->status === 'success') {
+        return $result->last_id;
+    } else {
+        throw new Exception("Erro ao criar usuário: " . $result->message);
     }
+}
+
+private function gerarDominioAleatorio()
+{
+    $dominios = ['mail.com', 'teste.org', 'exemplo.net', 'site.dev'];
+    return $dominios[array_rand($dominios)];
+}
+
 }

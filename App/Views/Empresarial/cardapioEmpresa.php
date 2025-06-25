@@ -132,17 +132,19 @@ ksort($categoriasExistentes); // Ordenar categorias alfabeticamente
     <!-- Conteúdo principal -->
     <div class="container py-4">
         <!-- Filtros dinâmicos -->
-        <div id="filter-group" class="btn-group" role="group">
-            <button type="button" class="btn btn-outline-success active" data-filter="todos" aria-label="Filtrar por todos os produtos">Todos</button>
-            <?php foreach ($categoriasExistentes as $filtro => $nome): ?>
-                <button type="button" class="btn btn-outline-success" data-filter="<?= htmlspecialchars($filtro); ?>" aria-label="Filtrar por <?= htmlspecialchars($nome); ?>">
-                    <?= htmlspecialchars(ucfirst($nome)); ?>
-                </button>
-            <?php endforeach; ?>
+        <div class="filter-group-centered">
+            <div id="filter-group" class="btn-group" role="group">
+                <button type="button" class="btn btn-outline-success active" data-filter="todos" aria-label="Filtrar por todos os produtos">Todos</button>
+                <?php foreach ($categoriasExistentes as $filtro => $nome): ?>
+                    <button type="button" class="btn btn-outline-success" data-filter="<?= htmlspecialchars($filtro); ?>" aria-label="Filtrar por <?= htmlspecialchars($nome); ?>">
+                        <?= htmlspecialchars(ucfirst($nome)); ?>
+                    </button>
+                <?php endforeach; ?>
+            </div>
         </div>
 
         <!-- Pesquisa -->
-        <div class="search-container-wrapper d-flex align-items-center flex-grow-1">
+        <div class="search-container-wrapper d-flex align-items-center flex-grow-1 search-container-centered">
             <div class="search-container">
                 <input type="text" class="form-control search-input" placeholder="Digite o produto" aria-label="Pesquisar produtos">
                 <button class="btn btn-light search-btn" aria-label="Pesquisar"><i class="bi bi-search"></i></button>
@@ -154,10 +156,12 @@ ksort($categoriasExistentes); // Ordenar categorias alfabeticamente
         <!-- Lista de produtos -->
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="produtos-lista">
             <?php foreach ($produtos as $produto):
-                $catId = (int) $produto->categoria_id;
-                $categoriaFiltro = $categoriaMap[$catId] ?? strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $produto->categoria_nome ?? 'comidas'));
-                $cardClass = $categoriaFiltro === 'sobremesas' ? 'category-dessert' : ($categoriaFiltro === 'bebidas' ? 'category-drink' : 'category-food');
-                $badgeClass = $categoriaFiltro === 'sobremesas' ? 'badge-dessert' : ($categoriaFiltro === 'bebidas' ? 'badge-drink' : 'badge-food');
+                // Verifica se status_produtos é 1
+                if ($produto->status_produtos == 1):
+                    $catId = (int) $produto->categoria_id;
+                    $categoriaFiltro = $categoriaMap[$catId] ?? strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $produto->categoria_nome ?? 'comidas'));
+                    $cardClass = $categoriaFiltro === 'sobremesas' ? 'category-dessert' : ($categoriaFiltro === 'bebidas' ? 'category-drink' : 'category-food');
+                    $badgeClass = $categoriaFiltro === 'sobremesas' ? 'badge-dessert' : ($categoriaFiltro === 'bebidas' ? 'badge-drink' : 'badge-food');
             ?>
             <div class="col animated-card"
                  data-categoria="<?= htmlspecialchars($categoriaFiltro); ?>"
@@ -183,6 +187,7 @@ ksort($categoriasExistentes); // Ordenar categorias alfabeticamente
                     </div>
                 </div>
             </div>
+            <?php endif; // Fim da verificação de status_produtos ?>
             <?php endforeach; ?>
         </div><!-- /.row -->
     </div><!-- /.container -->

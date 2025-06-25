@@ -26,7 +26,7 @@
                     </span>
                 </div>
             </div>
-            <button type="submit" class="btn" id="login">Entrar</button>
+            <button type="submit" class="btn" id="logar">Entrar</button>
             <div class="links">
                 <a href="./"><i class="fas fa-arrow-left"></i> Voltar ao Início</a>
                 <a href="./esqueceuSenha"><i class="fa-solid fa-lock"></i> Esqueceu a Senha</a>

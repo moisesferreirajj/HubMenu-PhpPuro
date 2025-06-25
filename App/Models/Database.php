@@ -119,6 +119,19 @@ class Database
         return $this->_result('success', 'success', $sql, null, $db->rowCount(), $last_inserted_id);
     }
 
+    public function getLastInsertId()
+    {
+        // Cria uma nova conexão só para pegar o último ID (não é o ideal, mas segue seu padrão atual)
+        $connection = new PDO(
+            "mysql:host={$this->_host};dbname={$this->_database};port={$this->_port};charset=utf8",
+            $this->_username,
+            $this->_password
+        );
+        $lastId = $connection->lastInsertId();
+        $connection = null;
+        return $lastId;
+    }
+
     private function _result($status, $message, $sql, $results, $affected_rows, $last_id)
     {
         $tmp = new stdClass;

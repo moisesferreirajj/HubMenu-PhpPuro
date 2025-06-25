@@ -77,8 +77,8 @@ class GerenciarController extends RenderView
             }
 
             $model = new EstabelecimentosModel();
-            $result = $model->update(
-                $id, $nome, $cep, $cnpj, $tipo, null, $endereco, $imagem, $banner, $cor1, $cor2, $cor3
+            $result = $model->updateGerenciar(
+                $id, $nome, $cep, $cnpj, $tipo, $endereco, $imagem, $banner, $cor1, $cor2, $cor3
             );
 
             // Se você tiver o campo banner no banco, adicione no update do model também!
