@@ -941,6 +941,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
+    <!-- Modal Produto -->
+    <div class="modal fade" id="produtoModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="POST" id="formProduto" autocomplete="off">
+                    <input type="hidden" name="estabelecimento_id" value="<?= $EstabelecimentoID ?>">
+                    <input type="hidden" name="acao" id="produtoAcao" value="cadastrar_produto">
+                    <input type="hidden" name="id" id="produtoId">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="produtoModalTitle"><i class="fas fa-box"></i> Novo Produto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Nome</label>
+                            <input type="text" class="form-control" name="nome" id="produtoNome" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Categoria</label>
+                            <select class="form-select" name="categoria_id" id="produtoCategoria" required>
+                                <option value="">Selecione a categoria</option>
+                                <?php foreach ($Categorias as $categoria): ?>
+                                    <option value="<?= $categoria->id ?>"><?= htmlspecialchars($categoria->nome) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Valor</label>
+                            <input type="number" step="0.01" class="form-control" name="valor" id="produtoValor" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Descrição</label>
+                            <textarea class="form-control" name="descricao" id="produtoDescricao"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Imagem (URL)</label>
+                            <input type="text" class="form-control" name="imagem" id="produtoImagem">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <select class="form-select" name="status_produtos" id="produtoStatus" required>
+                                <option value="1">Ativo</option>
+                                <option value="0">Inativo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Usuario -->
     <div class="modal fade" id="usuarioModal" tabindex="-1">
         <div class="modal-dialog">
