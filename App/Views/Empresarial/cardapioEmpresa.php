@@ -49,19 +49,27 @@ ksort($categoriasExistentes); // Ordenar categorias alfabeticamente
         <div class="container">
             <!-- Nome do estabelecimento (centro) -->
             <?php if (!empty($estabelecimento[0]->nome)): ?>
-                <div class="banner-estabelecimento mb-4 d-flex align-items-center justify-content-center"
-                     style="width:100%;height:100px;overflow:hidden;">
+                <div class="banner-estabelecimento mb-4 d-flex align-items-center p-4" style="width:100%; min-height: 120px; background: none; border-radius: 12px;">
                     <?php if (!empty($estabelecimento[0]->imagem)): ?>
-                        <img class="imagemempresa" src="<?= htmlspecialchars($estabelecimento[0]->imagem) ?>" alt="Imagem do Estabelecimento Redonda"
-                             style="width:100%;height:100px;object-fit:cover;">
+                        <div class="me-4" style="width: 100px; height: 100px; overflow: hidden; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                            <img class="w-100 h-100" src="<?= htmlspecialchars($estabelecimento[0]->imagem) ?>" alt="<?= htmlspecialchars($estabelecimento[0]->nome) ?>" style="object-fit: cover;">
+                        </div>
                     <?php endif; ?>
-                    <h2 class="mb-0"><?= htmlspecialchars($estabelecimento[0]->nome) ?></h2>
-                    <h4><?= htmlspecialchars($estabelecimento[0]->endereco) ?></h4>
+                    <div class="d-flex flex-column">
+                        <h2 class="mb-1 fw-bold text-dark"><?= htmlspecialchars($estabelecimento[0]->nome) ?></h2>
+                        <div class="d-flex align-items-center text-muted">
+                            <i class="bi bi-geo-alt-fill me-2"></i>
+                            <span><?= htmlspecialchars($estabelecimento[0]->endereco) ?></span>
+                        </div>
+                    </div>
                 </div>
             <?php else: ?>
-                <div class="banner-estabelecimento mb-4 text-center p-4 bg-light border"
-                     style="height:220px;display:flex;align-items:center;justify-content:center;">
-                    <p class="text-muted mb-0">Este estabelecimento ainda não possui um banner.</p>
+                <div class="banner-estabelecimento mb-4 d-flex align-items-center justify-content-center p-4" 
+                     style="height: 120px; background: #f8f9fa; border: 2px dashed #dee2e6; border-radius: 12px;">
+                    <div class="text-center">
+                        <i class="bi bi-image text-muted" style="font-size: 2rem;"></i>
+                        <p class="text-muted mt-2 mb-0">Este estabelecimento ainda não possui um banner.</p>
+                    </div>
                 </div>
             <?php endif; ?>
 
@@ -115,10 +123,10 @@ ksort($categoriasExistentes); // Ordenar categorias alfabeticamente
                  style="width:100%;height:220px;object-fit:cover;">
         </div>
     <?php else: ?>
-        <div class="banner-estabelecimento mb-4 text-center p-4 bg-light border"
-             style="height:220px;display:flex;align-items:center;justify-content:center;">
-            <p class="text-muted mb-0">Este estabelecimento ainda não possui um banner.</p>
-        </div>
+    <div class="banner-estabelecimento mb-4 text-center p-4 bg-light border"
+         style="height:220px;display:flex;align-items:center;justify-content:center;">
+        <p class="text-muted mb-0">Este estabelecimento ainda não possui um banner.</p>
+    </div>
     <?php endif; ?>
 
     <!-- Conteúdo principal -->

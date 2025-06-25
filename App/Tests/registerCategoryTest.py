@@ -12,33 +12,44 @@ class TestRegisterCategory:
     
     def fill_category_form(self):
         try:
-            # Acessa a página de cadastro de produtos
-            self.driver.findElement(By.ID, "category_page").click()
+            print("Preenchendo email...")
+            self.driver.find_element(By.ID, "email").send_keys("cautios2.0@gmail.com")
+            self.driver.find_element(By.ID, "password").send_keys("yohan")
+            time.sleep(3)
+
+            print("Clicando em login...")
+            self.driver.find_element(By.ID, "login").click()
+
+            print("Acessando página de categoria...")
+            page_cat = self.driver.find_element(By.CSS_SELECTOR, "a[href='#']")
+            page_cat[3].click()
 
             time.sleep(3)
+            print("Procurando botão de cadastro de categoria...")
             open_form = self.driver.find_element(By.ID, "registerCat")
+            print("Botão encontrado:", open_form)
             open_form.click()
             time.sleep(3)
 
-            # Procura pelos campos e envia os dados corretos
-            # Nome do produto
+            print("Preenchendo nome da categoria...")
             input_name = self.driver.find_element(By.ID, "categoriaNome")
             input_name.send_keys("Chinesa")
             time.sleep(3)
 
-
-
+            print("Enviando formulário...")
             submit_form = self.driver.find_element(By.ID, "regis_cat")
             submit_form.click()
         
-            self.driver.findElement(By.ID, "category_page").click()
+            self.driver.find_element(By.ID, "category_page").click()
             time.sleep(3)
         except Exception as e:
-            self.driver.quit()  
+            print("Erro:", e)
+            self.driver.quit()
+driver = webdriver.Chrome()
+driver.maximize_window()
+addressUrl = "http://26.123.71.60:8080/empresarial/login"
+driver.get(addressUrl)
 
-service = webdriver.Chrome()
-addressUrl = service.get("http://localhost:8080/empresarial/dashboard/1")
+testUnir = TestRegisterCategory(addressUrl, driver)
 
-testUnir = TestRegisterCategory(addressUrl, service)
-
-testUnir.fill_product_form()
+testUnir.fill_category_form()

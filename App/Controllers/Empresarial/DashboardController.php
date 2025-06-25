@@ -162,29 +162,87 @@ class DashboardController extends RenderView
             $usuariosModel = new UsuariosModel();
             $nome = $_POST['nome'] ?? '';
             $email = $_POST['email'] ?? '';
+            $cargo_id = $_POST['cargo'] ?? null;
             $telefone = $_POST['telefone'] ?? '';
+            $cep = $_POST['cep'] ?? null;
+            $endereco = $_POST['endereco'] ?? null;
             $senha = $_POST['senha'] ?? '';
             $senha2 = $_POST['senha2'] ?? '';
-            $cargo_id = $_POST['cargo'] ?? '';
             $estabelecimento_id = $_POST['estabelecimento_id'] ?? null;
 
             if ($senha !== $senha2) {
-                echo "<script>alert('Cadastro Realizado!'); window.location.href = '" . $_SERVER['REQUEST_URI'] . "';</script>";
+                echo "<script>alert('As senhas não conferem!');window.history.back();</script>";
                 exit;
             }
 
             $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
-            // 1. Insere o usuário
-            $usuario_id = $usuariosModel->insert($nome, $senhaHash, $email, $cargo_id, null, null, $telefone);
+            // Insere usuário (cargo_id vai para tabela de relacionamento)
+            $usuario_id = $usuariosModel->insert($nome, $senhaHash, $email, null, $cep, $endereco, $telefone);
 
-            // 2. Insere o vínculo na tabela estabelecimentos_usuarios
+            // Relaciona usuário ao estabelecimento e cargo
             if ($usuario_id && $estabelecimento_id && $cargo_id) {
                 $estabUsuariosModel = new EstabelecimentosUsuariosModel();
                 $estabUsuariosModel->insert($estabelecimento_id, $usuario_id, $cargo_id);
             }
 
-            echo "<script>alert('Cadastro Realizado'); window.history.back()</script>";
+            echo "<script>alert('Usuário cadastrado!');window.location.href = '" . $_SERVER['REQUEST_URI'] . "';</script>";
+            exit;
+        }
+
+        // Editar Usuário
+        if (isset($_POST['acao']) && $_POST['acao'] === 'editar_usuario') {
+            $usuariosModel = new UsuariosModel();
+            $id = $_POST['id'];
+            $nome = $_POST['nome'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $cargo_id = $_POST['cargo'] ?? null;
+            $telefone = $_POST['telefone'] ?? '';
+            $cep = $_POST['cep'] ?? null;
+            $endereco = $_POST['endereco'] ?? null;
+            $senha = $_POST['senha'] ?? null;
+            $senha2 = $_POST['senha2'] ?? null;
+            $estabelecimento_id = $_POST['estabelecimento_id'] ?? null;
+
+            // Busca senha atual se não for alterar
+            $senhaHash = null;
+            if ($senha && $senha === $senha2) {
+                $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+            } else {
+                // Busca senha atual do usuário
+                $usuarioObj = $usuariosModel->findById($id);
+                $usuario = $usuarioObj->results ?? [];
+                $senhaHash = $usuario[0]->senha ?? '';
+            }
+
+            // Atualiza usuário
+            $usuariosModel->update($id, $nome, $senhaHash, $email, $cep, $endereco, $telefone);
+
+            // Atualiza cargo na tabela de relacionamento
+            if ($estabelecimento_id && $cargo_id) {
+                $estabUsuariosModel = new EstabelecimentosUsuariosModel();
+                $estabUsuariosModel->update($id, $estabelecimento_id, $cargo_id);
+            }
+
+            echo "<script>alert('Usuário atualizado!');window.location.href = '" . $_SERVER['REQUEST_URI'] . "';</script>";
+            exit;
+        }
+
+        // Excluir Usuário
+        if (isset($_POST['acao']) && $_POST['acao'] === 'excluir_usuario') {
+            $usuariosModel = new UsuariosModel();
+            $estabUsuariosModel = new EstabelecimentosUsuariosModel();
+            $id = $_POST['id'];
+            $estabelecimento_id = $_POST['estabelecimento_id'] ?? null;
+
+            // Remove vínculo
+            if ($estabelecimento_id) {
+                $estabUsuariosModel->delete($id, $estabelecimento_id);
+            }
+            // Remove usuário
+            $usuariosModel->delete($id);
+
+            echo json_encode(['status' => 'success']);
             exit;
         }
     }
@@ -204,5 +262,10 @@ class DashboardController extends RenderView
                 exit;
             }
         }
+    }
+
+    public function Venda() 
+    {
+        
     }
 }

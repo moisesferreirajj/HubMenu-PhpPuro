@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Cadastro de Produto
 
@@ -15,6 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // cadastro, edit e delete de pedido
     $dashboard->Pedido();
+
+    // edit vendas
+    $dashboard->Venda();
 }
 ?>
 
@@ -476,6 +483,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="#" class="menu-item" data-page="relatorios">
                 <i class="fas fa-file-alt"></i> Relatórios
             </a>
+            <a href="/gerenciar/cardapio/<?= $EstabelecimentoID ?>" class="menu-item">
+                <i class="fas fa-sign-out"></i> Cardápio
+            </a>
             <a href="/empresarial/logout" class="menu-item">
                 <i class="fas fa-sign-out"></i> Logout
             </a>
@@ -635,16 +645,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </td>
                                     <td>
                                         <button class="btn-action btn-edit btn-edit-produto"
-    data-id="<?= $produto->id ?>"
-    data-nome="<?= htmlspecialchars($produto->nome) ?>"
-    data-categoria="<?= $produto->categoria_id ?>"
-    data-valor="<?= htmlspecialchars($produto->valor) ?>"
-    data-descricao="<?= htmlspecialchars($produto->descricao) ?>"
-    data-status="<?= $produto->status_produtos ?>">
-                                        <i class="fas fa-edit"></i>
+                                            data-id="<?= $produto->id ?>"
+                                            data-nome="<?= htmlspecialchars($produto->nome) ?>"
+                                            data-categoria="<?= $produto->categoria_id ?>"
+                                            data-valor="<?= htmlspecialchars($produto->valor) ?>"
+                                            data-descricao="<?= htmlspecialchars($produto->descricao) ?>"
+                                            data-status="<?= $produto->status_produtos ?>">
+                                            <i class="fas fa-edit"></i>
                                         </button>
                                         <button class="btn-action btn-delete btn-delete-produto" data-id="<?= $produto->id ?>">
-                                        <i class="fas fa-trash"></i>
+                                            <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -742,7 +752,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="page-content" id="usuarios">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2 class="page-title">Usuários</h2>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#usuarioModal">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#usuarioModal" id="btnNovoUsuario">
                         <i class="fas fa-plus"></i> Novo Usuário
                     </button>
                 </div>
@@ -763,15 +773,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <?php foreach ($Usuarios as $usuario): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($usuario->id) ?></td>
-                                    <td><?= ucwords(htmlspecialchars($usuario->nome)) ?></td>
+                                    <td><?= htmlspecialchars($usuario->nome) ?></td>
                                     <td><?= htmlspecialchars($usuario->email) ?></td>
-                                    <td><?= htmlspecialchars($usuario->cargo_nome) ?></td>
+                                    <td data-cargo-id="<?= $usuario->cargo_id ?>"><?= htmlspecialchars($usuario->cargo_nome) ?></td>
                                     <td><?= htmlspecialchars($usuario->telefone) ?></td>
                                     <td>
-                                        <button class="btn-action btn-edit" data-id="<?= $usuario->id ?>"><i
-                                                class="fas fa-edit"></i></button>
-                                        <button class="btn-action btn-delete" data-id="<?= $usuario->id ?>"><i
-                                                class="fas fa-trash"></i></button>
+                                        <button type="button" class="btn-action btn-edit btn-edit-usuario"
+                                            data-id="<?= $usuario->id ?>"
+                                            data-nome="<?= htmlspecialchars($usuario->nome) ?>"
+                                            data-email="<?= htmlspecialchars($usuario->email) ?>"
+                                            data-cargo="<?= $usuario->cargo_id ?>"
+                                            data-telefone="<?= htmlspecialchars($usuario->telefone) ?>"
+                                            data-cep="<?= htmlspecialchars($usuario->cep) ?>"
+                                            data-endereco="<?= htmlspecialchars($usuario->endereco) ?>"
+                                            title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button type="button" class="btn-action btn-delete btn-delete-usuario"
+                                            data-id="<?= $usuario->id ?>"
+                                            title="Excluir">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -919,118 +941,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <!-- Modal Produto -->
-<div class="modal fade" id="produtoModal" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <form method="POST" enctype="multipart/form-data" id="formProduto">
-        <input type="hidden" name="acao" id="produtoAcao" value="cadastrar_produto">
-        <input type="hidden" name="id" id="produtoId">
-        <input type="hidden" name="estabelecimento_id" value="<?= $EstabelecimentoID ?>">
-        <div class="modal-header">
-          <h5 class="modal-title" id="produtoModalTitle"><i class="fas fa-box"></i> Produto</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Nome do Produto</label>
-              <input type="text" class="form-control" name="nome" id="produtoNome" required>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Categoria</label>
-              <select class="form-select" name="categoria_id" id="produtoCategoria" required>
-                <option selected disabled>Selecione a categoria</option>
-                <?php foreach ($Categorias as $categoria): ?>
-                  <option value="<?= $categoria->id ?>"><?= htmlspecialchars($categoria->nome) ?></option>
-                <?php endforeach; ?>
-              </select>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Valor</label>
-              <input type="number" class="form-control" name="valor" id="produtoValor" step="0.10" required>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Status</label>
-              <select class="form-select" name="status_produtos" id="produtoStatus" required>
-                <option value="1">Ativo</option>
-                <option value="0">Inativo</option>
-              </select>
-            </div>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Descrição</label>
-            <textarea class="form-control" name="descricao" id="produtoDescricao" rows="3"></textarea>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Imagem do Produto</label>
-            <input type="file" class="form-control" name="imagem" id="produtoImagem" accept="image/*">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary" id="regis_pro">Salvar Produto</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-    <!-- Modal Usuário -->
+    <!-- Modal Usuario -->
     <div class="modal fade" id="usuarioModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form method="POST" id="formUsuario" autocomplete="off">
                     <input type="hidden" name="estabelecimento_id" value="<?= $EstabelecimentoID ?>">
-                    <input type="hidden" name="acao" value="cadastrar_usuario">
+                    <input type="hidden" name="acao" id="usuarioAcao" value="cadastrar_usuario">
                     <input type="hidden" name="id" id="usuarioId">
                     <div class="modal-header">
-                        <h5 class="modal-title"><i class="fas fa-user"></i> Novo Usuário</h5>
+                        <h5 class="modal-title"><i class="fas fa-user"></i> <span id="usuarioModalTitulo">Novo Usuário</span></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label">Nome Completo</label>
+                            <label class="form-label">Nome</label>
                             <input type="text" class="form-control" name="nome" id="usuarioNome" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Email</label>
+                            <label class="form-label">E-mail</label>
                             <input type="email" class="form-control" name="email" id="usuarioEmail" required>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Cargo</label>
-                                    <select class="form-select" name="cargo" id="usuarioCargo" required>
-                                        <option value="" selected disabled>Selecione o cargo</option>
-                                        <?php
-                                        foreach ($Cargos as $cargo) {
-                                            echo '<option value="' . htmlspecialchars($cargo->id) . '">' . htmlspecialchars($cargo->nome) . '</option>';
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Telefone</label>
-                                    <input type="tel" class="form-control" name="telefone" id="usuarioTelefone"
-                                        pattern="^\(\d{2}\)\s?\d{4,5}-\d{4}$" placeholder="(DDD) xxxxx-xxxx" required>
-                                </div>
-                            </div>
+                        <div class="mb-3">
+                            <label class="form-label">Cargo</label>
+                            <select class="form-select" name="cargo" id="usuarioCargo" required>
+                                <option value="">Selecione o cargo</option>
+                                <?php foreach ($Cargos as $cargo): ?>
+                                    <option value="<?= $cargo->id ?>"><?= htmlspecialchars($cargo->nome) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Telefone</label>
+                            <input type="text" class="form-control" name="telefone" id="usuarioTelefone">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">CEP</label>
+                            <input type="text" class="form-control" name="cep" id="usuarioCep">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Endereço</label>
+                            <input type="text" class="form-control" name="endereco" id="usuarioEndereco">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Senha</label>
-                            <input type="password" class="form-control" name="senha" id="usuarioSenha" required>
+                            <input type="password" class="form-control" name="senha" id="usuarioSenha" placeholder="Preencha para alterar">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Confirmar Senha</label>
-                            <input type="password" class="form-control" name="senha2" id="usuarioSenha2" required>
+                            <input type="password" class="form-control" name="senha2" id="usuarioSenha2" placeholder="Confirme a senha">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Cancelar</button>
-                        <button type="submit" id="regis_usu" class="btn btn-primary">Salvar Usuário</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
                     </div>
                 </form>
             </div>
@@ -1038,30 +1002,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <!-- Modal Categoria -->
-<div class="modal fade" id="categoriaModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form method="POST" id="formCategoria">
-        <input type="hidden" name="acao" id="categoriaAcao" value="cadastrar_categoria">
-        <input type="hidden" name="id" id="categoriaId">
-        <div class="modal-header">
-          <h5 class="modal-title" id="categoriaModalTitle">Categoria</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    <div class="modal fade" id="categoriaModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="POST" id="formCategoria">
+                    <input type="hidden" name="acao" id="categoriaAcao" value="cadastrar_categoria">
+                    <input type="hidden" name="id" id="categoriaId">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="categoriaModalTitle">Categoria</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Nome da Categoria</label>
+                            <input type="text" class="form-control" name="nome" id="categoriaNome" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label class="form-label">Nome da Categoria</label>
-            <input type="text" class="form-control" name="nome" id="categoriaNome" required>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Salvar</button>
-        </div>
-      </form>
     </div>
-  </div>
-</div>
 
     <!-- Modal Editar Status do Pedido -->
     <div class="modal fade" id="editarStatusPedidoModal" tabindex="-1" aria-labelledby="editarStatusPedidoLabel"
@@ -1116,11 +1080,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Page navigation
         const menuItems = document.querySelectorAll('.menu-item');
         const pageContents = document.querySelectorAll('.page-content');
+        var estabelecimentoId = <?= json_encode($EstabelecimentoID) ?>;
 
         menuItems.forEach(item => {
             item.addEventListener('click', (e) => {
                 // Se for o botão de logout, deixa o link funcionar normalmente
-                if (item.getAttribute('href') === '/empresarial/logout') {
+                if (
+                    item.getAttribute('href') === '/empresarial/logout' ||
+                    item.getAttribute('href') === ('/gerenciar/cardapio/' + estabelecimentoId)
+                ) {
                     return;
                 }
                 e.preventDefault();
@@ -1349,7 +1317,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Editar status do pedido
         document.querySelectorAll('.btn-edit-pedido').forEach(btn => {
-            btn.addEventListener('click', function () {
+            btn.addEventListener('click', function() {
                 const pedidoId = this.getAttribute('data-id');
                 const row = this.closest('tr');
                 const statusText = row.querySelector('td:nth-child(5) .status-badge').textContent.trim().toLowerCase();
@@ -1364,76 +1332,78 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
 
         // Abrir modal para NOVO produto
-        document.getElementById('registerPro').addEventListener('click', function () {
-        document.getElementById('produtoModalTitle').textContent = 'Novo Produto';
-        document.getElementById('produtoAcao').value = 'cadastrar_produto';
-        document.getElementById('produtoId').value = '';
-        document.getElementById('produtoNome').value = '';
-        document.getElementById('produtoCategoria').value = '';
-        document.getElementById('produtoValor').value = '';
-        document.getElementById('produtoDescricao').value = '';
-        document.getElementById('produtoImagem').value = '';
-        document.getElementById('produtoStatus').value = '1';
+        document.getElementById('registerPro').addEventListener('click', function() {
+            document.getElementById('produtoModalTitle').textContent = 'Novo Produto';
+            document.getElementById('produtoAcao').value = 'cadastrar_produto';
+            document.getElementById('produtoId').value = '';
+            document.getElementById('produtoNome').value = '';
+            document.getElementById('produtoCategoria').value = '';
+            document.getElementById('produtoValor').value = '';
+            document.getElementById('produtoDescricao').value = '';
+            document.getElementById('produtoImagem').value = '';
+            document.getElementById('produtoStatus').value = '1';
         });
 
         // Abrir modal para EDITAR produto
         document.querySelectorAll('.btn-edit-produto').forEach(btn => {
-    btn.addEventListener('click', function () {
-        const id = this.getAttribute('data-id');
-        const nome = this.getAttribute('data-nome');
-        const categoria = this.getAttribute('data-categoria');
-        const valor = this.getAttribute('data-valor');
-        const descricao = this.getAttribute('data-descricao');
-        const status = this.getAttribute('data-status'); // Adicione se quiser editar status
+            btn.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const nome = this.getAttribute('data-nome');
+                const categoria = this.getAttribute('data-categoria');
+                const valor = this.getAttribute('data-valor');
+                const descricao = this.getAttribute('data-descricao');
+                const status = this.getAttribute('data-status'); // Adicione se quiser editar status
 
-        document.getElementById('produtoModalTitle').textContent = 'Editar Produto';
-        document.getElementById('produtoAcao').value = 'editar_produto';
-        document.getElementById('produtoId').value = id;
-        document.getElementById('produtoNome').value = nome;
-        document.getElementById('produtoCategoria').value = categoria;
-        document.getElementById('produtoValor').value = valor;
-        document.getElementById('produtoDescricao').value = descricao;
-        if (status) document.getElementById('produtoStatus').value = status;
-        document.getElementById('produtoImagem').value = '';
-        const modal = new bootstrap.Modal(document.getElementById('produtoModal'));
-        modal.show();
-    });
-});
+                document.getElementById('produtoModalTitle').textContent = 'Editar Produto';
+                document.getElementById('produtoAcao').value = 'editar_produto';
+                document.getElementById('produtoId').value = id;
+                document.getElementById('produtoNome').value = nome;
+                document.getElementById('produtoCategoria').value = categoria;
+                document.getElementById('produtoValor').value = valor;
+                document.getElementById('produtoDescricao').value = descricao;
+                if (status) document.getElementById('produtoStatus').value = status;
+                document.getElementById('produtoImagem').value = '';
+                const modal = new bootstrap.Modal(document.getElementById('produtoModal'));
+                modal.show();
+            });
+        });
 
         // Excluir produto
         document.querySelectorAll('.btn-delete-produto').forEach(btn => {
-            btn.addEventListener('click', function () {
+            btn.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
                 if (confirm('Deseja realmente excluir este produto?')) {
                     fetch('/api/produtos/excluir', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                        body: 'id=' + encodeURIComponent(id)
-                    })
-                    .then(res => res.json())
-                    .then(resp => {
-                        if (resp.status === 'success') {
-                            alert('Produto excluído com sucesso!');
-                            location.reload();
-                        } else {
-                            alert('Erro ao excluir produto: ' + (resp.message || ''));
-                        }
-                    });
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            body: 'id=' + encodeURIComponent(id)
+                        })
+                        .then(res => res.json())
+                        .then(resp => {
+                            if (resp.status === 'success') {
+                                alert('Produto excluído com sucesso!');
+                                location.reload();
+                            } else {
+                                alert('Erro ao excluir produto: ' + (resp.message || ''));
+                            }
+                        });
                 }
             });
         });
 
         // Abrir modal para NOVA categoria
-        document.getElementById('registerCat').addEventListener('click', function () {
-        document.getElementById('categoriaModalTitle').textContent = 'Nova Categoria';
-        document.getElementById('categoriaAcao').value = 'cadastrar_categoria';
-        document.getElementById('categoriaId').value = '';
-        document.getElementById('categoriaNome').value = '';
+        document.getElementById('registerCat').addEventListener('click', function() {
+            document.getElementById('categoriaModalTitle').textContent = 'Nova Categoria';
+            document.getElementById('categoriaAcao').value = 'cadastrar_categoria';
+            document.getElementById('categoriaId').value = '';
+            document.getElementById('categoriaNome').value = '';
         });
 
         // Abrir modal para EDITAR categoria
         document.querySelectorAll('.btn-edit-categoria').forEach(btn => {
-            btn.addEventListener('click', function () {
+            btn.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
                 const nome = this.getAttribute('data-nome');
                 document.getElementById('categoriaModalTitle').textContent = 'Editar Categoria';
@@ -1447,28 +1417,90 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Excluir categoria
         document.querySelectorAll('.btn-delete-categoria').forEach(btn => {
-            btn.addEventListener('click', function () {
+            btn.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
                 if (confirm('Deseja realmente excluir esta categoria?')) {
                     fetch('/api/categorias/excluir', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                        body: 'id=' + encodeURIComponent(id)
-                    })
-                    .then(res => res.json())
-                    .then(resp => {
-                        if (resp.status === 'success') {
-                             alert('Categoria excluída com sucesso!');
-                            location.reload();
-                        } else {
-                            alert('Erro ao excluir categoria: ' + (resp.message || ''));
-                        }
-                    });
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            body: 'id=' + encodeURIComponent(id)
+                        })
+                        .then(res => res.json())
+                        .then(resp => {
+                            if (resp.status === 'success') {
+                                alert('Categoria excluída com sucesso!');
+                                location.reload();
+                            } else {
+                                alert('Erro ao excluir categoria: ' + (resp.message || ''));
+                            }
+                        });
                 }
             });
         });
 
-        document.getElementById('usuarioTelefone').addEventListener('input', function (e) {
+        // Novo usuário
+        document.getElementById('btnNovoUsuario').addEventListener('click', function() {
+            document.getElementById('usuarioModalTitulo').textContent = 'Novo Usuário';
+            document.getElementById('usuarioAcao').value = 'cadastrar_usuario';
+            document.getElementById('usuarioId').value = '';
+            document.getElementById('usuarioNome').value = '';
+            document.getElementById('usuarioEmail').value = '';
+            document.getElementById('usuarioCargo').value = '';
+            document.getElementById('usuarioTelefone').value = '';
+            document.getElementById('usuarioCep').value = '';
+            document.getElementById('usuarioEndereco').value = '';
+            document.getElementById('usuarioSenha').value = '';
+            document.getElementById('usuarioSenha2').value = '';
+        });
+
+        // Editar usuário
+        document.querySelectorAll('.btn-edit-usuario').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.getElementById('usuarioModalTitulo').textContent = 'Editar Usuário';
+                document.getElementById('usuarioAcao').value = 'editar_usuario';
+                document.getElementById('usuarioId').value = this.dataset.id;
+                document.getElementById('usuarioNome').value = this.dataset.nome;
+                document.getElementById('usuarioEmail').value = this.dataset.email;
+                document.getElementById('usuarioCargo').value = this.dataset.cargo;
+                document.getElementById('usuarioTelefone').value = this.dataset.telefone;
+                document.getElementById('usuarioCep').value = this.dataset.cep;
+                document.getElementById('usuarioEndereco').value = this.dataset.endereco;
+                document.getElementById('usuarioSenha').value = '';
+                document.getElementById('usuarioSenha2').value = '';
+                var modal = new bootstrap.Modal(document.getElementById('usuarioModal'));
+                modal.show();
+            });
+        });
+
+        // Excluir usuário
+        document.querySelectorAll('.btn-delete-usuario').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                if (confirm('Deseja realmente excluir este usuário?')) {
+                    var formData = new FormData();
+                    formData.append('acao', 'excluir_usuario');
+                    formData.append('id', this.dataset.id);
+                    formData.append('estabelecimento_id', <?= json_encode($EstabelecimentoID) ?>);
+
+                    fetch('', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(res => res.json())
+                        .then(resp => {
+                            if (resp.status === 'success') {
+                                alert('Usuário excluído com sucesso!');
+                                location.reload();
+                            } else {
+                                alert('Erro ao excluir usuário!');
+                            }
+                        });
+                }
+            });
+        });
+
+        document.getElementById('usuarioTelefone').addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
             if (value.length > 11) value = value.slice(0, 11);
 
@@ -1487,7 +1519,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
 
         // Validação de senha igual
-        document.getElementById('formUsuario').addEventListener('submit', function (e) {
+        document.getElementById('formUsuario').addEventListener('submit', function(e) {
             const senha = document.getElementById('usuarioSenha').value;
             const senha2 = document.getElementById('usuarioSenha2').value;
             if (senha !== senha2) {

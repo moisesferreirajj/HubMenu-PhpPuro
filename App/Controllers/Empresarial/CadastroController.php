@@ -1,4 +1,4 @@
-<?php
+d<?php
 
 class CadastroController extends RenderView
 {
