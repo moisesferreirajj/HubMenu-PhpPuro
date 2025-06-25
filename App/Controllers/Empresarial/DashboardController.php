@@ -266,6 +266,18 @@ class DashboardController extends RenderView
 
     public function Venda() 
     {
-        
+        // Atualizar status da venda
+        if (isset($_POST['acao']) && $_POST['acao'] === 'editar_status_venda') {
+            $vendaId = $_POST['venda_id'] ?? null;
+            $novoStatus = $_POST['status'] ?? null;
+
+            if ($vendaId && $novoStatus) {
+                // Exemplo de model, ajuste conforme seu projeto
+                $vendaModel = new VendasModel();
+                $vendaModel->atualizarStatusVenda($vendaId, $novoStatus);
+                echo "<script>alert('Status da venda atualizado!'); window.location.href = '" . $_SERVER['REQUEST_URI'] . "';</script>";
+                exit;
+            }
+        }
     }
 }

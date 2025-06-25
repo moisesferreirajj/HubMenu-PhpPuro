@@ -635,7 +635,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <td><?= ucwords(htmlspecialchars($produto->nome)) ?></td>
                                     <td><?= htmlspecialchars($produto->categoria_nome) ?></td>
                                     <td><?= htmlspecialchars($produto->estabelecimento_nome) ?></td>
-                                    <td><?= htmlspecialchars($produto->valor) ?></td>
+                                    <td><?= number_format(floatval($produto->valor), 2, ',', '.') ?></td>
                                     <td>
                                         <?php if ($produto->status_produtos == 1): ?>
                                             <span class="status-badge status-approved">Ativo</span>
@@ -837,7 +837,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </td>
                                     <td><?= date('d/m/Y', strtotime($venda->data_venda)) ?></td>
                                     <td>
-                                        <button class="btn-action btn-edit"><i class="fas fa-edit"></i> Status</button>
+                                        <button class="btn-action btn-edit btn-edit-venda" data-id="<?= $venda->id ?>">
+                                            <i class="fas fa-edit"></i> Status</button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -945,7 +946,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="modal fade" id="produtoModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="POST" id="formProduto" autocomplete="off">
+                <form method="POST" id="formProduto" autocomplete="off" enctype="multipart/form-data">
                     <input type="hidden" name="estabelecimento_id" value="<?= $EstabelecimentoID ?>">
                     <input type="hidden" name="acao" id="produtoAcao" value="cadastrar_produto">
                     <input type="hidden" name="id" id="produtoId">
@@ -976,8 +977,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <textarea class="form-control" name="descricao" id="produtoDescricao"></textarea>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Imagem (URL)</label>
-                            <input type="text" class="form-control" name="imagem" id="produtoImagem">
+                            <label class="form-label">Imagem</label>
+                            <input type="file" class="form-control" name="imagem" id="produtoImagem" accept="image/*">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Status</label>
@@ -1101,6 +1102,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <option value="preparando">Preparando</option>
                                 <option value="entregue">Entregue</option>
                                 <option value="cancelado">Cancelado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Editar Status da Venda -->
+    <div class="modal fade" id="editarStatusVendaModal" tabindex="-1" aria-labelledby="editarStatusVendaLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="formEditarStatusVenda" method="POST">
+                <input type="hidden" name="acao" value="editar_status_venda">
+                <input type="hidden" name="venda_id" id="editVendaId">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editarStatusVendaLabel">Editar Status da Venda</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="editPedidoStatus" class="form-label">Status</label>
+                            <select class="form-select" name="status" id="editVendaStatus" required>
+                                <option value="Aprovado">Aprovado</option>
+                                <option value="Pendente">Pendente</option>
+                                <option value="Cancelado">Cancelado</option>
                             </select>
                         </div>
                     </div>
@@ -1382,6 +1414,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 document.getElementById('editPedidoId').value = pedidoId;
                 document.getElementById('editPedidoStatus').value = statusValue;
                 const modal = new bootstrap.Modal(document.getElementById('editarStatusPedidoModal'));
+                modal.show();
+            });
+        });
+
+        // Editar status da venda
+        document.querySelectorAll('.btn-edit-venda').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const vendaId = this.getAttribute('data-id');
+                const row = this.closest('tr');
+                // Pega o texto do status e normaliza para minúsculo
+                const statusText = row.querySelector('td:nth-child(5) .status-badge').textContent.trim().toLowerCase();
+
+                // Define o valor do select conforme o status atual
+                let statusValue = 'Aprovado';
+                if (statusText === 'pendente') statusValue = 'Pendente';
+                else if (statusText === 'cancelado') statusValue = 'Cancelado';
+
+                document.getElementById('editVendaId').value = vendaId;
+                document.getElementById('editVendaStatus').value = statusValue;
+                const modal = new bootstrap.Modal(document.getElementById('editarStatusVendaModal'));
                 modal.show();
             });
         });

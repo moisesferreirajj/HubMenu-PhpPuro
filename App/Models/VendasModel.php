@@ -164,4 +164,12 @@ class VendasModel
         $result = $db->execute_query($sql, $params);
         return $result->results ?? [];
     }
+
+    public function atualizarStatusVenda($id, $status)
+    {
+        $db = new Database();
+        $sql = "UPDATE vendas SET status_pagamento = :status WHERE id = :id";
+        $params = [':status' => $status, ':id' => $id];
+        return $db->execute_non_query($sql, $params);
+    }
 }
