@@ -32,7 +32,7 @@ class GerenciarController extends RenderView
     public function editarEstabelecimento()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            error_log(print_r($_FILES, true)); // <-- Adicione esta linha para depurar
+            // error_log(print_r($_FILES, true)); // <-- Adicione esta linha para depurar
             $id = $_POST['id'] ?? null;
             if (!$id) {
                 echo json_encode(['status' => 'error', 'message' => 'ID não informado']);
@@ -44,9 +44,9 @@ class GerenciarController extends RenderView
             $cnpj = $_POST['cnpj'] ?? '';
             $cep = $_POST['cep'] ?? '';
             $endereco = $_POST['endereco'] ?? '';
-            $cor1 = $_POST['cor1'] ?? '#28a745';
-            $cor2 = $_POST['cor2'] ?? '#20c997';
-            $cor3 = $_POST['cor3'] ?? '#17a2b8';
+            $cor1 = $_POST['cor1'] ?? '#000000';
+            $cor2 = $_POST['cor2'] ?? '#000000';
+            $cor3 = $_POST['cor3'] ?? '#000000';
 
             // Upload de imagem de perfil
             $imagem = $_POST['imagem_atual'] ?? null;

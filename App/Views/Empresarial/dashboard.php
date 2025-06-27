@@ -1034,7 +1034,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="hidden" name="id" id="produtoId">
                     <div class="modal-header">
                         <h5 class="modal-title" id="produtoModalTitle"><i class="fas fa-box"></i> Novo Produto</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" ></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
@@ -1072,7 +1072,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        <button type="submit" class="btn btn-primary" id="regis_pro">Salvar</button>
                     </div>
                 </form>
             </div>
@@ -1158,7 +1158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        <button type="submit" class="btn btn-primary" id="regis_cat">Salvar</button>
                     </div>
                 </form>
             </div>

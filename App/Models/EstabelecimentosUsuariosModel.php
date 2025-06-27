@@ -13,8 +13,8 @@ class EstabelecimentosUsuariosModel
             ':cargo_id' => $cargo_id,
             ':estabelecimento_id' => $estabelecimento_id
         ];
-
-        return $db->execute_non_query($sql, $params);
+        $result = $db->execute_non_query($sql, $params);
+        return $result->last_id; // <-- use o last_id do resultado!
     }
 
     public function update($usuario_id, $estabelecimento_id, $cargo_id)

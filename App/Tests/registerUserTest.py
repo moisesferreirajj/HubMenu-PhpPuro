@@ -33,7 +33,18 @@ class TestRegisterUser:
     
     def fill_user_form(self):
         try:
-            self.driver.findElement(By.ID, "user_page").click()
+            # Processo de login
+            print("Preenchendo email...")
+            self.driver.find_element(By.ID, "email").send_keys("cautios2.0@gmail.com")
+            self.driver.find_element(By.ID, "password").send_keys("yohan")
+            time.sleep(3)
+
+            print("Clicando em login...")
+            self.driver.find_element(By.ID, "logar").click()
+            time.sleep(10)
+
+            print("Acessando página de usuários...")
+            self.driver.find_element(By.ID, "user_page").click()
             time.sleep(3)
             
             for key_user, id_form in key_id.items():
@@ -55,9 +66,10 @@ class TestRegisterUser:
             submit_button = self.driver.find_element(By.ID, "regis_usu")
             submit_button.click()
 
-            self.driver.findElement(By.ID, "user_page").click()
+            self.driver.find_element(By.ID, "user_page").click()
 
         except Exception as e:
+            print("Erro:", e)
             self.driver.quit()  
 
 service = webdriver.Chrome()

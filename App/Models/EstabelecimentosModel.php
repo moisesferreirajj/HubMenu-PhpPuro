@@ -52,7 +52,8 @@ class EstabelecimentosModel
             ':tipo' => $tipo,
             ':media_avaliacao' => $media_avaliacao
         ];
-        return $db->execute_non_query($sql, $params);
+        $result = $db->execute_non_query($sql, $params);
+        return $result->last_id; // <-- use o last_id do resultado!
     }
 
     /**

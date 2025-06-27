@@ -28,32 +28,38 @@ class CadastroController extends RenderView
 
             if (!$usuarioExistente || ($usuarioExistente->email == '' && $usuarioExistente->telefone == '')) {
                 // Insere usuário e pega o ID
-                $usuarioInsert = $users->insert($nome, $senha, $email, null, $cep, $endereco, $telefone);
-                $usuarioId = $usuarioInsert->last_id ?? null;
+                $usuarioId = $users->insert(
+                    $nome,
+                    $senha,
+                    $email,
+                    null,
+                    $cep,
+                    $endereco,
+                    $telefone
+                );
 
                 if ($usuarioId) {
                     // Cria estabelecimento padrão e pega o ID
                     $estabelecimentosModel = new EstabelecimentosModel();
-                    $estabInsert = $estabelecimentosModel->insert(
-                        "Restaurante",
-                        $cep,
-                        "00.000.000/0000-00",
-                        "Restaurante",
-                        0,
-                        $endereco,
-                        null,
-                        null,
-                        "#000000",
-                        "#000000",
-                        "#000000"
+                    $estabelecimentoId = $estabelecimentosModel->insert(
+                        "Restaurante",        // nome
+                        $cep,                 // cep
+                        "00.000.000/0000-00", // cnpj
+                        "Restaurante",        // tipo
+                        0,                    // media_avaliacao
+                        $endereco,            // endereco
+                        null,                 // imagem
+                        null,                 // banner
+                        "#000000",            // cor1
+                        "#000000",            // cor2
+                        "#000000"             // cor3
                     );
-                    $estabelecimentoId = $estabInsert->last_id ?? null;
 
                     if ($estabelecimentoId) {
                         $estabelecimentosUsuariosModel = new EstabelecimentosUsuariosModel();
                         $estabelecimentosUsuariosModel->insert(
                             $usuarioId,
-                            '1',
+                            1, // cargo_id padrão (Administrador)
                             $estabelecimentoId
                         );
                     }

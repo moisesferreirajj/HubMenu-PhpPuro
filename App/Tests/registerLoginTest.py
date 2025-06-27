@@ -6,12 +6,12 @@ import time
 
 
 user = {
-    "name" : "Zoe Rotert",
+    "name" : "benimaru106",
     "cep" : 89120323,
     "endereco" : "Rua das Flores, 123",
-    "email" : "zozo@mail.com",
+    "email" : "benimaru106@gmail.com",
     "telefone" : "1234567890",
-    "password" : "Ana&Jordan123",
+    "password" : "benimaru",
 }
 
 ids_formulario = [
@@ -40,19 +40,19 @@ class TestRegisterLogin:
     def fill_user_form(self):
         try:
             for key_user, id_form in key_id.items():
-                time.sleep(3)
+                time.sleep(0.5)
                 element = self.driver.find_element(By.ID, id_form)
                 element.send_keys(user[key_user])
 
-            time.sleep(3)
+            time.sleep(0.5)
             confirm = self.driver.find_element(By.ID, "confirmar-senha")
             confirm.send_keys(user["password"])
 
-            time.sleep(3)
+            time.sleep(0.5)
             checkbox = self.driver.find_element(By.ID, "aceito-termos")
             checkbox.click()
 
-            time.sleep(5)
+            time.sleep(0.5)
             submit_button = self.driver.find_element(By.ID, "btn-cadastrar")
             submit_button.click()
         except Exception as e:
@@ -60,7 +60,7 @@ class TestRegisterLogin:
 
 service = webdriver.Chrome()
 service.maximize_window()
-addressUrl = service.get("http://10.3.76.83:8080/empresarial/dashboard/1")
+addressUrl = service.get("http://localhost:8080/empresarial/cadastro")
 
 testUnir = TestRegisterLogin(addressUrl, service)
 

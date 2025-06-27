@@ -22,10 +22,9 @@ class TestRegisterCategory:
             time.sleep(10)
 
             print("Acessando página de categoria...")
-            page_cat = self.driver.find_element(By.CSS_SELECTOR, "a[href='#']")
-            page_cat[3].click()
-
+            self.driver.find_element(By.ID, "category_page").click()
             time.sleep(3)
+
             print("Procurando botão de cadastro de categoria...")
             open_form = self.driver.find_element(By.ID, "registerCat")
             print("Botão encontrado:", open_form)
@@ -43,12 +42,16 @@ class TestRegisterCategory:
         
             self.driver.find_element(By.ID, "category_page").click()
             time.sleep(3)
+
+            
+            self.driver.find_element(By.ID, "category_page").click()
+            time.sleep(10)
         except Exception as e:
             print("Erro:", e)
             self.driver.quit()
 driver = webdriver.Chrome()
 driver.maximize_window()
-addressUrl = "http://10.3.76.83:8080/empresarial/login"
+addressUrl = "http://localhost:8080/empresarial/login"
 driver.get(addressUrl)
 
 testUnir = TestRegisterCategory(addressUrl, driver)

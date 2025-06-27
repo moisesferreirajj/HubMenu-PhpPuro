@@ -219,12 +219,12 @@
                     <!-- Preview Section -->
                     <div class="preview-section">
                         <h5><i class="fas fa-eye"></i> Visualização em Tempo Real</h5>
-                        <p class="text-muted">As alterações são aplicadas automaticamente conforme você digita.</p>
+                        <p class="text-muted">As alterações serão aplicadas após você clicar no botão "Salvar Alterações".</p>
                     </div>
 
                     <!-- Botões -->
                     <div class="d-flex gap-3 mt-4 flex-wrap">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" id="saveChangesBtn">
                             <i class="fas fa-save"></i>
                             Salvar Alterações
                         </button>
