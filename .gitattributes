@@ -2,15 +2,13 @@
 
 *.blade.php diff=php
 *.blade diff=php
-*.css diff=php
-*.html diff=php
 *.php diff=php
 
 *.md diff=markdown
 
-*.css linguist-language=php
-*.html linguist-language=php
-*.js linguist-language=php
+*.css linguist-documentation
+*.html linguist-documentation
+*.js linguist-documentation
 
 /.github export-ignore
 README.md export-ignore
