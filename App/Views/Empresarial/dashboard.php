@@ -70,7 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             z-index: 1000;
             transition: all 0.3s ease;
             box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
-            transform: translateX(0); /* Garante posição inicial correta */
+            transform: translateX(0);
+            /* Garante posição inicial correta */
         }
 
         /* Estado colapsado do sidebar */
@@ -107,7 +108,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             padding: 20px;
             text-align: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            overflow: hidden; /* Evita quebra de layout */
+            overflow: hidden;
+            /* Evita quebra de layout */
         }
 
         .sidebar-header h3 {
@@ -137,7 +139,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-decoration: none;
             transition: all 0.3s ease;
             border-left: 3px solid transparent;
-            white-space: nowrap; /* Evita quebra de texto */
+            white-space: nowrap;
+            /* Evita quebra de texto */
         }
 
         .sidebar-menu .menu-item:hover,
@@ -436,7 +439,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         @media (max-width: 768px) {
             .sidebar {
                 width: 280px;
-                transform: translateX(-100%); /* Esconde completamente em mobile */
+                transform: translateX(-100%);
+                /* Esconde completamente em mobile */
                 transition: transform 0.3s ease;
                 position: fixed;
                 left: 0;
@@ -446,16 +450,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             .sidebar.show {
-                transform: translateX(0); /* Mostra o sidebar */
+                transform: translateX(0);
+                /* Mostra o sidebar */
             }
-            
+
             .sidebar.collapsed {
-                width: 280px; /* Mantém largura completa em mobile */
-                transform: translateX(-100%); /* Ainda esconde quando colapsado */
+                width: 280px;
+                /* Mantém largura completa em mobile */
+                transform: translateX(-100%);
+                /* Ainda esconde quando colapsado */
             }
-            
+
             .sidebar.collapsed.show {
-                transform: translateX(0); /* Sobrepõe collapsed em mobile */
+                transform: translateX(0);
+                /* Sobrepõe collapsed em mobile */
             }
 
             .main-content {
@@ -744,7 +752,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- Pedidos Page -->
             <div class="page-content" id="pedidos">
-                <h2 class="page-title">Pedidos</h2>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="page-title">Pedidos</h2>
+                    <button class="btn btn-primary" onclick="window.location.href='/pedidos/<?= $EstabelecimentoID ?>'"> Gerenciar Pedidos
+                    </button>
+                </div>
 
                 <div class="data-table">
                     <table class="table">
@@ -1034,7 +1046,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="hidden" name="id" id="produtoId">
                     <div class="modal-header">
                         <h5 class="modal-title" id="produtoModalTitle"><i class="fas fa-box"></i> Novo Produto</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" ></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
@@ -1233,64 +1245,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script>
         // Toggle sidebar
-const toggleBtn = document.getElementById('toggleBtn');
-const sidebar = document.getElementById('sidebar');
-const mainContent = document.getElementById('mainContent');
+        const toggleBtn = document.getElementById('toggleBtn');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
 
-let sidebarClosed = false; // Controla o estado do sidebar no desktop
+        let sidebarClosed = false; // Controla o estado do sidebar no desktop
 
-toggleBtn.addEventListener('click', () => {
-    if (window.innerWidth <= 768) {
-        // Mobile: apenas toggle da classe 'show'
-        sidebar.classList.toggle('show');
-    } else {
-        // Desktop: toggle entre fechado completo e colapsado/aberto
-        if (sidebarClosed) {
-            // Se está fechado, abrir para estado normal
-            sidebar.style.transform = 'translateX(0)';
-            mainContent.style.marginLeft = '280px';
-            sidebar.classList.remove('collapsed');
-            mainContent.classList.remove('expanded');
-            sidebarClosed = false;
-        } else {
-            // Se está aberto, fechar completamente
-            sidebar.style.transform = 'translateX(-100%)';
-            mainContent.style.marginLeft = '0';
-            sidebarClosed = true;
-        }
-    }
-});
+        toggleBtn.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                // Mobile: apenas toggle da classe 'show'
+                sidebar.classList.toggle('show');
+            } else {
+                // Desktop: toggle entre fechado completo e colapsado/aberto
+                if (sidebarClosed) {
+                    // Se está fechado, abrir para estado normal
+                    sidebar.style.transform = 'translateX(0)';
+                    mainContent.style.marginLeft = '280px';
+                    sidebar.classList.remove('collapsed');
+                    mainContent.classList.remove('expanded');
+                    sidebarClosed = false;
+                } else {
+                    // Se está aberto, fechar completamente
+                    sidebar.style.transform = 'translateX(-100%)';
+                    mainContent.style.marginLeft = '0';
+                    sidebarClosed = true;
+                }
+            }
+        });
 
-// Fechar sidebar ao clicar fora dele em mobile
-document.addEventListener('click', (e) => {
-    if (window.innerWidth <= 768) {
-        const isClickInsideSidebar = sidebar.contains(e.target);
-        const isToggleBtn = toggleBtn.contains(e.target);
-        
-        if (!isClickInsideSidebar && !isToggleBtn && sidebar.classList.contains('show')) {
-            sidebar.classList.remove('show');
-        }
-    }
-});
+        // Fechar sidebar ao clicar fora dele em mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                const isClickInsideSidebar = sidebar.contains(e.target);
+                const isToggleBtn = toggleBtn.contains(e.target);
 
-// Ajustar comportamento ao redimensionar a tela
-window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-        // Desktop: remover classe 'show' se existir e resetar estado
-        sidebar.classList.remove('show');
-        if (!sidebarClosed) {
-            sidebar.style.transform = 'translateX(0)';
-            mainContent.style.marginLeft = '280px';
-        }
-    } else {
-        // Mobile: remover classes de desktop e resetar estilos inline
-        sidebar.classList.remove('collapsed');
-        mainContent.classList.remove('expanded');
-        sidebar.style.transform = '';
-        mainContent.style.marginLeft = '';
-        sidebarClosed = false;
-    }
-});
+                if (!isClickInsideSidebar && !isToggleBtn && sidebar.classList.contains('show')) {
+                    sidebar.classList.remove('show');
+                }
+            }
+        });
+
+        // Ajustar comportamento ao redimensionar a tela
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                // Desktop: remover classe 'show' se existir e resetar estado
+                sidebar.classList.remove('show');
+                if (!sidebarClosed) {
+                    sidebar.style.transform = 'translateX(0)';
+                    mainContent.style.marginLeft = '280px';
+                }
+            } else {
+                // Mobile: remover classes de desktop e resetar estilos inline
+                sidebar.classList.remove('collapsed');
+                mainContent.classList.remove('expanded');
+                sidebar.style.transform = '';
+                mainContent.style.marginLeft = '';
+                sidebarClosed = false;
+            }
+        });
 
         // Page navigation
         const menuItems = document.querySelectorAll('.menu-item');
@@ -1709,13 +1721,20 @@ window.addEventListener('resize', () => {
             });
         });
 
+        var usuarioIdSessao = <?= json_encode($_SESSION['usuario_id'] ?? null) ?>;
+
         // Excluir usuário
         document.querySelectorAll('.btn-delete-usuario').forEach(function(btn) {
             btn.addEventListener('click', function() {
+                var idUsuario = this.dataset.id;
+                if (usuarioIdSessao == idUsuario) {
+                    alert('Não pode excluir a si mesmo!');
+                    return;
+                }
                 if (confirm('Deseja realmente excluir este usuário?')) {
                     var formData = new FormData();
                     formData.append('acao', 'excluir_usuario');
-                    formData.append('id', this.dataset.id);
+                    formData.append('id', idUsuario);
                     formData.append('estabelecimento_id', <?= json_encode($EstabelecimentoID) ?>);
 
                     fetch('', {
