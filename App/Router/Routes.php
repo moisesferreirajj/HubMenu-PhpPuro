@@ -37,6 +37,7 @@ $routes = [
 
     /* ROTAS DE API ABAIXO: */
     '/api/visualizar/categorias' => 'ProdutosController@getCategorias',
+    '/api/pedidos/adicionarProdutoAoPedidoExistente' => 'PedidosController@adicionarProdutoAoPedidoExistente',
     '/api/visualizar/estabelecimentos' => 'ProdutosController@getEstabelecimentos',
     '/api/visualizar/produtos' => 'ProdutosController@getProdutos',
     '/api/send/SMS' => 'SendSMSController@sendSMS',

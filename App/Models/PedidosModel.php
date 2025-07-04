@@ -1,4 +1,4 @@
-    <?php
+<?php
     class PedidosModel
     {
         private $db;
@@ -194,6 +194,34 @@
             $params = [
                 ':pedido_id' => $pedido_id,
                 ':status' => $status
+            ];
+            $result = $this->db->execute_non_query($sql, $params);
+
+            if ($result->status === 'error') {
+                throw new Exception($result->message);
+            }
+
+            return $result->affected_rows > 0;
+        }
+
+        public function findById($pedido_id)
+        {
+            $sql = "SELECT * FROM pedidos WHERE id = :pedido_id";
+            $params = [':pedido_id' => $pedido_id];
+            $result = $this->db->execute_query($sql, $params);
+
+            if ($result->status === 'success' && !empty($result->results)) {
+                return $result->results[0];
+            }
+            return null;
+        }
+
+        public function atualizarValorTotal($pedido_id, $valor_total)
+        {
+            $sql = "UPDATE pedidos SET valor_total = :valor_total WHERE id = :pedido_id";
+            $params = [
+                ':valor_total' => $valor_total,
+                ':pedido_id' => $pedido_id
             ];
             $result = $this->db->execute_non_query($sql, $params);
 

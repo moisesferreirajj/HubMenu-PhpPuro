@@ -111,27 +111,96 @@ class PedidosController
     }
     public function adicionarProdutoAoPedidoExistente()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $pedido_id = $_POST['pedido_id'];
-            $produto_id = $_POST['produto_id'];
-            $quantidade = $_POST['quantidade'] ?? 1;
-            $observacao = $_POST['observacao'] ?? null;
+        // Força o content-type para JSON
+        header('Content-Type: application/json');
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 'error', 'message' => 'Método não permitido']);
+            return;
+        }
+
+        try {
+            $pedido_id = $_POST['pedido_id'] ?? null;
+            $produto_ids = $_POST['products'] ?? [];
+            $quantidades = $_POST['quantidade'] ?? [];
+            $observacoes = $_POST['observacao'] ?? [];
+
+            if (!$pedido_id || empty($produto_ids)) {
+                echo json_encode(['status' => 'error', 'message' => 'ID do pedido ou produtos não informados.']);
+                return;
+            }
 
             $pedidosModel = new PedidosModel();
             $produtosModel = new ProdutosModel();
 
-            $produto = $produtosModel->findById($produto_id);
-            if (!$produto) {
-                echo json_encode(['status' => 'error', 'message' => 'Produto não encontrado']);
+            // Verifica se o pedido existe
+            $pedido = $pedidosModel->findById($pedido_id);
+            if (!$pedido) {
+                echo json_encode(['status' => 'error', 'message' => 'Pedido não encontrado']);
                 return;
             }
 
-            $pedidosModel->adicionarProdutoPedido($pedido_id, $produto_id, $quantidade, $observacao);
+            // Verifica se o usuário tem permissão para modificar este pedido
+            if (!isset($_SESSION['usuario_id'])) {
+                echo json_encode(['status' => 'error', 'message' => 'Usuário não autenticado']);
+                return;
+            }
 
-            echo json_encode(['status' => 'success', 'message' => 'Produto adicionado com sucesso']);
+            $usuariosModel = new UsuariosModel();
+            $userCompany = $usuariosModel->getCompanyByUserId($_SESSION['usuario_id']);
+            $estabelecimento_id = is_object($userCompany) ? $userCompany->id : $userCompany;
+
+            if ($pedido->estabelecimento_id != $estabelecimento_id) {
+                echo json_encode(['status' => 'error', 'message' => 'Você não tem permissão para modificar este pedido']);
+                return;
+            }
+
+            $produtosAdicionados = 0;
+            $valorAdicional = 0;
+
+            foreach ($produto_ids as $produto_id) {
+                // Verifica se o produto existe
+                $produto = $produtosModel->findById($produto_id);
+                if (!$produto) {
+                    echo json_encode(['status' => 'error', 'message' => "Produto ID {$produto_id} não encontrado"]);
+                    return;
+                }
+
+                // Verifica se o produto pertence ao mesmo estabelecimento do pedido
+                if ($produto->estabelecimento_id != $pedido->estabelecimento_id) {
+                    echo json_encode(['status' => 'error', 'message' => "Produto ID {$produto_id} não pertence ao estabelecimento do pedido"]);
+                    return;
+                }
+
+                $quantidade = isset($quantidades[$produto_id]) ? (int)$quantidades[$produto_id] : 1;
+                $observacao = $observacoes[$produto_id] ?? null;
+
+                // Adiciona o produto ao pedido
+                $success = $pedidosModel->adicionarProdutoPedido($pedido_id, $produto_id, $quantidade, $observacao);
+
+                if ($success) {
+                    $produtosAdicionados++;
+                    $valorAdicional += $produto->valor * $quantidade;
+                }
+            }
+
+            if ($produtosAdicionados > 0) {
+                // Atualiza o valor total do pedido
+                $novoValorTotal = $pedido->valor_total + $valorAdicional;
+                $pedidosModel->atualizarValorTotal($pedido_id, $novoValorTotal);
+
+                $mensagem = $produtosAdicionados === 1 ?
+                    'Produto adicionado com sucesso!' :
+                    "{$produtosAdicionados} produtos adicionados com sucesso!";
+
+                echo json_encode(['status' => 'success', 'message' => $mensagem]);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Nenhum produto foi adicionado']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => 'Erro: ' . $e->getMessage()]);
         }
     }
-
 
     public function atualizarStatus()
     {
@@ -180,7 +249,7 @@ class PedidosController
             'id_usuario' => $usuarioLogadoId
         ];
 
-        $pedidosModel->criar($dadosPedido);
+        $pedidosModel->cadastrarPedido($dadosPedido);
 
         header("Location: /pedidos");
         exit;

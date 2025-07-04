@@ -1,9 +1,12 @@
 <?php
 $produtosModel = new ProdutosModel();
 $usuariosModel = new UsuariosModel();
+
 $userCompany = $usuariosModel->getCompanyByUserId($_SESSION['usuario_id']);
-$menuProductsObj = $produtosModel->findByEstabelecimentoId($userCompany ?? []);
-$menuProducts = $menuProductsObj->results ?? [];
+
+$menuProducts = $produtosModel->findByEstabelecimentoId($userCompany);
+
+
 ?>
 <div class="modal fade" id="cadastrarModal" tabindex="-1" aria-labelledby="cadastrarModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -25,7 +28,7 @@ $menuProducts = $menuProductsObj->results ?? [];
 
                     <div class="row mb-3">
                         <div class="col-md-12">
-                            <input type="hidden" name="estabelecimento_id" value="<?= $userCompany?? '' ?>">
+                            <input type="hidden" name="estabelecimento_id" value="<?= $userCompany ?>">
                         </div>
                     </div>
 

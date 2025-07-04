@@ -40,7 +40,7 @@ class ProdutosController extends RenderView
                     die('Erro ao salvar a imagem.');
                 }
 
-            $imagemPath = '/Views/Assets/Images/Produtos/' . $nomeImagem;
+                $imagemPath = '/Views/Assets/Images/Produtos/' . $nomeImagem;
             } else {
                 die('Imagem não enviada corretamente.');
             }
@@ -134,6 +134,47 @@ class ProdutosController extends RenderView
         }
     }
 
+    public function adicionarProdutoPedido($pedido_id, $produto_id, $quantidade, $observacao, $preco_unitario)
+    {
+        $db = new Database();
+        $sql = "INSERT INTO pedidos_produtos (pedido_id, produto_id, quantidade, preco_unitario, observacao)
+                VALUES (:pedido_id, :produto_id, :quantidade, :preco_unitario, :observacao)";
+        $params = [
+            ':pedido_id' => intval($pedido_id),
+            ':produto_id' => intval($produto_id),
+            ':quantidade' => intval($quantidade),
+            ':preco_unitario' => floatval($preco_unitario),
+            ':observacao' => $observacao
+        ];
+        return $db->execute_non_query($sql, $params);
+    }
+
+    /**
+     * Atualiza o valor total de um pedido.
+     */
+    public function atualizarValorTotal($pedido_id, $valor_total)
+    {
+        $db = new Database();
+        $sql = "UPDATE pedidos SET valor_total = :valor_total WHERE id = :pedido_id";
+        $params = [
+            ':pedido_id' => intval($pedido_id),
+            ':valor_total' => floatval($valor_total)
+        ];
+        return $db->execute_non_query($sql, $params);
+    }
+
+    /**
+     * Busca um pedido pelo ID.
+     */
+    public function findById($pedido_id)
+    {
+        $db = new Database();
+        $sql = "SELECT * FROM pedidos WHERE id = :pedido_id";
+        $params = [':pedido_id' => intval($pedido_id)];
+        $result = $db->execute_query($sql, $params);
+        return $result->results[0] ?? null;
+    }
+
     public function desativar()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -161,7 +202,7 @@ class ProdutosController extends RenderView
     }
 
 
-    
+
     public function searchProdutos($estabelecimento_id)
     {
         header('Content-Type: application/json; charset=utf-8');
@@ -187,5 +228,22 @@ class ProdutosController extends RenderView
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Produto não encontrado ou não foi excluído']);
         }
+    }
+
+    // Exemplo de método no controller de API
+    public function visualizarProdutos($estabelecimentoId)
+    {
+        $produtosModel = new ProdutosModel();
+        $produtos = $produtosModel->findByEstabelecimentoId($estabelecimentoId);
+
+        // Filtra apenas produtos ativos, se necessário
+        $produtosAtivos = array_filter($produtos, function($produto) {
+            return $produto->status_produtos == 1;
+        });
+
+        echo json_encode([
+            'status' => 'success',
+            'produtos' => array_values($produtosAtivos)
+        ]);
     }
 }

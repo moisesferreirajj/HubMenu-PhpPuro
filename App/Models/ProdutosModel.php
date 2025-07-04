@@ -36,15 +36,12 @@ class ProdutosModel
     public function findByEstabelecimentoId($estabelecimento_id)
     {
         $db = new Database();
-        $sql = "SELECT p.*, c.nome AS categoria_nome, e.nome AS estabelecimento_nome
-            FROM produtos p
-            LEFT JOIN categorias c ON p.categoria_id = c.id
-            LEFT JOIN estabelecimentos e ON p.estabelecimento_id = e.id
-            WHERE p.estabelecimento_id = :estabelecimento_id
-            ORDER BY p.status_produtos DESC, p.nome ASC"; // Ativos primeiro, depois inativos
+        $sql = "SELECT * FROM produtos WHERE estabelecimento_id = :estabelecimento_id AND status_produtos = 1";
         $params = [':estabelecimento_id' => intval($estabelecimento_id)];
-        return $db->execute_query($sql, $params);
+        $result = $db->execute_query($sql, $params);
+        return $result->results ?? [];
     }
+
 
     /**
      * Retorna todos os produtos da tabela.
