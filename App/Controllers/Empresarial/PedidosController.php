@@ -1,8 +1,10 @@
 <?php
 
-class PedidosController {
+class PedidosController
+{
 
-    public function indexEmpresa() {
+    public function indexEmpresa()
+    {
         $uri = $_SERVER['REQUEST_URI'];
         $segments = explode('/', trim($uri, '/'));
         $companyId = isset($segments[1]) ? (int)$segments[1] : null;
@@ -22,33 +24,34 @@ class PedidosController {
         require_once 'Views/Empresarial/pedidosEmpresa.php';
     }
 
-    public function registerOrder() {
+    public function registerOrder()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 if (!isset($_SESSION['usuario_id'])) {
                     throw new Exception('Usuário não autenticado.');
                 }
-    
+
                 $usuariosModel = new UsuariosModel();
                 $pedidosModel = new PedidosModel();
                 $produtosModel = new ProdutosModel();
-    
+
                 $userCompany = $usuariosModel->getCompanyByUserId($_SESSION['usuario_id']);
                 $estabelecimento_id = is_object($userCompany) ? $userCompany->id : $userCompany;
-    
+
                 if (!$estabelecimento_id) {
                     throw new Exception('Empresa do usuário não encontrada.');
                 }
-    
+
                 // Recebe o nome do cliente do formulário
                 $nomeCliente = $_POST['nome_cliente'] ?? null;
                 if (!$nomeCliente) {
                     throw new Exception("Nome do cliente é obrigatório");
                 }
-    
+
                 // Cria o cliente na tabela usuarios e pega o id gerado
                 $clienteId = $usuariosModel->criar($nomeCliente);
-    
+
                 // Prepara os produtos selecionados
                 $produtos_info = [];
                 if (!empty($_POST['products'])) {
@@ -60,7 +63,7 @@ class PedidosController {
                         ];
                     }
                 }
-    
+
                 // Calcula o valor total do pedido
                 $valor_total = 0;
                 foreach ($produtos_info as $produto) {
@@ -69,7 +72,7 @@ class PedidosController {
                         $valor_total += $produtoInfo->valor * $produto['quantidade'];
                     }
                 }
-    
+
                 // Cadastra o pedido usando o id do cliente criado
                 $pedido_id = $pedidosModel->cadastrarPedido([
                     'usuario_id' => $clienteId,
@@ -77,11 +80,11 @@ class PedidosController {
                     'valor_total' => $valor_total,
                     'observacao' => $_POST['observacao_geral'] ?? null
                 ]);
-    
+
                 if (!$pedido_id) {
                     throw new Exception("Erro ao cadastrar pedido.");
                 }
-    
+
                 // Adiciona produtos ao pedido
                 foreach ($produtos_info as $produto) {
                     $pedidosModel->adicionarProdutoPedido(
@@ -91,13 +94,12 @@ class PedidosController {
                         $produto['observacao'] ?? null
                     );
                 }
-    
+
                 echo "<script>
                         alert('Pedido cadastrado com sucesso!');
                         window.location.href = '/pedidos/{$estabelecimento_id}';
                       </script>";
                 exit;
-    
             } catch (Exception $e) {
                 echo "<script>
                         alert('Erro ao cadastrar pedido: " . addslashes($e->getMessage()) . "');
@@ -107,9 +109,32 @@ class PedidosController {
             }
         }
     }
-    
+    public function adicionarProdutoAoPedidoExistente()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $pedido_id = $_POST['pedido_id'];
+            $produto_id = $_POST['produto_id'];
+            $quantidade = $_POST['quantidade'] ?? 1;
+            $observacao = $_POST['observacao'] ?? null;
 
-    public function atualizarStatus() {
+            $pedidosModel = new PedidosModel();
+            $produtosModel = new ProdutosModel();
+
+            $produto = $produtosModel->findById($produto_id);
+            if (!$produto) {
+                echo json_encode(['status' => 'error', 'message' => 'Produto não encontrado']);
+                return;
+            }
+
+            $pedidosModel->adicionarProdutoPedido($pedido_id, $produto_id, $quantidade, $observacao);
+
+            echo json_encode(['status' => 'success', 'message' => 'Produto adicionado com sucesso']);
+        }
+    }
+
+
+    public function atualizarStatus()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $usuariosModel = new UsuariosModel();
@@ -125,7 +150,6 @@ class PedidosController {
 
                 header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '/'));
                 exit;
-
             } catch (Exception $e) {
                 $_SESSION['mensagem'] = 'Erro ao atualizar status: ' . $e->getMessage();
                 $_SESSION['tipo_mensagem'] = 'danger';
@@ -136,7 +160,8 @@ class PedidosController {
         }
     }
 
-    public function salvar() {
+    public function salvar()
+    {
         session_start();
 
         if (!isset($_SESSION['usuario_id'])) {
@@ -161,7 +186,8 @@ class PedidosController {
         exit;
     }
 
-    public function salvarCliente($cliente) {
+    public function salvarCliente($cliente)
+    {
         session_start();
 
         $usuariosModel = new UsuariosModel();
@@ -183,6 +209,5 @@ class PedidosController {
         }
         header("Location: /pedidos");
         exit;
-
     }
 }

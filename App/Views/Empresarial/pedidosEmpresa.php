@@ -12,7 +12,6 @@
     <title>HubMenu | Pedidos</title>
 </head>
 <body>
-    
     <?php require_once __DIR__ . '/../../Views/Components/Cadastros/cadastrarPedidos.php'; ?>
     <?php require_once __DIR__ . '/../../Views/Components/sidebar.php'; ?>
 
@@ -83,14 +82,107 @@
                     <input type="hidden" name="status" value="entregue">
                     <button type="submit" class="btn btn-success">Concluir</button>
                 </form>
+
+                <!-- Botão para adicionar produto -->
+                <button 
+                    type="button" 
+                    class="btn btn-primary" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#adicionarProdutoModal" 
+                    onclick="abrirModalAdicionarProduto(<?= $pedido->id ?>)">
+                    Adicionar
+                </button>
             </div>
         </div>
     <?php endforeach; ?>
     </div>
 
+    <!-- Modal para adicionar produto a pedido existente -->
+    <div class="modal fade" id="adicionarProdutoModal" tabindex="-1" aria-labelledby="adicionarProdutoModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <form method="POST" id="formAdicionarProduto">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Adicionar Produto ao Pedido</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" name="pedido_id" id="pedidoIdInput">
+
+              <div class="mb-3">
+                <label for="produto_id" class="form-label">Produto</label>
+                <select name="produto_id" id="produto_id" class="form-select" required>
+                  <option value="">Carregando produtos...</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="quantidade" class="form-label">Quantidade</label>
+                <input type="number" name="quantidade" id="quantidade" class="form-control" value="1" min="1" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="observacao" class="form-label">Observação</label>
+                <textarea name="observacao" id="observacao" class="form-control"></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Adicionar</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <script src="/Views/Assets/Vendor/bootstrap.bundle.min.js"></script>
     <script src="/Views/Assets/Js/sidebar.js"></script>
     <script src="/Views/Assets/Js/FooterLayout.js"></script>
+    <script>
+    function abrirModalAdicionarProduto(pedidoId) {
+        document.getElementById('pedidoIdInput').value = pedidoId;
+
+        fetch('/api/produtos') // ajuste se necessário
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById('produto_id');
+                select.innerHTML = '';
+
+                if (data.status === 'success') {
+                    data.produtos.forEach(produto => {
+                        const option = document.createElement('option');
+                        option.value = produto.id;
+                        option.textContent = `${produto.nome} - R$ ${parseFloat(produto.valor).toFixed(2)}`;
+                        select.appendChild(option);
+                    });
+                } else {
+                    const option = document.createElement('option');
+                    option.textContent = 'Nenhum produto disponível';
+                    option.disabled = true;
+                    select.appendChild(option);
+                }
+            });
+    }
+
+    document.getElementById('formAdicionarProduto').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+
+        fetch('/pedidos/adicionarProdutoAoPedidoExistente', {
+            method: 'POST',
+            body: new URLSearchParams(formData)
+        })
+        .then(res => res.json())
+        .then(response => {
+            alert(response.message || 'Produto adicionado com sucesso!');
+            location.reload();
+        })
+        .catch(error => {
+            alert('Erro ao adicionar produto');
+            console.error(error);
+        });
+    });
+    </script>
     <footer-layout></footer-layout>
 </body>
 </html>

@@ -132,9 +132,17 @@ class ProdutosModel
     public function delete($id)
     {
         $db = new Database();
-        $sql = "DELETE FROM produtos WHERE id = :id";
-        $params = [':id' => intval($id)];
-        return $db->execute_non_query($sql, $params);
+
+        $param = [':id' => intval($id)];
+
+        // 1º: remove produtos relacionados nos pedidos
+        $deletePedidosProdutos = $db->execute_non_query("DELETE FROM pedidos_produtos WHERE produto_id = :id", $param);
+
+        // 2º: agora é seguro excluir o produto
+        $deleteProduto = $db->execute_non_query("DELETE FROM produtos WHERE id = :id", $param);
+
+        // Retorna verdadeiro apenas se ambos deram certo
+        return $deleteProduto;
     }
 
     /**
