@@ -2,7 +2,7 @@
 -- Servidor:                     127.0.0.1
 -- Versão do servidor:           10.4.32-MariaDB - mariadb.org binary distribution
 -- OS do Servidor:               Win64
--- HeidiSQL Versão:              12.10.0.7000
+-- HeidiSQL Versão:              12.11.0.7065
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -34,8 +34,8 @@ CREATE TABLE IF NOT EXISTS `avaliacoes` (
   CONSTRAINT `avaliacoes_ibfk_2` FOREIGN KEY (`estabelecimento_id`) REFERENCES `estabelecimentos` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela db_hubmenu.avaliacoes: ~10 rows (aproximadamente)
-INSERT INTO `avaliacoes` (`id`, `usuario_id`, `estabelecimento_id`, `avaliacao`, `comentario`, `data_avaliacao`) VALUES
+-- Copiando dados para a tabela db_hubmenu.avaliacoes: ~11 rows (aproximadamente)
+INSERT IGNORE INTO `avaliacoes` (`id`, `usuario_id`, `estabelecimento_id`, `avaliacao`, `comentario`, `data_avaliacao`) VALUES
 	(1, 1, 1, 5, 'Excelente atendimento e comida!', '2025-05-23 16:49:29'),
 	(2, 2, 2, 4, 'Muito bom, mas poderia ser mais rápido.', '2025-05-23 16:49:29'),
 	(3, 3, 3, 5, 'Sabor incrível!', '2025-05-23 16:49:29'),
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `avaliacoes_sistema` (
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Copiando dados para a tabela db_hubmenu.avaliacoes_sistema: ~10 rows (aproximadamente)
-INSERT INTO `avaliacoes_sistema` (`id`, `usuario_id`, `avaliacao`, `comentario`, `data_avaliacao`) VALUES
+INSERT IGNORE INTO `avaliacoes_sistema` (`id`, `usuario_id`, `avaliacao`, `comentario`, `data_avaliacao`) VALUES
 	(1, 1, 5, 'Sistema muito intuitivo e rápido, facilitou o controle dos pedidos.', '2025-05-23 16:56:43'),
 	(2, 2, 4, 'Gostei da interface, mas poderia ter mais opções de filtros nas vendas.', '2025-05-23 16:56:43'),
 	(3, 3, 5, 'Excelente! Melhorou muito a organização do meu estabelecimento.', '2025-05-23 16:56:43'),
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `cargos` (
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Copiando dados para a tabela db_hubmenu.cargos: ~10 rows (aproximadamente)
-INSERT INTO `cargos` (`id`, `nome`) VALUES
+INSERT IGNORE INTO `cargos` (`id`, `nome`) VALUES
 	(1, 'Administrador'),
 	(2, 'Gerente'),
 	(3, 'Atendente'),
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `categorias` (
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Copiando dados para a tabela db_hubmenu.categorias: ~10 rows (aproximadamente)
-INSERT INTO `categorias` (`id`, `nome`) VALUES
+INSERT IGNORE INTO `categorias` (`id`, `nome`) VALUES
 	(1, 'Pizzas'),
 	(2, 'Carnes'),
 	(3, 'Sushi'),
@@ -128,10 +128,10 @@ CREATE TABLE IF NOT EXISTS `estabelecimentos` (
   `tipo` varchar(100) DEFAULT NULL,
   `media_avaliacao` decimal(3,2) DEFAULT 0.00,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela db_hubmenu.estabelecimentos: ~13 rows (aproximadamente)
-INSERT INTO `estabelecimentos` (`id`, `nome`, `cep`, `endereco`, `cnpj`, `imagem`, `banner`, `cor1`, `cor2`, `cor3`, `tipo`, `media_avaliacao`) VALUES
+-- Copiando dados para a tabela db_hubmenu.estabelecimentos: ~16 rows (aproximadamente)
+INSERT IGNORE INTO `estabelecimentos` (`id`, `nome`, `cep`, `endereco`, `cnpj`, `imagem`, `banner`, `cor1`, `cor2`, `cor3`, `tipo`, `media_avaliacao`) VALUES
 	(1, 'Sergio Lanches', '89219-510', 'R. Arno Waldemar Döhler, 957 - Zona Industrial Norte, Joinville - SC', '12.345.678/0001-00', '/Views/Assets/Images/Estabelecimentos/685c41bad96af.jpg', '/Views/Assets/Images/Estabelecimentos/685c41bad98dc.jpg', '#28a745', '#20c997', '#17a2b8', 'Lanchonete e Pizzaria', 5.00),
 	(2, 'Tigrinho Lanches', '01234-567', 'Rua das Flores, 123, Centro, São Paulo - SP', '12.345.678/0001-90', '/Views/Assets/Images/Estabelecimentos/685c48ff1340f.jpg', '/Views/Assets/Images/Estabelecimentos/685c48f1c3f4b.webp', '#000000', '#000000', '#17a2b8', 'Lanchonete', 5.00),
 	(3, 'Sushi Bananas', '89200-002', 'Rua Japão, 789', '34.567.890/0001-22', '/Views/Assets/Images/Estabelecimentos/SushiPlace.png', NULL, '#FF5733', '#33FF57', '#3357FF', 'Restaurante Japonês', 4.80),
@@ -146,7 +146,8 @@ INSERT INTO `estabelecimentos` (`id`, `nome`, `cep`, `endereco`, `cnpj`, `imagem
 	(12, 'Restaurante', '01234-567', 'Rua das Flores, 123, Centro, São Paulo - SP', '00.000.000/0000-00', NULL, NULL, '#000000', '#000000', '#000000', 'Restaurante', 0.00),
 	(13, 'Restaurante', '99312-312', 'benimaru9', '00.000.000/0000-00', NULL, NULL, '#000000', '#000000', '#000000', 'Restaurante', 0.00),
 	(14, 'Restaurante', '32132-132', 'bluezao', '00.000.000/0000-00', NULL, NULL, '#000000', '#000000', '#000000', 'Restaurante', 0.00),
-	(15, 'Restaurante', '32213-213', 'bluezao1', '00.000.000/0000-00', NULL, NULL, '#000000', '#000000', '#000000', 'Restaurante', 0.00);
+	(15, 'Restaurante', '32213-213', 'bluezao1', '00.000.000/0000-00', NULL, NULL, '#000000', '#000000', '#000000', 'Restaurante', 0.00),
+	(16, 'Restaurante', '00000-111', 'Rua Senai', '00.000.000/0000-00', '/Views/Assets/Images/Estabelecimentos/685ef265bf81f.png', '/Views/Assets/Images/Estabelecimentos/685ef265c00ba.png', '#000000', '#000000', '#000000', 'Restaurante', 0.00);
 
 -- Copiando estrutura para tabela db_hubmenu.estabelecimentos_usuarios
 CREATE TABLE IF NOT EXISTS `estabelecimentos_usuarios` (
@@ -161,10 +162,10 @@ CREATE TABLE IF NOT EXISTS `estabelecimentos_usuarios` (
   CONSTRAINT `estabelecimentos_usuarios_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
   CONSTRAINT `estabelecimentos_usuarios_ibfk_2` FOREIGN KEY (`estabelecimento_id`) REFERENCES `estabelecimentos` (`id`),
   CONSTRAINT `estabelecimentos_usuarios_ibfk_3` FOREIGN KEY (`cargo_id`) REFERENCES `cargos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela db_hubmenu.estabelecimentos_usuarios: ~12 rows (aproximadamente)
-INSERT INTO `estabelecimentos_usuarios` (`id`, `usuario_id`, `cargo_id`, `estabelecimento_id`) VALUES
+-- Copiando dados para a tabela db_hubmenu.estabelecimentos_usuarios: ~13 rows (aproximadamente)
+INSERT IGNORE INTO `estabelecimentos_usuarios` (`id`, `usuario_id`, `cargo_id`, `estabelecimento_id`) VALUES
 	(1, 1, 1, 2),
 	(2, 2, 2, 2),
 	(3, 3, 3, 3),
@@ -176,7 +177,8 @@ INSERT INTO `estabelecimentos_usuarios` (`id`, `usuario_id`, `cargo_id`, `estabe
 	(9, 9, 9, 9),
 	(10, 11, 1, 2),
 	(11, 12, 1, 1),
-	(12, 16, 7, 1);
+	(12, 16, 7, 1),
+	(13, 56, 1, 16);
 
 -- Copiando estrutura para tabela db_hubmenu.pedidos
 CREATE TABLE IF NOT EXISTS `pedidos` (
@@ -195,8 +197,8 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
   CONSTRAINT `pedidos_ibfk_2` FOREIGN KEY (`estabelecimento_id`) REFERENCES `estabelecimentos` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela db_hubmenu.pedidos: ~29 rows (aproximadamente)
-INSERT INTO `pedidos` (`id`, `usuario_id`, `estabelecimento_id`, `observacao`, `status`, `avaliacao`, `valor_total`, `data_pedido`) VALUES
+-- Copiando dados para a tabela db_hubmenu.pedidos: ~32 rows (aproximadamente)
+INSERT IGNORE INTO `pedidos` (`id`, `usuario_id`, `estabelecimento_id`, `observacao`, `status`, `avaliacao`, `valor_total`, `data_pedido`) VALUES
 	(1, 1, 1, 'Sem cebola', 'cancelado', 5, 29.90, '2025-05-14 15:41:03'),
 	(2, 2, 1, 'Ponto da carne: mal passada', 'entregue', 4, 59.90, '2025-05-14 15:41:03'),
 	(3, 3, 3, 'Sem wasabi', 'entregue', 5, 39.90, '2025-05-14 15:41:03'),
@@ -245,8 +247,8 @@ CREATE TABLE IF NOT EXISTS `pedidos_produtos` (
   CONSTRAINT `pedidos_produtos_ibfk_2` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela db_hubmenu.pedidos_produtos: ~20 rows (aproximadamente)
-INSERT INTO `pedidos_produtos` (`id`, `pedido_id`, `produto_id`, `quantidade`, `preco_unitario`, `observacao`) VALUES
+-- Copiando dados para a tabela db_hubmenu.pedidos_produtos: ~26 rows (aproximadamente)
+INSERT IGNORE INTO `pedidos_produtos` (`id`, `pedido_id`, `produto_id`, `quantidade`, `preco_unitario`, `observacao`) VALUES
 	(5, 1, 2, 2, 19.99, NULL),
 	(6, 1, 1, 1, 29.90, NULL),
 	(7, 2, 4, 3, 9.50, NULL),
@@ -291,8 +293,8 @@ CREATE TABLE IF NOT EXISTS `produtos` (
   CONSTRAINT `produtos_ibfk_2` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela db_hubmenu.produtos: ~29 rows (aproximadamente)
-INSERT INTO `produtos` (`id`, `nome`, `descricao`, `valor`, `imagem`, `status_produtos`, `estabelecimento_id`, `categoria_id`) VALUES
+-- Copiando dados para a tabela db_hubmenu.produtos: ~30 rows (aproximadamente)
+INSERT IGNORE INTO `produtos` (`id`, `nome`, `descricao`, `valor`, `imagem`, `status_produtos`, `estabelecimento_id`, `categoria_id`) VALUES
 	(1, 'Pizza Margherita Queijo', 'Molho de tomate, mussarela e manjericão e muito queijo', 30.00, '/Views/Assets/Images/Produtos/6830ce694ee14.webp', 1, 1, 1),
 	(2, 'Picanha na Brasa', 'Picanha grelhada com acompanhamentos', 59.90, '/Views/Assets/Images/Produtos/68432c01e5ea5.jpg', 1, 2, 2),
 	(3, 'Sushi Combo', '10 unidades de sushi variados', 39.90, 'sushi_combo.jpg', 1, 3, 3),
@@ -314,7 +316,7 @@ INSERT INTO `produtos` (`id`, `nome`, `descricao`, `valor`, `imagem`, `status_pr
 	(23, 'Pizza de Banana', 'Pizza de banana com muito carinho', 100.00, '/Views/Assets/Images/Produtos/68432372dc5f6.jpg', 1, 1, 1),
 	(24, 'mini Sonho', 'Malasadas são donuts feitos com fermento e enriquecidos com ovos, manteiga e, às vezes, leite evaporado ou fresco. Depois de fritos, são passados ​​em açúcar. (OBS.: é um sonho de padaria)', 25.00, '/Views/Assets/Images/Produtos/6843306ba2d0d.jpg', 1, 1, 5),
 	(25, 'Picanha defumada', 'peça de carne', 88.00, '/Views/Assets/Images/Produtos/68433807f3199.jpg', 1, 1, 2),
-	(26, 'Costela', 'Fogo de chão', 72.00, '/Views/Assets/Images/Produtos/68432dc9e8e18.jpg', 1, 1, 2),
+	(26, 'Costela Silva', 'Fogo de chão', 72.00, '/Views/Assets/Images/Produtos/68432dc9e8e18.jpg', 1, 1, 2),
 	(27, 'Big Malassada', 'Malasadas são donuts feitos com fermento e enriquecidos com ovos, manteiga e, às vezes, leite evaporado ou fresco. Depois de fritos, são passados ​​em açúcar. (OBS.: é um sonho de padaria)', 25.00, '/Views/Assets/Images/Produtos/6843318c5ad45.jpg', 1, 3, 5),
 	(28, 'Guaraná Jesus 2.0', 'refri doce', 3.00, '/Views/Assets/Images/Produtos/68433edbceb34.jpg', 1, 10, 1),
 	(29, 'Petit Gateau Branco', 'Bolo e sorvete', 23.00, '/Views/Assets/Images/Produtos/68433b1b7fd40.jpg', 1, 9, 1),
@@ -338,10 +340,10 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   UNIQUE KEY `email` (`email`),
   KEY `fk_usuarios_cargo` (`cargo_id`),
   CONSTRAINT `fk_usuarios_cargo` FOREIGN KEY (`cargo_id`) REFERENCES `cargos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela db_hubmenu.usuarios: ~23 rows (aproximadamente)
-INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `cargo_id`, `cep`, `endereco`, `telefone`) VALUES
+-- Copiando dados para a tabela db_hubmenu.usuarios: ~29 rows (aproximadamente)
+INSERT IGNORE INTO `usuarios` (`id`, `nome`, `email`, `senha`, `cargo_id`, `cep`, `endereco`, `telefone`) VALUES
 	(1, 'João Silva', 'joao@example.com', '$2y$2y$10$PlZAEZtmmsh7zQcuN4P1Z.5l2sDCWLcb7k2k7hyCxf0bT0uk3i1NO', 1, '89200-010', 'Rua A, 100', '(47) 99999-0001'),
 	(2, 'Maria Oliveira', 'maria@example.com', '$2y$2y$10$PlZAEZtmmsh7zQcuN4P1Z.5l2sDCWLcb7k2k7hyCxf0bT0uk3i1NO', NULL, '89200-011', 'Rua B, 200', '(47) 99999-0002'),
 	(3, 'Pedro Santos', 'pedro@example.com', '$2y$2y$10$PlZAEZtmmsh7zQcuN4P1Z.5l2sDCWLcb7k2k7hyCxf0bT0uk3i1NO', NULL, '89200-012', 'Rua C, 300', '(47) 99999-0003'),
@@ -369,7 +371,8 @@ INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `cargo_id`, `cep`, `ende
 	(52, 'bluezao', 'bluezao@gmail.com', '$2y$10$O/lDizCj/qw19DiA.ahvzuFuPWQ2Lcw00q6VMYPEVqYum3GyyxFTW', NULL, '32132-132', 'bluezao', '(32) 13213-2132'),
 	(53, 'bluezao1', 'bluezao1@gmail.ccom', '$2y$10$lhJGUXygNbrlOTixI5BobeggAU1Y0el4aDfr28fGTBNRAeatCT4HC', NULL, '32213-213', 'bluezao1', '(32) 13213-2131'),
 	(54, 'bluezao5', 'bluezao5@gmail.com', '$2y$10$442Ql9dTprAgHDxaPdjAfuJKMKY8P87vGmEBRnTLUN54z/CeuIbFe', NULL, '32213-213', 'bluezao5', '(32) 13213-2132'),
-	(55, 'bluzao22', 'a@gmail.com', '$2y$10$1mOx2X0ktOxdYJNk778Lbud8Kw98EiwXSZOUUp4.OodsTCIDIgO/a', NULL, '12312-313', 'a', '(12) 33333-3333');
+	(55, 'bluzao22', 'a@gmail.com', '$2y$10$1mOx2X0ktOxdYJNk778Lbud8Kw98EiwXSZOUUp4.OodsTCIDIgO/a', NULL, '12312-313', 'a', '(12) 33333-3333'),
+	(56, 'Sergio', 'sergio123@gmail.com', '$2y$10$CurLgwHbPUsxxKcpRaSC/eamCwIcsboU9wEoeq7IF3qdlZw36Opqi', NULL, '00000-111', 'Rua Senai', '(41) 23123-1232');
 
 -- Copiando estrutura para tabela db_hubmenu.vendas
 CREATE TABLE IF NOT EXISTS `vendas` (
@@ -389,7 +392,7 @@ CREATE TABLE IF NOT EXISTS `vendas` (
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Copiando dados para a tabela db_hubmenu.vendas: ~12 rows (aproximadamente)
-INSERT INTO `vendas` (`id`, `referencia`, `pedido_id`, `transacao_id`, `status_pagamento`, `estabelecimento_id`, `valor_total`, `data_venda`) VALUES
+INSERT IGNORE INTO `vendas` (`id`, `referencia`, `pedido_id`, `transacao_id`, `status_pagamento`, `estabelecimento_id`, `valor_total`, `data_venda`) VALUES
 	(1, 'VEND001', 11, 'TXN001', 'Aprovado', 1, 150.00, '2025-05-12 15:41:03'),
 	(2, 'VEND002', 5, 'TXN002', 'Aprovado', 2, 230.50, '2025-05-14 15:41:03'),
 	(3, 'VEND003', 23, 'TXN003', 'Pendente', 3, 120.75, '2025-05-14 15:41:03'),
