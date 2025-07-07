@@ -155,10 +155,15 @@ th, td {
 
 .card-header {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.datas {
+    display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    margin-bottom: 12px;
-    align-items: start;
+    gap: 5px;
 }
 
 .order-id {

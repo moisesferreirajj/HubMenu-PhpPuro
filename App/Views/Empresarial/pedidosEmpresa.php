@@ -34,7 +34,7 @@
             </div>
             <div class="actions-right">
                 <button id="open_cad" data-bs-toggle="modal" data-bs-target="#cadastrarModal" onclick="closeNav()" class="btn btn-light btn-circle">
-                    <i class="bi bi-plus-lg"></i>
+                    <i class="bi bi-plus-lg"></i>     
                 </button>
             </div>
         </div>
@@ -43,14 +43,24 @@
     <div class="order-container">
         <?php foreach ($orders as $pedido): ?>
             <div class="card">
-                <div class="card-header">
-                    <span class="order-id">Pedido #<?= htmlspecialchars($pedido->id) ?></span>
-                    <span class="order-client"><?= htmlspecialchars($pedido->cliente) ?></span>
-                    <span class="order-status badge bg-<?=
-                                                        $pedido->status == 'entregue' ? 'success' : ($pedido->status == 'cancelado' ? 'danger' : ($pedido->status == 'preparando' ? 'warning' : 'info'))
-                                                        ?>">
-                        <?= ucfirst($pedido->status) ?>
-                    </span>
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <div class="datas d-flex flex-column">
+                        <span class="order-id">Pedido #<?= htmlspecialchars($pedido->id) ?></span>
+                        <span class="order-client"><?= htmlspecialchars($pedido->cliente) ?></span>
+                        <span class="order-status badge bg-<?=
+                                                            $pedido->status == 'entregue' ? 'success' : ($pedido->status == 'cancelado' ? 'danger' : ($pedido->status == 'preparando' ? 'warning' : 'info'))
+                                                            ?>">
+                            <?= ucfirst($pedido->status) ?>
+                        </span>
+                    </div>
+                    <button
+                        type="button"
+                        class="btn btn-adicionar-produto"
+                        data-bs-toggle="modal"
+                        data-bs-target="#adicionarProdutoModal"
+                        data-pedido-id="<?= $pedido->id ?>">
+                        <i class="bi bi-plus-lg"></i>
+                    </button>
                 </div>
                 <div class="card-body">
                     <?php if (!empty($pedido->produtos) && is_array($pedido->produtos)): ?>
@@ -59,10 +69,9 @@
                                 <div class="item-info">
                                     <span class="quantity"><?= intval($item->quantidade) ?>x</span>
                                     <span class="item-name"><?= htmlspecialchars($item->nome) ?></span>
-                                    <span class="item-price" style="margin-left: 8px;">| R$ <?= number_format($item->valor*$item->quantidade, 2, ',', '.') ?></span>
+                                    <span class="item-price" style="margin-left: 8px;">| R$ <?= number_format($item->valor * $item->quantidade, 2, ',', '.') ?></span>
                                 </div>
-                                <span class="item-observations">- <?= htmlspecialchars($item->descricao ?? '') ?></span>
-                                <span class="item-observations">[ <?= htmlspecialchars($item->observacao ?? '') ?> ]</span>
+                                <span class="item-observations">Observação:<br> - <?= htmlspecialchars($item->observacao ?? '') ?> </span>
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>
@@ -83,15 +92,7 @@
                         <button type="submit" class="btn btn-success">Concluir</button>
                     </form>
 
-                    <!-- Botão para adicionar produto -->
-                    <button
-                        type="button"
-                        class="btn btn-primary btn-adicionar-produto"
-                        data-bs-toggle="modal"
-                        data-bs-target="#adicionarProdutoModal"
-                        data-pedido-id="<?= $pedido->id ?>">
-                        Adicionar
-                    </button>
+
                 </div>
             </div>
         <?php endforeach; ?>

@@ -1,0 +1,2 @@
+[2025-07-07 13:38:16] Erro [8192] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated - Arquivo: C:\Users\igor_s_dias\Documents\GitHub\HubMenu-PhpPuro\App\Views\Empresarial\dashboard.php - Linha: 877
+[2025-07-07 13:38:16] Erro [8192] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated - Arquivo: C:\Users\igor_s_dias\Documents\GitHub\HubMenu-PhpPuro\App\Views\Empresarial\dashboard.php - Linha: 878
