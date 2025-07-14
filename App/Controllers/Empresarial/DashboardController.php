@@ -19,10 +19,10 @@ class DashboardController extends RenderView
 
         // Dados principais
         $estabelecimento = $estabelecimentosModel->findById($id)->results[0] ?? null;
-        $produtosObj = $produtoModel->findByEstabelecimentoId($id);
-        $produtos = $produtosObj->results ?? [];
+        $produtos = $produtoModel->findByEstabelecimentoId($id);
         $pedidos = $pedidosModel->getOrderByCompanyId($id) ?? [];
         $usuarios = $usuariosModel->findByEstabelecimentoId($id) ?? [];
+
         $vendas = $vendasModel->findByEstabelecimentoId($id) ?? [];
 
         // Pedidos recentes (últimos 10)
@@ -160,6 +160,9 @@ class DashboardController extends RenderView
         // Cadastro de Usuário
         if (isset($_POST['acao']) && $_POST['acao'] === 'cadastrar_usuario') {
             $usuariosModel = new UsuariosModel();
+            $estabUsuariosModel = new EstabelecimentosUsuariosModel();
+
+            // Dados do formulário
             $nome = $_POST['nome'] ?? '';
             $email = $_POST['email'] ?? '';
             $cargo_id = $_POST['cargo'] ?? null;
@@ -168,8 +171,10 @@ class DashboardController extends RenderView
             $endereco = $_POST['endereco'] ?? null;
             $senha = $_POST['senha'] ?? '';
             $senha2 = $_POST['senha2'] ?? '';
-            $estabelecimento_id = $_POST['estabelecimento_id'] ?? null;
+            $estabelecimento_id = $usuariosModel->getCompanyByUserId($_SESSION['usuario_id']) ?? null;
 
+
+            // Verifica senhas
             if ($senha !== $senha2) {
                 echo "<script>alert('As senhas não conferem!');window.history.back();</script>";
                 exit;
@@ -177,16 +182,15 @@ class DashboardController extends RenderView
 
             $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
-            // Insere usuário (cargo_id vai para tabela de relacionamento)
+            // Inserção do usuário
             $usuario_id = $usuariosModel->insert($nome, $senhaHash, $email, null, $cep, $endereco, $telefone);
-
-            // Relaciona usuário ao estabelecimento e cargo
+            $estabUsuariosModel->insert($usuario_id, $cargo_id, $estabelecimento_id);
             if ($usuario_id && $estabelecimento_id && $cargo_id) {
-                $estabUsuariosModel = new EstabelecimentosUsuariosModel();
-                $estabUsuariosModel->insert($estabelecimento_id, $usuario_id, $cargo_id);
+                $usuariosModel->insert($estabelecimento_id, $usuario_id, $cargo_id);
+                echo "<script>alert('Usuário cadastrado com sucesso!');window.location.href = '" . $_SERVER['REQUEST_URI'] . "';</script>";
+            } else {
+                echo "<script>alert('Erro ao cadastrar usuário ou associar ao estabelecimento.');window.history.back();</script>";
             }
-
-            echo "<script>alert('Usuário cadastrado!');window.location.href = '" . $_SERVER['REQUEST_URI'] . "';</script>";
             exit;
         }
 
@@ -202,7 +206,6 @@ class DashboardController extends RenderView
             $endereco = $_POST['endereco'] ?? null;
             $senha = $_POST['senha'] ?? null;
             $senha2 = $_POST['senha2'] ?? null;
-            $estabelecimento_id = $_POST['estabelecimento_id'] ?? null;
 
             // Busca senha atual se não for alterar
             $senhaHash = null;
@@ -217,12 +220,6 @@ class DashboardController extends RenderView
 
             // Atualiza usuário
             $usuariosModel->update($id, $nome, $senhaHash, $email, $cep, $endereco, $telefone);
-
-            // Atualiza cargo na tabela de relacionamento
-            if ($estabelecimento_id && $cargo_id) {
-                $estabUsuariosModel = new EstabelecimentosUsuariosModel();
-                $estabUsuariosModel->update($id, $estabelecimento_id, $cargo_id);
-            }
 
             echo "<script>alert('Usuário atualizado!');window.location.href = '" . $_SERVER['REQUEST_URI'] . "';</script>";
             exit;
@@ -264,7 +261,7 @@ class DashboardController extends RenderView
         }
     }
 
-    public function Venda() 
+    public function Venda()
     {
         // Atualizar status da venda
         if (isset($_POST['acao']) && $_POST['acao'] === 'editar_status_venda') {

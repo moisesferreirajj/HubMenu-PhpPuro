@@ -65,3 +65,5 @@ addressUrl = service.get("http://localhost:8080/empresarial/cadastro")
 testUnir = TestRegisterLogin(addressUrl, service)
 
 testUnir.fill_user_form()
+
+# python registerLoginTest.py

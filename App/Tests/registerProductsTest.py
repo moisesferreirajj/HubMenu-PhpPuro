@@ -48,7 +48,7 @@ class TestRegisterProducts:
             
             time.sleep(2)
             
-            price_input = self.driver.find_element(By.ID, "produtoPreco")
+            price_input = self.driver.find_element(By.ID, "produtoValor")
             price_input.send_keys("20.00")
             
             time.sleep(2)
@@ -78,7 +78,7 @@ class TestRegisterProducts:
             self.driver.quit()
 
 service = webdriver.Chrome()
-addressUrl = "http://10.3.76.83:8080/empresarial/login"  # Corrigido: agora é uma string
+addressUrl = "http://localhost:8080/empresarial/login"  # Corrigido: agora é uma string
 
 testUnir = TestRegisterProducts(addressUrl, service)
 

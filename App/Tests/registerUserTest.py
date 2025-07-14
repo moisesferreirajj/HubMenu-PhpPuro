@@ -6,10 +6,12 @@ import time
 
 
 user = {
-    "name" : "Zara Rotert",
-    "email" : "zaza@mail.com",
-    "telefone" : "0987654321",
-    "password" : "Ana&Jordan321",
+    "name": "Zoe Rotert",
+    "email": "zozo@gmail.com",
+    "telefone": "0987654321",
+    "password": "Ana&Jordan321",
+    "cep": "12345678",
+    "endereco": "Rua Exemplo, 456"
 }
 
 ids_formulario = [
@@ -17,14 +19,19 @@ ids_formulario = [
     "usuarioEmail",
     "usuarioTelefone",
     "usuarioSenha",
+    "usuarioCep",
+    "usuarioEndereco"
 ]
 
-key_id  = {
+key_id = {
     "name": "usuarioNome",
     "email": "usuarioEmail",
     "telefone": "usuarioTelefone",
-    "password": "usuarioSenha"
+    "password": "usuarioSenha",
+    "cep": "usuarioCep",
+    "endereco": "usuarioEndereco"
 }
+
 
 class TestRegisterUser:
     def __init__(self, address, driver):
@@ -47,6 +54,8 @@ class TestRegisterUser:
             self.driver.find_element(By.ID, "user_page").click()
             time.sleep(3)
             
+            self.driver.find_element(By.ID, "btnNovoUsuario").click()
+            time.sleep(3)
             for key_user, id_form in key_id.items():
                 time.sleep(3)
                 element = self.driver.find_element(By.ID, id_form)
@@ -65,8 +74,9 @@ class TestRegisterUser:
             time.sleep(5)
             submit_button = self.driver.find_element(By.ID, "regis_usu")
             submit_button.click()
-
+            time.sleep(10)
             self.driver.find_element(By.ID, "user_page").click()
+            time.sleep(3)
 
         except Exception as e:
             print("Erro:", e)
@@ -74,7 +84,7 @@ class TestRegisterUser:
 
 service = webdriver.Chrome()
 service.maximize_window()
-addressUrl = service.get("http://10.3.76.83:8080/empresarial/dashboard/1")
+addressUrl = service.get("http://localhost:8080/empresarial/login")
 
 testUnir = TestRegisterUser(addressUrl, service)
 

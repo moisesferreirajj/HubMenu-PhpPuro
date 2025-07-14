@@ -20,8 +20,8 @@ class TestRegisterStores:
         
         try:
             print("Preenchendo email...")
-            self.driver.find_element(By.ID, "email").send_keys("marciosenhorinha@gmail.com")
-            self.driver.find_element(By.ID, "password").send_keys("marciosenhorinha")
+            self.driver.find_element(By.ID, "email").send_keys("senhorinhamarcio@gmail.com")
+            self.driver.find_element(By.ID, "password").send_keys("marcio")
 
             #18
 
@@ -29,7 +29,7 @@ class TestRegisterStores:
             self.driver.find_element(By.ID, "logar").click()
             time.sleep(10)  
 
-            gerenciar_url = "http://localhost:8080/gerenciar/estabelecimento/18"  # Ajuste o ID conforme necessário
+            gerenciar_url = "http://localhost:8080/gerenciar/estabelecimento/17"  
             print(f"Acessando {gerenciar_url} ...")
             self.driver.get(gerenciar_url)
             time.sleep(5)
@@ -66,21 +66,21 @@ class TestRegisterStores:
             self.driver.find_element(By.ID, "banner").send_keys(banner_path)
             time.sleep(5)
             
-            # BOTAO DE CORTAR BANNER APÓS 10 SEGUNDOS PARA EVITAR BUGS
             WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable((By.ID, "cropBannerBtn"))
             ).click()
             time.sleep(3)
-            
-            #ENVIAR MUDANÇAS
+            time.sleep(3)
+
             self.driver.find_element(By.ID, "saveChangesBtn").click()
+            
 
         except Exception as e :
             print(f"Erro ao preencher o formulário: {e}")
-            # self.driver.quit()
+            self.driver.quit()
 
 service = webdriver.Chrome()
-addressUrl = "http://localhost:8080/empresarial/login"  # Corrigido: agora é uma string
+addressUrl = "http://localhost:8080/empresarial/login"  
 
 testUnir = TestRegisterStores(addressUrl, service)
 
