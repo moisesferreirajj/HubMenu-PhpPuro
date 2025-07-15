@@ -7,17 +7,18 @@ class CardapioController extends RenderView
         $produtoModel = new ProdutosModel();
         $estabelecimentosModel = new EstabelecimentosModel();
 
-        $produtosResponse = $produtoModel->findByEstabelecimentoId($id);
+        $produtos = $produtoModel->findByEstabelecimentoId($id);
         $estabelecimentoResponse = $estabelecimentosModel->findById($id);
 
-        $produtos = ($produtosResponse->status === 'success') ? $produtosResponse->results : [];
-        $estabelecimento = ($estabelecimentoResponse->status === 'success') ? $estabelecimentoResponse->results : null;
+        $estabelecimento = (is_object($estabelecimentoResponse) && isset($estabelecimentoResponse->status) && $estabelecimentoResponse->status === 'success')
+            ? $estabelecimentoResponse->results
+            : null;
 
         $this->loadView('Clientes/cardapioCliente', [
             'Title' => 'HubMenu |',
             'Produtos' => $produtos,
             'Estabelecimento' => $estabelecimento,
-            'Erro' => $produtosResponse->status === 'error' ? $produtosResponse->message : null
+            'Erro' => empty($produtos) ? 'Nenhum produto encontrado.' : null
         ]);
     }
 
@@ -28,19 +29,19 @@ class CardapioController extends RenderView
         $produtoModel = new ProdutosModel();
         $estabelecimentosModel = new EstabelecimentosModel();
 
-        $produtosResponse = $produtoModel->findByEstabelecimentoId($id);
+        $produtos = $produtoModel->findByEstabelecimentoId($id);
         $estabelecimentoResponse = $estabelecimentosModel->findById($id);
 
-        $produtos = ($produtosResponse->status === 'success') ? $produtosResponse->results : [];
-        // Mantendo como objeto para facilitar uso na view
-        $estabelecimento = ($estabelecimentoResponse->status === 'success') ? $estabelecimentoResponse->results : null;
+        $estabelecimento = (is_object($estabelecimentoResponse) && isset($estabelecimentoResponse->status) && $estabelecimentoResponse->status === 'success')
+            ? $estabelecimentoResponse->results
+            : null;
 
         $this->loadView('empresarial/cardapioEmpresa', [
             'Title' => 'HubMenu |',
             'Produtos' => $produtos,
             'EstabelecimentoID' => $id,
             'Estabelecimento' => $estabelecimento,
-            'Erro' => $produtosResponse->status === 'error' ? $produtosResponse->message : null
+            'Erro' => empty($produtos) ? 'Nenhum produto encontrado.' : null
         ]);
     }
 
