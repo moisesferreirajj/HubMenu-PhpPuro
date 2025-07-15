@@ -59,7 +59,7 @@
                         data-bs-toggle="modal"
                         data-bs-target="#adicionarProdutoModal"
                         data-pedido-id="<?= $pedido->id ?>">
-                        <i class="bi bi-plus-lg"></i> JAdd
+                        <i class="bi bi-plus-lg"></i> Add
                     </button>
                 </div>
                 <div class="card-body">
