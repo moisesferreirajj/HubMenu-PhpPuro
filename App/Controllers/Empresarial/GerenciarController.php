@@ -18,7 +18,7 @@ class GerenciarController extends RenderView
         $avaliacoes = $avaliacoesModel->getByEstabelecimento($id, 10); // últimas 10 avaliações
 
         $this->loadView(
-            'empresarial/gerenciar',
+            'Empresarial/gerenciar',
             [
                 'Title' => 'HubMenu | Gerenciar Conta',
                 'EstabelecimentoID' => $id,

@@ -5,7 +5,7 @@ class DashClienteController extends RenderView
     public function index(){
         $users = new UsuariosModel();
 
-        $this->loadView('clientes/dashCliente',
+        $this->loadView('Clientes/dashCliente',
             [
                 'Title' => 'HubMenu |'
             ],

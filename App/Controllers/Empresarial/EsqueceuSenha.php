@@ -14,7 +14,7 @@ class EsqueceuSenha extends RenderView
     public function index()
     {
         $this->loadView(
-            'empresarial/forget_password',
+            'Empresarial/forget_password',
             [
                 'Title' => 'HubMenu |'
             ],

@@ -11,7 +11,8 @@ class Core {
         //LOOP PELAS ROTAS
         foreach ($routes as $path => $controller) {
             //SUBSTITUI O {id} POR REGEX
-            $pattern = '#^' . preg_replace('/{[^}]+}/', '(\w+)', $path) . '$#';
+            $pattern = '#^' . preg_replace('/{[^}]+}/', '([^/]+)', $path) . '$#';
+
 
             if (preg_match($pattern, $url, $matches)) {
                 array_shift($matches);

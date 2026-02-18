@@ -74,3 +74,50 @@
 [2025-07-15 14:55:19] Erro [8192] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated - Arquivo: C:\Users\moises_j_ferreira\Documents\GitHub\HubMenu-PhpPuro\App\Views\Empresarial\dashboard.php - Linha: 723
 [2025-07-15 14:55:19] Erro [8192] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated - Arquivo: C:\Users\moises_j_ferreira\Documents\GitHub\HubMenu-PhpPuro\App\Views\Empresarial\dashboard.php - Linha: 877
 [2025-07-15 14:55:19] Erro [8192] htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated - Arquivo: C:\Users\moises_j_ferreira\Documents\GitHub\HubMenu-PhpPuro\App\Views\Empresarial\dashboard.php - Linha: 878
+[2026-02-17 19:27:18] Erro [2] require_once(/var/www/html/App/Core/../Views/clientes/dashCliente.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:27:18] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/clientes/dashCliente.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:27:19] Erro [2] require_once(/var/www/html/App/Core/../Views/clientes/dashCliente.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:27:19] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/clientes/dashCliente.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:27:19] Erro [2] require_once(/var/www/html/App/Core/../Views/clientes/dashCliente.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:27:19] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/clientes/dashCliente.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:27:20] Erro [2] require_once(/var/www/html/App/Core/../Views/clientes/dashCliente.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:27:20] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/clientes/dashCliente.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:27:20] Erro [2] require_once(/var/www/html/App/Core/../Views/clientes/dashCliente.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:27:20] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/clientes/dashCliente.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:27:24] Erro [2] require_once(/var/www/html/App/Core/../Views/clientes/dashCliente.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:27:24] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/clientes/dashCliente.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:27:45] Erro [2] require_once(/var/www/html/App/Core/../Views/clientes/dashCliente.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:27:45] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/clientes/dashCliente.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:32:56] Erro [2] require_once(/var/www/html/App/Core/../Views/clientes/dashCliente.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:32:56] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/clientes/dashCliente.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:32:57] Erro [2] require_once(/var/www/html/App/Core/../Views/clientes/dashCliente.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:32:57] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/clientes/dashCliente.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:33:10] Erro [2] require_once(/var/www/html/App/Core/../Views/clientes/dashCliente.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:33:10] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/clientes/dashCliente.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:33:15] Erro [2] require_once(/var/www/html/App/Core/../Views/clientes/dashCliente.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:33:15] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/clientes/dashCliente.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:33:44] Erro [2] require_once(/var/www/html/App/Core/../Views/clientes/dashCliente.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:33:44] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/clientes/dashCliente.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:34:20] Erro [2] require_once(/var/www/html/App/Core/../Views/clientes/dashCliente.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:34:20] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/clientes/dashCliente.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:35:18] Erro [2] require_once(/var/www/html/App/Core/../Views/clientes/dashCliente.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 19:35:18] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/clientes/dashCliente.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-17 22:56:51] Exceção não capturada: Unclosed '{' on line 4 - Arquivo: /var/www/html/App/Core/Core.php - Linha: 14
+[2026-02-17 22:56:53] Exceção não capturada: Unclosed '{' on line 4 - Arquivo: /var/www/html/App/Core/Core.php - Linha: 14
+[2026-02-17 22:56:54] Exceção não capturada: Unclosed '{' on line 4 - Arquivo: /var/www/html/App/Core/Core.php - Linha: 14
+[2026-02-17 22:56:54] Exceção não capturada: Unclosed '{' on line 4 - Arquivo: /var/www/html/App/Core/Core.php - Linha: 14
+[2026-02-17 22:56:54] Exceção não capturada: Unclosed '{' on line 4 - Arquivo: /var/www/html/App/Core/Core.php - Linha: 14
+[2026-02-17 22:56:54] Exceção não capturada: Unclosed '{' on line 4 - Arquivo: /var/www/html/App/Core/Core.php - Linha: 14
+[2026-02-17 22:56:54] Exceção não capturada: Unclosed '{' on line 4 - Arquivo: /var/www/html/App/Core/Core.php - Linha: 14
+[2026-02-17 22:56:54] Exceção não capturada: Unclosed '{' on line 4 - Arquivo: /var/www/html/App/Core/Core.php - Linha: 14
+[2026-02-17 20:13:10] Exceção não capturada: SQLSTATE[HY000] [1044] Access denied for user 'hubmenu_user'@'%' to database 'db_hubmenu' - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 20:13:11] Exceção não capturada: SQLSTATE[HY000] [1044] Access denied for user 'hubmenu_user'@'%' to database 'db_hubmenu' - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 20:13:14] Exceção não capturada: SQLSTATE[HY000] [1044] Access denied for user 'hubmenu_user'@'%' to database 'db_hubmenu' - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 20:13:14] Exceção não capturada: SQLSTATE[HY000] [1044] Access denied for user 'hubmenu_user'@'%' to database 'db_hubmenu' - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 20:13:14] Exceção não capturada: SQLSTATE[HY000] [1044] Access denied for user 'hubmenu_user'@'%' to database 'db_hubmenu' - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 20:13:15] Exceção não capturada: SQLSTATE[HY000] [1044] Access denied for user 'hubmenu_user'@'%' to database 'db_hubmenu' - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 20:13:15] Exceção não capturada: SQLSTATE[HY000] [1044] Access denied for user 'hubmenu_user'@'%' to database 'db_hubmenu' - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 20:13:15] Exceção não capturada: SQLSTATE[HY000] [1044] Access denied for user 'hubmenu_user'@'%' to database 'db_hubmenu' - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 20:13:18] Exceção não capturada: SQLSTATE[HY000] [1044] Access denied for user 'hubmenu_user'@'%' to database 'db_hubmenu' - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 20:13:21] Exceção não capturada: SQLSTATE[HY000] [1044] Access denied for user 'hubmenu_user'@'%' to database 'db_hubmenu' - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 20:13:32] Exceção não capturada: SQLSTATE[HY000] [1044] Access denied for user 'hubmenu_user'@'%' to database 'db_hubmenu' - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37

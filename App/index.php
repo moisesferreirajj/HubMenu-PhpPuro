@@ -1,10 +1,5 @@
 <?php
 
-// Ativa exibição de erros (opcional para desenvolvimento)
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 // Define manipulador de erros
 set_error_handler(function ($errno, $errstr, $errfile, $errline) {
     logErro("Erro [$errno] $errstr - Arquivo: $errfile - Linha: $errline");

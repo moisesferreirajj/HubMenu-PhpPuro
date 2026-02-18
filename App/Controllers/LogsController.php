@@ -3,7 +3,7 @@
 class LogsController extends RenderView
 {
     public function index(){
-        $this->loadView('logs/index',
+        $this->loadView('Logs/index',
             [
                 'Title' => 'HubMenu |'
             ],
