@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="/views/assets/css/error.css">
+    <link rel="stylesheet" type="text/css" href="/Views/Assets/Css/error.css">
 
     <!-- BOOTSTRAP GERENCIAMENTO -->
     <link rel="icon" href="/Views/Assets/Images/favicon.png">

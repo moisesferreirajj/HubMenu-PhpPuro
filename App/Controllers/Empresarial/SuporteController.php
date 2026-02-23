@@ -9,7 +9,7 @@ class SuporteController extends RenderView
     {
         $users = new UsuariosModel();
 
-        $this->loadView('empresarial/suporte', [
+        $this->loadView('Empresarial/suporte', [
             'Title' => 'HubMenu |'
         ]);
     }

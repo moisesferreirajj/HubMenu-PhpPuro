@@ -5,7 +5,7 @@ class CadastroController extends RenderView
     public function index()
     {
         $users = new UsuariosModel();
-        $this->loadView('empresarial/cadastro', [
+        $this->loadView('Empresarial/cadastro', [
             'Title' => 'HubMenu |',
             'users' => $users->findAll(),
         ]);
