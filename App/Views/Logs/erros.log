@@ -121,3 +121,82 @@
 [2026-02-17 20:13:18] Exceção não capturada: SQLSTATE[HY000] [1044] Access denied for user 'hubmenu_user'@'%' to database 'db_hubmenu' - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
 [2026-02-17 20:13:21] Exceção não capturada: SQLSTATE[HY000] [1044] Access denied for user 'hubmenu_user'@'%' to database 'db_hubmenu' - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
 [2026-02-17 20:13:32] Exceção não capturada: SQLSTATE[HY000] [1044] Access denied for user 'hubmenu_user'@'%' to database 'db_hubmenu' - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 21:49:28] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 21:49:37] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 21:49:40] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 21:49:46] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 21:49:50] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 21:49:58] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 21:50:56] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 21:50:57] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 21:51:05] Exceção não capturada: SQLSTATE[HY000] [1044] Access denied for user 'hubmenu_user'@'%' to database 'db_hubmenu' - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 21:51:06] Exceção não capturada: SQLSTATE[HY000] [1044] Access denied for user 'hubmenu_user'@'%' to database 'db_hubmenu' - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 21:51:07] Exceção não capturada: SQLSTATE[HY000] [1044] Access denied for user 'hubmenu_user'@'%' to database 'db_hubmenu' - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 21:51:07] Exceção não capturada: SQLSTATE[HY000] [1044] Access denied for user 'hubmenu_user'@'%' to database 'db_hubmenu' - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 21:51:48] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 21:51:57] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-17 21:52:05] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:32:53] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:32:58] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:37:14] Exceção não capturada: Class "HomeController" not found - Arquivo: /var/www/html/App/Core/Core.php - Linha: 53
+[2026-02-23 17:37:17] Exceção não capturada: Class "HomeController" not found - Arquivo: /var/www/html/App/Core/Core.php - Linha: 53
+[2026-02-23 17:37:22] Exceção não capturada: Class "HomeController" not found - Arquivo: /var/www/html/App/Core/Core.php - Linha: 53
+[2026-02-23 17:37:24] Exceção não capturada: Class "HomeController" not found - Arquivo: /var/www/html/App/Core/Core.php - Linha: 53
+[2026-02-23 17:37:34] Exceção não capturada: Class "HomeController" not found - Arquivo: /var/www/html/App/Core/Core.php - Linha: 53
+[2026-02-23 17:37:36] Exceção não capturada: Class "HomeController" not found - Arquivo: /var/www/html/App/Core/Core.php - Linha: 53
+[2026-02-23 17:37:36] Exceção não capturada: Class "HomeController" not found - Arquivo: /var/www/html/App/Core/Core.php - Linha: 53
+[2026-02-23 17:37:42] Exceção não capturada: Class "HomeController" not found - Arquivo: /var/www/html/App/Core/Core.php - Linha: 53
+[2026-02-23 17:37:51] Erro [2] Undefined array key "usuario_id" - Arquivo: /var/www/html/App/Views/Empresarial/logout.php - Linha: 4
+[2026-02-23 17:37:51] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:39:21] Exceção não capturada: Class "HomeController" not found - Arquivo: /var/www/html/App/Core/Core.php - Linha: 53
+[2026-02-23 17:41:46] Erro [2] require_once(/var/www/html/App/Core/../Views/empresarial/index.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-23 17:41:46] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/empresarial/index.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-23 17:41:47] Erro [2] require_once(/var/www/html/App/Core/../Views/empresarial/index.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-23 17:41:47] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/empresarial/index.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-23 17:41:47] Erro [2] require_once(/var/www/html/App/Core/../Views/empresarial/index.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-23 17:41:47] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/empresarial/index.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-23 17:42:08] Erro [2] require_once(/var/www/html/App/Core/../Views/empresarial/index.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-23 17:42:08] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/empresarial/index.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-23 17:43:47] Erro [2] require_once(/var/www/html/App/Core/../Views/empresarial/index.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-23 17:43:47] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/empresarial/index.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-23 17:43:49] Erro [2] require_once(/var/www/html/App/Core/../Views/empresarial/index.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-23 17:43:49] Exceção não capturada: Failed opening required '/var/www/html/App/Core/../Views/empresarial/index.php' (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Core/RenderView.php - Linha: 8
+[2026-02-23 17:43:57] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:44:01] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:44:04] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:44:05] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:44:05] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:44:05] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:45:14] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:45:38] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:47:11] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:47:11] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:47:11] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:47:11] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:47:22] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:47:24] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:47:32] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:47:38] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:47:44] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:49:18] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:49:21] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:49:27] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:54:36] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:54:38] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:54:39] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:54:40] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:55:05] Exceção não capturada: SQLSTATE[HY000] [2002] Connection refused - Arquivo: /var/www/html/App/Models/Database.php - Linha: 37
+[2026-02-23 17:59:18] Erro [2] include_once(/var/www/html/App/Views/Empresarial/../Components/Footer.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Views/Empresarial/index.php - Linha: 191
+[2026-02-23 17:59:18] Erro [2] include_once(): Failed opening '/var/www/html/App/Views/Empresarial/../Components/Footer.php' for inclusion (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Views/Empresarial/index.php - Linha: 191
+[2026-02-23 17:59:45] Erro [2] include_once(/var/www/html/App/Views/Empresarial/../Components/Footer.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Views/Empresarial/index.php - Linha: 191
+[2026-02-23 17:59:45] Erro [2] include_once(): Failed opening '/var/www/html/App/Views/Empresarial/../Components/Footer.php' for inclusion (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Views/Empresarial/index.php - Linha: 191
+[2026-02-23 17:59:45] Erro [2] include_once(/var/www/html/App/Views/Empresarial/../Components/Footer.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Views/Empresarial/index.php - Linha: 191
+[2026-02-23 17:59:45] Erro [2] include_once(): Failed opening '/var/www/html/App/Views/Empresarial/../Components/Footer.php' for inclusion (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Views/Empresarial/index.php - Linha: 191
+[2026-02-23 17:59:45] Erro [2] include_once(/var/www/html/App/Views/Empresarial/../Components/Footer.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Views/Empresarial/index.php - Linha: 191
+[2026-02-23 17:59:45] Erro [2] include_once(): Failed opening '/var/www/html/App/Views/Empresarial/../Components/Footer.php' for inclusion (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Views/Empresarial/index.php - Linha: 191
+[2026-02-23 17:59:45] Erro [2] include_once(/var/www/html/App/Views/Empresarial/../Components/Footer.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Views/Empresarial/index.php - Linha: 191
+[2026-02-23 17:59:45] Erro [2] include_once(): Failed opening '/var/www/html/App/Views/Empresarial/../Components/Footer.php' for inclusion (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Views/Empresarial/index.php - Linha: 191
+[2026-02-23 17:59:50] Erro [2] include_once(/var/www/html/App/Views/Empresarial/../Components/Footer.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Views/Empresarial/index.php - Linha: 191
+[2026-02-23 17:59:50] Erro [2] include_once(): Failed opening '/var/www/html/App/Views/Empresarial/../Components/Footer.php' for inclusion (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Views/Empresarial/index.php - Linha: 191
+[2026-02-23 18:00:37] Erro [2] include_once(/var/www/html/App/Views/Empresarial/../Components/Footer.php): Failed to open stream: No such file or directory - Arquivo: /var/www/html/App/Views/Empresarial/index.php - Linha: 191
+[2026-02-23 18:00:37] Erro [2] include_once(): Failed opening '/var/www/html/App/Views/Empresarial/../Components/Footer.php' for inclusion (include_path='.:/usr/local/lib/php') - Arquivo: /var/www/html/App/Views/Empresarial/index.php - Linha: 191

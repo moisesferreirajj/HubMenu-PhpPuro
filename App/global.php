@@ -13,7 +13,7 @@ define('DB_PORT'     , "3306");
 define('DB_USER'     , "hubmenu_user");
 define('DB_PASSWORD' , "FOnoenp3o5623ionhono36");
 define('DB_DRIVER'   , "mysql");
-define('DB_NAME'     , "db_hubmenu");
+define('DB_NAME'     , "hubmenu");
 
 // constantes do phpMailer
 define('PHPMAILER_USERNAME', "contatosistemassenai@gmail.com");
