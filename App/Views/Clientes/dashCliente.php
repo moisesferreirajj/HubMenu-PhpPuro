@@ -219,7 +219,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Script customizado para carregar os estabelecimentos via AJAX -->
-    <script src="/Views/Assets/JS/Clientes/dash.js"></script>
+    <script src="/Views/Assets/Js/Clientes/dash.js"></script>
 </body>
 
 </html>

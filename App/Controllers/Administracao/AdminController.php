@@ -11,7 +11,7 @@ class AdminController extends RenderView
 
         $users = new UsuariosModel();
 
-        $this->loadView('administracao/login',
+        $this->loadView('Administracao/login',
             [
                 'Title' => 'HubMenu |'
             ],
@@ -52,7 +52,7 @@ class AdminController extends RenderView
         $estabelecimentosNovos = $estabelecimentosModel->findNewest(5); // pegar 5 mais novos
         $totalEstabelecimentos = count($estabelecimentos);
 
-        $this->loadView('administracao/dashboard', [
+        $this->loadView('Administracao/dashboard', [
             'Title' => 'HubMenu |',
             'totalVendas' => number_format($totalVendas, 2, ',', '.'),
             'totalPedidos' => $totalPedidos,

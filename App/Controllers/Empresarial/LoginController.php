@@ -5,7 +5,7 @@ class LoginController extends RenderView
     public function index()
     {
         $this->loadView(
-            'empresarial/login',
+            'Empresarial/login',
             [
                 'Title' => 'HubMenu |'
             ],

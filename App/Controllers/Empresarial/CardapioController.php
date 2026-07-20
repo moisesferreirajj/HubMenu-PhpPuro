@@ -36,7 +36,7 @@ class CardapioController extends RenderView
             ? $estabelecimentoResponse->results
             : null;
 
-        $this->loadView('empresarial/cardapioEmpresa', [
+        $this->loadView('Empresarial/cardapioEmpresa', [
             'Title' => 'HubMenu |',
             'Produtos' => $produtos,
             'EstabelecimentoID' => $id,
@@ -60,7 +60,7 @@ class CardapioController extends RenderView
         $estabelecimento = ($estabelecimentoResponse->status === 'success') ? $estabelecimentoResponse->results : null;
         $erro = empty($produtos) && !is_array($produtosInativos) ? 'Erro ao carregar produtos inativos.' : null;
 
-        $this->loadView('empresarial/lixeira', [
+        $this->loadView('Empresarial/lixeira', [
             'Title' => 'HubMenu | Lixeira',
             'ProdutosInativos' => $produtos,
             'Estabelecimento' => $estabelecimento,

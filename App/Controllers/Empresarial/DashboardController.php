@@ -46,7 +46,7 @@ class DashboardController extends RenderView
         $cargosObj = $cargosModel->findAll();
         $cargos = $cargosObj->results ?? [];
 
-        $this->loadView('empresarial/dashboard', [
+        $this->loadView('Empresarial/dashboard', [
             'Title' => 'HubMenu | Dashboard',
             'EstabelecimentoID' => $id,
             'Estabelecimento' => $estabelecimento,
